@@ -108,11 +108,38 @@ std::vector<int16_t> QMC5883LDriver::get_magnet() {
     return {static_cast<int16_t>(x1), static_cast<int16_t>(y1)};
 }
 
+// double QMC5883LDriver::get_bearing() {
+//     std::vector<int16_t> mag = get_data();
+//     if (mag[0] == 0 && mag[1] == 0) {
+//         return NAN; // No data
+//     }
+//     double bearing = atan2(mag[1], mag[0]) * 180 / M_PI;
+//     return (bearing < 0) ? bearing + 360 : bearing; // Normalize bearing
+// }
+
+void QMC5883LDriver::apply_calibration(const std::vector<int16_t>& raw, double& x_cal, double& y_cal, double& z_cal) {
+    // Apply calibration: (raw - offset) / scale
+    x_cal = (raw[0] - offsets[0]) / scales[0];
+    y_cal = (raw[1] - offsets[1]) / scales[1];
+    z_cal = (raw[2] - offsets[2]) / scales[2];
+}
+
 double QMC5883LDriver::get_bearing() {
+    // Get raw magnetometer data
     std::vector<int16_t> mag = get_data();
-    if (mag[0] == 0 && mag[1] == 0) {
-        return NAN; // No data
+
+    // Check if data is invalid
+    if (mag.size() < 3 || (mag[0] == 0 && mag[1] == 0)) {
+        return std::numeric_limits<double>::quiet_NaN(); // No valid data
     }
-    double bearing = atan2(mag[1], mag[0]) * 180 / M_PI;
-    return (bearing < 0) ? bearing + 360 : bearing; // Normalize bearing
+
+    // Apply calibration to the raw data
+    double x_cal, y_cal, z_cal;
+    apply_calibration(mag, x_cal, y_cal, z_cal);
+
+    // Calculate bearing in degrees
+    double bearing = atan2(y_cal, x_cal) * 180.0 / M_PI;
+
+    // Normalize the bearing to [0, 360] degrees
+    return (bearing < 0) ? bearing + 360.0 : bearing;
 }
