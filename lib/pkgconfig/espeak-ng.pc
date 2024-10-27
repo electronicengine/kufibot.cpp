@@ -1,0 +1,11 @@
+prefix=/home/kufi/workspace/piper/build/p/src/piper_phonemize_external-build/ei
+exec_prefix=/home/kufi/workspace/piper/build/p/src/piper_phonemize_external-build/ei
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: espeak-ng
+Description: espeak-ng is a multi-lingual software speech synthesizer
+Version: 1.52.0.1
+Requires:
+Libs: -L${libdir} -lespeak-ng
+Cflags: -I${includedir}

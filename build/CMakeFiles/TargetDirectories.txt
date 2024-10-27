@@ -1,0 +1,3 @@
+/home/kufi/workspace/kufibot.cpp/build/CMakeFiles/kufibot.dir
+/home/kufi/workspace/kufibot.cpp/build/CMakeFiles/edit_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/CMakeFiles/rebuild_cache.dir

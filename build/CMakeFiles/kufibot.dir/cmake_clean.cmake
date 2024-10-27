@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o"
+  "CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o.d"
+  "CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o"
+  "CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o.d"
+  "CMakeFiles/kufibot.dir/drivers/qmc588l_driver.cpp.o"
+  "CMakeFiles/kufibot.dir/drivers/qmc588l_driver.cpp.o.d"
+  "CMakeFiles/kufibot.dir/main.cpp.o"
+  "CMakeFiles/kufibot.dir/main.cpp.o.d"
+  "CMakeFiles/kufibot.dir/publisher.cpp.o"
+  "CMakeFiles/kufibot.dir/publisher.cpp.o.d"
+  "CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o"
+  "CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o.d"
+  "CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o"
+  "CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o.d"
+  "CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o"
+  "CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o.d"
+  "CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o"
+  "CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o.d"
+  "kufibot"
+  "kufibot.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/kufibot.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
