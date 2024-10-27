@@ -114,6 +114,12 @@ int RobotControllerService::control_motion(Json message)
 }
 
 void RobotControllerService::control_body(int angle, int magnitude) {
+
+    if(magnitude == 100)
+        magnitude = 95;
+
+    std::cout << "control_body: " << "angle: " << std::to_string(angle) << " - magnitude: " << std::to_string(magnitude) << std::endl;
+
     if (magnitude == 0 && angle == 0) {
         _dcMotorController->stop();
     } else if (45 <= angle && angle < 135) {
@@ -145,7 +151,9 @@ void RobotControllerService::control_head(int angle, int magnitude) {
 
 void RobotControllerService::control_arm(const std::string& control_id, int angle) {
     double mapped_angle = (angle / 100.0) * 180.0;
-    if (control_id == "left_arm") {
+    std::cout << "control_arm: " << "angle: " << std::to_string(mapped_angle) << std::endl;
+
+        if (control_id == "left_arm") {
         _servoController->set_absolute_servo_angle("left_arm", mapped_angle);
     } else if (control_id == "right_arm") {
         _servoController->set_absolute_servo_angle("right_arm", mapped_angle); 
