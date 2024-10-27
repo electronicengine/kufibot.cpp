@@ -65,6 +65,12 @@ private:
     int _mode_stby;
 
     std::array<std::array<double, 3>, 2> _calibration; // Calibration matrix
+   // Offsets and scales for calibration
+    const std::vector<double> offsets = {3096.95455451, -7452.84550654, 840.2791695};
+    const std::vector<double> scales = {16639.36998797, 18514.63340064, 16972.20317855};
+
+    // Apply calibration to raw data
+    void apply_calibration(const std::vector<int16_t>& raw, double& x_cal, double& y_cal, double& z_cal);
 
 };
 
