@@ -16,7 +16,7 @@ class SpeechRecognitionController {
 public:
     ~SpeechRecognitionController();
 
-    void load_mode(const std::string &modelPath);
+    void load_model(const std::string &modelPath);
     bool open();              // Initialize resources
     bool start_listen();       // Start the audio stream
     void stop_listen();        // Stop the audio stream

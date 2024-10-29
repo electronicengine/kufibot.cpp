@@ -46,7 +46,7 @@ int SpeechRecognitionController::paCallback(const void *input, void *output,
     return paContinue;
 }
 
-void SpeechRecognitionController::load_mode(const std::string &modelPath)
+void SpeechRecognitionController::load_model(const std::string &modelPath)
 {
     _model = vosk_model_new(modelPath.c_str());
     _recognizer = vosk_recognizer_new(_model, SAMPLE_RATE);

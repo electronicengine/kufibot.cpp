@@ -10,6 +10,8 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <mpg123.h>
+#include <alsa/asoundlib.h>
 
 #include "piper.hpp"
 
@@ -40,6 +42,8 @@ public:
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();
+    void playMusic(const std::string& mp3_file);
+
     ~SpeechProcessController();
 
 private:
@@ -53,7 +57,10 @@ private:
     bool audioReady = false;
     bool audioFinished = false;
     static SpeechProcessController* _instance;
+    mpg123_handle* mh;  // MPG123 handle for MP3 playback
+    int mpg123_err;
 
+    
     SpeechProcessController();
     void audioCallbackFunc();
 };
