@@ -6,5 +6,5 @@ CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_SYSTEM_DYN_LINK
 
 CXX_INCLUDES = -I/home/kufi/workspace/kufibot.cpp/include -I/home/kufi/workspace/kufibot.cpp/lib -isystem /usr/include/opencv4
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -g -std=gnu++17
 

@@ -83,7 +83,11 @@ void RemoteConnectionService::update_web_socket_message(websocketpp::connection_
     }
     else{
         Json message = Json::parse(msg);
-        _robotControllerService->control_motion(message);
+        if (message.contains("talkie")) {
+            return;
+        }else{
+            _robotControllerService->control_motion(message);
+        }
     }
 
 }

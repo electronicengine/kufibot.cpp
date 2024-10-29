@@ -3,6 +3,7 @@ project(kufibot)
 
 set(CMAKE_CXX_STANDARD 17) 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
+set(CMAKE_BUILD_TYPE Debug)
 
 set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 

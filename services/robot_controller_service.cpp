@@ -88,25 +88,27 @@ Json RobotControllerService::get_sensor_values()
 
 int RobotControllerService::control_motion(Json message)
 {
-    if (!message.is_null()) {
-        std::string object_name = message.begin().key();
-        std::string control_id = object_name;
+    if (!message.is_null() && message.is_object()) {
+        if (!message.empty()) {
+            std::string object_name = message.begin().key();
+            std::string control_id = object_name;
 
-        if (control_id == "body_joystick") {
-            int angle = message[object_name]["Angle"];
-            int strength = message[object_name]["Strength"];
-            control_body(angle, strength);
-        } else if (control_id == "head_joystick") {
-            int angle = message[object_name]["Angle"];
-            int strength = message[object_name]["Strength"];
-            control_head(angle, strength);
-        } else if (control_id == "right_arm" || control_id == "left_arm") {
-            int angle = message[object_name]["Angle"];
-            control_arm(control_id, angle);
-        } else if (control_id == "right_eye" || control_id == "left_eye") {
-            int angle = message[object_name]["Angle"];
-            control_eye(angle);
-        } else {
+            if (control_id == "body_joystick") {
+                int angle = message[object_name]["Angle"];
+                int strength = message[object_name]["Strength"];
+                control_body(angle, strength);
+            } else if (control_id == "head_joystick") {
+                int angle = message[object_name]["Angle"];
+                int strength = message[object_name]["Strength"];
+                control_head(angle, strength);
+            } else if (control_id == "right_arm" || control_id == "left_arm") {
+                int angle = message[object_name]["Angle"];
+                control_arm(control_id, angle);
+            } else if (control_id == "right_eye" || control_id == "left_eye") {
+                int angle = message[object_name]["Angle"];
+                control_eye(angle);
+            } else {
+            }
         }
     }
 

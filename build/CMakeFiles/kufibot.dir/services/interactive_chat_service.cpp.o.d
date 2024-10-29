@@ -1276,7 +1276,7 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: \
  /usr/include/c++/12/bits/regex.h /usr/include/c++/12/bits/regex.tcc \
  /usr/include/c++/12/bits/regex_executor.h \
  /usr/include/c++/12/bits/regex_executor.tcc \
- /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.h \
+ /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -1392,7 +1392,7 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
- /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
+ /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.h \
  /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/compass_controller.h \
@@ -1433,4 +1433,5 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/speech_recognition_controller.h \
  /usr/include/portaudio.h \
  /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
- /home/kufi/workspace/kufibot.cpp/services/../controllers/curl_controller.h
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/services/web_socket_service.h
