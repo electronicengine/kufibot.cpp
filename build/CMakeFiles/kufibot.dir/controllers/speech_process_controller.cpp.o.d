@@ -205,6 +205,8 @@ CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o: \
  /usr/include/c++/12/bits/stl_vector.h \
  /usr/include/c++/12/bits/stl_bvector.h \
  /usr/include/c++/12/bits/vector.tcc \
+ /usr/include/aarch64-linux-gnu/mpg123.h \
+ /usr/include/aarch64-linux-gnu/fmt123.h \
  /home/kufi/workspace/kufibot.cpp/include/piper.hpp \
  /usr/include/c++/12/fstream \
  /usr/include/aarch64-linux-gnu/c++/12/bits/basic_file.h \

@@ -226,6 +226,21 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//The directory containing a CMake configuration file for CURL.
+CURL_DIR:PATH=CURL_DIR-NOTFOUND
+
+//Path to a file.
+CURL_INCLUDE_DIR:PATH=/usr/include/aarch64-linux-gnu
+
+//Path to a library.
+CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+CURL_LIBRARY_RELEASE:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
+
+//The directory containing a CMake configuration file for MPG123.
+MPG123_DIR:PATH=MPG123_DIR-NOTFOUND
+
 //Path to a library.
 OPENSSL_CRYPTO_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libcrypto.so
 
@@ -261,6 +276,9 @@ kufibot_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 kufibot_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp
+
+//Path to a library.
+pkgcfg_lib_PC_CURL_curl:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
 
 //Path to a library.
 pkgcfg_lib_PORTAUDIO_asound:FILEPATH=/usr/lib/aarch64-linux-gnu/libasound.so
@@ -440,10 +458,20 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_DIR
+CURL_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_INCLUDE_DIR
+CURL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_LIBRARY_DEBUG
+CURL_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_LIBRARY_RELEASE
+CURL_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //Details about finding ALSA
 FIND_PACKAGE_MESSAGE_DETAILS_ALSA:INTERNAL=[/usr/lib/aarch64-linux-gnu/libasound.so][/usr/include][v1.2.8()]
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib/aarch64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake][cfound components: system ][v1.74.0()]
+//Details about finding CURL
+FIND_PACKAGE_MESSAGE_DETAILS_CURL:INTERNAL=[/usr/lib/aarch64-linux-gnu/libcurl.so][/usr/include/aarch64-linux-gnu][c ][v7.88.1()]
 //Details about finding OpenCV
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.6.0()]
 //Details about finding OpenSSL
@@ -451,12 +479,72 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/aarch64-linux-gnu/libcry
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 JSON_BuildTests:INTERNAL=OFF
+MPG123_CFLAGS:INTERNAL=
+MPG123_CFLAGS_I:INTERNAL=
+MPG123_CFLAGS_OTHER:INTERNAL=
+MPG123_FOUND:INTERNAL=
+MPG123_INCLUDEDIR:INTERNAL=
+MPG123_LIBDIR:INTERNAL=
+MPG123_LIBS:INTERNAL=
+MPG123_LIBS_L:INTERNAL=
+MPG123_LIBS_OTHER:INTERNAL=
+MPG123_LIBS_PATHS:INTERNAL=
+MPG123_MODULE_NAME:INTERNAL=
+MPG123_PREFIX:INTERNAL=
+MPG123_STATIC_CFLAGS:INTERNAL=
+MPG123_STATIC_CFLAGS_I:INTERNAL=
+MPG123_STATIC_CFLAGS_OTHER:INTERNAL=
+MPG123_STATIC_LIBDIR:INTERNAL=
+MPG123_STATIC_LIBS:INTERNAL=
+MPG123_STATIC_LIBS_L:INTERNAL=
+MPG123_STATIC_LIBS_OTHER:INTERNAL=
+MPG123_STATIC_LIBS_PATHS:INTERNAL=
+MPG123_VERSION:INTERNAL=
+MPG123_mpg123_INCLUDEDIR:INTERNAL=
+MPG123_mpg123_LIBDIR:INTERNAL=
+MPG123_mpg123_PREFIX:INTERNAL=
+MPG123_mpg123_VERSION:INTERNAL=
 //ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
 OPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENSSL_INCLUDE_DIR
 OPENSSL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENSSL_SSL_LIBRARY
 OPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1
+PC_CURL_CFLAGS:INTERNAL=-I/usr/include/aarch64-linux-gnu
+PC_CURL_CFLAGS_I:INTERNAL=
+PC_CURL_CFLAGS_OTHER:INTERNAL=
+PC_CURL_FOUND:INTERNAL=1
+PC_CURL_INCLUDEDIR:INTERNAL=/usr/include/aarch64-linux-gnu
+PC_CURL_INCLUDE_DIRS:INTERNAL=/usr/include/aarch64-linux-gnu
+PC_CURL_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lcurl
+PC_CURL_LDFLAGS_OTHER:INTERNAL=
+PC_CURL_LIBDIR:INTERNAL=/usr/lib/aarch64-linux-gnu
+PC_CURL_LIBRARIES:INTERNAL=curl
+PC_CURL_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu
+PC_CURL_LIBS:INTERNAL=
+PC_CURL_LIBS_L:INTERNAL=
+PC_CURL_LIBS_OTHER:INTERNAL=
+PC_CURL_LIBS_PATHS:INTERNAL=
+PC_CURL_MODULE_NAME:INTERNAL=libcurl
+PC_CURL_PREFIX:INTERNAL=/usr
+PC_CURL_STATIC_CFLAGS:INTERNAL=-I/usr/include/aarch64-linux-gnu
+PC_CURL_STATIC_CFLAGS_I:INTERNAL=
+PC_CURL_STATIC_CFLAGS_OTHER:INTERNAL=
+PC_CURL_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/aarch64-linux-gnu
+PC_CURL_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lcurl;-lnghttp2;-lidn2;-lrtmp;-lssh2;-lssh2;-lpsl;-lssl;-lcrypto;-lssl;-lcrypto;-lgssapi_krb5;-llber;-lldap;-llber;-lzstd;-lbrotlidec;-lz
+PC_CURL_STATIC_LDFLAGS_OTHER:INTERNAL=
+PC_CURL_STATIC_LIBDIR:INTERNAL=
+PC_CURL_STATIC_LIBRARIES:INTERNAL=curl;nghttp2;idn2;rtmp;ssh2;ssh2;psl;ssl;crypto;ssl;crypto;gssapi_krb5;lber;ldap;lber;zstd;brotlidec;z
+PC_CURL_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu
+PC_CURL_STATIC_LIBS:INTERNAL=
+PC_CURL_STATIC_LIBS_L:INTERNAL=
+PC_CURL_STATIC_LIBS_OTHER:INTERNAL=
+PC_CURL_STATIC_LIBS_PATHS:INTERNAL=
+PC_CURL_VERSION:INTERNAL=7.88.1
+PC_CURL_libcurl_INCLUDEDIR:INTERNAL=
+PC_CURL_libcurl_LIBDIR:INTERNAL=
+PC_CURL_libcurl_PREFIX:INTERNAL=
+PC_CURL_libcurl_VERSION:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_ARGN
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
@@ -533,14 +621,18 @@ _OPENSSL_openssl_INCLUDEDIR:INTERNAL=
 _OPENSSL_openssl_LIBDIR:INTERNAL=
 _OPENSSL_openssl_PREFIX:INTERNAL=
 _OPENSSL_openssl_VERSION:INTERNAL=
+__pkg_config_arguments_PC_CURL:INTERNAL=QUIET;libcurl
 __pkg_config_arguments_PORTAUDIO:INTERNAL=REQUIRED;portaudio-2.0
 __pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl
+__pkg_config_checked_PC_CURL:INTERNAL=1
 __pkg_config_checked_PORTAUDIO:INTERNAL=1
 __pkg_config_checked__OPENSSL:INTERNAL=1
 //ADVANCED property for variable: boost_headers_DIR
 boost_headers_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_system_DIR
 boost_system_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_CURL_curl
+pkgcfg_lib_PC_CURL_curl-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_asound
 pkgcfg_lib_PORTAUDIO_asound-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_m
@@ -553,5 +645,5 @@ pkgcfg_lib_PORTAUDIO_pthread-ADVANCED:INTERNAL=1
 pkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl
 pkgcfg_lib__OPENSSL_ssl-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/usr/lib/aarch64-linux-gnu
+prefix_result:INTERNAL=AsynchDNS;GSS-API;HSTS;HTTP2;HTTPS-proxy;IDN;IPv6;Kerberos;Largefile;NTLM;NTLM_WB;PSL;SPNEGO;SSL;TLS-SRP;UnixSockets;alt-svc;brotli;libz;threadsafe;zstd
 

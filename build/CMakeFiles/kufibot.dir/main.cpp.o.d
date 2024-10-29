@@ -1386,4 +1386,54 @@ CMakeFiles/kufibot.dir/main.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/dc_motor_controller.h \
  /home/kufi/workspace/kufibot.cpp/services/video_stream_service.h \
  /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.h \
- /home/kufi/workspace/kufibot.cpp/services/web_socket_service.h
+ /home/kufi/workspace/kufibot.cpp/services/web_socket_service.h \
+ /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.h \
+ /usr/include/aarch64-linux-gnu/curl/curl.h \
+ /usr/include/aarch64-linux-gnu/curl/curlver.h \
+ /usr/include/aarch64-linux-gnu/curl/system.h \
+ /usr/include/aarch64-linux-gnu/curl/easy.h \
+ /usr/include/aarch64-linux-gnu/curl/multi.h \
+ /usr/include/aarch64-linux-gnu/curl/curl.h \
+ /usr/include/aarch64-linux-gnu/curl/urlapi.h \
+ /usr/include/aarch64-linux-gnu/curl/options.h \
+ /usr/include/aarch64-linux-gnu/curl/header.h \
+ /usr/include/aarch64-linux-gnu/curl/websockets.h \
+ /usr/include/c++/12/regex /usr/include/c++/12/bitset \
+ /usr/include/c++/12/stack /usr/include/c++/12/bits/stl_stack.h \
+ /usr/include/c++/12/bits/regex_constants.h \
+ /usr/include/c++/12/bits/regex_error.h \
+ /usr/include/c++/12/bits/regex_automaton.h \
+ /usr/include/c++/12/bits/regex_automaton.tcc \
+ /usr/include/c++/12/bits/regex_scanner.h \
+ /usr/include/c++/12/bits/regex_scanner.tcc \
+ /usr/include/c++/12/bits/regex_compiler.h \
+ /usr/include/c++/12/bits/regex_compiler.tcc \
+ /usr/include/c++/12/bits/regex.h /usr/include/c++/12/bits/regex.tcc \
+ /usr/include/c++/12/bits/regex_executor.h \
+ /usr/include/c++/12/bits/regex_executor.tcc \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/speech_process_controller.h \
+ /usr/include/alsa/asoundlib.h /usr/include/alsa/asoundef.h \
+ /usr/include/alsa/version.h /usr/include/alsa/global.h \
+ /usr/include/alsa/input.h /usr/include/alsa/output.h \
+ /usr/include/alsa/error.h /usr/include/alsa/conf.h \
+ /usr/include/alsa/pcm.h /usr/include/alsa/rawmidi.h \
+ /usr/include/alsa/timer.h /usr/include/alsa/hwdep.h \
+ /usr/include/alsa/control.h /usr/include/alsa/mixer.h \
+ /usr/include/alsa/seq_event.h /usr/include/alsa/seq.h \
+ /usr/include/alsa/seqmid.h /usr/include/alsa/seq_midi_event.h \
+ /usr/include/c++/12/optional /usr/include/aarch64-linux-gnu/mpg123.h \
+ /usr/include/aarch64-linux-gnu/fmt123.h \
+ /home/kufi/workspace/kufibot.cpp/include/piper.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_cxx_api.h \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_c_api.h \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_cxx_inline.h \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phoneme_ids.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/shared.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/tashkeel.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/json.hpp \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/speech_recognition_controller.h \
+ /usr/include/portaudio.h \
+ /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/curl_controller.h

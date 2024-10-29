@@ -90,7 +90,7 @@ void InteractiveChatService::chat_loop()
         message = json_msg["text"];
         std::cout << "message: " << message << std::endl;
         if(message.find("kofi") != std::string::npos){
-            std::cout << "dinliyor... " << std::endl;
+            _speechProcessController->speakText("dinliyorum");
 
             _speechRecognitionController->start_listen();
             std::string message = _speechRecognitionController->get_message();  

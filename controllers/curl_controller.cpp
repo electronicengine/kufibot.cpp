@@ -110,7 +110,6 @@ std::string CurlController::execute_gemini(const std::string& prompt) {
     } else {
         std::cerr << "Failed to initialize CURL" << std::endl;
     }
-    std::cout << response << std::endl;
     return parse_response_gemini(response);
 }
 

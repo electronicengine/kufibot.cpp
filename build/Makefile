@@ -153,6 +153,30 @@ controllers/compass_controller.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.s
 .PHONY : controllers/compass_controller.cpp.s
 
+controllers/curl_controller.o: controllers/curl_controller.cpp.o
+.PHONY : controllers/curl_controller.o
+
+# target to build an object file
+controllers/curl_controller.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o
+.PHONY : controllers/curl_controller.cpp.o
+
+controllers/curl_controller.i: controllers/curl_controller.cpp.i
+.PHONY : controllers/curl_controller.i
+
+# target to preprocess a source file
+controllers/curl_controller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.i
+.PHONY : controllers/curl_controller.cpp.i
+
+controllers/curl_controller.s: controllers/curl_controller.cpp.s
+.PHONY : controllers/curl_controller.s
+
+# target to generate assembly for a file
+controllers/curl_controller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.s
+.PHONY : controllers/curl_controller.cpp.s
+
 controllers/dc_motor_controller.o: controllers/dc_motor_controller.cpp.o
 .PHONY : controllers/dc_motor_controller.o
 
@@ -345,29 +369,29 @@ drivers/pca9685_driver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.s
 .PHONY : drivers/pca9685_driver.cpp.s
 
-drivers/qmc588l_driver.o: drivers/qmc588l_driver.cpp.o
-.PHONY : drivers/qmc588l_driver.o
+drivers/qmc5883l_driver.o: drivers/qmc5883l_driver.cpp.o
+.PHONY : drivers/qmc5883l_driver.o
 
 # target to build an object file
-drivers/qmc588l_driver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc588l_driver.cpp.o
-.PHONY : drivers/qmc588l_driver.cpp.o
+drivers/qmc5883l_driver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o
+.PHONY : drivers/qmc5883l_driver.cpp.o
 
-drivers/qmc588l_driver.i: drivers/qmc588l_driver.cpp.i
-.PHONY : drivers/qmc588l_driver.i
+drivers/qmc5883l_driver.i: drivers/qmc5883l_driver.cpp.i
+.PHONY : drivers/qmc5883l_driver.i
 
 # target to preprocess a source file
-drivers/qmc588l_driver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc588l_driver.cpp.i
-.PHONY : drivers/qmc588l_driver.cpp.i
+drivers/qmc5883l_driver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.i
+.PHONY : drivers/qmc5883l_driver.cpp.i
 
-drivers/qmc588l_driver.s: drivers/qmc588l_driver.cpp.s
-.PHONY : drivers/qmc588l_driver.s
+drivers/qmc5883l_driver.s: drivers/qmc5883l_driver.cpp.s
+.PHONY : drivers/qmc5883l_driver.s
 
 # target to generate assembly for a file
-drivers/qmc588l_driver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc588l_driver.cpp.s
-.PHONY : drivers/qmc588l_driver.cpp.s
+drivers/qmc5883l_driver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.s
+.PHONY : drivers/qmc5883l_driver.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -416,6 +440,30 @@ publisher.s: publisher.cpp.s
 publisher.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/publisher.cpp.s
 .PHONY : publisher.cpp.s
+
+services/interactive_chat_service.o: services/interactive_chat_service.cpp.o
+.PHONY : services/interactive_chat_service.o
+
+# target to build an object file
+services/interactive_chat_service.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o
+.PHONY : services/interactive_chat_service.cpp.o
+
+services/interactive_chat_service.i: services/interactive_chat_service.cpp.i
+.PHONY : services/interactive_chat_service.i
+
+# target to preprocess a source file
+services/interactive_chat_service.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.i
+.PHONY : services/interactive_chat_service.cpp.i
+
+services/interactive_chat_service.s: services/interactive_chat_service.cpp.s
+.PHONY : services/interactive_chat_service.s
+
+# target to generate assembly for a file
+services/interactive_chat_service.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.s
+.PHONY : services/interactive_chat_service.cpp.s
 
 services/remote_connection_service.o: services/remote_connection_service.cpp.o
 .PHONY : services/remote_connection_service.o
@@ -525,6 +573,9 @@ help:
 	@echo "... controllers/compass_controller.o"
 	@echo "... controllers/compass_controller.i"
 	@echo "... controllers/compass_controller.s"
+	@echo "... controllers/curl_controller.o"
+	@echo "... controllers/curl_controller.i"
+	@echo "... controllers/curl_controller.s"
 	@echo "... controllers/dc_motor_controller.o"
 	@echo "... controllers/dc_motor_controller.i"
 	@echo "... controllers/dc_motor_controller.s"
@@ -549,15 +600,18 @@ help:
 	@echo "... drivers/pca9685_driver.o"
 	@echo "... drivers/pca9685_driver.i"
 	@echo "... drivers/pca9685_driver.s"
-	@echo "... drivers/qmc588l_driver.o"
-	@echo "... drivers/qmc588l_driver.i"
-	@echo "... drivers/qmc588l_driver.s"
+	@echo "... drivers/qmc5883l_driver.o"
+	@echo "... drivers/qmc5883l_driver.i"
+	@echo "... drivers/qmc5883l_driver.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... publisher.o"
 	@echo "... publisher.i"
 	@echo "... publisher.s"
+	@echo "... services/interactive_chat_service.o"
+	@echo "... services/interactive_chat_service.i"
+	@echo "... services/interactive_chat_service.s"
 	@echo "... services/remote_connection_service.o"
 	@echo "... services/remote_connection_service.i"
 	@echo "... services/remote_connection_service.s"

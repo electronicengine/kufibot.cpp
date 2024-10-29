@@ -38,6 +38,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.25/Modules/Compiler/GNU.cmake"
   "/usr/share/cmake-3.25/Modules/FindALSA.cmake"
   "/usr/share/cmake-3.25/Modules/FindBoost.cmake"
+  "/usr/share/cmake-3.25/Modules/FindCURL.cmake"
   "/usr/share/cmake-3.25/Modules/FindOpenSSL.cmake"
   "/usr/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.25/Modules/FindPackageMessage.cmake"
@@ -47,6 +48,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.25/Modules/Platform/Linux-GNU.cmake"
   "/usr/share/cmake-3.25/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.25/Modules/Platform/UnixPaths.cmake"
+  "/usr/share/cmake-3.25/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:
