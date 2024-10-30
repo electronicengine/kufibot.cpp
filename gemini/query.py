@@ -1,6 +1,6 @@
 import google.generativeai as genai
-import os
 import argparse
+import sys 
 
 # Set your API key
 key = "AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw"
@@ -34,3 +34,4 @@ if __name__ == "__main__":
 
     # Generate and print the text based on the provided prompt
     print(generate_text(args.prompt))
+    sys.stdout.flush()

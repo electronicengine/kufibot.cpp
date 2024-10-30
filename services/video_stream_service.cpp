@@ -14,6 +14,18 @@ VideoStreamService *VideoStreamService::get_instance()
     return _instance;
 }
 
+cv::Mat VideoStreamService::take_snap_shot()
+{
+    if (!_cap.isOpened()) {
+         _cap.open(0);
+    }
+
+    if (_subscribers.empty()) {
+        _cap >> _frame;
+    }
+    
+    return _frame;
+}
 
 VideoStreamService::VideoStreamService(int cameraIndex) : _cap(cameraIndex){
     if (!_cap.isOpened()) {
@@ -47,6 +59,7 @@ void VideoStreamService::streamLoop() {
     while (_running ) {
         if(!_subscribers.empty()){
             _cap >> frame;
+            _frame = frame;
             if (frame.empty()) {
                 std::cerr << "Warning: Received empty frame!" << std::endl;
                 break;

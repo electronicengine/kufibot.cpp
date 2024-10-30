@@ -35,6 +35,8 @@ add_executable(kufibot main.cpp
                 drivers/qmc5883l_driver.h
                 drivers/ina219_driver.cpp
                 drivers/ina219_driver.h
+                controllers/execution_controller.cpp
+                controllers/execution_controller.h
                 controllers/curl_controller.cpp
                 controllers/curl_controller.h
                 controllers/dc_motor_controller.cpp

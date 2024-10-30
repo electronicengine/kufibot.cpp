@@ -16,6 +16,7 @@ private:
     std::thread _streamThread;
     std::atomic<bool> _running{false}; 
     static VideoStreamService* _instance;
+    cv::Mat _frame;
 
     VideoStreamService(int cameraIndex = 0);
     void streamLoop();  
@@ -24,6 +25,7 @@ public:
     ~VideoStreamService();  
 
     static VideoStreamService *get_instance();
+    cv::Mat take_snap_shot();
     void start();  
     void stop();  
 };

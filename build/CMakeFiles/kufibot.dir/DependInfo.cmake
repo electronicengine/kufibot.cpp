@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/kufi/workspace/kufibot.cpp/controllers/curl_controller.cpp" "CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp" "CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp" "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o.d"
+  "/home/kufi/workspace/kufibot.cpp/controllers/execution_controller.cpp" "CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp" "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp" "CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/controllers/speech_process_controller.cpp" "CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o" "gcc" "CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o.d"

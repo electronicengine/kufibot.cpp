@@ -225,6 +225,30 @@ controllers/distance_controller.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.s
 .PHONY : controllers/distance_controller.cpp.s
 
+controllers/execution_controller.o: controllers/execution_controller.cpp.o
+.PHONY : controllers/execution_controller.o
+
+# target to build an object file
+controllers/execution_controller.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o
+.PHONY : controllers/execution_controller.cpp.o
+
+controllers/execution_controller.i: controllers/execution_controller.cpp.i
+.PHONY : controllers/execution_controller.i
+
+# target to preprocess a source file
+controllers/execution_controller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.i
+.PHONY : controllers/execution_controller.cpp.i
+
+controllers/execution_controller.s: controllers/execution_controller.cpp.s
+.PHONY : controllers/execution_controller.s
+
+# target to generate assembly for a file
+controllers/execution_controller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.s
+.PHONY : controllers/execution_controller.cpp.s
+
 controllers/power_controller.o: controllers/power_controller.cpp.o
 .PHONY : controllers/power_controller.o
 
@@ -582,6 +606,9 @@ help:
 	@echo "... controllers/distance_controller.o"
 	@echo "... controllers/distance_controller.i"
 	@echo "... controllers/distance_controller.s"
+	@echo "... controllers/execution_controller.o"
+	@echo "... controllers/execution_controller.i"
+	@echo "... controllers/execution_controller.s"
 	@echo "... controllers/power_controller.o"
 	@echo "... controllers/power_controller.i"
 	@echo "... controllers/power_controller.s"

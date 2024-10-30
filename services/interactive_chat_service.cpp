@@ -16,7 +16,10 @@ InteractiveChatService::InteractiveChatService(){
     _speechRecognitionController = SpeechRecognitionController::get_instance();
     _robotControllerService = RobotControllerService::get_instance();
     _webSocketService = WebSocketService::get_instance();
+    _executionController = ExecutionController::get_instance();
+    _videoStreamService = VideoStreamService::get_instance();
 
+    _executionController->set_venv("/home/kufi/venv");
     // _curlController = CurlController::get_instance("http://192.168.1.20:11434/api/generate");
     _curlController = CurlController::get_instance("https://generativelanguage.googleapis.com/v1beta/tunedModels/kufi-2165:generateContent?key=AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw");
     _speechProcessController->loadModel("../ai.models/trSpeechModel/dfki.onnx",
@@ -90,8 +93,6 @@ void InteractiveChatService::chat_loop()
 
 
     while(_running){
-
-
         std::string message = _speechRecognitionController->get_message();  
         _speechRecognitionController->stop_listen();
         Json json_msg = Json::parse(message);
@@ -151,8 +152,25 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
     }else if (message.find("atölye") != std::string::npos && message.find("git") != std::string::npos) {
         _speechProcessController->speakText("Şu an atolye odasına gidiliyor...");
 
+    }else if(message.find("tanım") != std::string::npos){
+        _speechProcessController->speakText("Şu an inceliyorum...");
+            cv::Mat photo = _videoStreamService->take_snap_shot();
+            if (cv::imwrite("../gemini/image.jpg", photo)) {
+                std::cout << "snap shot" << std::endl;
+            } else {
+                std::cerr << "Error: Could not save the photo." << std::endl;
+            }
+
+            std::string result = _executionController->execute(ExecutionType::imageQuery, "Fotoğrafı Türkçe olarak ve bir resim olduğunu belirtmeden açıkla");
+            std::vector<std::string> sentences = splitSentences(result);
+            for (const auto& sentence : sentences) {
+                std::cout << "sentence: " << sentence << std::endl;
+                _speechProcessController->speakText(sentence);
+            }
+
     }else{
-        std::string result = _curlController->execute_gemini(message);
+        // std::string result = _curlController->execute_gemini(message);
+        std::string result = _executionController->execute(ExecutionType::query, message);
         std::cout << "result" << result << std::endl;
         std::vector<std::string> sentences = splitSentences(result);
         for (const auto& sentence : sentences) {
@@ -160,6 +178,9 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
             _speechProcessController->speakText(sentence);
         }
     }
+
+
+
 }
 
 void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
@@ -188,6 +209,8 @@ void InteractiveChatService::start()
     if (!_running) { // Ensure the thread is not already running
         _running = true;
          
+        std::cout << "InteractiveChatService::_webSocketService::subscribe" << std::endl;
+
         _webSocketService->subscribe(this);
         std::cout << "InteractiveChatService is starting..." << std::endl;
 

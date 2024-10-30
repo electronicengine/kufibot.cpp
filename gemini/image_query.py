@@ -1,46 +1,37 @@
-
 import google.generativeai as genai
-import os
-import random
-import time
-import cv2
+import argparse
+import sys
 
-key = "AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw"
-# os_key = os.environ["GEMINI_API_KEY"]
+# API key and model configuration
+API_KEY = "AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw"
+MODEL_NAME = "models/gemini-1.5-flash"
 
-genai.configure(api_key=key)
-# Create the model
+# Configure generative AI with your API key
+genai.configure(api_key=API_KEY)
 
-def take_photo():
-    # Open the camera (0 is typically the default camera)
-    cam = cv2.VideoCapture(0)
+# Upload the image file
+sample_file = genai.upload_file(path="image.jpg", display_name="image")
 
-    if not cam.isOpened():
-        print("Error: Could not open the camera.")
-        return
+def generate_text(prompt):
+    """Generate text based on the prompt and uploaded image."""
+    model = genai.GenerativeModel(model_name=MODEL_NAME)
+    response = model.generate_content([prompt, sample_file])
 
-    # Read a frame from the camera
-    ret, frame = cam.read()
-    
-    if ret:
-        # Save the frame as 'image.jpg' in the current directory
-        cv2.imwrite("image.jpg", frame)
-        print("Photo saved as 'image.jpg'")
-    else:
-        print("Error: Could not read frame from the camera.")
+    # Return the generated text
+    return response.text
 
-    # Release the camera resource
-    cam.release()
-    
-    
-sample_file = genai.upload_file(path="image.jpg", display_name="Sample drawing")
+if __name__ == "__main__":
+    # Set up argument parsing
+    parser = argparse.ArgumentParser(description='Generate text from a prompt')
+    parser.add_argument('prompt', type=str, help='The prompt for text generation')
+    args = parser.parse_args()
 
-file = genai.get_file(name=sample_file.name)
-model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
-
-response = model.generate_content(
-    ["bu resmi türkçe olarak tanımla", sample_file]
-)
-
-print(response.text)
-     
+    try:
+        # Generate the text and print it to stdout
+        output = generate_text(args.prompt)
+        print(output)  # Print the result so C++ can read it
+        sys.stdout.flush()  # Ensure all output is flushed
+    except Exception as e:
+        # Print any error messages to stderr
+        print(f"Error: {str(e)}", file=sys.stderr)
+        sys.exit(1)

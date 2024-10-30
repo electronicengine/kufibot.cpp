@@ -1436,4 +1436,5 @@ CMakeFiles/kufibot.dir/main.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/speech_recognition_controller.h \
  /usr/include/portaudio.h \
  /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
- /home/kufi/workspace/kufibot.cpp/services/../controllers/curl_controller.h
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/execution_controller.h

@@ -29,6 +29,10 @@
 #include "../controllers/speech_process_controller.h"
 #include "../controllers/speech_recognition_controller.h"
 #include "../controllers/curl_controller.h"
+#include "../controllers/execution_controller.h"
+
+#include "video_stream_service.h"
+
 #include "web_socket_service.h"
 
 using Json = nlohmann::json;
@@ -44,6 +48,9 @@ private:
     SpeechProcessController *_speechProcessController;
     WebSocketService *_webSocketService;
     CurlController *_curlController;
+    ExecutionController *_executionController;
+    VideoStreamService *_videoStreamService;
+    
     std::thread _chat_thread; 
     std::mutex _walkie_thread_mutex;
 

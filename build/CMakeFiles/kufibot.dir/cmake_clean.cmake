@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o.d"
   "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o"
   "CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o.d"
+  "CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o"
+  "CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o.d"
   "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o"
   "CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o.d"
   "CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o"
