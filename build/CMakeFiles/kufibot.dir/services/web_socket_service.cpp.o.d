@@ -1257,7 +1257,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: \
  /usr/include/websocketpp/sha1/sha1.hpp \
  /usr/include/websocketpp/version.hpp \
  /usr/include/websocketpp/impl/endpoint_impl.hpp \
- /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
+ /home/kufi/workspace/kufibot.cpp/services/service.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -1373,4 +1373,5 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
+ /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/services/../subscriber.h

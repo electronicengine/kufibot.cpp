@@ -29,6 +29,8 @@ add_executable(kufibot main.cpp
                 subscriber.h
                 publisher.cpp
                 publisher.h
+                drivers/median_filter.h
+                drivers/median_filter.cpp
                 drivers/pca9685_driver.cpp 
                 drivers/pca9685_driver.h 
                 drivers/qmc5883l_driver.cpp
@@ -53,6 +55,8 @@ add_executable(kufibot main.cpp
                 controllers/speech_recognition_controller.h
                 controllers/speech_process_controller.cpp
                 controllers/speech_process_controller.h
+                services/service.cpp
+                services/service.h
                 services/remote_connection_service.cpp
                 services/remote_connection_service.h
                 services/video_stream_service.cpp
@@ -63,6 +67,8 @@ add_executable(kufibot main.cpp
                 services/robot_controller_service.h
                 services/interactive_chat_service.cpp
                 services/interactive_chat_service.h
+                services/mapping_service.cpp
+                services/mapping_service.h
             )
 
 

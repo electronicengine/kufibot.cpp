@@ -12,7 +12,7 @@ RemoteConnectionService *RemoteConnectionService::get_instance()
     return _instance;
 }
 
-RemoteConnectionService::RemoteConnectionService(int port)
+RemoteConnectionService::RemoteConnectionService(int port) : Service("RemoteConnectionService")
 {
     _port = port;
     _webSocket = WebSocketService::get_instance();
@@ -71,7 +71,6 @@ void RemoteConnectionService::update_web_socket_message(websocketpp::connection_
         _videoStream->subscribe(this);
         std::cout << "RemoteConnectionService::_robotControllerService::subscribe" << std::endl;
         _robotControllerService->subscribe(this);
-
     }
     else if(msg == "on_close"){
         std::cout << "web socket connection is closed." << std::endl;
@@ -79,7 +78,6 @@ void RemoteConnectionService::update_web_socket_message(websocketpp::connection_
         _videoStream->un_subscribe(this); 
         std::cout << "RemoteConnectionService::_robotControllerService::un_subscribe" << std::endl;
         _robotControllerService->un_subscribe(this);
-
     }
     else{
         Json message = Json::parse(msg);
@@ -89,7 +87,6 @@ void RemoteConnectionService::update_web_socket_message(websocketpp::connection_
             _robotControllerService->control_motion(message);
         }
     }
-
 }
 
 void RemoteConnectionService::update_sensor_values(Json values){

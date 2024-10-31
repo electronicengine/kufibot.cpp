@@ -11,7 +11,7 @@ InteractiveChatService *InteractiveChatService::get_instance()
 }
 
 
-InteractiveChatService::InteractiveChatService(){
+InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
     _speechProcessController = SpeechProcessController::get_instance();
     _speechRecognitionController = SpeechRecognitionController::get_instance();
     _robotControllerService = RobotControllerService::get_instance();
@@ -32,34 +32,13 @@ InteractiveChatService::InteractiveChatService(){
 }
 
 
-std::string InteractiveChatService::executeCommand(const std::string& command) {
-    std::array<char, 128> buffer;
-    std::string result;
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
-
-    if (!pipe) {
-        std::cerr << "Failed to run command\n";
-        return "";
-    }
-
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-        result += buffer.data();
-    }
-
-    return result;
-}
-
-
 const std::string InteractiveChatService::translate(const std::string& source, const std::string& target, const std::string& text){
 
-    // Path to your Python virtual environment and script
     std::string venvPath = "/home/kufi/venv/bin/activate";
     std::string scriptPath = "/home/kufi/workspace/translate_test.py";
 
-    // Build the command to activate venv and run the Python script
     std::string command ="trans -b " + source + ":" + target + " \"" + text + "\"";
-    // Execute the command and capture the translated text
-    std::string translatedText = executeCommand(command);
+    std::string translatedText = _executionController->run(command);
 
     return translatedText;
 }
@@ -70,16 +49,14 @@ std::vector<std::string> InteractiveChatService::splitSentences(std::string text
     std::string currentSentence;
     
     for (size_t i = 0; i < text.length(); ++i) {
-        currentSentence += text[i]; // Add current character to the sentence
+        currentSentence += text[i]; 
         
-        // Check for sentence-ending punctuation
         if (text[i] == '.' || text[i] == '!' || text[i] == '?') {
-            sentences.push_back(currentSentence); // Add trimmed sentence to the vector
-            currentSentence.clear(); // Clear the current sentence for the next one
+            sentences.push_back(currentSentence); 
+            currentSentence.clear();
         }
     }
     
-    // If there's any text left in currentSentence, add it as well
     if (!currentSentence.empty()) {
         sentences.push_back(currentSentence);
     }
@@ -88,10 +65,13 @@ std::vector<std::string> InteractiveChatService::splitSentences(std::string text
 
 }
 
-void InteractiveChatService::chat_loop()
+
+InteractiveChatService::~InteractiveChatService()
 {
+}
 
-
+void InteractiveChatService::service_update_function()
+{
     while(_running){
         std::string message = _speechRecognitionController->get_message();  
         _speechRecognitionController->stop_listen();
@@ -127,13 +107,9 @@ void InteractiveChatService::chat_loop()
     }
 }
 
-InteractiveChatService::~InteractiveChatService()
-{
-}
-
 void InteractiveChatService::walkie_talkie_thread(const std::string& message){
 
-    std::lock_guard<std::mutex> lock(_walkie_thread_mutex);
+    std::lock_guard<std::mutex> lock(_dataMutex);
 
     if (message.find("mikrofon") != std::string::npos &&  message.find("başlat") != std::string::npos) {
         _speechProcessController->speakText("mikrofon yayını başlatılıyor.");
@@ -141,13 +117,13 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
             _speechRecognitionController->close();
             return ;
         }
-        _chat_thread = std::thread(&InteractiveChatService::chat_loop, this);
+        _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
 
     }else if(message.find("mikrofon") != std::string::npos &&  message.find("durdur") != std::string::npos) {
         _speechProcessController->speakText("mikrofon yayını durduruluyor.");
         _speechRecognitionController->stop_listen();
-        if (_chat_thread.joinable()) {
-            _chat_thread.join(); 
+        if (_serviceThread.joinable()) {
+            _serviceThread.join(); 
         }
     }else if (message.find("atölye") != std::string::npos && message.find("git") != std::string::npos) {
         _speechProcessController->speakText("Şu an atolye odasına gidiliyor...");
@@ -178,9 +154,6 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
             _speechProcessController->speakText(sentence);
         }
     }
-
-
-
 }
 
 void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
@@ -226,8 +199,8 @@ void InteractiveChatService::stop()
         _speechRecognitionController->stop_listen();
         _speechRecognitionController->close();
 
-        if (_chat_thread.joinable()) {
-            _chat_thread.join(); 
+        if (_serviceThread.joinable()) {
+            _serviceThread.join(); 
         }
         std::cout << "InteractiveChatService is stopped." << std::endl;
     }

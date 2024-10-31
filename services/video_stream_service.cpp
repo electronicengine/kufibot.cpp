@@ -27,7 +27,7 @@ cv::Mat VideoStreamService::take_snap_shot()
     return _frame;
 }
 
-VideoStreamService::VideoStreamService(int cameraIndex) : _cap(cameraIndex){
+VideoStreamService::VideoStreamService(int cameraIndex) : Service("VideoStreamService") , _cap(cameraIndex){
     if (!_cap.isOpened()) {
         throw std::runtime_error("Error: Could not open the camera.");
     }
@@ -35,21 +35,20 @@ VideoStreamService::VideoStreamService(int cameraIndex) : _cap(cameraIndex){
 
 VideoStreamService::~VideoStreamService() {
     stop();
-    if (_streamThread.joinable()) {
-        _streamThread.join(); 
+    if (_serviceThread.joinable()) {
+        _serviceThread.join(); 
     }
 }
-
 
 void VideoStreamService::start() {
-    if (!_running) { // Ensure the thread is not already running
+    if (!_running) { 
         _running = true;
         std::cout << "VideoStreamService is starting..." << std::endl;
-        _streamThread = std::thread(&VideoStreamService::streamLoop, this);   
+        _serviceThread = std::thread(&VideoStreamService::service_update_function, this);   
     }
 }
 
-void VideoStreamService::streamLoop() {
+void VideoStreamService::service_update_function(){
     cv::Mat frame;
 
     if (!_cap.isOpened()) {
@@ -75,8 +74,8 @@ void VideoStreamService::stop() {
 
         _running = false;
         std::cout << "VideoStreamService is stopping..." << std::endl;
-        if (_streamThread.joinable()) {
-            _streamThread.join();  
+        if (_serviceThread.joinable()) {
+            _serviceThread.join();  
         }
         _cap.release();  
         std::cout << "VideoStreamService is stopped" << std::endl;

@@ -1367,19 +1367,22 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: \
  /usr/include/nlohmann/ordered_map.hpp \
  /usr/include/nlohmann/detail/macro_unscope.hpp \
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+ /home/kufi/workspace/kufibot.cpp/services/service.h \
+ /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
+ /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/services/web_socket_service.h \
  /usr/include/c++/12/fstream \
  /usr/include/aarch64-linux-gnu/c++/12/bits/basic_file.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/c++io.h \
  /usr/include/c++/12/bits/fstream.tcc \
- /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
- /home/kufi/workspace/kufibot.cpp/services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/services/video_stream_service.h \
  /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/compass_controller.h \
- /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/qmc5883l_driver.h \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/median_filter.h \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/../drivers/qmc5883l_driver.h \
  /usr/include/wiringPi.h /usr/include/wiringPiI2C.h \
+ /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/qmc5883l_driver.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/distance_controller.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/power_controller.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/ina219_driver.h \

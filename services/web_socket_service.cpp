@@ -12,7 +12,7 @@ WebSocketService *WebSocketService::get_instance()
     return _instance;
 }
 
-WebSocketService::WebSocketService() {
+WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.init_asio();
     _server.clear_access_channels(websocketpp::log::alevel::all);
     _server.set_open_handler(bind(&WebSocketService::on_open, this, std::placeholders::_1));
@@ -25,19 +25,18 @@ void WebSocketService::start(const std::string& address, uint16_t port) {
     if (!_running){
         _running = true;
         std::cout << "WebSocketService is starting..." << std::endl;
-        _serverThread = std::thread(&WebSocketService::run, this, address, port); // Start server in a new thread
+        _serviceThread = std::thread(&WebSocketService::run, this, address, port); // Start server in a new thread
     }
 }
 
 void WebSocketService::run(const std::string &address, uint16_t port)
 {
     try {
-        // Create an endpoint to listen on a specific address and port
         websocketpp::lib::error_code ec;
 
-        _server.set_reuse_addr(true); // Allow address reuse
+        _server.set_reuse_addr(true); 
 
-        // Resolve the address
+
         boost::asio::ip::tcp::resolver resolver(_server.get_io_service());
         boost::asio::ip::tcp::resolver::results_type endpoints =  resolver.resolve(address, std::to_string(port));
         if (ec) {
@@ -45,9 +44,9 @@ void WebSocketService::run(const std::string &address, uint16_t port)
             return;
         }
 
-        for (const auto& endpoint : endpoints) {
-            _server.listen(endpoint.endpoint()); // Bind to the specific IP address and port
-        }
+        // for (const auto& endpoint : endpoints) {
+            _server.listen(boost::asio::ip::tcp::v4(), port); 
+        // }
 
         _server.start_accept();
         std::cout << "WebSocket Server listening on " << address << ":" << port << std::endl;
@@ -59,7 +58,7 @@ void WebSocketService::run(const std::string &address, uint16_t port)
         std::cerr << "Other exception occurred" << std::endl;
     }
 
-    _running = false; // Set flag to false when server stops
+    _running = false;
 }
 
 void WebSocketService::stop() {
@@ -68,11 +67,11 @@ void WebSocketService::stop() {
 
         _running = false;
         std::cout << "WebSocketService is stopping..." << std::endl;
-        _server.stop_listening();  // Stop the server from accepting new connections
-        _server.stop();            // Stop the server event loop
+        _server.stop_listening();  
+        _server.stop();            
 
-        if (_serverThread.joinable()) {
-            _serverThread.join();  // Wait for the thread to finish
+        if (_serviceThread.joinable()) {
+            _serviceThread.join(); 
         }
         std::cout << "WebSocketService is stopped." << std::endl;
     }

@@ -369,6 +369,30 @@ drivers/ina219_driver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.s
 .PHONY : drivers/ina219_driver.cpp.s
 
+drivers/median_filter.o: drivers/median_filter.cpp.o
+.PHONY : drivers/median_filter.o
+
+# target to build an object file
+drivers/median_filter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o
+.PHONY : drivers/median_filter.cpp.o
+
+drivers/median_filter.i: drivers/median_filter.cpp.i
+.PHONY : drivers/median_filter.i
+
+# target to preprocess a source file
+drivers/median_filter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/median_filter.cpp.i
+.PHONY : drivers/median_filter.cpp.i
+
+drivers/median_filter.s: drivers/median_filter.cpp.s
+.PHONY : drivers/median_filter.s
+
+# target to generate assembly for a file
+drivers/median_filter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/drivers/median_filter.cpp.s
+.PHONY : drivers/median_filter.cpp.s
+
 drivers/pca9685_driver.o: drivers/pca9685_driver.cpp.o
 .PHONY : drivers/pca9685_driver.o
 
@@ -489,6 +513,30 @@ services/interactive_chat_service.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.s
 .PHONY : services/interactive_chat_service.cpp.s
 
+services/mapping_service.o: services/mapping_service.cpp.o
+.PHONY : services/mapping_service.o
+
+# target to build an object file
+services/mapping_service.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/mapping_service.cpp.o
+.PHONY : services/mapping_service.cpp.o
+
+services/mapping_service.i: services/mapping_service.cpp.i
+.PHONY : services/mapping_service.i
+
+# target to preprocess a source file
+services/mapping_service.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/mapping_service.cpp.i
+.PHONY : services/mapping_service.cpp.i
+
+services/mapping_service.s: services/mapping_service.cpp.s
+.PHONY : services/mapping_service.s
+
+# target to generate assembly for a file
+services/mapping_service.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/mapping_service.cpp.s
+.PHONY : services/mapping_service.cpp.s
+
 services/remote_connection_service.o: services/remote_connection_service.cpp.o
 .PHONY : services/remote_connection_service.o
 
@@ -536,6 +584,30 @@ services/robot_controller_service.s: services/robot_controller_service.cpp.s
 services/robot_controller_service.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.s
 .PHONY : services/robot_controller_service.cpp.s
+
+services/service.o: services/service.cpp.o
+.PHONY : services/service.o
+
+# target to build an object file
+services/service.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/service.cpp.o
+.PHONY : services/service.cpp.o
+
+services/service.i: services/service.cpp.i
+.PHONY : services/service.i
+
+# target to preprocess a source file
+services/service.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/service.cpp.i
+.PHONY : services/service.cpp.i
+
+services/service.s: services/service.cpp.s
+.PHONY : services/service.s
+
+# target to generate assembly for a file
+services/service.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/services/service.cpp.s
+.PHONY : services/service.cpp.s
 
 services/video_stream_service.o: services/video_stream_service.cpp.o
 .PHONY : services/video_stream_service.o
@@ -624,6 +696,9 @@ help:
 	@echo "... drivers/ina219_driver.o"
 	@echo "... drivers/ina219_driver.i"
 	@echo "... drivers/ina219_driver.s"
+	@echo "... drivers/median_filter.o"
+	@echo "... drivers/median_filter.i"
+	@echo "... drivers/median_filter.s"
 	@echo "... drivers/pca9685_driver.o"
 	@echo "... drivers/pca9685_driver.i"
 	@echo "... drivers/pca9685_driver.s"
@@ -639,12 +714,18 @@ help:
 	@echo "... services/interactive_chat_service.o"
 	@echo "... services/interactive_chat_service.i"
 	@echo "... services/interactive_chat_service.s"
+	@echo "... services/mapping_service.o"
+	@echo "... services/mapping_service.i"
+	@echo "... services/mapping_service.s"
 	@echo "... services/remote_connection_service.o"
 	@echo "... services/remote_connection_service.i"
 	@echo "... services/remote_connection_service.s"
 	@echo "... services/robot_controller_service.o"
 	@echo "... services/robot_controller_service.i"
 	@echo "... services/robot_controller_service.s"
+	@echo "... services/service.o"
+	@echo "... services/service.i"
+	@echo "... services/service.s"
 	@echo "... services/video_stream_service.o"
 	@echo "... services/video_stream_service.i"
 	@echo "... services/video_stream_service.s"

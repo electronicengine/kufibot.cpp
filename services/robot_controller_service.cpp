@@ -2,7 +2,6 @@
 
 RobotControllerService* RobotControllerService::_instance = nullptr;
 
-
 RobotControllerService *RobotControllerService::get_instance()
 {
     if (_instance == nullptr) {
@@ -12,7 +11,7 @@ RobotControllerService *RobotControllerService::get_instance()
 }
 
 
-RobotControllerService::RobotControllerService()
+RobotControllerService::RobotControllerService() : Service("RobotControllerService")
 {
     _compassController =  CompassController::get_instance();
     _distanceController = DistanceController::get_instance();
@@ -27,21 +26,10 @@ RobotControllerService::~RobotControllerService()
 
 
 
-void RobotControllerService::update_sensors() {
-    while (_running) {
-        std::this_thread::sleep_for(std::chrono::seconds(1)); 
-        if(!_subscribers.empty()){
-            _sensor_values = get_sensor_values(); 
-            update_sensor_values(_sensor_values);
-        }
-    }
-}
-
-
 Json RobotControllerService::get_sensor_values()
 {
     const std::unordered_map<std::string, double>& compass_map = _compassController->get_all();
-    const std::map<std::string, int>& distance_map = _distanceController->get_dinstance();
+    const std::map<std::string, int>& distance_map = _distanceController->get_distance();
     const std::map<std::string, double>& power_map = _powerController->get_consumption();
     const std::map<std::string, int> joints_map = _servoController->get_all_joint_angles();
 
@@ -71,7 +59,7 @@ Json RobotControllerService::get_sensor_values()
 
     Json power = {
         {"BusVoltage", power_map.at("busVoltage")},
-        {"BusCurrent", power_map.at("current")}, // Fixed key for BusCurrent
+        {"BusCurrent", power_map.at("current")}, 
         {"Power", power_map.at("power")},
         {"ShuntVoltage", power_map.at("shuntVoltage")}
     };
@@ -170,12 +158,23 @@ void RobotControllerService::control_eye(int angle) {
     }
 }
 
+void RobotControllerService::service_update_function()
+{
+    while (_running) {
+        std::this_thread::sleep_for(std::chrono::seconds(1)); 
+        if(!_subscribers.empty()){
+            _sensor_values = get_sensor_values(); 
+            update_sensor_values(_sensor_values);
+        }
+    }
+}
+
 void RobotControllerService::start()
 {
     if (!_running) { // Ensure the thread is not already running
         _running = true;
         std::cout << "RobotControllerService is starting..." << std::endl;
-        _sensor_thread = std::thread(&RobotControllerService::update_sensors, this);
+        _serviceThread = std::thread(&RobotControllerService::service_update_function, this);
     }
 }
 
@@ -184,8 +183,8 @@ void RobotControllerService::stop()
     if (_running){
         _running = false;
         std::cout << "RobotControllerService is stopping..." << std::endl;
-        if (_sensor_thread.joinable()) {
-            _sensor_thread.join(); 
+        if (_serviceThread.joinable()) {
+            _serviceThread.join(); 
         }
         std::cout << "RobotControllerService is stopped." << std::endl;
     }

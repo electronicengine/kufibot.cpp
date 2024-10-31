@@ -10,7 +10,7 @@ DistanceController* DistanceController::get_instance() {
     return _instance;
 }
 
-DistanceController::DistanceController() : uart(io, "/dev/ttyAMA0") {
+DistanceController::DistanceController() : uart(io, "/dev/ttyAMA0"), _medianFilter(10)  {
     uart.set_option(serial_port_base::baud_rate(115200));
     uart.set_option(serial_port_base::character_size(8));
     uart.set_option(serial_port_base::parity(serial_port_base::parity::none));
@@ -18,7 +18,7 @@ DistanceController::DistanceController() : uart(io, "/dev/ttyAMA0") {
     uart.set_option(serial_port_base::flow_control(serial_port_base::flow_control::none));
 }
 
-DistanceController::~DistanceController() {
+DistanceController::~DistanceController(){
     if (uart.is_open()) {
         uart.close();
     }
@@ -31,7 +31,7 @@ void DistanceController::flush_input_buffer() {
 }
 
 
-const std::map<std::string, int> &DistanceController::get_dinstance() {
+const std::map<std::string, int> &DistanceController::get_distance() {
     std::vector<uint8_t> buffer(9);
     boost::system::error_code ec;
     
@@ -57,6 +57,7 @@ const std::map<std::string, int> &DistanceController::get_dinstance() {
         int temperature = (tempL + (tempH << 8)) / 8 - 256;
 
         flush_input_buffer();
+        distance =_medianFilter.apply(distance);
 
         _sensorData["distance"] = distance;
         _sensorData["strength"] = strength;

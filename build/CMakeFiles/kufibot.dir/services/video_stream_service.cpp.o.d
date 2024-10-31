@@ -350,6 +350,7 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
  /usr/include/c++/12/thread /usr/include/c++/12/bits/std_thread.h \
  /usr/include/c++/12/bits/this_thread_sleep.h /usr/include/c++/12/atomic \
+ /home/kufi/workspace/kufibot.cpp/services/service.h \
  /home/kufi/workspace/kufibot.cpp/services/../publisher.h \
  /usr/include/websocketpp/config/asio_no_tls.hpp \
  /usr/include/websocketpp/config/core.hpp \

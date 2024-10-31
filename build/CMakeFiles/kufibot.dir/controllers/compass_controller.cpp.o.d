@@ -176,8 +176,16 @@ CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o: \
  /usr/include/c++/12/bits/erase_if.h /usr/include/c++/12/vector \
  /usr/include/c++/12/bits/stl_vector.h \
  /usr/include/c++/12/bits/stl_bvector.h \
- /usr/include/c++/12/bits/vector.tcc \
- /home/kufi/workspace/kufibot.cpp/controllers/../drivers/qmc5883l_driver.h \
+ /usr/include/c++/12/bits/vector.tcc /usr/include/c++/12/numeric \
+ /usr/include/c++/12/bits/stl_numeric.h \
+ /usr/include/c++/12/pstl/glue_numeric_defs.h \
+ /usr/include/c++/12/algorithm /usr/include/c++/12/bits/stl_algo.h \
+ /usr/include/c++/12/bits/algorithmfwd.h \
+ /usr/include/c++/12/bits/stl_heap.h \
+ /usr/include/c++/12/bits/uniform_int_dist.h \
+ /usr/include/c++/12/pstl/glue_algorithm_defs.h \
+ /home/kufi/workspace/kufibot.cpp/controllers/../drivers/median_filter.h \
+ /home/kufi/workspace/kufibot.cpp/controllers/../drivers/../drivers/qmc5883l_driver.h \
  /usr/include/c++/12/iomanip /usr/include/c++/12/locale \
  /usr/include/c++/12/bits/locale_facets_nonio.h /usr/include/c++/12/ctime \
  /usr/include/aarch64-linux-gnu/c++/12/bits/time_members.h \
@@ -211,4 +219,5 @@ CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o: \
  /usr/include/c++/12/tr1/poly_laguerre.tcc \
  /usr/include/c++/12/tr1/riemann_zeta.tcc /usr/include/wiringPi.h \
  /usr/include/wiringPiI2C.h /usr/include/c++/12/array \
- /usr/include/c++/12/compare
+ /usr/include/c++/12/compare \
+ /home/kufi/workspace/kufibot.cpp/controllers/../drivers/qmc5883l_driver.h

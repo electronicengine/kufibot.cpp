@@ -1129,4 +1129,10 @@ CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o: \
  /usr/include/libintl.h /usr/include/c++/12/bits/codecvt.h \
  /usr/include/c++/12/bits/locale_facets_nonio.tcc \
  /usr/include/c++/12/bits/locale_conv.h \
- /usr/include/c++/12/bits/quoted_string.h
+ /usr/include/c++/12/bits/quoted_string.h \
+ /home/kufi/workspace/kufibot.cpp/controllers/../drivers/median_filter.h \
+ /usr/include/c++/12/numeric /usr/include/c++/12/bits/stl_numeric.h \
+ /usr/include/c++/12/pstl/glue_numeric_defs.h \
+ /home/kufi/workspace/kufibot.cpp/controllers/../drivers/../drivers/qmc5883l_driver.h \
+ /usr/include/c++/12/math.h /usr/include/wiringPi.h \
+ /usr/include/wiringPiI2C.h

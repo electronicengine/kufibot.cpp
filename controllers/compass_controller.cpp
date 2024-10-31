@@ -10,8 +10,13 @@ CompassController* CompassController::get_instance() {
     return _instance;
 }
 
+
 double CompassController::get_angle() {
-    return sensor.get_bearing();
+    int angle = sensor.get_bearing(); 
+    angle = _medianFilter.apply(angle);
+    angle += OFFSET_ANGLE;
+    angle = angle % 360; 
+    return angle;
 }
 
 std::vector<int16_t> CompassController::get_magnet() {

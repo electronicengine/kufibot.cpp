@@ -20,7 +20,7 @@
 #include <chrono>
 #include <thread>
 
-
+#include "service.h"
 #include "../subscriber.h"
 #include "web_socket_service.h"
 #include "video_stream_service.h"
@@ -29,7 +29,7 @@
 
 using Json = nlohmann::json;
 
-class RemoteConnectionService : public Subscriber{
+class RemoteConnectionService : public Subscriber, public Service{
 
 private:
     int _port;
@@ -37,9 +37,7 @@ private:
     WebSocketService *_webSocket;
     VideoStreamService *_videoStream;
     RobotControllerService *_robotControllerService;
-    std::mutex _dataMutex; 
     websocketpp::connection_hdl _hdl;
-    std::atomic<bool> _running{false}; 
     Json _sensor_values;
     static RemoteConnectionService *_instance;
 
@@ -52,7 +50,7 @@ public:
 
     void start();
     void stop(); 
-    
+    void service_update_function(){}
     void update_video_frame(const cv::Mat& frame);
     void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg);
     void update_sensor_values(Json values);

@@ -18,6 +18,7 @@
 #include <chrono>
 #include <thread>
 
+#include "service.h"
 #include "../subscriber.h"
 #include "../publisher.h"
 #include "../controllers/compass_controller.h"
@@ -34,13 +35,10 @@ enum State{
     move
 };
 
-class RobotControllerService : public Publisher{
+class RobotControllerService : public Publisher, public Service{
 
 private:
-   
 
-    std::thread _sensor_thread; 
-    std::atomic<bool> _running{false}; 
     Json _sensor_values;
     State _current_state{State::stop};
 
@@ -66,7 +64,7 @@ public:
     void control_head(int angle, int magnitude);
     void control_arm(const std::string& control_id, int angle);
     void control_eye(int angle);
-
+    void service_update_function();
     void start();
     void stop(); 
 

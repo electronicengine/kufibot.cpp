@@ -8,13 +8,13 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+
+#include "service.h"
 #include "../publisher.h"
 
-class VideoStreamService : public Publisher{
+class VideoStreamService : public Publisher, public Service{
 private:
     cv::VideoCapture _cap;
-    std::thread _streamThread;
-    std::atomic<bool> _running{false}; 
     static VideoStreamService* _instance;
     cv::Mat _frame;
 
@@ -26,6 +26,7 @@ public:
 
     static VideoStreamService *get_instance();
     cv::Mat take_snap_shot();
+    void service_update_function();
     void start();  
     void stop();  
 };
