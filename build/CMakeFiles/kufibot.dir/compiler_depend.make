@@ -492,7 +492,7 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: /home/kufi/workspace/k
   /usr/include/aarch64-linux-gnu/curl/options.h \
   /usr/include/aarch64-linux-gnu/curl/header.h \
   /usr/include/aarch64-linux-gnu/curl/websockets.h \
-  /usr/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
   /usr/include/c++/12/algorithm \
   /usr/include/c++/12/bits/stl_algo.h \
   /usr/include/c++/12/bits/algorithmfwd.h \
@@ -539,9 +539,9 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/pstl/glue_memory_defs.h \
   /usr/include/c++/12/utility \
   /usr/include/c++/12/bits/stl_relops.h \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -584,29 +584,29 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
   /usr/include/c++/12/version \
   /usr/include/c++/12/cassert \
   /usr/include/assert.h \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
   /usr/include/c++/12/cstring \
   /usr/include/string.h \
   /usr/include/strings.h \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/chrono.h \
@@ -629,34 +629,34 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
   /usr/include/c++/12/any \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
 
 CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp \
   /usr/include/stdc-predef.h \
@@ -2789,7 +2789,7 @@ CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: /home/kufi/work
   /usr/include/c++/12/bits/uses_allocator.h \
   /usr/include/c++/12/bits/stl_multimap.h \
   /usr/include/c++/12/bits/erase_if.h \
-  /usr/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
   /usr/include/c++/12/algorithm \
   /usr/include/c++/12/bits/stl_algo.h \
   /usr/include/c++/12/bits/algorithmfwd.h \
@@ -2826,9 +2826,9 @@ CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: /home/kufi/work
   /usr/include/c++/12/pstl/glue_memory_defs.h \
   /usr/include/c++/12/utility \
   /usr/include/c++/12/bits/stl_relops.h \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -2842,29 +2842,29 @@ CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: /home/kufi/work
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
   /usr/include/c++/12/version \
   /usr/include/c++/12/cassert \
   /usr/include/assert.h \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
   /usr/include/c++/12/cstring \
   /usr/include/string.h \
   /usr/include/strings.h \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/chrono.h \
@@ -2886,34 +2886,34 @@ CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: /home/kufi/work
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
   /usr/include/c++/12/any \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.h \
   /usr/include/wiringPi.h \
   /usr/include/wiringPiI2C.h
@@ -4874,41 +4874,41 @@ CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp \
   /usr/include/opencv4/opencv2/video.hpp \
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/c++/12/bits/this_thread_sleep.h \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -4921,18 +4921,18 @@ CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp \
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -5444,7 +5444,7 @@ CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp \
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -5816,31 +5816,31 @@ CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp \
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -5854,56 +5854,56 @@ CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp \
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
   /home/kufi/workspace/kufibot.cpp/subscriber.h \
@@ -6409,41 +6409,41 @@ CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publish
   /usr/include/opencv4/opencv2/video.hpp \
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/c++/12/bits/this_thread_sleep.h \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -6462,18 +6462,18 @@ CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publish
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -7029,7 +7029,7 @@ CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publish
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -7401,31 +7401,31 @@ CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publish
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -7439,66 +7439,66 @@ CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publish
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/subscriber.h
 
 CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.cpp \
   /usr/include/stdc-predef.h \
   /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.h \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
   /usr/lib/gcc/aarch64-linux-gnu/12/include/stdint.h \
   /usr/include/stdint.h \
   /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
@@ -7516,8 +7516,8 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/aarch64-linux-gnu/bits/wchar.h \
   /usr/include/aarch64-linux-gnu/bits/stdint-intn.h \
   /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
@@ -7681,9 +7681,9 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/allocated_ptr.h \
   /usr/include/c++/12/ext/aligned_buffer.h \
   /usr/include/c++/12/ext/concurrence.h \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
   /usr/include/c++/12/functional \
   /usr/include/c++/12/bits/std_function.h \
   /usr/include/c++/12/unordered_map \
@@ -7705,11 +7705,11 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/stl_heap.h \
   /usr/include/c++/12/bits/stl_tempbuf.h \
   /usr/include/c++/12/bits/uniform_int_dist.h \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
   /usr/include/c++/12/memory \
   /usr/include/c++/12/bits/stl_raw_storage_iter.h \
   /usr/include/c++/12/bits/align.h \
@@ -7720,9 +7720,9 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/backward/auto_ptr.h \
   /usr/include/c++/12/pstl/glue_memory_defs.h \
   /usr/include/c++/12/pstl/execution_defs.h \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
   /usr/include/c++/12/utility \
   /usr/include/c++/12/bits/stl_relops.h \
   /usr/include/c++/12/algorithm \
@@ -7749,15 +7749,15 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/ostream.tcc \
   /usr/include/c++/12/bits/istream.tcc \
   /usr/include/c++/12/bits/sstream.tcc \
-  /usr/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
   /usr/include/c++/12/iostream \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
   /usr/include/c++/12/map \
   /usr/include/c++/12/bits/stl_tree.h \
   /usr/include/c++/12/bits/stl_map.h \
   /usr/include/c++/12/bits/stl_multimap.h \
-  /usr/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
   /usr/include/c++/12/locale \
   /usr/include/c++/12/bits/locale_facets_nonio.h \
   /usr/include/aarch64-linux-gnu/c++/12/bits/time_members.h \
@@ -7766,15 +7766,15 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/codecvt.h \
   /usr/include/c++/12/bits/locale_facets_nonio.tcc \
   /usr/include/c++/12/bits/locale_conv.h \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -7793,20 +7793,20 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
   /usr/include/c++/12/iomanip \
   /usr/include/c++/12/bits/quoted_string.h \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -8402,7 +8402,7 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -8774,36 +8774,36 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
   /usr/include/c++/12/queue \
   /usr/include/c++/12/deque \
   /usr/include/c++/12/bits/stl_deque.h \
   /usr/include/c++/12/bits/deque.tcc \
   /usr/include/c++/12/bits/stl_queue.h \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -8817,56 +8817,56 @@ CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /usr/include/aarch64-linux-gnu/curl/curl.h \
   /usr/include/aarch64-linux-gnu/curl/curlver.h \
   /usr/include/aarch64-linux-gnu/curl/system.h \
@@ -9494,38 +9494,38 @@ CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufi
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /usr/include/c++/12/atomic \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -9544,18 +9544,18 @@ CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufi
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -10110,7 +10110,7 @@ CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufi
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -10482,31 +10482,31 @@ CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufi
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -10520,56 +10520,56 @@ CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufi
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/subscriber.h \
   /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.h \
   /home/kufi/workspace/kufibot.cpp/drivers/median_filter.h \
@@ -10994,41 +10994,41 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/work
   /usr/include/opencv4/opencv2/video.hpp \
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/c++/12/bits/this_thread_sleep.h \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -11047,18 +11047,18 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/work
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -11614,7 +11614,7 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/work
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -11986,31 +11986,31 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/work
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -12024,56 +12024,56 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/work
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
   /home/kufi/workspace/kufibot.cpp/subscriber.h \
@@ -12513,41 +12513,41 @@ CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/works
   /usr/include/opencv4/opencv2/video.hpp \
   /usr/include/opencv4/opencv2/video/tracking.hpp \
   /usr/include/opencv4/opencv2/video/background_segm.hpp \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/c++/12/bits/this_thread_sleep.h \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -12566,18 +12566,18 @@ CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/works
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -13133,7 +13133,7 @@ CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/works
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -13505,33 +13505,33 @@ CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/works
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -13545,56 +13545,56 @@ CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/works
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/subscriber.h \
   /home/kufi/workspace/kufibot.cpp/subscriber.h \
   /home/kufi/workspace/kufibot.cpp/controllers/compass_controller.h \
@@ -14034,38 +14034,38 @@ CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/
   /usr/include/c++/12/bits/this_thread_sleep.h \
   /usr/include/c++/12/atomic \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -14084,18 +14084,18 @@ CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -14650,7 +14650,7 @@ CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -15022,31 +15022,31 @@ CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -15060,56 +15060,56 @@ CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/subscriber.h
 
 CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/video_stream_service.cpp \
@@ -15533,38 +15533,38 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace
   /usr/include/c++/12/atomic \
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /home/kufi/workspace/kufibot.cpp/publisher.h \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -15583,18 +15583,18 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -16149,7 +16149,7 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -16521,31 +16521,31 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
-  /usr/include/nlohmann/json.hpp \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -16559,56 +16559,56 @@ CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/fs_path.h \
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /home/kufi/workspace/kufibot.cpp/subscriber.h
 
 CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/web_socket_service.cpp \
@@ -16800,7 +16800,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/aarch64-linux-gnu/c++/12/bits/basic_file.h \
   /usr/include/aarch64-linux-gnu/c++/12/bits/c++io.h \
   /usr/include/c++/12/bits/fstream.tcc \
-  /usr/include/nlohmann/json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
   /usr/include/c++/12/algorithm \
   /usr/include/c++/12/bits/stl_algo.h \
   /usr/include/c++/12/bits/algorithmfwd.h \
@@ -16847,9 +16847,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/pstl/glue_memory_defs.h \
   /usr/include/c++/12/utility \
   /usr/include/c++/12/bits/stl_relops.h \
-  /usr/include/nlohmann/adl_serializer.hpp \
-  /usr/include/nlohmann/detail/abi_macros.hpp \
-  /usr/include/nlohmann/detail/conversions/from_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
   /usr/include/c++/12/forward_list \
   /usr/include/c++/12/bits/forward_list.h \
   /usr/include/c++/12/bits/forward_list.tcc \
@@ -16892,29 +16892,29 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/bits/gslice_array.h \
   /usr/include/c++/12/bits/mask_array.h \
   /usr/include/c++/12/bits/indirect_array.h \
-  /usr/include/nlohmann/detail/exceptions.hpp \
-  /usr/include/nlohmann/detail/value_t.hpp \
-  /usr/include/nlohmann/detail/macro_scope.hpp \
-  /usr/include/nlohmann/detail/meta/detected.hpp \
-  /usr/include/nlohmann/detail/meta/void_t.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
   /usr/include/c++/12/version \
   /usr/include/c++/12/cassert \
   /usr/include/assert.h \
-  /usr/include/nlohmann/detail/string_escape.hpp \
-  /usr/include/nlohmann/detail/input/position_t.hpp \
-  /usr/include/nlohmann/detail/meta/cpp_future.hpp \
-  /usr/include/nlohmann/detail/meta/type_traits.hpp \
-  /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
-  /usr/include/nlohmann/detail/meta/call_std/end.hpp \
-  /usr/include/nlohmann/json_fwd.hpp \
-  /usr/include/nlohmann/detail/string_concat.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
   /usr/include/c++/12/cstring \
   /usr/include/string.h \
   /usr/include/strings.h \
-  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
-  /usr/include/nlohmann/detail/meta/std_fs.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
   /usr/include/c++/12/filesystem \
   /usr/include/c++/12/bits/fs_fwd.h \
   /usr/include/c++/12/bits/chrono.h \
@@ -16936,41 +16936,41 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/codecvt \
   /usr/include/c++/12/bits/fs_dir.h \
   /usr/include/c++/12/bits/fs_ops.h \
-  /usr/include/nlohmann/detail/conversions/to_json.hpp \
-  /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
-  /usr/include/nlohmann/byte_container_with_subtype.hpp \
-  /usr/include/nlohmann/detail/hash.hpp \
-  /usr/include/nlohmann/detail/input/binary_reader.hpp \
-  /usr/include/nlohmann/detail/input/input_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
   /usr/include/c++/12/numeric \
   /usr/include/c++/12/bits/stl_numeric.h \
   /usr/include/c++/12/pstl/glue_numeric_defs.h \
-  /usr/include/nlohmann/detail/input/json_sax.hpp \
-  /usr/include/nlohmann/detail/input/lexer.hpp \
-  /usr/include/nlohmann/detail/meta/is_sax.hpp \
-  /usr/include/nlohmann/detail/input/parser.hpp \
-  /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
-  /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
-  /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
-  /usr/include/nlohmann/detail/json_custom_base_class.hpp \
-  /usr/include/nlohmann/detail/json_pointer.hpp \
-  /usr/include/nlohmann/detail/json_ref.hpp \
-  /usr/include/nlohmann/detail/output/binary_writer.hpp \
-  /usr/include/nlohmann/detail/output/output_adapters.hpp \
-  /usr/include/nlohmann/detail/output/serializer.hpp \
-  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
-  /usr/include/nlohmann/ordered_map.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
   /usr/include/c++/12/any \
-  /usr/include/nlohmann/detail/macro_unscope.hpp \
-  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
-  /usr/include/websocketpp/config/asio_no_tls.hpp \
-  /usr/include/websocketpp/config/core.hpp \
-  /usr/include/websocketpp/common/platforms.hpp \
-  /usr/include/websocketpp/common/cpp11.hpp \
-  /usr/include/websocketpp/common/stdint.hpp \
-  /usr/include/websocketpp/concurrency/basic.hpp \
-  /usr/include/websocketpp/common/thread.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
   /usr/include/c++/12/thread \
   /usr/include/c++/12/bits/std_thread.h \
   /usr/include/c++/12/bits/this_thread_sleep.h \
@@ -16978,30 +16978,30 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/c++/12/bits/std_mutex.h \
   /usr/include/c++/12/bits/unique_lock.h \
   /usr/include/c++/12/condition_variable \
-  /usr/include/websocketpp/transport/iostream/endpoint.hpp \
-  /usr/include/websocketpp/transport/base/endpoint.hpp \
-  /usr/include/websocketpp/common/functional.hpp \
-  /usr/include/websocketpp/common/system_error.hpp \
-  /usr/include/websocketpp/transport/iostream/connection.hpp \
-  /usr/include/websocketpp/transport/iostream/base.hpp \
-  /usr/include/websocketpp/common/connection_hdl.hpp \
-  /usr/include/websocketpp/common/memory.hpp \
-  /usr/include/websocketpp/transport/base/connection.hpp \
-  /usr/include/websocketpp/uri.hpp \
-  /usr/include/websocketpp/error.hpp \
-  /usr/include/websocketpp/logger/levels.hpp \
-  /usr/include/websocketpp/http/request.hpp \
-  /usr/include/websocketpp/http/parser.hpp \
-  /usr/include/websocketpp/utilities.hpp \
-  /usr/include/websocketpp/impl/utilities_impl.hpp \
-  /usr/include/websocketpp/http/constants.hpp \
-  /usr/include/websocketpp/http/impl/parser.hpp \
-  /usr/include/websocketpp/http/impl/request.hpp \
-  /usr/include/websocketpp/http/response.hpp \
-  /usr/include/websocketpp/http/impl/response.hpp \
-  /usr/include/websocketpp/message_buffer/message.hpp \
-  /usr/include/websocketpp/frame.hpp \
-  /usr/include/websocketpp/common/network.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp \
   /usr/include/netinet/in.h \
   /usr/include/aarch64-linux-gnu/sys/socket.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
@@ -17020,18 +17020,18 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
-  /usr/include/websocketpp/message_buffer/alloc.hpp \
-  /usr/include/websocketpp/logger/basic.hpp \
-  /usr/include/websocketpp/common/time.hpp \
-  /usr/include/websocketpp/random/none.hpp \
-  /usr/include/websocketpp/endpoint_base.hpp \
-  /usr/include/websocketpp/connection_base.hpp \
-  /usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
-  /usr/include/websocketpp/extensions/extension.hpp \
-  /usr/include/websocketpp/transport/asio/endpoint.hpp \
-  /usr/include/websocketpp/transport/asio/connection.hpp \
-  /usr/include/websocketpp/transport/asio/base.hpp \
-  /usr/include/websocketpp/common/asio.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp \
   /usr/include/boost/version.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -17593,7 +17593,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/boost/asio/detail/completion_handler.hpp \
   /usr/include/boost/asio/impl/io_context.ipp \
   /usr/include/boost/asio/wait_traits.hpp \
-  /usr/include/websocketpp/common/chrono.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/awaitable.hpp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
@@ -17965,32 +17965,32 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /usr/include/websocketpp/common/type_traits.hpp \
-  /usr/include/websocketpp/base64/base64.hpp \
-  /usr/include/websocketpp/transport/asio/security/none.hpp \
-  /usr/include/websocketpp/transport/asio/security/base.hpp \
-  /usr/include/websocketpp/server.hpp \
-  /usr/include/websocketpp/roles/server_endpoint.hpp \
-  /usr/include/websocketpp/endpoint.hpp \
-  /usr/include/websocketpp/connection.hpp \
-  /usr/include/websocketpp/close.hpp \
-  /usr/include/websocketpp/utf8_validator.hpp \
-  /usr/include/websocketpp/processors/processor.hpp \
-  /usr/include/websocketpp/processors/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
   /usr/include/c++/12/queue \
   /usr/include/c++/12/deque \
   /usr/include/c++/12/bits/stl_deque.h \
   /usr/include/c++/12/bits/deque.tcc \
   /usr/include/c++/12/bits/stl_queue.h \
-  /usr/include/websocketpp/impl/connection_impl.hpp \
-  /usr/include/websocketpp/processors/hybi00.hpp \
-  /usr/include/websocketpp/common/md5.hpp \
-  /usr/include/websocketpp/processors/hybi07.hpp \
-  /usr/include/websocketpp/processors/hybi08.hpp \
-  /usr/include/websocketpp/processors/hybi13.hpp \
-  /usr/include/websocketpp/sha1/sha1.hpp \
-  /usr/include/websocketpp/version.hpp \
-  /usr/include/websocketpp/impl/endpoint_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
+  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
   /home/kufi/workspace/kufibot.cpp/services/service.h \
   /usr/include/opencv4/opencv2/opencv.hpp \
   /usr/include/opencv4/opencv2/opencv_modules.hpp \
@@ -18127,6 +18127,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/regex.tcc:
 
+/usr/include/c++/12/bits/regex.h:
+
 /usr/include/c++/12/bits/regex_compiler.h:
 
 /usr/include/c++/12/bits/regex_scanner.h:
@@ -18135,79 +18137,75 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/regex_error.h:
 
-/usr/include/c++/12/bits/stl_stack.h:
-
 /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.h:
 
 /home/kufi/workspace/kufibot.cpp/services/web_socket_service.h:
 
 /home/kufi/workspace/kufibot.cpp/publisher.h:
 
-/usr/include/websocketpp/impl/endpoint_impl.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp:
 
-/usr/include/websocketpp/sha1/sha1.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp:
 
-/usr/include/websocketpp/common/md5.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp:
 
-/usr/include/websocketpp/processors/hybi00.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi07.hpp:
 
-/usr/include/websocketpp/processors/processor.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp:
 
-/usr/include/websocketpp/connection.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp:
 
-/usr/include/websocketpp/endpoint.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/close.hpp:
 
-/usr/include/websocketpp/base64/base64.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/connection.hpp:
 
-/usr/include/websocketpp/common/chrono.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint.hpp:
 
-/usr/include/websocketpp/common/asio.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/none.hpp:
 
-/usr/include/websocketpp/transport/asio/connection.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/base64/base64.hpp:
 
-/usr/include/websocketpp/transport/asio/endpoint.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/asio.hpp:
 
-/usr/include/websocketpp/connection_base.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/endpoint.hpp:
 
-/usr/include/c++/12/bits/regex.h:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/permessage_deflate/disabled.hpp:
 
-/usr/include/websocketpp/endpoint_base.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/connection_base.hpp:
 
-/usr/include/websocketpp/common/time.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/time.hpp:
 
-/usr/include/websocketpp/logger/basic.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/basic.hpp:
 
-/usr/include/websocketpp/frame.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/frame.hpp:
 
-/usr/include/websocketpp/message_buffer/message.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/message.hpp:
 
-/usr/include/websocketpp/http/impl/response.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/response.hpp:
 
-/usr/include/websocketpp/http/impl/request.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/response.hpp:
 
-/usr/include/websocketpp/http/constants.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/constants.hpp:
 
-/usr/include/websocketpp/utilities.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/utilities.hpp:
 
-/usr/include/websocketpp/http/parser.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/parser.hpp:
 
-/usr/include/websocketpp/http/request.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/logger/levels.hpp:
 
-/usr/include/websocketpp/logger/levels.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/memory.hpp:
 
-/usr/include/websocketpp/uri.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/connection_hdl.hpp:
 
-/usr/include/websocketpp/common/connection_hdl.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/base.hpp:
 
-/usr/include/websocketpp/transport/iostream/connection.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/connection.hpp:
 
-/usr/include/websocketpp/common/functional.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/system_error.hpp:
 
-/usr/include/websocketpp/transport/iostream/endpoint.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp:
 
-/usr/include/websocketpp/common/thread.hpp:
-
-/usr/include/websocketpp/config/core.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/cpp11.hpp:
 
 /usr/include/opencv4/opencv2/video/background_segm.hpp:
 
@@ -18220,6 +18218,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp:
 
 /usr/include/c++/12/bits/stl_queue.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/request.hpp:
 
 /usr/include/c++/12/bits/deque.tcc:
 
@@ -18266,8 +18266,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/opencv4/opencv2/flann/logger.h:
 
 /usr/include/opencv4/opencv2/flann/kmeans_index.h:
-
-/usr/include/websocketpp/http/response.hpp:
 
 /usr/include/opencv4/opencv2/flann/heap.h:
 
@@ -18327,8 +18325,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/opencv4/opencv2/core/fast_math.hpp:
 
-/usr/include/websocketpp/utf8_validator.hpp:
-
 /usr/include/opencv4/opencv2/core/matx.hpp:
 
 /usr/include/opencv4/opencv2/core/traits.hpp:
@@ -18336,8 +18332,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/opencv4/opencv2/core/check.hpp:
 
 /usr/include/opencv4/opencv2/core/neon_utils.hpp:
-
-/usr/include/websocketpp/common/platforms.hpp:
 
 /usr/include/opencv4/opencv2/core/cvstd.hpp:
 
@@ -18413,6 +18407,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp:
+
 /usr/include/opencv4/opencv2/core/operations.hpp:
 
 /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp:
@@ -18422,6 +18418,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/opencv4/opencv2/core/cuda_types.hpp:
 
 /home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi08.hpp:
 
 /usr/include/c++/12/thread:
 
@@ -18451,11 +18449,17 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/bulk_executor_op.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/server.hpp:
+
 /usr/include/boost/asio/detail/blocking_executor_op.hpp:
 
 /usr/include/boost/asio/impl/thread_pool.hpp:
 
+/usr/include/boost/asio/thread_pool.hpp:
+
 /usr/include/boost/asio/signal_set.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/uri.hpp:
 
 /usr/include/boost/asio/traits/require_concept_free.hpp:
 
@@ -18547,6 +18551,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/predef/library/std/msl.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp:
+
 /usr/include/boost/predef/library/std/modena.h:
 
 /usr/include/boost/predef/library/std/libcomo.h:
@@ -18599,11 +18605,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/predef/compiler/iar.h:
 
-/usr/include/websocketpp/random/none.hpp:
-
 /usr/include/boost/predef/compiler/hp_acc.h:
-
-/usr/include/boost/predef/detail/comp_detected.h:
 
 /usr/include/boost/predef/compiler/gcc.h:
 
@@ -18614,6 +18616,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/predef/os/cygwin.h:
 
 /usr/include/boost/predef/compiler/dignus.h:
+
+/usr/include/boost/predef/compiler/diab.h:
 
 /usr/include/boost/predef/compiler/compaq.h:
 
@@ -18626,8 +18630,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/predef/compiler.h:
 
 /usr/include/boost/predef/architecture/z.h:
-
-/usr/include/websocketpp/processors/hybi08.hpp:
 
 /usr/include/c++/12/bits/stl_list.h:
 
@@ -18654,8 +18656,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/predef/architecture/riscv.h:
 
 /usr/include/boost/predef/architecture/pyramid.h:
-
-/usr/include/boost/predef/architecture/ptx.h:
 
 /usr/include/boost/predef/architecture/ppc.h:
 
@@ -18703,6 +18703,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/posix/stream_descriptor.hpp:
 
+/usr/include/boost/asio/posix/basic_descriptor.hpp:
+
 /usr/include/boost/bind/arg.hpp:
 
 /usr/include/c++/12/bits/std_thread.h:
@@ -18723,11 +18725,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/local/basic_endpoint.hpp:
 
-/usr/include/boost/asio/is_write_buffered.hpp:
-
 /usr/include/boost/asio/ip/v6_only.hpp:
 
 /usr/include/boost/asio/ip/tcp.hpp:
+
+/usr/include/boost/asio/ip/detail/socket_option.hpp:
 
 /usr/include/boost/asio/ip/multicast.hpp:
 
@@ -18743,6 +18745,16 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/mutex.hpp:
 
+/usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h:
+
+/home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp:
+
+/usr/include/boost/preprocessor/control/iif.hpp:
+
+/usr/include/boost/mpl/aux_/largest_int.hpp:
+
+/usr/include/boost/asio/basic_stream_socket.hpp:
+
 /usr/include/boost/asio/traits/require_free.hpp:
 
 /usr/include/opencv4/opencv2/objdetect/face.hpp:
@@ -18753,23 +18765,17 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/prefer_member.hpp:
 
-/usr/include/boost/asio/traits/set_value_member.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp:
 
-/usr/include/websocketpp/transport/asio/security/none.hpp:
+/usr/include/boost/asio/traits/set_value_member.hpp:
 
 /usr/include/boost/asio/execution/blocking.hpp:
 
 /usr/include/aarch64-linux-gnu/c++/12/bits/c++locale.h:
 
-/usr/include/nlohmann/adl_serializer.hpp:
-
 /usr/include/boost/asio/detail/future.hpp:
 
 /usr/include/aarch64-linux-gnu/sys/ucontext.h:
-
-/usr/include/c++/12/fstream:
-
-/usr/include/boost/asio/impl/post.hpp:
 
 /usr/include/boost/asio/impl/handler_alloc_hook.ipp:
 
@@ -18797,15 +18803,17 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/conditionally_enabled_event.hpp:
 
+/usr/include/boost/throw_exception.hpp:
+
 /usr/include/boost/asio/detail/impl/throw_error.ipp:
 
 /usr/include/c++/12/locale:
 
-/usr/include/boost/mpl/aux_/include_preprocessed.hpp:
-
 /usr/include/boost/predef/compiler/digitalmars.h:
 
 /usr/include/aarch64-linux-gnu/sys/socket.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/time.h:
 
@@ -18815,15 +18823,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/query_free.hpp:
 
-/usr/include/websocketpp/common/stdint.hpp:
-
 /usr/include/boost/asio/execution/impl/receiver_invocation_error.ipp:
-
-/usr/include/websocketpp/extensions/permessage_deflate/disabled.hpp:
 
 /usr/include/boost/predef/compiler/gcc_xml.h:
 
 /usr/include/boost/system/detail/generic_category.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp:
 
 /usr/include/boost/system/detail/config.hpp:
 
@@ -18831,11 +18837,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/date_time/posix_time/posix_time_duration.hpp:
 
-/usr/include/boost/core/enable_if.hpp:
-
-/usr/include/boost/asio/detail/posix_tss_ptr.hpp:
-
-/usr/include/boost/config/helper_macros.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/network.hpp:
 
 /home/kufi/workspace/kufibot.cpp/controllers/execution_controller.h:
 
@@ -18850,6 +18852,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/detail/assert.hpp:
 
 /usr/include/boost/asio/execution/any_executor.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp:
 
 /usr/include/boost/asio/execution/blocking_adaptation.hpp:
 
@@ -18875,9 +18879,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/static_assert.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/request.hpp:
+
 /usr/include/boost/asio/ip/impl/address.ipp:
 
 /usr/include/boost/asio/traits/schedule_free.hpp:
+
+/usr/include/boost/asio/detail/is_executor.hpp:
 
 /usr/include/boost/asio/execution/schedule.hpp:
 
@@ -18889,19 +18897,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/execute_member.hpp:
 
-/usr/include/boost/asio/traits/set_error_free.hpp:
-
-/usr/include/boost/numeric/conversion/cast.hpp:
-
 /usr/include/boost/asio/traits/set_error_member.hpp:
 
 /usr/include/opencv4/opencv2/flann/kdtree_single_index.h:
 
 /usr/include/boost/date_time/posix_time/posix_time_types.hpp:
 
-/usr/include/c++/12/tr1/poly_laguerre.tcc:
-
-/usr/include/boost/asio/execution/set_done.hpp:
+/usr/include/boost/asio/execution/set_error.hpp:
 
 /usr/include/boost/asio/execution/receiver_invocation_error.hpp:
 
@@ -18909,7 +18911,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/execution/detail/as_invocable.hpp:
 
+/usr/include/boost/asio/detail/pop_options.hpp:
+
 /usr/include/c++/12/pstl/execution_defs.h:
+
+/usr/include/boost/asio/detail/type_traits.hpp:
 
 /usr/include/boost/asio/impl/read_until.hpp:
 
@@ -18918,8 +18924,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/bits/stl_iterator.h:
 
 /usr/include/boost/config/detail/suffix.hpp:
-
-/usr/include/boost/config/detail/select_platform_config.hpp:
 
 /home/kufi/workspace/kufibot.cpp/controllers/speech_recognition_controller.h:
 
@@ -18930,6 +18934,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/execution/detail/as_receiver.hpp:
 
 /usr/include/boost/asio/detail/thread_context.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/http/impl/parser.hpp:
 
 /usr/include/boost/asio/detail/throw_error.hpp:
 
@@ -18943,6 +18949,12 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/getopt_posix.h:
 
+/usr/include/boost/config/platform/linux.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
+
+/usr/include/aarch64-linux-gnu/bits/posix_opt.h:
+
 /usr/include/boost/asio/execution/scheduler.hpp:
 
 /usr/include/boost/config/detail/select_stdlib_config.hpp:
@@ -18953,33 +18965,53 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/wrapped_handler.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/type_traits.hpp:
+
 /usr/include/boost/config/detail/select_compiler_config.hpp:
 
 /usr/include/boost/predef/platform/android.h:
 
 /usr/include/boost/asio/detail/config.hpp:
 
+/usr/include/boost/asio/associated_allocator.hpp:
+
 /usr/include/boost/asio/traits/static_query.hpp:
 
 /usr/include/c++/12/bits/valarray_before.h:
+
+/usr/include/boost/config/helper_macros.hpp:
+
+/usr/include/boost/asio/detail/posix_tss_ptr.hpp:
 
 /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.h:
 
 /usr/lib/linux/uapi/arm64/asm/posix_types.h:
 
-/usr/include/nlohmann/detail/macro_unscope.hpp:
+/home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.h:
 
-/usr/include/nlohmann/ordered_map.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp:
 
-/usr/include/nlohmann/detail/conversions/to_chars.hpp:
+/usr/include/boost/core/enable_if.hpp:
 
-/usr/include/boost/asio/detail/type_traits.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp:
 
-/usr/include/boost/predef/language.h:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp:
 
-/usr/include/boost/operators.hpp:
+/usr/include/boost/asio/impl/system_context.ipp:
 
-/usr/include/nlohmann/detail/output/binary_writer.hpp:
+/usr/include/boost/asio/is_write_buffered.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp:
+
+/usr/include/boost/asio/basic_waitable_timer.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp:
+
+/usr/include/aarch64-linux-gnu/bits/termios.h:
+
+/usr/include/c++/12/bits/stl_stack.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp:
 
 /usr/include/c++/12/climits:
 
@@ -18987,15 +19019,21 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/numeric/conversion/detail/sign_mixture.hpp:
 
-/usr/include/nlohmann/detail/input/lexer.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp:
 
-/usr/include/websocketpp/processors/hybi13.hpp:
+/usr/include/boost/asio/detail/impl/eventfd_select_interrupter.ipp:
 
-/usr/include/boost/throw_exception.hpp:
+/usr/include/boost/mpl/aux_/include_preprocessed.hpp:
 
-/usr/include/nlohmann/detail/input/binary_reader.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp:
 
-/usr/include/nlohmann/detail/hash.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp:
+
+/usr/include/boost/asio/detail/string_view.hpp:
 
 /usr/include/linux/close_range.h:
 
@@ -19007,53 +19045,45 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/filesystem:
 
+/usr/include/opencv4/opencv2/flann/kdtree_index.h:
+
+/usr/lib/gcc/aarch64-linux-gnu/12/include/limits.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp:
+
 /usr/include/boost/asio/traits/equality_comparable.hpp:
 
-/usr/include/string.h:
+/usr/include/boost/predef/detail/comp_detected.h:
 
-/usr/include/boost/asio/associated_allocator.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp:
 
-/usr/include/c++/12/bits/hash_bytes.h:
+/usr/include/c++/12/fstream:
 
-/usr/include/boost/asio/execution/set_error.hpp:
+/usr/include/boost/asio/impl/post.hpp:
 
-/usr/include/aarch64-linux-gnu/bits/types/sigval_t.h:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp:
 
-/usr/include/boost/config/pragma_message.hpp:
+/usr/include/aarch64-linux-gnu/bits/statx-generic.h:
 
-/usr/include/opencv4/opencv2/flann.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp:
 
-/usr/include/nlohmann/detail/abi_macros.hpp:
+/usr/include/boost/asio/traits/set_error_free.hpp:
 
-/usr/include/boost/mpl/void_fwd.hpp:
+/usr/include/boost/numeric/conversion/cast.hpp:
 
-/usr/include/boost/preprocessor/list/fold_left.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp:
 
-/usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp:
 
-/home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp:
+/usr/include/c++/12/bits/streambuf_iterator.h:
 
-/usr/include/boost/preprocessor/control/iif.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp:
 
-/usr/include/boost/mpl/aux_/largest_int.hpp:
+/usr/include/boost/system/error_code.hpp:
 
-/usr/include/boost/asio/basic_stream_socket.hpp:
-
-/usr/include/nlohmann/detail/meta/cpp_future.hpp:
-
-/usr/include/boost/predef/compiler/diab.h:
-
-/usr/include/nlohmann/detail/input/position_t.hpp:
-
-/usr/include/opencv4/opencv2/flann/autotuned_index.h:
-
-/usr/include/boost/asio/impl/thread_pool.ipp:
-
-/usr/include/boost/asio/traits/set_done_member.hpp:
-
-/home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.h:
-
-/usr/include/nlohmann/detail/string_escape.hpp:
+/usr/include/boost/asio/impl/serial_port_base.ipp:
 
 /usr/include/boost/config/compiler/gcc.hpp:
 
@@ -19063,17 +19093,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
-/usr/include/nlohmann/detail/meta/void_t.hpp:
+/usr/include/opencv4/opencv2/core/hal/interface.h:
 
-/usr/include/boost/config/platform/linux.hpp:
-
-/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/posix_opt.h:
-
-/usr/include/boost/asio/thread_pool.hpp:
-
-/usr/include/nlohmann/detail/exceptions.hpp:
+/usr/include/boost/core/addressof.hpp:
 
 /usr/include/boost/cerrno.hpp:
 
@@ -19089,7 +19111,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio.hpp:
 
-/usr/include/nlohmann/thirdparty/hedley/hedley.hpp:
+/usr/include/boost/asio/detail/impl/scheduler.ipp:
+
+/usr/include/c++/12/map:
 
 /usr/include/c++/12/bits/stl_set.h:
 
@@ -19097,23 +19121,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/slice_array.h:
 
-/usr/include/nlohmann/detail/input/json_sax.hpp:
-
 /usr/include/c++/12/valarray:
 
 /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp:
 
 /usr/include/c++/12/bits/stl_map.h:
 
-/usr/include/boost/predef/os/bsd/open.h:
-
-/usr/include/aarch64-linux-gnu/bits/sched.h:
-
 /usr/include/boost/date_time/gregorian/greg_date.hpp:
-
-/usr/include/nlohmann/detail/value_t.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/termios.h:
 
 /usr/include/c++/12/bits/forward_list.h:
 
@@ -19121,7 +19135,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/execution/execute.hpp:
 
-/usr/include/c++/12/sstream:
+/usr/include/boost/asio/execution/set_done.hpp:
+
+/usr/include/c++/12/tr1/poly_laguerre.tcc:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp:
 
 /usr/include/boost/asio/posix/descriptor.hpp:
 
@@ -19137,11 +19155,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/co_spawn.hpp:
 
-/usr/include/websocketpp/processors/hybi07.hpp:
-
-/usr/include/boost/asio/detail/is_executor.hpp:
-
-/usr/include/nlohmann/json.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp:
 
 /usr/include/boost/predef/compiler/watcom.h:
 
@@ -19169,17 +19183,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/opencv4/opencv2/flann/kdtree_index.h:
-
-/usr/lib/gcc/aarch64-linux-gnu/12/include/limits.h:
-
 /usr/include/boost/asio/redirect_error.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/c++/12/mutex:
-
-/usr/include/nlohmann/detail/iterators/iterator_traits.hpp:
 
 /usr/include/boost/mpl/aux_/has_apply.hpp:
 
@@ -19201,12 +19209,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/connect_free.hpp:
 
-/usr/include/boost/regex/config/cwchar.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/sigthread.h:
-
-/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
-
 /usr/include/aarch64-linux-gnu/bits/sockaddr.h:
 
 /usr/include/boost/predef/hardware/simd.h:
@@ -19227,13 +19229,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/curl/curl.h:
 
-/usr/include/nlohmann/detail/json_custom_base_class.hpp:
-
 /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.h:
 
 /usr/include/boost/asio/detail/reactive_socket_sendto_op.hpp:
 
 /home/kufi/workspace/kufibot.cpp/controllers/curl_controller.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp:
 
 /usr/include/opencv4/opencv2/flann/lsh_table.h:
 
@@ -19254,8 +19256,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/tr1/legendre_function.tcc:
 
 /usr/include/aarch64-linux-gnu/bits/signum-arch.h:
-
-/usr/include/nlohmann/detail/iterators/iter_impl.hpp:
 
 /usr/include/boost/mpl/aux_/config/gcc.hpp:
 
@@ -19283,9 +19283,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/epoll_reactor.hpp:
 
-/home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.h:
+/usr/include/c++/12/bits/stl_vector.h:
 
-/usr/include/nlohmann/detail/meta/identity_tag.hpp:
+/usr/include/boost/asio/detail/memory.hpp:
+
+/home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.h:
 
 /usr/include/aarch64-linux-gnu/c++/12/bits/time_members.h:
 
@@ -19301,11 +19303,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/concurrency_hint.hpp:
 
+/usr/include/string.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp:
+
 /usr/include/math.h:
 
-/usr/include/boost/asio/ip/detail/socket_option.hpp:
-
-/usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp:
 
 /usr/include/boost/asio/detail/noncopyable.hpp:
 
@@ -19321,15 +19325,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/types/time_t.h:
 
-/usr/include/boost/mpl/aux_/na_spec.hpp:
-
-/usr/include/c++/12/bits/uses_allocator.h:
-
-/usr/include/websocketpp/impl/connection_impl.hpp:
-
 /usr/include/boost/asio/buffered_stream_fwd.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/ioctl-types.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp:
 
 /usr/include/boost/date_time/posix_time/ptime.hpp:
 
@@ -19347,6 +19347,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/shared_ptr.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp:
+
 /usr/include/c++/12/tr1/bessel_function.tcc:
 
 /usr/include/boost/predef/architecture.h:
@@ -19354,8 +19356,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/buffered_write_stream_fwd.hpp:
 
 /usr/include/c++/12/string:
-
-/usr/include/websocketpp/message_buffer/alloc.hpp:
 
 /usr/include/boost/regex/config.hpp:
 
@@ -19371,13 +19371,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/asm-generic/bitsperlong.h:
 
-/usr/include/aarch64-linux-gnu/bits/epoll.h:
-
-/usr/include/c++/12/ext/type_traits.h:
-
 /usr/include/aarch64-linux-gnu/sys/single_threaded.h:
-
-/usr/include/websocketpp/transport/iostream/base.hpp:
 
 /usr/include/c++/12/bits/basic_string.h:
 
@@ -19396,8 +19390,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/debug/assertions.h:
 
 /usr/include/boost/asio/detail/executor_op.hpp:
-
-/usr/include/nlohmann/detail/output/serializer.hpp:
 
 /usr/include/boost/mpl/aux_/value_wknd.hpp:
 
@@ -19421,12 +19413,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/execution/outstanding_work.hpp:
 
-/usr/include/boost/is_placeholder.hpp:
-
-/usr/include/wchar.h:
-
-/usr/include/boost/asio/execution/impl/bad_executor.ipp:
-
 /usr/include/boost/asio/basic_streambuf_fwd.hpp:
 
 /usr/include/boost/preprocessor/list/reverse.hpp:
@@ -19434,6 +19420,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/aarch64-linux-gnu/bits/mathcalls.h:
 
 /usr/include/boost/numeric/conversion/detail/numeric_cast_traits.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp:
 
 /usr/include/c++/12/cerrno:
 
@@ -19507,8 +19495,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/atomic_base.h:
 
-/usr/include/nlohmann/detail/conversions/to_json.hpp:
-
 /usr/include/c++/12/bits/regex_executor.tcc:
 
 /usr/include/c++/12/backward/auto_ptr.h:
@@ -19535,13 +19521,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/non_const_lvalue.hpp:
 
-/usr/include/nlohmann/detail/meta/std_fs.hpp:
-
 /usr/include/c++/12/bits/stl_tempbuf.h:
-
-/usr/include/nlohmann/byte_container_with_subtype.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/alsa/asoundlib.h:
 
@@ -19549,19 +19529,15 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/nested_exception.h:
 
-/usr/include/nlohmann/detail/conversions/from_json.hpp:
-
 /usr/include/boost/asio/require.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/termios-c_iflag.h:
-
-/usr/include/boost/asio/detail/cstdint.hpp:
 
 /usr/include/c++/12/bits/stl_pair.h:
 
 /usr/include/c++/12/bits/allocator.h:
 
 /usr/include/aarch64-linux-gnu/c++/12/bits/error_constants.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp:
 
 /usr/include/c++/12/bits/memoryfwd.h:
 
@@ -19581,8 +19557,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/execution/bulk_execute.hpp:
 
-/usr/include/nlohmann/detail/meta/type_traits.hpp:
-
 /usr/include/aarch64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/c++/12/cstdint:
@@ -19601,6 +19575,12 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/ip/impl/address_v6.ipp:
 
+/usr/include/boost/is_placeholder.hpp:
+
+/usr/include/boost/asio/execution/impl/bad_executor.ipp:
+
+/usr/include/wchar.h:
+
 /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/shared.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/struct_mutex.h:
@@ -19610,6 +19590,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/preprocessor/punctuation/comma_if.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/types.h:
+
+/usr/include/boost/asio/detail/impl/null_event.ipp:
 
 /usr/include/aarch64-linux-gnu/bits/setjmp.h:
 
@@ -19621,7 +19603,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/strand_service.hpp:
 
-/usr/include/boost/asio/any_io_executor.hpp:
+/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/aarch64-linux-gnu/bits/struct_rwlock.h:
 
@@ -19630,6 +19612,12 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/string_view:
 
 /usr/include/c++/12/bits/locale_facets.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp:
+
+/usr/include/boost/asio/detached.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp:
 
 /usr/include/c++/12/bits/ostream.tcc:
 
@@ -19655,15 +19643,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
 
-/usr/include/nlohmann/detail/output/output_adapters.hpp:
-
-/usr/include/aarch64-linux-gnu/curl/header.h:
-
-/usr/include/websocketpp/processors/base.hpp:
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp:
 
 /usr/include/c++/12/bits/stl_iterator_base_funcs.h:
 
 /usr/include/aarch64-linux-gnu/bits/wordsize.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/extensions/extension.hpp:
 
 /usr/include/aarch64-linux-gnu/gnu/stubs-lp64.h:
 
@@ -19687,17 +19673,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/uniform_int_dist.h:
 
+/usr/include/boost/config/detail/select_platform_config.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp:
+
 /usr/lib/gcc/aarch64-linux-gnu/12/include/stdint.h:
-
-/usr/include/nlohmann/detail/json_ref.hpp:
-
-/usr/include/websocketpp/config/asio_no_tls.hpp:
-
-/usr/include/boost/asio/detail/fenced_block.hpp:
-
-/usr/include/boost/asio/detail/handler_type_requirements.hpp:
-
-/usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp:
 
 /usr/include/aarch64-linux-gnu/sys/cdefs.h:
 
@@ -19713,17 +19693,29 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/procfs.h:
 
+/usr/include/boost/predef/os/bsd/open.h:
+
+/usr/include/aarch64-linux-gnu/bits/sched.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp:
+
 /usr/include/c++/12/tr1/riemann_zeta.tcc:
 
-/usr/include/websocketpp/common/cpp11.hpp:
-
 /usr/include/boost/asio/execution/bad_executor.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp:
 
 /usr/include/boost/date_time/date_generators.hpp:
 
 /usr/include/c++/12/bits/basic_ios.tcc:
 
 /usr/include/boost/asio/dispatch.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp:
+
+/usr/include/boost/asio/detail/descriptor_ops.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/cpu-set.h:
 
@@ -19736,8 +19728,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/bits/locale_facets_nonio.tcc:
 
 /usr/include/aarch64-linux-gnu/bits/fp-fast.h:
-
-/usr/include/nlohmann/detail/input/input_adapters.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/waitstatus.h:
 
@@ -19752,8 +19742,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/aarch64-linux-gnu/bits/termios-misc.h:
 
 /usr/include/boost/asio/write.hpp:
-
-/usr/include/nlohmann/detail/macro_scope.hpp:
 
 /usr/include/c++/12/ext/aligned_buffer.h:
 
@@ -19773,17 +19761,31 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/query_member.hpp:
 
-/usr/include/nlohmann/detail/meta/detected.hpp:
-
 /usr/include/boost/asio/traits/start_free.hpp:
+
+/usr/include/boost/asio/any_io_executor.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp:
 
 /usr/include/c++/12/bits/stl_multimap.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp:
+
 /usr/include/aarch64-linux-gnu/bits/time64.h:
+
+/usr/include/c++/12/bits/regex_automaton.tcc:
+
+/usr/include/boost/system/api_config.hpp:
+
+/usr/include/boost/asio/detail/impl/strand_service.ipp:
+
+/usr/include/aarch64-linux-gnu/sys/timerfd.h:
 
 /usr/include/boost/date_time/date_duration.hpp:
 
 /usr/include/c++/12/bits/std_mutex.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp:
 
 /usr/include/opencv4/opencv2/flann/miniflann.hpp:
 
@@ -19795,11 +19797,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/pstl/glue_algorithm_defs.h:
 
-/usr/include/websocketpp/impl/utilities_impl.hpp:
-
 /usr/include/aarch64-linux-gnu/bits/locale.h:
-
-/usr/include/websocketpp/server.hpp:
 
 /usr/include/c++/12/bits/quoted_string.h:
 
@@ -19821,13 +19819,7 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/locale_classes.h:
 
-/usr/include/boost/asio/detail/pop_options.hpp:
-
-/usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp:
-
-/usr/include/c++/12/bit:
-
-/usr/include/boost/asio/ip/address_v4_range.hpp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/error.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/socket_type.h:
 
@@ -19836,6 +19828,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/bits/stringfwd.h:
 
 /usr/include/c++/12/backward/binders.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp:
 
 /usr/include/linux/stddef.h:
 
@@ -19856,10 +19850,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/execution/sender.hpp:
 
 /usr/include/boost/mpl/if.hpp:
-
-/usr/include/boost/asio/detail/memory.hpp:
-
-/usr/include/c++/12/bits/stl_vector.h:
 
 /usr/include/boost/asio/traits/require_concept_member.hpp:
 
@@ -19923,6 +19913,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/bits/types/sig_atomic_t.h:
 
+/usr/include/c++/12/bits/hash_bytes.h:
+
 /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp:
 
 /usr/include/boost/asio/detail/impl/reactive_socket_service_base.ipp:
@@ -19930,10 +19922,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/traits/bulk_execute_free.hpp:
 
 /usr/include/boost/asio/detail/timer_queue.hpp:
-
-/usr/include/boost/system/error_code.hpp:
-
-/usr/include/boost/asio/impl/serial_port_base.ipp:
 
 /usr/include/c++/12/tr1/hypergeometric.tcc:
 
@@ -19951,6 +19939,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/ext/string_conversions.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi13.hpp:
+
 /usr/include/c++/12/cstdlib:
 
 /usr/include/boost/asio/serial_port.hpp:
@@ -19959,9 +19949,17 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/aarch64-linux-gnu/sys/types.h:
 
+/usr/include/aarch64-linux-gnu/bits/types/sigval_t.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp:
+
 /usr/include/aarch64-linux-gnu/bits/waitflags.h:
 
-/usr/include/nlohmann/detail/meta/call_std/end.hpp:
+/usr/include/opencv4/opencv2/flann/autotuned_index.h:
+
+/usr/include/boost/asio/impl/thread_pool.ipp:
+
+/usr/include/boost/asio/traits/set_done_member.hpp:
 
 /usr/include/c++/12/bits/predefined_ops.h:
 
@@ -19981,8 +19979,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/date_time/dst_rules.hpp:
 
-/usr/include/websocketpp/transport/base/endpoint.hpp:
-
 /usr/include/libintl.h:
 
 /usr/include/c++/12/cstdio:
@@ -19995,15 +19991,19 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/bits/basic_ios.h:
 
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/piper-phonemize/tashkeel.hpp:
+
+/usr/include/boost/numeric/conversion/converter.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/connection.hpp:
+
 /usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/time.h:
 
-/usr/include/websocketpp/common/system_error.hpp:
-
 /usr/include/boost/asio/detail/throw_exception.hpp:
-
-/usr/include/nlohmann/detail/iterators/internal_iterator.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/errno.h:
 
@@ -20015,6 +20015,10 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/execution/prefer_only.hpp:
 
+/usr/include/boost/predef/architecture/ptx.h:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp:
+
 /usr/include/c++/12/bits/stl_bvector.h:
 
 /usr/include/boost/asio/detail/handler_tracking.hpp:
@@ -20022,8 +20026,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/high_resolution_timer.hpp:
 
 /usr/include/wctype.h:
-
-/usr/include/c++/12/bits/streambuf_iterator.h:
 
 /usr/include/boost/predef/os/bsd/free.h:
 
@@ -20050,6 +20052,16 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/detail/is_buffer_sequence.hpp:
 
 /usr/include/boost/asio/detail/event.hpp:
+
+/usr/include/c++/12/bit:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/base.hpp:
+
+/usr/include/boost/asio/ip/address_v4_range.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp:
+
+/usr/include/boost/asio/detail/impl/signal_set_service.ipp:
 
 /usr/include/boost/asio/detail/impl/posix_mutex.ipp:
 
@@ -20105,8 +20117,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/less.hpp:
 
-/usr/include/boost/asio/basic_waitable_timer.hpp:
-
 /usr/include/boost/asio/prefer.hpp:
 
 /usr/include/boost/predef/library/std/cxx.h:
@@ -20118,16 +20128,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/date_time/locale_config.hpp:
 
 /usr/include/c++/12/algorithm:
-
-/usr/include/boost/asio/posix/basic_descriptor.hpp:
-
-/usr/include/nlohmann/detail/string_concat.hpp:
-
-/usr/include/nlohmann/json_fwd.hpp:
-
-/usr/include/c++/12/ios:
-
-/usr/include/boost/mpl/aux_/config/compiler.hpp:
 
 /usr/include/boost/config/stdlib/libstdcpp3.hpp:
 
@@ -20144,6 +20144,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/aarch64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/aarch64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/security/base.hpp:
 
 /usr/include/boost/asio/detail/select_interrupter.hpp:
 
@@ -20175,15 +20177,21 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/generic/seq_packet_protocol.hpp:
 
+/usr/include/c++/12/sstream:
+
+/usr/include/c++/12/bits/uses_allocator.h:
+
+/usr/include/boost/mpl/aux_/na_spec.hpp:
+
 /usr/include/boost/smart_ptr/detail/spinlock.hpp:
 
 /usr/include/boost/preprocessor/tuple/detail/is_single_return.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/math-vector.h:
 
-/usr/include/c++/12/tr1/gamma.tcc:
+/usr/include/aarch64-linux-gnu/curl/header.h:
 
-/usr/include/nlohmann/detail/meta/call_std/begin.hpp:
+/usr/include/c++/12/tr1/gamma.tcc:
 
 /usr/include/c++/12/bits/fs_path.h:
 
@@ -20192,6 +20200,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/locale.h:
 
 /usr/include/aarch64-linux-gnu/bits/stdint-intn.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/roles/server_endpoint.hpp:
 
 /usr/include/boost/asio/async_result.hpp:
 
@@ -20213,6 +20223,14 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/c++/12/cwchar:
 
+/usr/include/boost/asio/detail/push_options.hpp:
+
+/usr/include/boost/mpl/and.hpp:
+
+/usr/include/boost/asio/detail/signal_set_service.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp:
+
 /usr/include/boost/asio/traits/bulk_execute_member.hpp:
 
 /usr/include/c++/12/bits/shared_ptr_base.h:
@@ -20225,13 +20243,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/traits/submit_free.hpp:
 
-/usr/include/websocketpp/common/network.hpp:
-
 /usr/include/boost/asio/impl/system_executor.hpp:
 
 /usr/include/boost/asio/detail/std_fenced_block.hpp:
 
 /usr/include/boost/mpl/aux_/static_cast.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/termios-c_cc.h:
 
@@ -20253,19 +20271,21 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/scheduler.hpp:
 
-/usr/include/websocketpp/close.hpp:
-
 /usr/include/wiringPiI2C.h:
 
 /usr/include/boost/mpl/aux_/lambda_support.hpp:
-
-/usr/include/nlohmann/detail/json_pointer.hpp:
 
 /usr/include/boost/asio/defer.hpp:
 
 /usr/include/boost/asio/execution_context.hpp:
 
 /usr/include/boost/asio/impl/execution_context.hpp:
+
+/usr/include/boost/asio/detail/fenced_block.hpp:
+
+/usr/include/boost/asio/detail/handler_type_requirements.hpp:
+
+/usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp:
 
 /usr/include/boost/asio/detail/impl/service_registry.hpp:
 
@@ -20277,16 +20297,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/arpa/inet.h:
 
-/usr/include/boost/asio/detail/impl/null_event.ipp:
-
-/usr/include/c++/12/bits/regex_automaton.tcc:
-
-/usr/include/boost/system/api_config.hpp:
-
-/usr/include/aarch64-linux-gnu/sys/timerfd.h:
-
-/usr/include/boost/asio/detail/impl/strand_service.ipp:
-
 /usr/include/boost/preprocessor/facilities/expand.hpp:
 
 /usr/include/boost/asio/detail/reactor_fwd.hpp:
@@ -20297,15 +20307,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/impl/posix_thread.ipp:
 
-/usr/include/c++/12/map:
-
-/usr/include/boost/asio/detail/impl/scheduler.ipp:
-
-/usr/include/boost/asio/impl/system_context.ipp:
-
-/usr/include/nlohmann/detail/input/parser.hpp:
-
 /usr/include/boost/asio/detail/object_pool.hpp:
+
+/usr/include/c++/12/ios:
+
+/usr/include/boost/mpl/aux_/config/compiler.hpp:
 
 /usr/include/boost/asio/detail/eventfd_select_interrupter.hpp:
 
@@ -20315,15 +20321,11 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/numeric/conversion/detail/is_subranged.hpp:
 
-/usr/include/boost/asio/detail/impl/eventfd_select_interrupter.ipp:
-
 /usr/include/aarch64-linux-gnu/sys/stat.h:
 
 /usr/include/boost/asio/detail/timer_queue_ptime.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/struct_stat.h:
-
-/usr/include/websocketpp/common/type_traits.hpp:
 
 /usr/include/boost/date_time/posix_time/posix_time_config.hpp:
 
@@ -20349,8 +20351,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/asm-generic/int-ll64.h:
 
-/usr/include/aarch64-linux-gnu/bits/statx-generic.h:
-
 /usr/include/alsa/hwdep.h:
 
 /usr/include/aarch64-linux-gnu/bits/endian.h:
@@ -20369,15 +20369,19 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/linux/falloc.h:
 
-/usr/include/websocketpp/extensions/extension.hpp:
-
 /usr/include/c++/12/bits/stl_algo.h:
 
 /usr/include/boost/type_traits/conditional.hpp:
 
 /usr/include/aarch64-linux-gnu/sys/eventfd.h:
 
+/usr/include/aarch64-linux-gnu/bits/termios-c_iflag.h:
+
+/usr/include/boost/asio/detail/cstdint.hpp:
+
 /usr/include/aarch64-linux-gnu/sys/ioctl.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/utilities_impl.hpp:
 
 /usr/lib/linux/uapi/arm64/asm/ioctls.h:
 
@@ -20417,6 +20421,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/net/if.h:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/random/none.hpp:
+
 /usr/include/boost/asio/detail/timer_queue_base.hpp:
 
 /usr/include/boost/asio/detail/timer_queue_set.hpp:
@@ -20426,8 +20432,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/c++/12/math.h:
 
 /usr/include/aarch64-linux-gnu/bits/timerfd.h:
-
-/usr/include/websocketpp/transport/base/connection.hpp:
 
 /usr/include/boost/asio/windows/basic_object_handle.hpp:
 
@@ -20441,11 +20445,17 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/dependent_type.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/functional.hpp:
+
 /usr/include/boost/asio/detail/impl/epoll_reactor.ipp:
 
 /usr/include/boost/system/detail/std_interoperability.hpp:
 
 /usr/include/boost/type_traits/is_class.hpp:
+
+/usr/include/c++/12/ext/type_traits.h:
+
+/usr/include/aarch64-linux-gnu/bits/epoll.h:
 
 /usr/include/boost/asio/detail/signal_blocker.hpp:
 
@@ -20493,8 +20503,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/chrono.hpp:
 
-/usr/include/nlohmann/detail/meta/is_sax.hpp:
-
 /usr/include/aarch64-linux-gnu/sys/procfs.h:
 
 /usr/include/boost/asio/detail/winsock_init.hpp:
@@ -20530,6 +20538,18 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/aarch64-linux-gnu/bits/types/struct_sigstack.h:
 
 /usr/include/boost/asio/detail/impl/strand_service.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/endpoint_base.hpp:
+
+/usr/include/boost/regex/config/cwchar.hpp:
+
+/usr/include/aarch64-linux-gnu/bits/sigthread.h:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/message_buffer/alloc.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
 
 /usr/include/boost/date_time/gregorian/greg_duration_types.hpp:
 
@@ -20567,8 +20587,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/reactive_socket_recvmsg_op.hpp:
 
-/usr/include/nlohmann/detail/iterators/primitive_iterator.hpp:
-
 /usr/include/boost/asio/detail/completion_handler.hpp:
 
 /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp:
@@ -20594,8 +20612,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/aarch64-linux-gnu/bits/timesize.h:
 
 /usr/include/boost/asio/detail/array_fwd.hpp:
-
-/usr/include/boost/asio/detail/string_view.hpp:
 
 /usr/include/boost/detail/workaround.hpp:
 
@@ -20635,9 +20651,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/date_time/period.hpp:
 
-/usr/include/websocketpp/transport/asio/base.hpp:
-
 /usr/include/boost/asio/serial_port_base.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp:
 
 /usr/include/boost/asio/detail/date_time_fwd.hpp:
 
@@ -20693,10 +20709,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/smart_ptr/detail/sp_noexcept.hpp:
 
-/usr/include/opencv4/opencv2/core/hal/interface.h:
-
-/usr/include/boost/core/addressof.hpp:
-
 /usr/include/boost/asio/detail/socket_ops.hpp:
 
 /usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
@@ -20711,7 +20723,15 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/mpl/aux_/config/integral.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp:
+/usr/include/boost/config/pragma_message.hpp:
+
+/usr/include/opencv4/opencv2/flann.hpp:
+
+/usr/include/boost/mpl/void_fwd.hpp:
+
+/usr/include/boost/preprocessor/list/fold_left.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp:
 
 /usr/include/boost/smart_ptr/detail/operator_bool.hpp:
 
@@ -20731,6 +20751,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/numeric/conversion/numeric_cast_traits.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/common/chrono.hpp:
+
 /usr/include/boost/date_time/posix_time/posix_time_system.hpp:
 
 /usr/include/boost/config/no_tr1/cmath.hpp:
@@ -20749,6 +20771,10 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/date_time/time_defs.hpp:
 
+/usr/include/boost/predef/language.h:
+
+/usr/include/boost/operators.hpp:
+
 /usr/include/boost/type_traits/is_integral.hpp:
 
 /usr/include/boost/predef/library/std/stdcpp3.h:
@@ -20756,6 +20782,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/type_traits/integral_constant.hpp:
 
 /usr/include/boost/date_time/time_resolution_traits.hpp:
+
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp:
 
 /usr/include/boost/asio/detail/posix_signal_blocker.hpp:
 
@@ -20776,8 +20804,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/impl/write_at.hpp:
 
 /usr/include/boost/date_time/year_month_day.hpp:
-
-/usr/include/websocketpp/version.hpp:
 
 /usr/include/boost/date_time/gregorian/greg_weekday.hpp:
 
@@ -20825,6 +20851,12 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/detail/chrono_time_traits.hpp:
 
+/usr/include/opencv4/opencv2/photo.hpp:
+
+/usr/include/boost/mpl/aux_/nttp_decl.hpp:
+
+/usr/include/boost/date_time/date_duration_types.hpp:
+
 /usr/include/boost/asio/streambuf.hpp:
 
 /usr/include/boost/date_time/adjust_functors.hpp:
@@ -20842,12 +20874,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/mpl/eval_if.hpp:
 
 /usr/include/boost/type.hpp:
-
-/home/kufi/workspace/kufibot.cpp/include/piper-phonemize/tashkeel.hpp:
-
-/usr/include/boost/numeric/conversion/converter.hpp:
-
-/usr/include/websocketpp/error.hpp:
 
 /usr/include/boost/type_traits/is_arithmetic.hpp:
 
@@ -20885,17 +20911,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/mpl/int_fwd.hpp:
 
-/usr/include/opencv4/opencv2/photo.hpp:
-
-/usr/include/boost/date_time/date_duration_types.hpp:
-
-/usr/include/boost/mpl/aux_/nttp_decl.hpp:
-
 /usr/include/boost/mpl/aux_/config/nttp.hpp:
 
 /usr/include/boost/mpl/aux_/integral_wrapper.hpp:
-
-/usr/include/websocketpp/concurrency/basic.hpp:
 
 /usr/include/boost/preprocessor/cat.hpp:
 
@@ -20937,13 +20955,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/preprocessor/debug/error.hpp:
 
-/usr/include/nlohmann/detail/iterators/iteration_proxy.hpp:
-
 /usr/include/boost/preprocessor/arithmetic/inc.hpp:
 
 /usr/include/boost/mpl/limits/arity.hpp:
-
-/usr/include/websocketpp/http/impl/parser.hpp:
 
 /usr/include/boost/asio/detail/signal_op.hpp:
 
@@ -20993,14 +21007,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/preprocessor/arithmetic/sub.hpp:
 
-/usr/include/boost/asio/detail/push_options.hpp:
-
-/usr/include/boost/asio/detail/signal_set_service.hpp:
-
-/usr/include/boost/mpl/and.hpp:
-
-/usr/include/boost/asio/detached.hpp:
-
 /usr/include/boost/mpl/aux_/comparison_op.hpp:
 
 /usr/include/boost/mpl/numeric_cast.hpp:
@@ -21019,6 +21025,8 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/mpl/aux_/config/has_xxx.hpp:
 
+/home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp:
+
 /usr/include/aarch64-linux-gnu/bits/ioctls.h:
 
 /usr/include/boost/mpl/aux_/config/msvc_typename.hpp:
@@ -21030,8 +21038,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/preprocessor/inc.hpp:
 
 /usr/include/boost/preprocessor/array/size.hpp:
-
-/usr/include/websocketpp/transport/asio/security/base.hpp:
 
 /usr/include/boost/preprocessor/repetition/enum_params.hpp:
 
@@ -21111,9 +21117,9 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/numeric/conversion/converter_policies.hpp:
 
-/usr/include/c++/12/cmath:
-
 /usr/include/boost/asio/ip/address_v4_iterator.hpp:
+
+/usr/include/c++/12/cmath:
 
 /usr/include/boost/numeric/conversion/detail/bounds.hpp:
 
@@ -21177,15 +21183,13 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/ip/impl/network_v6.hpp:
 
-/usr/include/boost/asio/detail/descriptor_ops.hpp:
-
 /usr/include/boost/config/user.hpp:
 
 /usr/include/boost/asio/detail/descriptor_read_op.hpp:
 
 /usr/include/boost/asio/detail/descriptor_write_op.hpp:
 
-/usr/include/boost/asio/detail/impl/signal_set_service.ipp:
+/home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/asio/connection.hpp:
 
 /usr/include/aarch64-linux-gnu/gnu/stubs.h:
 
@@ -21211,8 +21215,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 
 /usr/include/boost/asio/buffered_write_stream.hpp:
 
-/usr/include/websocketpp/roles/server_endpoint.hpp:
-
 /usr/include/c++/12/bits/codecvt.h:
 
 /usr/include/boost/asio/detail/base_from_completion_cond.hpp:
@@ -21224,8 +21226,6 @@ CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/k
 /usr/include/boost/asio/impl/compose.hpp:
 
 /usr/include/boost/asio/impl/connect.hpp:
-
-/usr/include/websocketpp/common/memory.hpp:
 
 /usr/include/aarch64-linux-gnu/bits/stat.h:
 

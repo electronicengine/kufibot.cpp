@@ -71,6 +71,8 @@ Json RobotControllerService::get_sensor_values()
         {"power", power}
     };
 
+    
+    
     return metadata;
 }
 

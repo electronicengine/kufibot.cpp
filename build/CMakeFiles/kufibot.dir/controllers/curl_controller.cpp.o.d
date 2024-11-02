@@ -184,8 +184,8 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: \
  /usr/include/aarch64-linux-gnu/curl/options.h \
  /usr/include/aarch64-linux-gnu/curl/header.h \
  /usr/include/aarch64-linux-gnu/curl/websockets.h \
- /usr/include/nlohmann/json.hpp /usr/include/c++/12/algorithm \
- /usr/include/c++/12/bits/stl_algo.h \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+ /usr/include/c++/12/algorithm /usr/include/c++/12/bits/stl_algo.h \
  /usr/include/c++/12/bits/algorithmfwd.h \
  /usr/include/c++/12/bits/stl_heap.h \
  /usr/include/c++/12/bits/stl_tempbuf.h \
@@ -222,9 +222,9 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: \
  /usr/include/c++/12/backward/auto_ptr.h \
  /usr/include/c++/12/pstl/glue_memory_defs.h /usr/include/c++/12/utility \
  /usr/include/c++/12/bits/stl_relops.h \
- /usr/include/nlohmann/adl_serializer.hpp \
- /usr/include/nlohmann/detail/abi_macros.hpp \
- /usr/include/nlohmann/detail/conversions/from_json.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
  /usr/include/c++/12/forward_list /usr/include/c++/12/bits/forward_list.h \
  /usr/include/c++/12/bits/forward_list.tcc /usr/include/c++/12/map \
  /usr/include/c++/12/bits/stl_tree.h /usr/include/c++/12/bits/stl_map.h \
@@ -261,25 +261,26 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: \
  /usr/include/c++/12/bits/gslice_array.h \
  /usr/include/c++/12/bits/mask_array.h \
  /usr/include/c++/12/bits/indirect_array.h \
- /usr/include/nlohmann/detail/exceptions.hpp \
- /usr/include/nlohmann/detail/value_t.hpp \
- /usr/include/nlohmann/detail/macro_scope.hpp \
- /usr/include/nlohmann/detail/meta/detected.hpp \
- /usr/include/nlohmann/detail/meta/void_t.hpp \
- /usr/include/nlohmann/thirdparty/hedley/hedley.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
  /usr/include/c++/12/version /usr/include/c++/12/cassert \
- /usr/include/assert.h /usr/include/nlohmann/detail/string_escape.hpp \
- /usr/include/nlohmann/detail/input/position_t.hpp \
- /usr/include/nlohmann/detail/meta/cpp_future.hpp \
- /usr/include/nlohmann/detail/meta/type_traits.hpp \
- /usr/include/nlohmann/detail/iterators/iterator_traits.hpp \
- /usr/include/nlohmann/detail/meta/call_std/begin.hpp \
- /usr/include/nlohmann/detail/meta/call_std/end.hpp \
- /usr/include/nlohmann/json_fwd.hpp \
- /usr/include/nlohmann/detail/string_concat.hpp \
+ /usr/include/assert.h \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
  /usr/include/c++/12/cstring /usr/include/string.h /usr/include/strings.h \
- /usr/include/nlohmann/detail/meta/identity_tag.hpp \
- /usr/include/nlohmann/detail/meta/std_fs.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
  /usr/include/c++/12/filesystem /usr/include/c++/12/bits/fs_fwd.h \
  /usr/include/c++/12/bits/chrono.h /usr/include/c++/12/ratio \
  /usr/include/c++/12/ctime /usr/include/c++/12/bits/parse_numbers.h \
@@ -293,29 +294,30 @@ CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: \
  /usr/include/c++/12/bits/quoted_string.h /usr/include/c++/12/sstream \
  /usr/include/c++/12/bits/sstream.tcc /usr/include/c++/12/codecvt \
  /usr/include/c++/12/bits/fs_dir.h /usr/include/c++/12/bits/fs_ops.h \
- /usr/include/nlohmann/detail/conversions/to_json.hpp \
- /usr/include/nlohmann/detail/iterators/iteration_proxy.hpp \
- /usr/include/nlohmann/byte_container_with_subtype.hpp \
- /usr/include/nlohmann/detail/hash.hpp \
- /usr/include/nlohmann/detail/input/binary_reader.hpp \
- /usr/include/nlohmann/detail/input/input_adapters.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
  /usr/include/c++/12/numeric /usr/include/c++/12/bits/stl_numeric.h \
  /usr/include/c++/12/pstl/glue_numeric_defs.h \
- /usr/include/nlohmann/detail/input/json_sax.hpp \
- /usr/include/nlohmann/detail/input/lexer.hpp \
- /usr/include/nlohmann/detail/meta/is_sax.hpp \
- /usr/include/nlohmann/detail/input/parser.hpp \
- /usr/include/nlohmann/detail/iterators/internal_iterator.hpp \
- /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp \
- /usr/include/nlohmann/detail/iterators/iter_impl.hpp \
- /usr/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
- /usr/include/nlohmann/detail/json_custom_base_class.hpp \
- /usr/include/nlohmann/detail/json_pointer.hpp \
- /usr/include/nlohmann/detail/json_ref.hpp \
- /usr/include/nlohmann/detail/output/binary_writer.hpp \
- /usr/include/nlohmann/detail/output/output_adapters.hpp \
- /usr/include/nlohmann/detail/output/serializer.hpp \
- /usr/include/nlohmann/detail/conversions/to_chars.hpp \
- /usr/include/nlohmann/ordered_map.hpp /usr/include/c++/12/any \
- /usr/include/nlohmann/detail/macro_unscope.hpp \
- /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+ /usr/include/c++/12/any \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp

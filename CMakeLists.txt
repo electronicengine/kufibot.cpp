@@ -16,7 +16,7 @@ find_package(OpenSSL REQUIRED)
 find_package(ALSA REQUIRED)
 find_package(CURL REQUIRED)
 
-pkg_check_modules(PORTAUDIO REQUIRED portaudio-2.0)
+
 
 include_directories(${PORTAUDIO_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -94,4 +94,5 @@ target_link_libraries(kufibot ${wiringPi_LIB}
                               piper_phonemize
                               onnxruntime
                               ALSA::ALSA
-                              Boost::system )
+                              Boost::system
+                              portaudio)

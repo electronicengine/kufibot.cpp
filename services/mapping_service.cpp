@@ -90,7 +90,7 @@ void MappingService::start() {
     if (!_running) { 
         _running = true;
         std::cout << "RobotControllerService is starting..." << std::endl;
-        _serviceThread = std::thread(&MappingService::service_update_function, this);
+        // _serviceThread = std::thread(&MappingService::service_update_function, this);
     }
 }
 
