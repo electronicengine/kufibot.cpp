@@ -10,10 +10,8 @@ set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
-find_package(OpenSSL REQUIRED)
 find_package(ALSA REQUIRED)
 find_package(CURL REQUIRED)
-
 
 
 include_directories(${PORTAUDIO_INCLUDE_DIRS})

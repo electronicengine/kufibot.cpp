@@ -464,8 +464,6 @@ kufibot: /usr/lib/aarch64-linux-gnu/libopencv_viz.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_wechat_qrcode.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_xobjdetect.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_xphoto.so.4.6.0
-kufibot: /usr/lib/aarch64-linux-gnu/libssl.so
-kufibot: /usr/lib/aarch64-linux-gnu/libcrypto.so
 kufibot: /usr/lib/aarch64-linux-gnu/libcurl.so
 kufibot: /usr/lib/aarch64-linux-gnu/libasound.so
 kufibot: /usr/lib/aarch64-linux-gnu/libboost_system.so.1.74.0
