@@ -428,7 +428,6 @@ kufibot: CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/services/mapping_service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/build.make
-kufibot: /usr/lib/libwiringPi.so
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_alphamat.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_aruco.so.4.6.0
@@ -470,7 +469,6 @@ kufibot: /usr/lib/aarch64-linux-gnu/libcrypto.so
 kufibot: /usr/lib/aarch64-linux-gnu/libcurl.so
 kufibot: /usr/lib/aarch64-linux-gnu/libasound.so
 kufibot: /usr/lib/aarch64-linux-gnu/libboost_system.so.1.74.0
-kufibot: /usr/lib/aarch64-linux-gnu/libcurl.so
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_highgui.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_datasets.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_plot.so.4.6.0
@@ -490,6 +488,7 @@ kufibot: /usr/lib/aarch64-linux-gnu/libopencv_flann.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0
+kufibot: /usr/lib/aarch64-linux-gnu/libcurl.so
 kufibot: CMakeFiles/kufibot.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking CXX executable kufibot"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kufibot.dir/link.txt --verbose=$(VERBOSE)

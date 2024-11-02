@@ -8,8 +8,6 @@ set(CMAKE_BUILD_TYPE Debug)
 set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 
 
-find_library(wiringPi_LIB wiringPi)
-
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -80,11 +78,11 @@ target_include_directories(kufibot PUBLIC
 ${EXTERNAL_LIB_DIR}
 )
 
-target_link_libraries(kufibot ${wiringPi_LIB}
-                              ${OpenCV_LIBS}
+target_link_libraries(kufibot ${OpenCV_LIBS}
                               ${OPENSSL_LIBRARIES}
                               ${PORTAUDIO_LIBRARIES} 
                               ${CURL_LIBRARIES}
+                              wiringPi
                               mpg123
                               vosk
                               fmt
