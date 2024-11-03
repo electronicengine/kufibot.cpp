@@ -1,7 +1,7 @@
 # kufibot.cpp
 
 ## Overview
-**kufibot.cpp** is a home made robot assistant C++ project designed for This guide provides instructions for setting up cross-compilation using Docker's buildx for multi-platform support.
+**kufibot.cpp** is a home made AI robot assistant C++ project designed for This guide provides instructions for setting up cross-compilation using Docker's buildx for multi-platform support.
 
 ---
 
