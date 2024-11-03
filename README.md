@@ -36,6 +36,7 @@ docker run --platform linux/arm64 --name test -it raspimage /bin/bash
 ```bash
 mkdir build && cd build
 make
+export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
 ```
   
 
