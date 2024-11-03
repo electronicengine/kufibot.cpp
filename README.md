@@ -53,6 +53,7 @@ docker run --platform linux/arm64 --name test -it raspimage /bin/bash
 ### Kufibot compilation
 ```bash
 mkdir build && cd build
+cmake ..
 make
 export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
 ```
