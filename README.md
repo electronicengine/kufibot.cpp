@@ -23,8 +23,12 @@ docker buildx create --use --name mybuilder
 docker buildx inspect mybuilder --bootstrap
 ```
 ### Compile and Run Arm64 Docker
+* Compile docker with Dockerfile and load image
 ```bash
 docker buildx build --platform linux/arm64 -t raspimage --load .  //compile docker
+```
+* run compiled docker image
+```bash
 docker run --platform linux/arm64 --name test -it raspimage /bin/bash // run the docker
 ```
 
