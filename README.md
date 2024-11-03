@@ -5,8 +5,26 @@
 
 ---
 
-## Cross-Compilation Setup
+## Mechinical Parts:
+The mechincal parts are 3D printed. see:  https://www.printables.com/model/408363-wall-e
 
+## Hardware Parts:
+* 150 Rpm 12V DC Motor x 2
+* mini servo motor x 6
+* Usb Camera x1
+* Usb wireless microphone x 1
+* Bluetooth Speaker x 1
+* HMI Display x 1
+* 12V-5600 mah Li-On Battery Pack x 1
+* INA219 i2c current cirtuit Sensor x 1
+* QMC5883L i2c magnometer circuit x 1
+* TF-Luna uart Lidar x 1
+* Waveshare Hat DC Motor Driver x 1
+* WaveShare Hat Servo Motor Driver x 1
+* Raspberry Pi 5 x 1
+* Hailo 8 AI Accelerator x 1
+
+## SOFTWARE:
 ### Enable Multi-Architecture Support
 To enable multi-architecture support, run the following commands:
 
@@ -32,7 +50,7 @@ docker buildx build --platform linux/arm64 -t raspimage --load .
 docker run --platform linux/arm64 --name test -it raspimage /bin/bash 
 ```
 
-## Kufibot compilation
+### Kufibot compilation
 ```bash
 mkdir build && cd build
 make
