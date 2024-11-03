@@ -30,7 +30,6 @@ docker run --platform linux/arm64 --name test -it raspimage /bin/bash // run the
 
 ## Kufibot compilation
 ```bash
-cd kufibot.cpp
 mkdir build && cd build
 make
 ```
