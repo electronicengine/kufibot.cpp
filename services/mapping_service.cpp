@@ -18,6 +18,46 @@ MappingService::MappingService(): Service("MappingService") {
 }
 
 
+void MappingService::go_to_point(int targetX, int targetY)
+{
+    int dx = targetX - _centerX;
+    int dy = _centerY - targetY;  
+
+
+    int targetDistance = static_cast<int>(sqrt(dx * dx + dy * dy));
+
+    double targetAngle = atan2(dy, dx) * 180.0 / CV_PI;
+
+    CompassController* compass = CompassController::get_instance();
+    DistanceController* distance = DistanceController::get_instance();
+    DCMotorController* motor = DCMotorController::get_instance();
+
+    double currentAngle = compass->get_angle();
+    double angleDiff = targetAngle - currentAngle;
+
+    if (angleDiff > 180) angleDiff -= 360;
+    if (angleDiff < -180) angleDiff += 360;
+
+    if (angleDiff > 0) {
+        motor->turn_right(static_cast<int>(fabs(angleDiff)));
+    } else {
+        motor->turn_left(static_cast<int>(fabs(angleDiff)));
+    }
+
+    std::map<std::string, int> distanceMap = distance->get_distance();
+    int currentDistance = distanceMap["distance"];
+
+    while (currentDistance < targetDistance) {
+        motor->move_forward(50);  // Adjust speed as needed
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+        distanceMap = distance->get_distance();
+        currentDistance = distanceMap["distance"];
+    }
+
+    motor->stop();
+}
+
 void MappingService::service_update_function()
 {
 

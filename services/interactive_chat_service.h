@@ -32,7 +32,7 @@
 #include "../controllers/curl_controller.h"
 #include "../controllers/execution_controller.h"
 #include "../controllers/dc_motor_controller.h"
-
+#include "mapping_service.h"
 
 #include "video_stream_service.h"
 

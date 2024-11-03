@@ -35,7 +35,7 @@ private:
 
 public:
     MappingService();
-
+    void go_to_point(int x, int y);
     static MappingService *get_instance();
     void service_update_function();
     void start(); 

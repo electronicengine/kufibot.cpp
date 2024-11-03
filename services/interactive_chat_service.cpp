@@ -127,6 +127,9 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
         }
     }else if (message.find("atölye") != std::string::npos && message.find("git") != std::string::npos) {
         _speechProcessController->speakText("Şu an atolye odasına gidiliyor...");
+        MappingService *map_service = MappingService::get_instance();
+        map_service->go_to_point(22334, 5677);
+
 
     }else if(message.find("tanım") != std::string::npos){
         _speechProcessController->speakText("Şu an inceliyorum...");
