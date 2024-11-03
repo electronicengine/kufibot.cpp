@@ -11,7 +11,7 @@ The mechanical parts are 3D printed. see:  https://www.printables.com/model/4083
 ## Hardware Parts:
 * 150 Rpm 12V DC Motor x 2
 * mini servo motor x 6
-* Usb Camera x1
+* Usb Camera x 1
 * Usb wireless microphone x 1
 * Bluetooth Speaker x 1
 * HMI Display x 1
