@@ -6,7 +6,7 @@
 ---
 
 ## Mechinical Parts:
-The mechincal parts are 3D printed. see:  https://www.printables.com/model/408363-wall-e
+The mechanical parts are 3D printed. see:  https://www.printables.com/model/408363-wall-e
 
 ## Hardware Parts:
 * 150 Rpm 12V DC Motor x 2
