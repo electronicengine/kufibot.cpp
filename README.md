@@ -5,10 +5,10 @@
 
 ---
 
-## Mechinical Parts:
+## Mechinical
 The mechanical parts are 3D printed. see:  https://www.printables.com/model/408363-wall-e
 
-## Hardware Parts:
+## Hardware
 * 150 Rpm 12V DC Motor x 2
 * mini servo motor x 6
 * Usb Camera x 1
@@ -24,7 +24,7 @@ The mechanical parts are 3D printed. see:  https://www.printables.com/model/4083
 * Raspberry Pi 5 x 1
 * Hailo 8 AI Accelerator x 1
 
-## SOFTWARE:
+## Software:
 ### Enable Multi-Architecture Support
 To enable multi-architecture support, run the following commands:
 
