@@ -93,8 +93,3 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               ALSA::ALSA
                               Boost::system
                               portaudio)
-
-                              
-# Option 1: Add to kufibot target properties (specific to kufibot target only)
-set_property(TARGET kufibot PROPERTY 
-INTERFACE_LINK_DIRECTORIES ${EXTERNAL_LIB_DIR})
