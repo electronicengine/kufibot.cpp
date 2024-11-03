@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     git \
     gcc \
+    g++ \
     pkg-config \
     libboost-all-dev \
     libssl-dev \
