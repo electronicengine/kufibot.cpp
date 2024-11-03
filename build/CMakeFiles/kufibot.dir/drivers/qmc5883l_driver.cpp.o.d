@@ -182,9 +182,10 @@ CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o: \
  /usr/include/c++/12/tr1/modified_bessel_func.tcc \
  /usr/include/c++/12/tr1/poly_hermite.tcc \
  /usr/include/c++/12/tr1/poly_laguerre.tcc \
- /usr/include/c++/12/tr1/riemann_zeta.tcc /usr/include/wiringPi.h \
- /usr/include/wiringPiI2C.h /usr/include/c++/12/vector \
- /usr/include/c++/12/bits/stl_uninitialized.h \
+ /usr/include/c++/12/tr1/riemann_zeta.tcc \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h \
+ /usr/include/c++/12/vector /usr/include/c++/12/bits/stl_uninitialized.h \
  /usr/include/c++/12/bits/stl_vector.h \
  /usr/include/c++/12/bits/stl_bvector.h \
  /usr/include/c++/12/bits/vector.tcc /usr/include/c++/12/array \

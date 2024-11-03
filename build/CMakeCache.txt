@@ -238,18 +238,6 @@ CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
 //Path to a library.
 CURL_LIBRARY_RELEASE:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
 
-//The directory containing a CMake configuration file for MPG123.
-MPG123_DIR:PATH=MPG123_DIR-NOTFOUND
-
-//Path to a library.
-OPENSSL_CRYPTO_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libcrypto.so
-
-//Path to a file.
-OPENSSL_INCLUDE_DIR:PATH=/usr/include
-
-//Path to a library.
-OPENSSL_SSL_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/libssl.so
-
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/lib/aarch64-linux-gnu/cmake/opencv4
 
@@ -258,12 +246,6 @@ PKG_CONFIG_ARGN:STRING=
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
-
-//The directory containing a CMake configuration file for Piper.
-Piper_DIR:PATH=Piper_DIR-NOTFOUND
-
-//The directory containing a CMake configuration file for PortAudio.
-PortAudio_DIR:PATH=PortAudio_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=/usr/lib/aarch64-linux-gnu/cmake/boost_headers-1.74.0
@@ -282,30 +264,6 @@ kufibot_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp
 
 //Path to a library.
 pkgcfg_lib_PC_CURL_curl:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
-
-//Path to a library.
-pkgcfg_lib_PORTAUDIO_asound:FILEPATH=/usr/lib/aarch64-linux-gnu/libasound.so
-
-//Path to a library.
-pkgcfg_lib_PORTAUDIO_m:FILEPATH=/usr/lib/aarch64-linux-gnu/libm.so
-
-//Path to a library.
-pkgcfg_lib_PORTAUDIO_portaudio:FILEPATH=/usr/lib/aarch64-linux-gnu/libportaudio.so
-
-//Path to a library.
-pkgcfg_lib_PORTAUDIO_pthread:FILEPATH=/usr/lib/aarch64-linux-gnu/libpthread.a
-
-//Path to a library.
-pkgcfg_lib__OPENSSL_crypto:FILEPATH=/usr/lib/aarch64-linux-gnu/libcrypto.so
-
-//Path to a library.
-pkgcfg_lib__OPENSSL_ssl:FILEPATH=/usr/lib/aarch64-linux-gnu/libssl.so
-
-//Path to a library.
-vosk:FILEPATH=/home/kufi/workspace/kufibot.cpp/lib/libvosk.so
-
-//Path to a library.
-wiringPi_LIB:FILEPATH=/usr/lib/libwiringPi.so
 
 
 ########################
@@ -477,42 +435,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/lib/aarch64-linux-gnu/cmake/Bo
 FIND_PACKAGE_MESSAGE_DETAILS_CURL:INTERNAL=[/usr/lib/aarch64-linux-gnu/libcurl.so][/usr/include/aarch64-linux-gnu][c ][v7.88.1()]
 //Details about finding OpenCV
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.6.0()]
-//Details about finding OpenSSL
-FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/aarch64-linux-gnu/libcrypto.so][/usr/include][c ][v3.0.14()]
-//Details about finding PkgConfig
-FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 JSON_BuildTests:INTERNAL=OFF
-MPG123_CFLAGS:INTERNAL=
-MPG123_CFLAGS_I:INTERNAL=
-MPG123_CFLAGS_OTHER:INTERNAL=
-MPG123_FOUND:INTERNAL=
-MPG123_INCLUDEDIR:INTERNAL=
-MPG123_LIBDIR:INTERNAL=
-MPG123_LIBS:INTERNAL=
-MPG123_LIBS_L:INTERNAL=
-MPG123_LIBS_OTHER:INTERNAL=
-MPG123_LIBS_PATHS:INTERNAL=
-MPG123_MODULE_NAME:INTERNAL=
-MPG123_PREFIX:INTERNAL=
-MPG123_STATIC_CFLAGS:INTERNAL=
-MPG123_STATIC_CFLAGS_I:INTERNAL=
-MPG123_STATIC_CFLAGS_OTHER:INTERNAL=
-MPG123_STATIC_LIBDIR:INTERNAL=
-MPG123_STATIC_LIBS:INTERNAL=
-MPG123_STATIC_LIBS_L:INTERNAL=
-MPG123_STATIC_LIBS_OTHER:INTERNAL=
-MPG123_STATIC_LIBS_PATHS:INTERNAL=
-MPG123_VERSION:INTERNAL=
-MPG123_mpg123_INCLUDEDIR:INTERNAL=
-MPG123_mpg123_LIBDIR:INTERNAL=
-MPG123_mpg123_PREFIX:INTERNAL=
-MPG123_mpg123_VERSION:INTERNAL=
-//ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
-OPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: OPENSSL_INCLUDE_DIR
-OPENSSL_INCLUDE_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: OPENSSL_SSL_LIBRARY
-OPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1
 PC_CURL_CFLAGS:INTERNAL=-I/usr/include/aarch64-linux-gnu
 PC_CURL_CFLAGS_I:INTERNAL=
 PC_CURL_CFLAGS_OTHER:INTERNAL=
@@ -552,101 +475,15 @@ PC_CURL_libcurl_VERSION:INTERNAL=
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
-PORTAUDIO_CFLAGS:INTERNAL=-pthread
-PORTAUDIO_CFLAGS_I:INTERNAL=
-PORTAUDIO_CFLAGS_OTHER:INTERNAL=-pthread
-PORTAUDIO_FOUND:INTERNAL=1
-PORTAUDIO_INCLUDEDIR:INTERNAL=/usr/include
-PORTAUDIO_INCLUDE_DIRS:INTERNAL=
-PORTAUDIO_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lportaudio;-lasound;-lm;-lpthread
-PORTAUDIO_LDFLAGS_OTHER:INTERNAL=
-PORTAUDIO_LIBDIR:INTERNAL=/usr/lib/aarch64-linux-gnu
-PORTAUDIO_LIBRARIES:INTERNAL=portaudio;asound;m;pthread
-PORTAUDIO_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu
-PORTAUDIO_LIBS:INTERNAL=
-PORTAUDIO_LIBS_L:INTERNAL=
-PORTAUDIO_LIBS_OTHER:INTERNAL=
-PORTAUDIO_LIBS_PATHS:INTERNAL=
-PORTAUDIO_MODULE_NAME:INTERNAL=portaudio-2.0
-PORTAUDIO_PREFIX:INTERNAL=/usr
-PORTAUDIO_STATIC_CFLAGS:INTERNAL=-pthread
-PORTAUDIO_STATIC_CFLAGS_I:INTERNAL=
-PORTAUDIO_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
-PORTAUDIO_STATIC_INCLUDE_DIRS:INTERNAL=
-PORTAUDIO_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lportaudio;-lasound;-lm;-lpthread
-PORTAUDIO_STATIC_LDFLAGS_OTHER:INTERNAL=
-PORTAUDIO_STATIC_LIBDIR:INTERNAL=
-PORTAUDIO_STATIC_LIBRARIES:INTERNAL=portaudio;asound;m;pthread
-PORTAUDIO_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu
-PORTAUDIO_STATIC_LIBS:INTERNAL=
-PORTAUDIO_STATIC_LIBS_L:INTERNAL=
-PORTAUDIO_STATIC_LIBS_OTHER:INTERNAL=
-PORTAUDIO_STATIC_LIBS_PATHS:INTERNAL=
-PORTAUDIO_VERSION:INTERNAL=19
-PORTAUDIO_portaudio-2.0_INCLUDEDIR:INTERNAL=
-PORTAUDIO_portaudio-2.0_LIBDIR:INTERNAL=
-PORTAUDIO_portaudio-2.0_PREFIX:INTERNAL=
-PORTAUDIO_portaudio-2.0_VERSION:INTERNAL=
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
-_OPENSSL_CFLAGS:INTERNAL=
-_OPENSSL_CFLAGS_I:INTERNAL=
-_OPENSSL_CFLAGS_OTHER:INTERNAL=
-_OPENSSL_FOUND:INTERNAL=1
-_OPENSSL_INCLUDEDIR:INTERNAL=/usr/include
-_OPENSSL_INCLUDE_DIRS:INTERNAL=
-_OPENSSL_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lssl;-lcrypto
-_OPENSSL_LDFLAGS_OTHER:INTERNAL=
-_OPENSSL_LIBDIR:INTERNAL=/usr/lib/aarch64-linux-gnu
-_OPENSSL_LIBRARIES:INTERNAL=ssl;crypto
-_OPENSSL_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu
-_OPENSSL_LIBS:INTERNAL=
-_OPENSSL_LIBS_L:INTERNAL=
-_OPENSSL_LIBS_OTHER:INTERNAL=
-_OPENSSL_LIBS_PATHS:INTERNAL=
-_OPENSSL_MODULE_NAME:INTERNAL=openssl
-_OPENSSL_PREFIX:INTERNAL=/usr
-_OPENSSL_STATIC_CFLAGS:INTERNAL=
-_OPENSSL_STATIC_CFLAGS_I:INTERNAL=
-_OPENSSL_STATIC_CFLAGS_OTHER:INTERNAL=
-_OPENSSL_STATIC_INCLUDE_DIRS:INTERNAL=
-_OPENSSL_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/aarch64-linux-gnu;-lssl;-L/usr/lib/aarch64-linux-gnu;-ldl;-pthread;-lcrypto;-ldl;-pthread
-_OPENSSL_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread;-pthread
-_OPENSSL_STATIC_LIBDIR:INTERNAL=
-_OPENSSL_STATIC_LIBRARIES:INTERNAL=ssl;dl;crypto;dl
-_OPENSSL_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/aarch64-linux-gnu;/usr/lib/aarch64-linux-gnu
-_OPENSSL_STATIC_LIBS:INTERNAL=
-_OPENSSL_STATIC_LIBS_L:INTERNAL=
-_OPENSSL_STATIC_LIBS_OTHER:INTERNAL=
-_OPENSSL_STATIC_LIBS_PATHS:INTERNAL=
-_OPENSSL_VERSION:INTERNAL=3.0.14
-_OPENSSL_openssl_INCLUDEDIR:INTERNAL=
-_OPENSSL_openssl_LIBDIR:INTERNAL=
-_OPENSSL_openssl_PREFIX:INTERNAL=
-_OPENSSL_openssl_VERSION:INTERNAL=
 __pkg_config_arguments_PC_CURL:INTERNAL=QUIET;libcurl
-__pkg_config_arguments_PORTAUDIO:INTERNAL=REQUIRED;portaudio-2.0
-__pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl
 __pkg_config_checked_PC_CURL:INTERNAL=1
-__pkg_config_checked_PORTAUDIO:INTERNAL=1
-__pkg_config_checked__OPENSSL:INTERNAL=1
 //ADVANCED property for variable: boost_headers_DIR
 boost_headers_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_system_DIR
 boost_system_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_PC_CURL_curl
 pkgcfg_lib_PC_CURL_curl-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_asound
-pkgcfg_lib_PORTAUDIO_asound-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_m
-pkgcfg_lib_PORTAUDIO_m-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_portaudio
-pkgcfg_lib_PORTAUDIO_portaudio-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_pthread
-pkgcfg_lib_PORTAUDIO_pthread-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib__OPENSSL_crypto
-pkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl
-pkgcfg_lib__OPENSSL_ssl-ADVANCED:INTERNAL=1
 prefix_result:INTERNAL=AsynchDNS;GSS-API;HSTS;HTTP2;HTTPS-proxy;IDN;IPv6;Kerberos;Largefile;NTLM;NTLM_WB;PSL;SPNEGO;SSL;TLS-SRP;UnixSockets;alt-svc;brotli;libz;threadsafe;zstd
 

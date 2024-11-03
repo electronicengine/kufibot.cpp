@@ -8,6 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 
 
+
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
 find_package(ALSA REQUIRED)
@@ -92,3 +93,8 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               ALSA::ALSA
                               Boost::system
                               portaudio)
+
+                              
+# Option 1: Add to kufibot target properties (specific to kufibot target only)
+set_property(TARGET kufibot PROPERTY 
+INTERFACE_LINK_DIRECTORIES ${EXTERNAL_LIB_DIR})

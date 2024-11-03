@@ -297,4 +297,5 @@ CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
  /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
  /home/kufi/workspace/kufibot.cpp/controllers/../drivers/pca9685_driver.h \
- /usr/include/wiringPi.h /usr/include/wiringPiI2C.h
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h

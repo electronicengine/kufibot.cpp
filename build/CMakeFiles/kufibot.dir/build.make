@@ -486,7 +486,6 @@ kufibot: /usr/lib/aarch64-linux-gnu/libopencv_flann.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0
-kufibot: /usr/lib/aarch64-linux-gnu/libcurl.so
 kufibot: CMakeFiles/kufibot.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking CXX executable kufibot"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kufibot.dir/link.txt --verbose=$(VERBOSE)

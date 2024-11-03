@@ -12,6 +12,7 @@
 #include "service.h"
 #include "../controllers/distance_controller.h"  
 #include "../controllers/compass_controller.h"
+#include "../controllers/dc_motor_controller.h"
 
 class DistanceController; 
 class CompassController;
@@ -24,6 +25,7 @@ private:
     int _maxMagnitude;
     cv::Mat _polarPlot;
     static MappingService *_instance;
+    
 
 
     int _index = 0;

@@ -1383,7 +1383,8 @@ CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/compass_controller.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/median_filter.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/../drivers/qmc5883l_driver.h \
- /usr/include/wiringPi.h /usr/include/wiringPiI2C.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/../drivers/qmc5883l_driver.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/distance_controller.h \
  /home/kufi/workspace/kufibot.cpp/services/../controllers/power_controller.h \

@@ -150,8 +150,10 @@ CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o: \
  /usr/include/c++/12/bits/locale_facets.tcc \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
- /usr/include/c++/12/bits/istream.tcc /usr/include/wiringPi.h \
- /usr/include/wiringPiI2C.h /usr/include/c++/12/cmath /usr/include/math.h \
+ /usr/include/c++/12/bits/istream.tcc \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h \
+ /usr/include/c++/12/cmath /usr/include/math.h \
  /usr/include/aarch64-linux-gnu/bits/math-vector.h \
  /usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/aarch64-linux-gnu/bits/flt-eval-method.h \

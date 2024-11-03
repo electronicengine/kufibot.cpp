@@ -150,7 +150,8 @@ CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: \
  /usr/include/c++/12/bits/locale_facets.tcc \
  /usr/include/c++/12/bits/basic_ios.tcc \
  /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
- /usr/include/c++/12/bits/istream.tcc /usr/include/wiringPi.h \
+ /usr/include/c++/12/bits/istream.tcc \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
  /usr/include/c++/12/map /usr/include/c++/12/bits/stl_tree.h \
  /usr/include/c++/12/ext/aligned_buffer.h \
  /usr/include/c++/12/bits/node_handle.h \
@@ -159,7 +160,8 @@ CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: \
  /usr/include/c++/12/bits/stl_multimap.h \
  /usr/include/c++/12/bits/erase_if.h \
  /home/kufi/workspace/kufibot.cpp/controllers/../drivers/pca9685_driver.h \
- /usr/include/wiringPiI2C.h /usr/include/c++/12/cmath /usr/include/math.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h \
+ /usr/include/c++/12/cmath /usr/include/math.h \
  /usr/include/aarch64-linux-gnu/bits/math-vector.h \
  /usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/aarch64-linux-gnu/bits/flt-eval-method.h \
