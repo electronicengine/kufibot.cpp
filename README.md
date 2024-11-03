@@ -15,7 +15,7 @@ The mechanical parts are 3D printed. see:  https://www.printables.com/model/4083
 * Usb wireless microphone x 1
 * Bluetooth Speaker x 1
 * HMI Display x 1
-* 12V-5600 mah Li-On Battery Pack x 1
+* 3S - 5600 mah Li-On Battery Pack x 1
 * INA219 i2c current cirtuit Sensor x 1
 * QMC5883L i2c magnometer circuit x 1
 * TF-Luna uart Lidar x 1
