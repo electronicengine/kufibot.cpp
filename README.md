@@ -16,11 +16,11 @@ The mechanical parts are 3D printed. see:  https://www.printables.com/model/4083
 * Bluetooth Speaker x 1
 * HMI Display x 1
 * 3S - 5600 mah Li-On Battery Pack x 1
-* INA219 i2c current cirtuit Sensor x 1
+* INA219 i2c current sensor cirtuit Sensor x 1
 * QMC5883L i2c magnometer circuit x 1
-* TF-Luna uart Lidar x 1
-* Waveshare Hat DC Motor Driver x 1
-* WaveShare Hat Servo Motor Driver x 1
+* TF-Luna uart Lidar circuit x 1
+* Waveshare Hat DC Motor Driver circuit x 1
+* WaveShare Hat Servo Motor Driver circuit x 1
 * Raspberry Pi 5 x 1
 * Hailo 8 AI Accelerator x 1
 
