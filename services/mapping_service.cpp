@@ -47,13 +47,13 @@ void MappingService::go_to_point(int targetX, int targetY)
     std::map<std::string, int> distanceMap = distance->get_distance();
     int currentDistance = distanceMap["distance"];
 
-    while (currentDistance < targetDistance) {
-        motor->move_forward(50);  // Adjust speed as needed
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // while (currentDistance < targetDistance) {
+    //     motor->move_forward(50);  // Adjust speed as needed
+    //     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        distanceMap = distance->get_distance();
-        currentDistance = distanceMap["distance"];
-    }
+    //     distanceMap = distance->get_distance();
+    //     currentDistance = distanceMap["distance"];
+    // }
 
     motor->stop();
 }
