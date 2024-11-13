@@ -19,6 +19,15 @@ RUN apt-get update && apt-get install -y \
     libopencv-dev \
     portaudio19-dev \
     libcurl4-openssl-dev \
+    libgpm-dev \
+    libncurses5-dev \
+    libglib2.0-dev\
+    pkg-config \
+    libtool \
+    autoconf-archive \
+    autoconf \
+    automake \
+    autotools-dev \
     mpg123 \
     libmpg123-dev && \
     # Clean up APT when done to reduce image size
