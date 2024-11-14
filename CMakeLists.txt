@@ -92,4 +92,6 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               onnxruntime
                               ALSA::ALSA
                               Boost::system
-                              portaudio)
+                              portaudio
+                              final
+                              )
