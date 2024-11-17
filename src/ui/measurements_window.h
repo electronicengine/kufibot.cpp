@@ -24,6 +24,13 @@ class MeasurementsWindow : public SubWindow
 
     auto operator = (MeasurementsWindow&&) noexcept -> MeasurementsWindow& = delete;
 
+private:
+
+    finalcut::FLineEdit _compassAngle {this};
+    finalcut::FLineEdit _distance {this};
+    finalcut::FLineEdit _current {this};
+    finalcut::FLineEdit _voltage {this};
+
 
 
 };

@@ -13,22 +13,21 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
 
     _lineEditFilter.setLabelText(L"Filter");
     _lineEditFilter.setLabelOrientation(finalcut::FLineEdit::LabelOrientation::Above);
-    _lineEditFilter.unsetShadow();
-    _lineEditFilter.setGeometry(finalcut::FPoint{3,2}, finalcut::FSize{12, 3});
+    _lineEditFilter.setGeometry(finalcut::FPoint{3,2}, finalcut::FSize{12, 1});
 
 
-    _radiobutton_group.setGeometry(finalcut::FPoint{16,1}, finalcut::FSize{25, 3});
+    _radiobutton_group.setGeometry(finalcut::FPoint{18,1}, finalcut::FSize{25, 3});
     _error.setGeometry(finalcut::FPoint{1,1}, finalcut::FSize{5, 1});
     _warning.setGeometry(finalcut::FPoint{7,1}, finalcut::FSize{5, 1});
     _info.setGeometry(finalcut::FPoint{13,1}, finalcut::FSize{5, 1});
     _trace.setGeometry(finalcut::FPoint{19,1}, finalcut::FSize{5, 1});
     _info.setChecked();
 
+    _toggleGroup.setGeometry(FPoint{44, 1}, FSize{15, 3});
     _toggleAutoScroll.setGeometry(finalcut::FPoint{2,1}, finalcut::FSize{12, 1});
     _toggleAutoScroll.setChecked(true);
     _toggleAutoScroll.addCallback("toggled", this, &MainWindow::auto_scroll_toggle);
 
-    _toggleGroup.setGeometry(FPoint{42, 1}, FSize{15, 3});
 
     _compassRTGraphWindow = new CompassRtGraphWindow{this, -200, 200, -200, 200};
     _compassRTGraphWindow->setGeometry (FPoint{8, 16}, FSize{60, 30});
