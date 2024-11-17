@@ -69,364 +69,492 @@ include CMakeFiles/kufibot.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/kufibot.dir/flags.make
 
-CMakeFiles/kufibot.dir/main.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/main.cpp.o: /home/kufi/workspace/kufibot.cpp/main.cpp
-CMakeFiles/kufibot.dir/main.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/kufibot.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/main.cpp.o -MF CMakeFiles/kufibot.dir/main.cpp.o.d -o CMakeFiles/kufibot.dir/main.cpp.o -c /home/kufi/workspace/kufibot.cpp/main.cpp
-
-CMakeFiles/kufibot.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/main.cpp > CMakeFiles/kufibot.dir/main.cpp.i
-
-CMakeFiles/kufibot.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/main.cpp -o CMakeFiles/kufibot.dir/main.cpp.s
-
-CMakeFiles/kufibot.dir/publisher.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/publisher.cpp
-CMakeFiles/kufibot.dir/publisher.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/kufibot.dir/publisher.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/publisher.cpp.o -MF CMakeFiles/kufibot.dir/publisher.cpp.o.d -o CMakeFiles/kufibot.dir/publisher.cpp.o -c /home/kufi/workspace/kufibot.cpp/publisher.cpp
-
-CMakeFiles/kufibot.dir/publisher.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/publisher.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/publisher.cpp > CMakeFiles/kufibot.dir/publisher.cpp.i
-
-CMakeFiles/kufibot.dir/publisher.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/publisher.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/publisher.cpp -o CMakeFiles/kufibot.dir/publisher.cpp.s
-
-CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o: /home/kufi/workspace/kufibot.cpp/drivers/median_filter.cpp
-CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o -MF CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o.d -o CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o -c /home/kufi/workspace/kufibot.cpp/drivers/median_filter.cpp
-
-CMakeFiles/kufibot.dir/drivers/median_filter.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/drivers/median_filter.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/drivers/median_filter.cpp > CMakeFiles/kufibot.dir/drivers/median_filter.cpp.i
-
-CMakeFiles/kufibot.dir/drivers/median_filter.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/drivers/median_filter.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/drivers/median_filter.cpp -o CMakeFiles/kufibot.dir/drivers/median_filter.cpp.s
-
-CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.cpp
-CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o -MF CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o.d -o CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.cpp
-
-CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.cpp > CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.i
-
-CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/drivers/pca9685_driver.cpp -o CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.s
-
-CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.cpp
-CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o -MF CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o.d -o CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.cpp
-
-CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.cpp > CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.i
-
-CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/drivers/qmc5883l_driver.cpp -o CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.s
-
-CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/drivers/ina219_driver.cpp
-CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o -MF CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o.d -o CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/drivers/ina219_driver.cpp
-
-CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/drivers/ina219_driver.cpp > CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.i
-
-CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/drivers/ina219_driver.cpp -o CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/execution_controller.cpp
-CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/execution_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/execution_controller.cpp > CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/execution_controller.cpp -o CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/curl_controller.cpp
-CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/curl_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/curl_controller.cpp > CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/curl_controller.cpp -o CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp
-CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp > CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/dc_motor_controller.cpp -o CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp
-CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp > CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/servo_motor_controller.cpp -o CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp
-CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp > CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/distance_controller.cpp -o CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/compass_controller.cpp
-CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/compass_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/compass_controller.cpp > CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/compass_controller.cpp -o CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp
-CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/power_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/power_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp > CMakeFiles/kufibot.dir/controllers/power_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/power_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/power_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/power_controller.cpp -o CMakeFiles/kufibot.dir/controllers/power_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/speech_recognition_controller.cpp
-CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/speech_recognition_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/speech_recognition_controller.cpp > CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/speech_recognition_controller.cpp -o CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.s
-
-CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/controllers/speech_process_controller.cpp
-CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o -MF CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o.d -o CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/controllers/speech_process_controller.cpp
-
-CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/controllers/speech_process_controller.cpp > CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.i
-
-CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/controllers/speech_process_controller.cpp -o CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.s
-
-CMakeFiles/kufibot.dir/services/service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/service.cpp
-CMakeFiles/kufibot.dir/services/service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/kufibot.dir/services/service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/service.cpp.o -MF CMakeFiles/kufibot.dir/services/service.cpp.o.d -o CMakeFiles/kufibot.dir/services/service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/service.cpp
-
-CMakeFiles/kufibot.dir/services/service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/service.cpp > CMakeFiles/kufibot.dir/services/service.cpp.i
-
-CMakeFiles/kufibot.dir/services/service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/service.cpp -o CMakeFiles/kufibot.dir/services/service.cpp.s
-
-CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/remote_connection_service.cpp
-CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o -MF CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/remote_connection_service.cpp
-
-CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/remote_connection_service.cpp > CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/remote_connection_service.cpp -o CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.s
-
-CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/video_stream_service.cpp
-CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o -MF CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/video_stream_service.cpp
-
-CMakeFiles/kufibot.dir/services/video_stream_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/video_stream_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/video_stream_service.cpp > CMakeFiles/kufibot.dir/services/video_stream_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/video_stream_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/video_stream_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/video_stream_service.cpp -o CMakeFiles/kufibot.dir/services/video_stream_service.cpp.s
-
-CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/web_socket_service.cpp
-CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o -MF CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/web_socket_service.cpp
-
-CMakeFiles/kufibot.dir/services/web_socket_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/web_socket_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/web_socket_service.cpp > CMakeFiles/kufibot.dir/services/web_socket_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/web_socket_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/web_socket_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/web_socket_service.cpp -o CMakeFiles/kufibot.dir/services/web_socket_service.cpp.s
-
-CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.cpp
-CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o -MF CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.cpp
-
-CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.cpp > CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/robot_controller_service.cpp -o CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.s
-
-CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.cpp
-CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o -MF CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.cpp
-
-CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.cpp > CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/interactive_chat_service.cpp -o CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.s
-
-CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
-CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: /home/kufi/workspace/kufibot.cpp/services/mapping_service.cpp
-CMakeFiles/kufibot.dir/services/mapping_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/kufibot.dir/services/mapping_service.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/services/mapping_service.cpp.o -MF CMakeFiles/kufibot.dir/services/mapping_service.cpp.o.d -o CMakeFiles/kufibot.dir/services/mapping_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/services/mapping_service.cpp
-
-CMakeFiles/kufibot.dir/services/mapping_service.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/services/mapping_service.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/services/mapping_service.cpp > CMakeFiles/kufibot.dir/services/mapping_service.cpp.i
-
-CMakeFiles/kufibot.dir/services/mapping_service.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/services/mapping_service.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/services/mapping_service.cpp -o CMakeFiles/kufibot.dir/services/mapping_service.cpp.s
+CMakeFiles/kufibot.dir/src/main.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/main.cpp.o: /home/kufi/workspace/kufibot.cpp/src/main.cpp
+CMakeFiles/kufibot.dir/src/main.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/kufibot.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/main.cpp.o -MF CMakeFiles/kufibot.dir/src/main.cpp.o.d -o CMakeFiles/kufibot.dir/src/main.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/main.cpp
+
+CMakeFiles/kufibot.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/main.cpp > CMakeFiles/kufibot.dir/src/main.cpp.i
+
+CMakeFiles/kufibot.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/main.cpp -o CMakeFiles/kufibot.dir/src/main.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/compass_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/compass_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/compass_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/compass_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/curl_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/curl_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/curl_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/curl_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/dc_motor_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/dc_motor_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/dc_motor_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/dc_motor_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/distance_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/distance_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/distance_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/distance_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/execution_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/execution_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/execution_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/execution_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/power_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/power_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/power_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/power_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/servo_motor_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/servo_motor_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/servo_motor_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/servo_motor_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/speech_process_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/speech_process_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/speech_process_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/speech_process_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o: /home/kufi/workspace/kufibot.cpp/src/controllers/speech_recognition_controller.cpp
+CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o -MF CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o.d -o CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/controllers/speech_recognition_controller.cpp
+
+CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/controllers/speech_recognition_controller.cpp > CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.i
+
+CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/controllers/speech_recognition_controller.cpp -o CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.s
+
+CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/src/drivers/ina219_driver.cpp
+CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o -MF CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o.d -o CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/drivers/ina219_driver.cpp
+
+CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/drivers/ina219_driver.cpp > CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.i
+
+CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/drivers/ina219_driver.cpp -o CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.s
+
+CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o: /home/kufi/workspace/kufibot.cpp/src/drivers/median_filter.cpp
+CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o -MF CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o.d -o CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/drivers/median_filter.cpp
+
+CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/drivers/median_filter.cpp > CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.i
+
+CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/drivers/median_filter.cpp -o CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.s
+
+CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/src/drivers/pca9685_driver.cpp
+CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o -MF CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o.d -o CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/drivers/pca9685_driver.cpp
+
+CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/drivers/pca9685_driver.cpp > CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.i
+
+CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/drivers/pca9685_driver.cpp -o CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.s
+
+CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o: /home/kufi/workspace/kufibot.cpp/src/drivers/qmc5883l_driver.cpp
+CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o -MF CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o.d -o CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/drivers/qmc5883l_driver.cpp
+
+CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/drivers/qmc5883l_driver.cpp > CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.i
+
+CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/drivers/qmc5883l_driver.cpp -o CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.s
+
+CMakeFiles/kufibot.dir/src/publisher.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/publisher.cpp.o: /home/kufi/workspace/kufibot.cpp/src/publisher.cpp
+CMakeFiles/kufibot.dir/src/publisher.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/kufibot.dir/src/publisher.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/publisher.cpp.o -MF CMakeFiles/kufibot.dir/src/publisher.cpp.o.d -o CMakeFiles/kufibot.dir/src/publisher.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/publisher.cpp
+
+CMakeFiles/kufibot.dir/src/publisher.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/publisher.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/publisher.cpp > CMakeFiles/kufibot.dir/src/publisher.cpp.i
+
+CMakeFiles/kufibot.dir/src/publisher.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/publisher.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/publisher.cpp -o CMakeFiles/kufibot.dir/src/publisher.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/interactive_chat_service.cpp
+CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/interactive_chat_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/interactive_chat_service.cpp > CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/interactive_chat_service.cpp -o CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.cpp
+CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.cpp > CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.cpp -o CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/remote_connection_service.cpp
+CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/remote_connection_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/remote_connection_service.cpp > CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/remote_connection_service.cpp -o CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/robot_controller_service.cpp
+CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/robot_controller_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/robot_controller_service.cpp > CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/robot_controller_service.cpp -o CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/service.cpp
+CMakeFiles/kufibot.dir/src/services/service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/kufibot.dir/src/services/service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/service.cpp
+
+CMakeFiles/kufibot.dir/src/services/service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/service.cpp > CMakeFiles/kufibot.dir/src/services/service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/service.cpp -o CMakeFiles/kufibot.dir/src/services/service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.cpp
+CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.cpp > CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.cpp -o CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: /home/kufi/workspace/kufibot.cpp/src/services/web_socket_service.cpp
+CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o -MF CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o.d -o CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/services/web_socket_service.cpp
+
+CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/services/web_socket_service.cpp > CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.i
+
+CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/services/web_socket_service.cpp -o CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp
+CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp > CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp -o CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp
+CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp > CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp -o CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp
+CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp > CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp -o CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp
+CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/main_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/main_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp > CMakeFiles/kufibot.dir/src/ui/main_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/main_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/main_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp -o CMakeFiles/kufibot.dir/src/ui/main_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp
+CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp > CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp -o CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp
+CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp > CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp -o CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp
+CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp > CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp -o CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.s
+
+CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp
+CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp
+
+CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp > CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp -o CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.s
 
 # Object files for target kufibot
 kufibot_OBJECTS = \
-"CMakeFiles/kufibot.dir/main.cpp.o" \
-"CMakeFiles/kufibot.dir/publisher.cpp.o" \
-"CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o" \
-"CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o" \
-"CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o" \
-"CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o" \
-"CMakeFiles/kufibot.dir/services/service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o" \
-"CMakeFiles/kufibot.dir/services/mapping_service.cpp.o"
+"CMakeFiles/kufibot.dir/src/main.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o" \
+"CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o" \
+"CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o" \
+"CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o" \
+"CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o" \
+"CMakeFiles/kufibot.dir/src/publisher.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o"
 
 # External object files for target kufibot
 kufibot_EXTERNAL_OBJECTS =
 
-kufibot: CMakeFiles/kufibot.dir/main.cpp.o
-kufibot: CMakeFiles/kufibot.dir/publisher.cpp.o
-kufibot: CMakeFiles/kufibot.dir/drivers/median_filter.cpp.o
-kufibot: CMakeFiles/kufibot.dir/drivers/pca9685_driver.cpp.o
-kufibot: CMakeFiles/kufibot.dir/drivers/qmc5883l_driver.cpp.o
-kufibot: CMakeFiles/kufibot.dir/drivers/ina219_driver.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/execution_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/curl_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/dc_motor_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/servo_motor_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/distance_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/compass_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/power_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/speech_recognition_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/controllers/speech_process_controller.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/remote_connection_service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/video_stream_service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/web_socket_service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/robot_controller_service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/interactive_chat_service.cpp.o
-kufibot: CMakeFiles/kufibot.dir/services/mapping_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/main.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/compass_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/dc_motor_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/distance_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/execution_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/power_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/servo_motor_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/speech_process_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/publisher.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/mapping_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/remote_connection_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/robot_controller_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o
 kufibot: CMakeFiles/kufibot.dir/build.make
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_alphamat.so.4.6.0
@@ -487,7 +615,7 @@ kufibot: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0
 kufibot: CMakeFiles/kufibot.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking CXX executable kufibot"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX executable kufibot"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kufibot.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
