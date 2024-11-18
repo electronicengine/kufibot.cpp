@@ -211,25 +211,29 @@ void MainWindow::onClose (finalcut::FCloseEvent* ev)
 void MainWindow::show_compass_rt_graph_window()
 {
     _compassRTGraphWindow->show();
+    _compassRTGraphWindow->zoomWindow();
 }
 
 void MainWindow::show_body_controller_window()
 {
     _bodyControllerWindow->show();
-
+    _bodyControllerWindow->zoomWindow();
 }
 
 void MainWindow::show_servo_controller_window()
 {
     _servoControllerWindow->show();
+    _servoControllerWindow->zoomWindow();
 }
 
 void MainWindow::show_measurements_window()
 {
     _measurementsWindow->show();
+    _measurementsWindow->zoomWindow();
 }
 
 void MainWindow::show_chat_window()
 {
     _chatWindow->show();
+    _chatWindow->zoomWindow();
 }
