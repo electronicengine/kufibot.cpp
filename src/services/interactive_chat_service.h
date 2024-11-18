@@ -57,7 +57,6 @@ private:
 
     const std::string translate(const std::string& source, const std::string& target, const std::string& Text);
     std::vector<std::string> splitSentences(std::string text);
-    void walkie_talkie_thread(const std::string& message);
 
 public:
 
@@ -67,7 +66,8 @@ public:
     void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg);
     void start();
     void stop(); 
-    
+    std::string query(const std::string& message);
+
 
 };
 

@@ -1263,6 +1263,7 @@ CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
  /home/kufi/workspace/kufibot.cpp/src/services/service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../publisher.h \
  /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
@@ -1378,7 +1379,6 @@ CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: \
  /usr/include/opencv4/opencv2/video.hpp \
  /usr/include/opencv4/opencv2/video/tracking.hpp \
  /usr/include/opencv4/opencv2/video/background_segm.hpp \
- /home/kufi/workspace/kufibot.cpp/src/services/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../ui/main_window.h \
  /home/kufi/workspace/kufibot.cpp/include/final/final.h \
@@ -1491,5 +1491,76 @@ CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/src/services/../ui/sub_window.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../ui/compass_rt_graph_window.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../ui/body_controller_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/robot_controller_service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../subscriber.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../publisher.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/compass_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/../drivers/median_filter.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/../drivers/../drivers/qmc5883l_driver.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPi.h \
+ /home/kufi/workspace/kufibot.cpp/include/wiringPiI2C.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/../drivers/qmc5883l_driver.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/distance_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/power_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/../drivers/ina219_driver.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/servo_motor_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/../drivers/pca9685_driver.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/dc_motor_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../ui/servo_controller_window.h \
- /home/kufi/workspace/kufibot.cpp/src/services/../ui/measurements_window.h
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/measurements_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../subscriber.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/chat_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/interactive_chat_service.h \
+ /usr/include/aarch64-linux-gnu/curl/curl.h \
+ /usr/include/aarch64-linux-gnu/curl/curlver.h \
+ /usr/include/aarch64-linux-gnu/curl/system.h \
+ /usr/include/aarch64-linux-gnu/curl/easy.h \
+ /usr/include/aarch64-linux-gnu/curl/multi.h \
+ /usr/include/aarch64-linux-gnu/curl/curl.h \
+ /usr/include/aarch64-linux-gnu/curl/urlapi.h \
+ /usr/include/aarch64-linux-gnu/curl/options.h \
+ /usr/include/aarch64-linux-gnu/curl/header.h \
+ /usr/include/aarch64-linux-gnu/curl/websockets.h \
+ /usr/include/c++/12/regex /usr/include/c++/12/bits/regex_constants.h \
+ /usr/include/c++/12/bits/regex_error.h \
+ /usr/include/c++/12/bits/regex_automaton.h \
+ /usr/include/c++/12/bits/regex_automaton.tcc \
+ /usr/include/c++/12/bits/regex_scanner.h \
+ /usr/include/c++/12/bits/regex_scanner.tcc \
+ /usr/include/c++/12/bits/regex_compiler.h \
+ /usr/include/c++/12/bits/regex_compiler.tcc \
+ /usr/include/c++/12/bits/regex.h /usr/include/c++/12/bits/regex.tcc \
+ /usr/include/c++/12/bits/regex_executor.h \
+ /usr/include/c++/12/bits/regex_executor.tcc \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/robot_controller_service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/speech_process_controller.h \
+ /usr/include/alsa/asoundlib.h /usr/include/alsa/asoundef.h \
+ /usr/include/alsa/version.h /usr/include/alsa/global.h \
+ /usr/include/alsa/input.h /usr/include/alsa/output.h \
+ /usr/include/alsa/error.h /usr/include/alsa/conf.h \
+ /usr/include/alsa/pcm.h /usr/include/alsa/rawmidi.h \
+ /usr/include/alsa/timer.h /usr/include/alsa/hwdep.h \
+ /usr/include/alsa/control.h /usr/include/alsa/mixer.h \
+ /usr/include/alsa/seq_event.h /usr/include/alsa/seq.h \
+ /usr/include/alsa/seqmid.h /usr/include/alsa/seq_midi_event.h \
+ /usr/include/c++/12/optional /usr/include/aarch64-linux-gnu/mpg123.h \
+ /usr/include/aarch64-linux-gnu/fmt123.h \
+ /home/kufi/workspace/kufibot.cpp/include/piper.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_cxx_api.h \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_c_api.h \
+ /home/kufi/workspace/kufibot.cpp/include/onnxruntime_cxx_inline.h \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phoneme_ids.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/shared.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/phonemize.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/piper-phonemize/tashkeel.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/json.hpp \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/speech_recognition_controller.h \
+ /usr/include/portaudio.h \
+ /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/../controllers/execution_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/mapping_service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/video_stream_service.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../ui/../services/web_socket_service.h

@@ -6,6 +6,10 @@
 #include "sub_window.h"
 #include <deque>
 
+#undef K
+#undef null
+
+#include "../services/robot_controller_service.h"
 
 using namespace finalcut;
 
@@ -29,6 +33,18 @@ class BodyControllerWindow : public SubWindow
     FButton _bodyTurnRightButton{finalcut::UniChar::BlackRightPointingTriangle, this};
     FButton _bodyBackwardButton{finalcut::UniChar::BlackDownPointingTriangle, this};
     FButton _bodyStopButton{finalcut::UniChar::BlackCircle, this};
+    FSpinBox _magnitude{this};
+
+    RobotControllerService *_robotControllerService;
+
+    
+    void forward();
+    void backward();
+    void stop();
+    void turnRight();
+    void turnLeft();
+
+
 
 };
 

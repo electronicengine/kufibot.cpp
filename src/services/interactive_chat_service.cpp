@@ -109,17 +109,19 @@ void InteractiveChatService::service_update_function()
     }
 }
 
-void InteractiveChatService::walkie_talkie_thread(const std::string& message){
+std::string InteractiveChatService::query(const std::string& message){
 
     std::lock_guard<std::mutex> lock(_dataMutex);
+    std::string result;
 
     if (message.find("mikrofon") != std::string::npos &&  message.find("başlat") != std::string::npos) {
         _speechProcessController->speakText("mikrofon yayını başlatılıyor.");
         if (!_speechRecognitionController->start_listen()) {
             _speechRecognitionController->close();
-            return ;
+            return "_speechRecognitionController error!";
         }
         _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
+        result = "mikrofon yayını başlatılıyor.";
 
     }else if(message.find("mikrofon") != std::string::npos &&  message.find("durdur") != std::string::npos) {
         _speechProcessController->speakText("mikrofon yayını durduruluyor.");
@@ -127,11 +129,13 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
+        result = "mikrofon yayını durduruluyor.";
+
     }else if (message.find("atölye") != std::string::npos && message.find("git") != std::string::npos) {
         _speechProcessController->speakText("Şu an atolye odasına gidiliyor...");
         MappingService *map_service = MappingService::get_instance();
         map_service->go_to_point(22334, 5677);
-
+        result = "Şu an atolye odasına gidiliyor...";
 
     }else if(message.find("tanım") != std::string::npos){
         _speechProcessController->speakText("Şu an inceliyorum...");
@@ -144,7 +148,7 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
 
             }
 
-            std::string result = _executionController->execute(ExecutionType::imageQuery, "Fotoğrafı Türkçe olarak ve bir resim olduğunu belirtmeden açıkla");
+            result = _executionController->execute(ExecutionType::imageQuery, "Fotoğrafı Türkçe olarak ve bir resim olduğunu belirtmeden açıkla");
             std::vector<std::string> sentences = splitSentences(result);
             for (const auto& sentence : sentences) {
                 MainWindow::log(  "sentence: " + sentence , LogLevel::LOG_TRACE);
@@ -153,7 +157,7 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
 
     }else{
         // std::string result = _curlController->execute_gemini(message);
-        std::string result = _executionController->execute(ExecutionType::query, message);
+        result = _executionController->execute(ExecutionType::query, message);
         MainWindow::log(  "result"  + result , LogLevel::LOG_TRACE);
 
         std::vector<std::string> sentences = splitSentences(result);
@@ -162,7 +166,10 @@ void InteractiveChatService::walkie_talkie_thread(const std::string& message){
             _speechProcessController->speakText(sentence);
         }
     }
+
+    return result;
 }
+
 
 void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
 {
@@ -179,7 +186,7 @@ void InteractiveChatService::update_web_socket_message(websocketpp::connection_h
             std::string incoming_talkie = message["talkie"];
             MainWindow::log( "incoming_talkie: " + incoming_talkie , LogLevel::LOG_TRACE);
 
-            std::thread walkie_thread = std::thread(&InteractiveChatService::walkie_talkie_thread, this, incoming_talkie);
+            std::thread walkie_thread = std::thread(&InteractiveChatService::query, this, incoming_talkie);
             walkie_thread.detach();
 
         }

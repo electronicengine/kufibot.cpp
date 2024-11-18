@@ -1557,6 +1557,10 @@ CMakeFiles/kufibot.dir/src/main.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.h \
  /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.h \
  /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/ui/../services/robot_controller_service.h \
  /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.h \
  /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/ui/../subscriber.h \
+ /home/kufi/workspace/kufibot.cpp/src/ui/chat_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/ui/../services/interactive_chat_service.h \
  /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.h

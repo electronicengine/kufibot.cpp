@@ -45,6 +45,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o.d"
   "CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o"
   "CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o.d"
+  "CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o"
+  "CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o.d"
   "CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o"
   "CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o.d"
   "CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o"

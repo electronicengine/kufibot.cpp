@@ -2,14 +2,20 @@
 #ifndef MEASUREMENTSWINDOW_H
 #define MEASUREMENTSWINDOW_H
 
+
 #include "final/final.h"
 #include "sub_window.h"
 #include <deque>
 
+#undef K
+#undef null
 
-using namespace finalcut;
+#include "../subscriber.h"
+#include "../services/robot_controller_service.h"
 
-class MeasurementsWindow : public SubWindow
+
+
+class MeasurementsWindow : public SubWindow, public Subscriber
 {
   public:
     explicit MeasurementsWindow (finalcut::FWidget* = nullptr);
@@ -23,6 +29,8 @@ class MeasurementsWindow : public SubWindow
     auto operator = (const MeasurementsWindow&) -> MeasurementsWindow& = delete;
 
     auto operator = (MeasurementsWindow&&) noexcept -> MeasurementsWindow& = delete;
+    void update_sensor_values(Json values) override;
+
 
 private:
 
@@ -31,7 +39,10 @@ private:
     finalcut::FLineEdit _current {this};
     finalcut::FLineEdit _voltage {this};
 
+    RobotControllerService *_robotControllerService;
 
+    void onClose (finalcut::FCloseEvent*) override;
+    void onShow  (finalcut::FShowEvent*) override;
 
 };
 

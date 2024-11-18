@@ -7,6 +7,12 @@
 #include <deque>
 
 
+#undef K
+#undef null
+
+#include "../services/robot_controller_service.h"
+
+
 using namespace finalcut;
 
 class ServoControllerWindow : public SubWindow
@@ -32,7 +38,16 @@ private:
     FSpinBox _neckRight{this};
     FSpinBox _eyeLeft{this};
     FSpinBox _eyeRight{this};
-    FButton _setValues{"Save", this};
+    FButton _setValuesButton{"Save", this};
+
+    RobotControllerService *_robotControllerService;
+
+    void set_servo_values();
+    void show_current_servo_values();
+
+protected:
+
+void onShow(finalcut::FShowEvent *) override;
 
 };
 

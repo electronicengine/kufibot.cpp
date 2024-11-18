@@ -1,8 +1,6 @@
 #ifndef ROBOT_CONTROLLER_SERVICE_H
 #define ROBOT_CONTROLLER_SERVICE_H
 
-
-#include <opencv2/opencv.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include <thread>
@@ -59,6 +57,9 @@ public:
 
     static RobotControllerService *get_instance();
     Json get_sensor_values();
+    std::map<std::string, int> get_servo_joint_map();
+    void set_servo_joint_map(const std::map<std::string, int>& jointMap);
+
     int control_motion(Json message);
     void control_body(int angle, int magnitude);
     void control_head(int angle, int magnitude);

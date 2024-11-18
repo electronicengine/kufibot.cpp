@@ -11,6 +11,7 @@
 #include "body_controller_window.h"
 #include "servo_controller_window.h"
 #include "measurements_window.h"
+#include "chat_window.h"
 
 #define LOG_HISTORY_SIZE    2000
 
@@ -58,6 +59,7 @@ class MainWindow final : public finalcut::FDialog
     BodyControllerWindow *_bodyControllerWindow;
     ServoControllerWindow *_servoControllerWindow;
     MeasurementsWindow *_measurementsWindow;
+    ChatWindow *_chatWindow;
 
     finalcut::FTextView _textView{this};
     finalcut::FButtonGroup _radiobutton_group {L"Log Level", this};
@@ -78,7 +80,7 @@ class MainWindow final : public finalcut::FDialog
     finalcut::FMenuItem       _bodyControllerWindowMenuButton{"&Open Body Controller Window", &_windowsMenu};
     finalcut::FMenuItem       _servoControllerWindowMenuButton{"&Open Servo Controller Window", &_windowsMenu};
     finalcut::FMenuItem       _measurementsWindowMenuButton{"&Open Measurements Window", &_windowsMenu};
-
+    finalcut::FMenuItem       _chatWindowMenuButton{"&Open Chat Window", &_windowsMenu};
 
     void append_log_view(const std::string& logLine, LogLevel logLevel);
     void configure_file_nenu_items();
@@ -97,6 +99,7 @@ class MainWindow final : public finalcut::FDialog
     void show_body_controller_window();
     void show_servo_controller_window();
     void show_measurements_window();
+    void show_chat_window();
 
     void auto_scroll_toggle();
 

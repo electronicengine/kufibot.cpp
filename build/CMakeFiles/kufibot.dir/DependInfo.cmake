@@ -31,6 +31,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.cpp" "CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/src/services/web_socket_service.cpp" "CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp" "CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o.d"
+  "/home/kufi/workspace/kufibot.cpp/src/ui/chat_window.cpp" "CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp" "CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp" "CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o.d"
   "/home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp" "CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o" "gcc" "CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o.d"

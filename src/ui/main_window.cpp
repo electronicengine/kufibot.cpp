@@ -37,7 +37,7 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     _compassRTGraphWindow->hide();
 
     _bodyControllerWindow = new BodyControllerWindow{this};
-    _bodyControllerWindow->setMinimumSize (FSize{30, 17});
+    _bodyControllerWindow->setMinimumSize (FSize{30, 20});
     _bodyControllerWindow->setResizeable();
     _bodyControllerWindow->setMinimizable();
     _bodyControllerWindow->hide();
@@ -49,10 +49,16 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     _servoControllerWindow->hide();
 
     _measurementsWindow = new MeasurementsWindow{this};
-    _measurementsWindow->setMinimumSize (FSize{30, 17});
+    _measurementsWindow->setMinimumSize (FSize{30, 18});
     _measurementsWindow->setResizeable();
     _measurementsWindow->setMinimizable();
     _measurementsWindow->hide();
+
+    _chatWindow = new ChatWindow{this};
+    _chatWindow->setMinimumSize (FSize{60, 35});
+    _chatWindow->setResizeable();
+    _chatWindow->setMinimizable();
+    _chatWindow->hide();
 
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
@@ -87,6 +93,7 @@ void MainWindow::configure_file_nenu_items()
     add_clicked_callback (&_bodyControllerWindowMenuButton, this, &MainWindow::show_body_controller_window);
     add_clicked_callback (&_servoControllerWindowMenuButton, this, &MainWindow::show_servo_controller_window);
     add_clicked_callback (&_measurementsWindowMenuButton, this, &MainWindow::show_measurements_window);
+    add_clicked_callback (&_chatWindowMenuButton, this, &MainWindow::show_chat_window);
 
     add_clicked_callback ( &_quit, finalcut::getFApplication(), &finalcut::FApplication::cb_exitApp, this );
 }
@@ -220,4 +227,9 @@ void MainWindow::show_servo_controller_window()
 void MainWindow::show_measurements_window()
 {
     _measurementsWindow->show();
+}
+
+void MainWindow::show_chat_window()
+{
+    _chatWindow->show();
 }

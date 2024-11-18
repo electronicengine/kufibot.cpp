@@ -1,3 +1,8 @@
+
+#ifndef CURL_CONTROLLER_H
+#define CURL_CONTROLLER_H
+
+
 #include <iostream>
 #include <string>
 #include <curl/curl.h>
@@ -22,3 +27,5 @@ private:
 
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output);
 };
+
+#endif //CURL_CONTROLLER_H

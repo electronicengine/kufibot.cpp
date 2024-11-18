@@ -1,4 +1,5 @@
 #include "publisher.h"
+#include <opencv2/opencv.hpp>
 
 void Publisher::subscribe(Subscriber* subscriber) {
     std::lock_guard<std::mutex> lock(_mutex);

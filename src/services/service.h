@@ -2,7 +2,6 @@
 #ifndef SERVICE_H
 #define SERVICE_H
 
-#include <opencv2/opencv.hpp>
 #include <vector>
 #include <memory>
 #include <thread>

@@ -68,7 +68,7 @@ std::vector<int16_t> QMC5883LDriver::get_data() {
     while (retries-- > 0) {
         uint8_t status = read_byte(REG_STATUS_1);
         if (status & 0b00000010) { // Overflow
-            MainWindow::log("Magnetic sensor overflow.", LogLevel::LOG_WARNING);
+            // MainWindow::log("Magnetic sensor overflow.", LogLevel::LOG_WARNING);
         }
         if (status & 0b00000100) { // Data skipped
             data[0] = read_word_2c(REG_XOUT_LSB);

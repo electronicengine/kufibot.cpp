@@ -391,10 +391,24 @@ CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/body_controller_window.cpp -o CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s
 
+CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
+CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/chat_window.cpp
+CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/chat_window.cpp
+
+CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kufi/workspace/kufibot.cpp/src/ui/chat_window.cpp > CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.i
+
+CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kufi/workspace/kufibot.cpp/src/ui/chat_window.cpp -o CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.s
+
 CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp
 CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/compass_rt_graph_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.i: cmake_force
@@ -408,7 +422,7 @@ CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp
 CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/graph_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.i: cmake_force
@@ -422,7 +436,7 @@ CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp
 CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/main_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/main_window.cpp.i: cmake_force
@@ -436,7 +450,7 @@ CMakeFiles/kufibot.dir/src/ui/main_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp
 CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/measurements_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.i: cmake_force
@@ -450,7 +464,7 @@ CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp
 CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/servo_controller_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.i: cmake_force
@@ -464,7 +478,7 @@ CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp
 CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/sub_window.cpp
 
 CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.i: cmake_force
@@ -478,7 +492,7 @@ CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.s: cmake_force
 CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: CMakeFiles/kufibot.dir/flags.make
 CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp
 CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o: CMakeFiles/kufibot.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o -MF CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o.d -o CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o -c /home/kufi/workspace/kufibot.cpp/src/ui/widget_color_theme.cpp
 
 CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.i: cmake_force
@@ -514,6 +528,7 @@ kufibot_OBJECTS = \
 "CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o" \
 "CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o" \
 "CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o" \
+"CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o" \
 "CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o" \
 "CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o" \
 "CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o" \
@@ -548,6 +563,7 @@ kufibot: CMakeFiles/kufibot.dir/src/services/service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/services/video_stream_service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o
+kufibot: CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o
 kufibot: CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o
@@ -615,7 +631,7 @@ kufibot: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.6.0
 kufibot: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.6.0
 kufibot: CMakeFiles/kufibot.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX executable kufibot"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kufi/workspace/kufibot.cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Linking CXX executable kufibot"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kufibot.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

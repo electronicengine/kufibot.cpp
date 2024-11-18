@@ -7,8 +7,6 @@
 #include <deque>
 
 
-using namespace finalcut;
-
 class SubWindow : public finalcut::FDialog
 {
   public:
@@ -24,6 +22,16 @@ class SubWindow : public finalcut::FDialog
 
     auto operator = (SubWindow&&) noexcept -> SubWindow& = delete;
 
+    template <typename InstanceT, typename CallbackT, typename... Args>
+    void add_clicked_callback (finalcut::FWidget* widget, InstanceT&& instance, CallbackT&& callback, Args&&... args){
+        widget->addCallback
+        (
+          "clicked",
+          std::bind ( std::forward<CallbackT>(callback)
+                    , std::forward<InstanceT>(instance)
+                    , std::forward<Args>(args)... )
+        );
+    }
 
   protected:
     void onClose (finalcut::FCloseEvent*) override;

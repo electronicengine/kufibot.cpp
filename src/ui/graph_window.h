@@ -25,7 +25,7 @@ class GraphWindow : public SubWindow
 
     auto operator = (GraphWindow&&) noexcept -> GraphWindow& = delete;
 
-    void add_point(double x, double y); // Add a new point to the graph
+    void add_point(double x, double y); 
     void add_realtime_point(double val, double interval = 1);
     void draw_line(double x1, double y1, double x2, double y2, FColor color);
     void draw_line(double angle, double magnitude, FColor color);

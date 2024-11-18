@@ -36,3 +36,4 @@ void SubWindow::activate_window(finalcut::FDialog *win) const
     if ( has_raised )
         win->redraw();
 }
+

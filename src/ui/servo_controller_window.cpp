@@ -39,10 +39,64 @@ ServoControllerWindow::ServoControllerWindow(finalcut::FWidget *parent) : SubWin
     _eyeRight.setRange (0, 180);
     _eyeRight.setValue (0);
 
-    _setValues.setGeometry(finalcut::FPoint{12,25}, finalcut::FSize{8, 2});
+    _setValuesButton.setGeometry(finalcut::FPoint{12,25}, finalcut::FSize{8, 2});
+    add_clicked_callback (&_setValuesButton, this, &ServoControllerWindow::set_servo_values);
+    _robotControllerService = RobotControllerService::get_instance();
+
 }
 
 ServoControllerWindow::~ServoControllerWindow() noexcept
 {
 
 }
+
+void ServoControllerWindow::set_servo_values()
+{
+    std::map<std::string, int> values;
+
+    values["rigth_arm"] = _rightArm.getValue();
+    values["left_arm"] = _leftArm.getValue();
+    values["neck_down"] = _neckDown.getValue();
+    values["neck_up"] = _neckUp.getValue();
+    values["neck_right"] = _neckRight.getValue();
+    values["eye_left"] = _eyeLeft.getValue();
+    values["eye_right"] = _eyeRight.getValue();
+
+    _robotControllerService->set_servo_joint_map(values);
+
+}
+
+void ServoControllerWindow::show_current_servo_values()
+{
+
+    std::map<std::string, int> values = _robotControllerService->get_servo_joint_map();
+
+    _rightArm.setValue (values["rigth_arm"]);
+    _rightArm.redraw();
+
+    _leftArm.setValue (values["left_arm"]);
+    _leftArm.redraw();
+
+    _neckDown.setValue (values["neck_down"]);
+    _neckDown.redraw();
+
+    _neckUp.setValue (values["neck_up"]);
+    _neckUp.redraw();
+
+    _neckRight.setValue (values["neck_right"]);
+    _neckRight.redraw();
+
+    _eyeLeft.setValue (values["eye_left"]);
+    _eyeLeft.redraw();
+
+    _eyeRight.setValue (values["eye_right"]);
+    _eyeRight.redraw();
+
+}
+
+void ServoControllerWindow::onShow(finalcut::FShowEvent *)
+{
+    activate_window(this);
+    show_current_servo_values();
+}
+

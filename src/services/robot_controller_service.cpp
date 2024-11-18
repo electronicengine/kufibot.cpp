@@ -77,6 +77,16 @@ Json RobotControllerService::get_sensor_values()
     return metadata;
 }
 
+std::map<std::string, int> RobotControllerService::get_servo_joint_map()
+{
+    return _servoController->get_all_joint_angles();
+}
+
+void RobotControllerService::set_servo_joint_map(const std::map<std::string, int> &jointMap)
+{
+    _servoController->set_all_angles(jointMap);
+}
+
 int RobotControllerService::control_motion(Json message)
 {
     if (!message.is_null() && message.is_object()) {

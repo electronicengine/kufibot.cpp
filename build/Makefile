@@ -681,6 +681,30 @@ src/ui/body_controller_window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s
 .PHONY : src/ui/body_controller_window.cpp.s
 
+src/ui/chat_window.o: src/ui/chat_window.cpp.o
+.PHONY : src/ui/chat_window.o
+
+# target to build an object file
+src/ui/chat_window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o
+.PHONY : src/ui/chat_window.cpp.o
+
+src/ui/chat_window.i: src/ui/chat_window.cpp.i
+.PHONY : src/ui/chat_window.i
+
+# target to preprocess a source file
+src/ui/chat_window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.i
+.PHONY : src/ui/chat_window.cpp.i
+
+src/ui/chat_window.s: src/ui/chat_window.cpp.s
+.PHONY : src/ui/chat_window.s
+
+# target to generate assembly for a file
+src/ui/chat_window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.s
+.PHONY : src/ui/chat_window.cpp.s
+
 src/ui/compass_rt_graph_window.o: src/ui/compass_rt_graph_window.cpp.o
 .PHONY : src/ui/compass_rt_graph_window.o
 
@@ -927,6 +951,9 @@ help:
 	@echo "... src/ui/body_controller_window.o"
 	@echo "... src/ui/body_controller_window.i"
 	@echo "... src/ui/body_controller_window.s"
+	@echo "... src/ui/chat_window.o"
+	@echo "... src/ui/chat_window.i"
+	@echo "... src/ui/chat_window.s"
 	@echo "... src/ui/compass_rt_graph_window.o"
 	@echo "... src/ui/compass_rt_graph_window.i"
 	@echo "... src/ui/compass_rt_graph_window.s"
