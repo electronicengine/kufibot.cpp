@@ -22,112 +22,58 @@ CurlController::~CurlController()
         curl_global_cleanup();  
 }
 
-std::string CurlController::execute_llm(const std::string& prompt) {
-    CURL* curl = curl_easy_init();  // Initialize CURL
-    std::string response;
+void CurlController::query_llama_text(const std::string& prompt) {
+    std::string url = "http://192.168.1.20:11434/api/generate";
+    std::string payload = R"({"model": "kufi", "prompt":")" + prompt + R"("})";
 
-    if (curl) {
-        // Create JSON payload
-        Json data = {
-            {"model", "kufi"},
-            {"prompt", prompt},
-            {"options", {{"num_predict", 120}}}
-        };
-        std::string jsonData = data.dump();  // Serialize JSON to string
-
-        // Set CURL options
-        curl_easy_setopt(curl, CURLOPT_URL, url_.c_str());
-        curl_easy_setopt(curl, CURLOPT_POST, 1L);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
-
-        // Set the write callback to capture the response
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
-        // Set HTTP headers
-        struct curl_slist* headers = nullptr;
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
-        // Perform the request
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            MainWindow::log("CURL request failed: " + std::string(curl_easy_strerror(res)), LogLevel::LOG_ERROR);
-        }
-
-        // Cleanup
-        curl_slist_free_all(headers);
-        curl_easy_cleanup(curl);
-    } else {
-        MainWindow::log("Failed to initialize CURL", LogLevel::LOG_ERROR);
+    // Initialize libcurl
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        std::cerr << "Failed to initialize CURL." << std::endl;
+        return;
     }
 
+    CURLcode res;
 
-    return parse_response_llm(response);
+    // Set CURL options
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, payload.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_responseBuffer);
+
+    // Perform the request
+    res = curl_easy_perform(curl);
+    if (res != CURLE_OK) {
+        std::cerr << "CURL error: " << curl_easy_strerror(res) << std::endl;
+        curl_easy_cleanup(curl);
+        return;
+    }
+
+    curl_easy_cleanup(curl);
 }
 
-std::string CurlController::execute_gemini(const std::string& prompt) {
-    CURL* curl = curl_easy_init();  // Initialize CURL
-    std::string response;
+size_t CurlController::write_callback(void *contents, size_t size, size_t nmemb, std::string &out)
+{
+    size_t totalSize = size * nmemb; // Total size of the incoming data
+    std::string data(static_cast<char*>(contents), totalSize); // Convert to std::string
+    auto jsonData = json::parse(data);
+    std::string word = jsonData["response"];
+    out.append(word );
+    if(word.find("!") != std::string::npos || word.find(".")!= std::string::npos ||
+        word.find("?") != std::string::npos){
 
-    if (curl) {
-        // Create JSON payload matching the required structure
-        Json data = {
-            {"contents", {
-                {{"parts", {{{"text", prompt}}}}}
-            }},
-            {"generationConfig", {
-                {"temperature", 1.0},
-                {"maxOutputTokens", 800},
-                {"topP", 0.8},
-                {"topK", 10}
-            }}
-        };
-        std::string jsonData = data.dump();  // Serialize JSON to string
+            out.erase(out.begin(), std::find_if(out.begin(), out.end(), [](unsigned char ch) {
+                return !std::isspace(ch);
+            }));
+            out.erase(std::find_if(out.rbegin(), out.rend(), [](unsigned char ch) {
+                return !std::isspace(ch);
+            }).base(), out.end());
 
-        // Set CURL options
-        curl_easy_setopt(curl, CURLOPT_URL, url_.c_str());
-        curl_easy_setopt(curl, CURLOPT_POST, 1L);
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
-
-        // Set the write callback to capture the response
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-
-        // Set HTTP headers
-        struct curl_slist* headers = nullptr;
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
-        // Perform the request
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            MainWindow::log("CURL request failed: " + std::string(curl_easy_strerror(res)), LogLevel::LOG_ERROR);
-
+            out.clear();
         }
-
-        // Cleanup
-        curl_slist_free_all(headers);
-        curl_easy_cleanup(curl);
-    } else {
-        MainWindow::log("Failed to initialize CURL", LogLevel::LOG_ERROR);
-    }
-    return parse_response_gemini(response);
-}
-
-std::string CurlController::parse_response_gemini(const std::string &response) {
-   try {
-        // Parse the JSON response
-        Json parsed = Json::parse(response);
-
-        // Navigate to the "text" field within the structure
-        std::string text = parsed["candidates"][0]["content"]["parts"][0]["text"].get<std::string>();
-
-        return text;
-    } catch (const std::exception& e) {
-        MainWindow::log("Error parsing JSON: " + std::string(e.what()), LogLevel::LOG_ERROR);
-        return "";
-    }
+        
+    return totalSize;
 }
 
 
@@ -153,11 +99,4 @@ std::string CurlController::parse_response_llm(const std::string &response) {
     }
 
     return combined_response;
-}
-
-
-size_t CurlController::WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
-    size_t totalSize = size * nmemb;
-    output->append((char*)contents, totalSize);
-    return totalSize;
 }

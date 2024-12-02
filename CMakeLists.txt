@@ -19,18 +19,20 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include) 
 include_directories(${CURL_INCLUDE_DIRS})
 
+add_subdirectory(src/ui)
+add_subdirectory(src/drivers)
+add_subdirectory(src/controllers)
+add_subdirectory(src/services)
+
+
 file(GLOB_RECURSE SRCS 
                     ${SRC_DIR}/subscriber.h
                     ${SRC_DIR}/publisher.cpp
                     ${SRC_DIR}/publisher.h
-                    ${SRC_DIR}/drivers/*.h
-                    ${SRC_DIR}/drivers/*.cpp
                     ${SRC_DIR}/controllers/*.cpp
                     ${SRC_DIR}/controllers/*.h
                     ${SRC_DIR}/services/*.cpp
                     ${SRC_DIR}/services/*.h
-                    ${SRC_DIR}/ui/*.h
-                    ${SRC_DIR}/ui/*.cpp
                 )
 
 
@@ -64,4 +66,8 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               Boost::system
                               portaudio
                               final
+                              ui
+                              drivers
+                              controllers
+                              services
                               )

@@ -1,3 +1,15 @@
 /home/kufi/workspace/kufibot.cpp/build/CMakeFiles/kufibot.dir
 /home/kufi/workspace/kufibot.cpp/build/CMakeFiles/edit_cache.dir
 /home/kufi/workspace/kufibot.cpp/build/CMakeFiles/rebuild_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/ui/CMakeFiles/ui.dir
+/home/kufi/workspace/kufibot.cpp/build/src/ui/CMakeFiles/edit_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/ui/CMakeFiles/rebuild_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/drivers/CMakeFiles/drivers.dir
+/home/kufi/workspace/kufibot.cpp/build/src/drivers/CMakeFiles/edit_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/drivers/CMakeFiles/rebuild_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/controllers/CMakeFiles/controllers.dir
+/home/kufi/workspace/kufibot.cpp/build/src/controllers/CMakeFiles/edit_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/controllers/CMakeFiles/rebuild_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/services/CMakeFiles/services.dir
+/home/kufi/workspace/kufibot.cpp/build/src/services/CMakeFiles/edit_cache.dir
+/home/kufi/workspace/kufibot.cpp/build/src/services/CMakeFiles/rebuild_cache.dir

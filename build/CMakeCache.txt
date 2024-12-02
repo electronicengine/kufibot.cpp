@@ -254,6 +254,30 @@ boost_headers_DIR:PATH=/usr/lib/aarch64-linux-gnu/cmake/boost_headers-1.74.0
 boost_system_DIR:PATH=/usr/lib/aarch64-linux-gnu/cmake/boost_system-1.74.0
 
 //Value Computed by CMake
+controllers_BINARY_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/build/src/controllers
+
+//Value Computed by CMake
+controllers_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+controllers_LIB_DEPENDS:STATIC=general;wiringPi;general;mpg123;general;vosk;general;fmt;general;spdlog;general;espeak-ng;general;piper;general;piper_phonemize;general;onnxruntime;general;ALSA::ALSA;general;Boost::system;general;portaudio;general;final;general;drivers;general;ui;
+
+//Value Computed by CMake
+controllers_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/src/controllers
+
+//Value Computed by CMake
+drivers_BINARY_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/build/src/drivers
+
+//Value Computed by CMake
+drivers_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+drivers_LIB_DEPENDS:STATIC=general;wiringPi;
+
+//Value Computed by CMake
+drivers_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/src/drivers
+
+//Value Computed by CMake
 kufibot_BINARY_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/build
 
 //Value Computed by CMake
@@ -264,6 +288,30 @@ kufibot_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp
 
 //Path to a library.
 pkgcfg_lib_PC_CURL_curl:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
+
+//Value Computed by CMake
+services_BINARY_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/build/src/services
+
+//Value Computed by CMake
+services_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+services_LIB_DEPENDS:STATIC=general;final;general;wiringPi;general;mpg123;general;vosk;general;fmt;general;spdlog;general;espeak-ng;general;piper;general;piper_phonemize;general;onnxruntime;general;ALSA::ALSA;general;Boost::system;general;portaudio;general;final;general;ui;general;drivers;general;controllers;
+
+//Value Computed by CMake
+services_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/src/services
+
+//Value Computed by CMake
+ui_BINARY_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/build/src/ui
+
+//Value Computed by CMake
+ui_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+ui_LIB_DEPENDS:STATIC=general;final;
+
+//Value Computed by CMake
+ui_SOURCE_DIR:STATIC=/home/kufi/workspace/kufibot.cpp/src/ui
 
 
 ########################
@@ -376,7 +424,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

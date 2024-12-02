@@ -1555,6 +1555,7 @@ CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/json.hpp \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/speech_recognition_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/execution_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/mapping_service.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/video_stream_service.h \

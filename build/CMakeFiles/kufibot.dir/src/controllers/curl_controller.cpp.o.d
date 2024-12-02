@@ -184,53 +184,31 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/aarch64-linux-gnu/curl/options.h \
  /usr/include/aarch64-linux-gnu/curl/header.h \
  /usr/include/aarch64-linux-gnu/curl/websockets.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../publisher.h \
+ /usr/include/opencv4/opencv2/opencv.hpp \
+ /usr/include/opencv4/opencv2/opencv_modules.hpp \
+ /usr/include/opencv4/opencv2/core.hpp \
+ /usr/include/opencv4/opencv2/core/cvdef.h \
+ /usr/include/opencv4/opencv2/core/version.hpp /usr/include/c++/12/limits \
+ /usr/include/opencv4/opencv2/core/hal/interface.h \
+ /usr/include/c++/12/cstddef \
+ /usr/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+ /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_neon.h \
+ /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_fp16.h \
+ /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_bf16.h \
+ /usr/include/c++/12/array /usr/include/c++/12/compare \
+ /usr/include/opencv4/opencv2/core/base.hpp /usr/include/c++/12/climits \
  /usr/include/c++/12/algorithm /usr/include/c++/12/bits/stl_algo.h \
  /usr/include/c++/12/bits/algorithmfwd.h \
  /usr/include/c++/12/bits/stl_heap.h \
  /usr/include/c++/12/bits/stl_tempbuf.h \
  /usr/include/c++/12/bits/uniform_int_dist.h \
  /usr/include/c++/12/pstl/glue_algorithm_defs.h \
- /usr/include/c++/12/pstl/execution_defs.h /usr/include/c++/12/cstddef \
- /usr/include/c++/12/functional /usr/include/c++/12/tuple \
- /usr/include/c++/12/bits/uses_allocator.h \
- /usr/include/c++/12/bits/std_function.h \
- /usr/include/c++/12/unordered_map \
- /usr/include/c++/12/ext/aligned_buffer.h \
- /usr/include/c++/12/bits/hashtable.h \
- /usr/include/c++/12/bits/hashtable_policy.h \
- /usr/include/c++/12/bits/enable_special_members.h \
- /usr/include/c++/12/bits/node_handle.h \
- /usr/include/c++/12/bits/unordered_map.h \
- /usr/include/c++/12/bits/erase_if.h /usr/include/c++/12/vector \
- /usr/include/c++/12/bits/stl_uninitialized.h \
- /usr/include/c++/12/bits/stl_vector.h \
- /usr/include/c++/12/bits/stl_bvector.h \
- /usr/include/c++/12/bits/vector.tcc /usr/include/c++/12/array \
- /usr/include/c++/12/compare /usr/include/c++/12/iterator \
- /usr/include/c++/12/bits/stream_iterator.h /usr/include/c++/12/memory \
- /usr/include/c++/12/bits/stl_raw_storage_iter.h \
- /usr/include/c++/12/bits/align.h /usr/include/c++/12/bit \
- /usr/include/c++/12/bits/unique_ptr.h \
- /usr/include/c++/12/bits/shared_ptr.h \
- /usr/include/c++/12/bits/shared_ptr_base.h \
- /usr/include/c++/12/bits/allocated_ptr.h \
- /usr/include/c++/12/ext/concurrence.h \
- /usr/include/c++/12/bits/shared_ptr_atomic.h \
- /usr/include/c++/12/bits/atomic_base.h \
- /usr/include/c++/12/bits/atomic_lockfree_defines.h \
- /usr/include/c++/12/backward/auto_ptr.h \
- /usr/include/c++/12/pstl/glue_memory_defs.h /usr/include/c++/12/utility \
- /usr/include/c++/12/bits/stl_relops.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
- /usr/include/c++/12/forward_list /usr/include/c++/12/bits/forward_list.h \
- /usr/include/c++/12/bits/forward_list.tcc /usr/include/c++/12/map \
- /usr/include/c++/12/bits/stl_tree.h /usr/include/c++/12/bits/stl_map.h \
- /usr/include/c++/12/bits/stl_multimap.h /usr/include/c++/12/valarray \
- /usr/include/c++/12/cmath /usr/include/math.h \
- /usr/include/aarch64-linux-gnu/bits/math-vector.h \
+ /usr/include/c++/12/pstl/execution_defs.h \
+ /usr/include/opencv4/opencv2/core/cvstd.hpp /usr/include/c++/12/cstring \
+ /usr/include/string.h /usr/include/strings.h /usr/include/c++/12/utility \
+ /usr/include/c++/12/bits/stl_relops.h /usr/include/c++/12/cmath \
+ /usr/include/math.h /usr/include/aarch64-linux-gnu/bits/math-vector.h \
  /usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/aarch64-linux-gnu/bits/flt-eval-method.h \
  /usr/include/aarch64-linux-gnu/bits/fp-logb.h \
@@ -239,8 +217,7 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/aarch64-linux-gnu/bits/mathcalls.h \
  /usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/aarch64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/12/bits/specfun.h /usr/include/c++/12/limits \
- /usr/include/c++/12/tr1/gamma.tcc \
+ /usr/include/c++/12/bits/specfun.h /usr/include/c++/12/tr1/gamma.tcc \
  /usr/include/c++/12/tr1/special_function_util.h \
  /usr/include/c++/12/tr1/bessel_function.tcc \
  /usr/include/c++/12/tr1/beta_function.tcc \
@@ -252,268 +229,151 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/c++/12/tr1/poly_hermite.tcc \
  /usr/include/c++/12/tr1/poly_laguerre.tcc \
  /usr/include/c++/12/tr1/riemann_zeta.tcc \
- /usr/include/c++/12/bits/valarray_array.h \
- /usr/include/c++/12/bits/valarray_array.tcc \
- /usr/include/c++/12/bits/valarray_before.h \
- /usr/include/c++/12/bits/slice_array.h \
- /usr/include/c++/12/bits/valarray_after.h \
- /usr/include/c++/12/bits/gslice.h \
- /usr/include/c++/12/bits/gslice_array.h \
- /usr/include/c++/12/bits/mask_array.h \
- /usr/include/c++/12/bits/indirect_array.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
- /usr/include/c++/12/version /usr/include/c++/12/cassert \
- /usr/include/assert.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
- /usr/include/c++/12/cstring /usr/include/string.h /usr/include/strings.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
- /usr/include/c++/12/filesystem /usr/include/c++/12/bits/fs_fwd.h \
+ /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+ /usr/include/c++/12/memory /usr/include/c++/12/bits/stl_uninitialized.h \
+ /usr/include/c++/12/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/12/bits/align.h /usr/include/c++/12/bit \
+ /usr/include/c++/12/bits/uses_allocator.h \
+ /usr/include/c++/12/bits/unique_ptr.h /usr/include/c++/12/tuple \
+ /usr/include/c++/12/bits/shared_ptr.h \
+ /usr/include/c++/12/bits/shared_ptr_base.h \
+ /usr/include/c++/12/bits/allocated_ptr.h \
+ /usr/include/c++/12/ext/aligned_buffer.h \
+ /usr/include/c++/12/ext/concurrence.h \
+ /usr/include/c++/12/bits/shared_ptr_atomic.h \
+ /usr/include/c++/12/bits/atomic_base.h \
+ /usr/include/c++/12/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/12/backward/auto_ptr.h \
+ /usr/include/c++/12/pstl/glue_memory_defs.h \
+ /usr/include/opencv4/opencv2/core/neon_utils.hpp \
+ /usr/include/opencv4/opencv2/core/vsx_utils.hpp /usr/include/assert.h \
+ /usr/include/opencv4/opencv2/core/check.hpp \
+ /usr/include/opencv4/opencv2/core/traits.hpp \
+ /usr/include/opencv4/opencv2/core/matx.hpp \
+ /usr/include/opencv4/opencv2/core/saturate.hpp \
+ /usr/include/opencv4/opencv2/core/fast_math.hpp \
+ /usr/include/opencv4/opencv2/core/types.hpp /usr/include/c++/12/cfloat \
+ /usr/lib/gcc/aarch64-linux-gnu/12/include/float.h \
+ /usr/include/c++/12/vector /usr/include/c++/12/bits/stl_vector.h \
+ /usr/include/c++/12/bits/stl_bvector.h \
+ /usr/include/c++/12/bits/vector.tcc \
+ /usr/include/opencv4/opencv2/core/mat.hpp \
+ /usr/include/opencv4/opencv2/core/bufferpool.hpp \
+ /usr/include/opencv4/opencv2/core/mat.inl.hpp \
+ /usr/include/opencv4/opencv2/core/persistence.hpp \
+ /usr/include/opencv4/opencv2/core/operations.hpp \
+ /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
+ /usr/include/c++/12/complex /usr/include/c++/12/sstream \
+ /usr/include/c++/12/bits/sstream.tcc \
+ /usr/include/opencv4/opencv2/core/utility.hpp \
+ /usr/include/c++/12/functional /usr/include/c++/12/bits/std_function.h \
+ /usr/include/c++/12/unordered_map /usr/include/c++/12/bits/hashtable.h \
+ /usr/include/c++/12/bits/hashtable_policy.h \
+ /usr/include/c++/12/bits/enable_special_members.h \
+ /usr/include/c++/12/bits/node_handle.h \
+ /usr/include/c++/12/bits/unordered_map.h \
+ /usr/include/c++/12/bits/erase_if.h /usr/include/c++/12/mutex \
  /usr/include/c++/12/bits/chrono.h /usr/include/c++/12/ratio \
  /usr/include/c++/12/ctime /usr/include/c++/12/bits/parse_numbers.h \
- /usr/include/c++/12/bits/fs_path.h /usr/include/c++/12/locale \
+ /usr/include/c++/12/bits/std_mutex.h \
+ /usr/include/c++/12/bits/unique_lock.h \
+ /usr/include/opencv4/opencv2/core/optim.hpp \
+ /usr/include/opencv4/opencv2/core/ovx.hpp \
+ /usr/include/opencv4/opencv2/core/cvdef.h \
+ /usr/include/opencv4/opencv2/calib3d.hpp \
+ /usr/include/opencv4/opencv2/features2d.hpp \
+ /usr/include/opencv4/opencv2/flann/miniflann.hpp \
+ /usr/include/opencv4/opencv2/flann/defines.h \
+ /usr/include/opencv4/opencv2/flann/config.h \
+ /usr/include/opencv4/opencv2/core/affine.hpp \
+ /usr/include/opencv4/opencv2/dnn.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/include/opencv4/opencv2/core/async.hpp /usr/include/c++/12/chrono \
+ /usr/include/opencv4/opencv2/dnn/version.hpp \
+ /usr/include/opencv4/opencv2/dnn/dict.hpp /usr/include/c++/12/map \
+ /usr/include/c++/12/bits/stl_tree.h /usr/include/c++/12/bits/stl_map.h \
+ /usr/include/c++/12/bits/stl_multimap.h \
+ /usr/include/opencv4/opencv2/dnn/layer.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
+ /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
+ /usr/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/include/opencv4/opencv2/flann.hpp \
+ /usr/include/opencv4/opencv2/flann/flann_base.hpp \
+ /usr/include/opencv4/opencv2/flann/general.h \
+ /usr/include/opencv4/opencv2/flann/matrix.h \
+ /usr/include/opencv4/opencv2/flann/params.h \
+ /usr/include/opencv4/opencv2/flann/any.h \
+ /usr/include/opencv4/opencv2/flann/defines.h \
+ /usr/include/opencv4/opencv2/flann/saving.h \
+ /usr/include/opencv4/opencv2/flann/nn_index.h \
+ /usr/include/opencv4/opencv2/flann/result_set.h /usr/include/c++/12/set \
+ /usr/include/c++/12/bits/stl_set.h \
+ /usr/include/c++/12/bits/stl_multiset.h \
+ /usr/include/opencv4/opencv2/flann/all_indices.h \
+ /usr/include/opencv4/opencv2/flann/kdtree_index.h \
+ /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
+ /usr/include/opencv4/opencv2/flann/dist.h \
+ /usr/include/opencv4/opencv2/flann/heap.h \
+ /usr/include/opencv4/opencv2/flann/allocator.h \
+ /usr/include/c++/12/stdlib.h /usr/include/opencv4/opencv2/flann/random.h \
+ /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
+ /usr/include/opencv4/opencv2/flann/kmeans_index.h \
+ /usr/include/opencv4/opencv2/flann/logger.h \
+ /usr/include/opencv4/opencv2/flann/composite_index.h \
+ /usr/include/opencv4/opencv2/flann/linear_index.h \
+ /usr/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+ /usr/include/opencv4/opencv2/flann/lsh_index.h \
+ /usr/include/opencv4/opencv2/flann/lsh_table.h \
+ /usr/include/c++/12/iomanip /usr/include/c++/12/locale \
  /usr/include/c++/12/bits/locale_facets_nonio.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/time_members.h \
  /usr/include/aarch64-linux-gnu/c++/12/bits/messages_members.h \
  /usr/include/libintl.h /usr/include/c++/12/bits/codecvt.h \
  /usr/include/c++/12/bits/locale_facets_nonio.tcc \
- /usr/include/c++/12/bits/locale_conv.h /usr/include/c++/12/iomanip \
- /usr/include/c++/12/bits/quoted_string.h /usr/include/c++/12/sstream \
- /usr/include/c++/12/bits/sstream.tcc /usr/include/c++/12/codecvt \
- /usr/include/c++/12/bits/fs_dir.h /usr/include/c++/12/bits/fs_ops.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
- /usr/include/c++/12/numeric /usr/include/c++/12/bits/stl_numeric.h \
- /usr/include/c++/12/pstl/glue_numeric_defs.h \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
- /usr/include/c++/12/any \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
- /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/main_window.h \
- /home/kufi/workspace/kufibot.cpp/include/final/final.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fapplication.h \
- /usr/include/getopt.h /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
- /usr/include/aarch64-linux-gnu/bits/getopt_ext.h \
- /usr/include/c++/12/deque /usr/include/c++/12/bits/stl_deque.h \
- /usr/include/c++/12/bits/deque.tcc \
- /home/kufi/workspace/kufibot.cpp/include/final/ftypes.h \
- /usr/include/c++/12/chrono \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/pipedata.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fwidget.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fobject.h \
- /home/kufi/workspace/kufibot.cpp/include/final/ftimer.h \
- /usr/include/c++/12/shared_mutex /usr/include/c++/12/bits/std_mutex.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fevent.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fc.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fconfig.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fdata.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fstring.h \
- /usr/include/langinfo.h /usr/include/nl_types.h \
- /usr/include/c++/12/cfloat \
- /usr/lib/gcc/aarch64-linux-gnu/12/include/float.h \
- /usr/include/c++/12/climits /usr/include/c++/12/cstdarg \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fpoint.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fwidget_flags.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fwidget_functions.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/foutput.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/fcolorpalette.h \
- /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvterm.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fterm_functions.h \
- /usr/include/unistd.h /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
- /usr/include/aarch64-linux-gnu/bits/environments.h \
- /usr/include/aarch64-linux-gnu/bits/confname.h \
- /usr/include/aarch64-linux-gnu/bits/getopt_posix.h \
- /usr/include/aarch64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/frect.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fsize.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fstringstream.h \
- /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvtermattribute.h \
- /home/kufi/workspace/kufibot.cpp/include/final/vterm/fcolorpair.h \
- /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvtermbuffer.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fcallback.h \
- /home/kufi/workspace/kufibot.cpp/include/final/fstartoptions.h \
- /usr/include/c++/12/fstream \
- /usr/include/aarch64-linux-gnu/c++/12/bits/basic_file.h \
- /usr/include/aarch64-linux-gnu/c++/12/bits/c++io.h \
- /usr/include/c++/12/bits/fstream.tcc \
- /home/kufi/workspace/kufibot.cpp/include/final/fwidgetcolors.h \
- /home/kufi/workspace/kufibot.cpp/include/final/dialog/fdialog.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenu.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenulist.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenuitem.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fwindow.h \
- /home/kufi/workspace/kufibot.cpp/include/final/dialog/ffiledialog.h \
- /usr/include/aarch64-linux-gnu/sys/param.h /usr/include/signal.h \
- /usr/include/aarch64-linux-gnu/bits/signum-generic.h \
- /usr/include/aarch64-linux-gnu/bits/signum-arch.h \
- /usr/include/aarch64-linux-gnu/bits/types/sig_atomic_t.h \
- /usr/include/aarch64-linux-gnu/bits/types/siginfo_t.h \
- /usr/include/aarch64-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/aarch64-linux-gnu/bits/siginfo-arch.h \
- /usr/include/aarch64-linux-gnu/bits/siginfo-consts.h \
- /usr/include/aarch64-linux-gnu/bits/siginfo-consts-arch.h \
- /usr/include/aarch64-linux-gnu/bits/types/sigval_t.h \
- /usr/include/aarch64-linux-gnu/bits/types/sigevent_t.h \
- /usr/include/aarch64-linux-gnu/bits/sigevent-consts.h \
- /usr/include/aarch64-linux-gnu/bits/sigaction.h \
- /usr/include/aarch64-linux-gnu/bits/sigcontext.h \
- /usr/lib/linux/uapi/arm64/asm/sigcontext.h /usr/include/linux/types.h \
- /usr/lib/linux/uapi/arm64/asm/types.h /usr/include/asm-generic/types.h \
- /usr/include/asm-generic/int-ll64.h \
- /usr/lib/linux/uapi/arm64/asm/sve_context.h \
- /usr/include/aarch64-linux-gnu/bits/types/stack_t.h \
- /usr/include/aarch64-linux-gnu/sys/ucontext.h \
- /usr/include/aarch64-linux-gnu/sys/procfs.h \
- /usr/include/aarch64-linux-gnu/sys/user.h \
- /usr/include/aarch64-linux-gnu/bits/procfs.h \
- /usr/include/aarch64-linux-gnu/bits/procfs-id.h \
- /usr/include/aarch64-linux-gnu/bits/procfs-prregset.h \
- /usr/include/aarch64-linux-gnu/bits/procfs-extra.h \
- /usr/include/aarch64-linux-gnu/bits/sigstack.h \
- /usr/include/aarch64-linux-gnu/bits/sigstksz.h \
- /usr/include/aarch64-linux-gnu/bits/ss_flags.h \
- /usr/include/aarch64-linux-gnu/bits/types/struct_sigstack.h \
- /usr/include/aarch64-linux-gnu/bits/sigthread.h \
- /usr/include/aarch64-linux-gnu/bits/signal_ext.h \
- /usr/include/aarch64-linux-gnu/bits/param.h /usr/include/linux/param.h \
- /usr/lib/linux/uapi/arm64/asm/param.h /usr/include/asm-generic/param.h \
- /usr/include/dirent.h /usr/include/aarch64-linux-gnu/bits/dirent.h \
- /usr/include/aarch64-linux-gnu/bits/dirent_ext.h /usr/include/fnmatch.h \
- /usr/include/libgen.h \
- /home/kufi/workspace/kufibot.cpp/include/final/dialog/fmessagebox.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fbutton.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fterm.h \
- /usr/include/aarch64-linux-gnu/sys/ioctl.h \
- /usr/include/aarch64-linux-gnu/bits/ioctls.h \
- /usr/lib/linux/uapi/arm64/asm/ioctls.h /usr/include/asm-generic/ioctls.h \
- /usr/include/linux/ioctl.h /usr/lib/linux/uapi/arm64/asm/ioctl.h \
- /usr/include/asm-generic/ioctl.h \
- /usr/include/aarch64-linux-gnu/bits/ioctl-types.h \
- /usr/include/aarch64-linux-gnu/sys/ttydefaults.h \
- /usr/include/aarch64-linux-gnu/sys/stat.h \
- /usr/include/aarch64-linux-gnu/bits/stat.h \
- /usr/include/aarch64-linux-gnu/bits/struct_stat.h \
- /usr/include/aarch64-linux-gnu/bits/statx.h /usr/include/linux/stat.h \
- /usr/include/aarch64-linux-gnu/bits/statx-generic.h \
- /usr/include/aarch64-linux-gnu/bits/types/struct_statx_timestamp.h \
- /usr/include/aarch64-linux-gnu/bits/types/struct_statx.h \
- /usr/include/fcntl.h /usr/include/aarch64-linux-gnu/bits/fcntl.h \
- /usr/include/aarch64-linux-gnu/bits/fcntl-linux.h \
- /usr/include/linux/falloc.h /usr/include/ttyent.h \
- /usr/include/c++/12/csignal \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdata.h \
- /usr/include/c++/12/atomic /usr/include/c++/12/bitset \
- /usr/include/c++/12/mutex /usr/include/c++/12/bits/unique_lock.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/fsystem.h \
- /usr/include/pwd.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fcheckbox.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/ftogglebutton.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/flineedit.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/flistbox.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fscrollbar.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/flog.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fstatusbar.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/backend_monitor.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/monitor.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/eventloop.h \
+ /usr/include/c++/12/bits/locale_conv.h \
+ /usr/include/c++/12/bits/quoted_string.h /usr/include/c++/12/math.h \
+ /usr/include/opencv4/opencv2/flann/autotuned_index.h \
+ /usr/include/opencv4/opencv2/flann/ground_truth.h \
+ /usr/include/opencv4/opencv2/flann/index_testing.h \
+ /usr/include/opencv4/opencv2/flann/timer.h \
+ /usr/include/opencv4/opencv2/flann/sampling.h \
+ /usr/include/opencv4/opencv2/highgui.hpp \
+ /usr/include/opencv4/opencv2/imgcodecs.hpp \
+ /usr/include/opencv4/opencv2/videoio.hpp \
+ /usr/include/opencv4/opencv2/imgproc.hpp \
+ /usr/include/opencv4/opencv2/imgproc/segmentation.hpp \
+ /usr/include/opencv4/opencv2/ml.hpp \
+ /usr/include/opencv4/opencv2/ml/ml.inl.hpp \
+ /usr/include/opencv4/opencv2/objdetect.hpp \
+ /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+ /usr/include/opencv4/opencv2/objdetect/face.hpp \
+ /usr/include/opencv4/opencv2/photo.hpp \
+ /usr/include/opencv4/opencv2/stitching.hpp \
+ /usr/include/opencv4/opencv2/stitching/warpers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/include/opencv4/opencv2/core/cuda.hpp \
+ /usr/include/opencv4/opencv2/core/cuda_types.hpp \
+ /usr/include/opencv4/opencv2/core/cuda.inl.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/util.hpp \
  /usr/include/c++/12/list /usr/include/c++/12/bits/stl_list.h \
- /usr/include/c++/12/bits/list.tcc /usr/include/poll.h \
- /usr/include/aarch64-linux-gnu/sys/poll.h \
- /usr/include/aarch64-linux-gnu/bits/poll.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/io_monitor.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/signal_monitor.h \
- /home/kufi/workspace/kufibot.cpp/include/final/eventloop/timer_monitor.h \
- /home/kufi/workspace/kufibot.cpp/include/final/input/fkeyboard.h \
- /home/kufi/workspace/kufibot.cpp/include/final/input/fkey_hashmap.h \
- /home/kufi/workspace/kufibot.cpp/include/final/input/fkey_map.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/char_ringbuffer.h \
- /home/kufi/workspace/kufibot.cpp/include/final/input/fmouse.h \
- /usr/include/linux/keyboard.h /usr/include/linux/wait.h \
- /usr/include/gpm.h /usr/include/paths.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fcheckmenuitem.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fdialoglistmenu.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenubar.h \
- /home/kufi/workspace/kufibot.cpp/include/final/menu/fradiomenuitem.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fcharmap.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/foptiattr.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/sgr_optimizer.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/foptimove.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermcap.h \
- /usr/include/c++/12/thread /usr/include/c++/12/bits/std_thread.h \
- /usr/include/c++/12/bits/this_thread_sleep.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermcapquirks.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdebugdata.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdetection.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermios.h \
- /usr/include/termios.h /usr/include/aarch64-linux-gnu/bits/termios.h \
- /usr/include/aarch64-linux-gnu/bits/termios-struct.h \
- /usr/include/aarch64-linux-gnu/bits/termios-c_cc.h \
- /usr/include/aarch64-linux-gnu/bits/termios-c_iflag.h \
- /usr/include/aarch64-linux-gnu/bits/termios-c_oflag.h \
- /usr/include/aarch64-linux-gnu/bits/termios-baud.h \
- /usr/include/aarch64-linux-gnu/bits/termios-c_cflag.h \
- /usr/include/aarch64-linux-gnu/bits/termios-c_lflag.h \
- /usr/include/aarch64-linux-gnu/bits/termios-tcflow.h \
- /usr/include/aarch64-linux-gnu/bits/termios-misc.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermoutput.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermxterminal.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/emptyfstring.h \
- /home/kufi/workspace/kufibot.cpp/include/final/util/flogger.h \
- /home/kufi/workspace/kufibot.cpp/include/final/vterm/fstyle.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fbusyindicator.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/ftooltip.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fbuttongroup.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fscrollview.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fcombobox.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/flabel.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/flistview.h \
- /usr/include/c++/12/stack /usr/include/c++/12/bits/stl_stack.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fprogressbar.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fradiobutton.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fspinbox.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/fswitch.h \
- /home/kufi/workspace/kufibot.cpp/include/final/widget/ftextview.h \
- /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermlinux.h \
- /usr/include/linux/fb.h /usr/include/linux/i2c.h \
- /usr/include/aarch64-linux-gnu/sys/kd.h /usr/include/linux/kd.h \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/graph_window.h \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/sub_window.h \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/compass_rt_graph_window.h \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/body_controller_window.h \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/robot_controller_service.h \
+ /usr/include/c++/12/bits/list.tcc \
+ /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+ /usr/include/c++/12/queue /usr/include/c++/12/deque \
+ /usr/include/c++/12/bits/stl_deque.h /usr/include/c++/12/bits/deque.tcc \
+ /usr/include/c++/12/bits/stl_queue.h \
+ /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+ /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/include/opencv4/opencv2/video.hpp \
+ /usr/include/opencv4/opencv2/video/tracking.hpp \
+ /usr/include/opencv4/opencv2/video/background_segm.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/asio_no_tls.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/config/core.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/platforms.hpp \
@@ -521,6 +381,8 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/stdint.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/concurrency/basic.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/thread.hpp \
+ /usr/include/c++/12/thread /usr/include/c++/12/bits/std_thread.h \
+ /usr/include/c++/12/bits/this_thread_sleep.h \
  /usr/include/c++/12/condition_variable \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/iostream/endpoint.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/transport/base/endpoint.hpp \
@@ -565,7 +427,15 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/config/detail/select_compiler_config.hpp \
  /usr/include/boost/config/compiler/gcc.hpp \
  /usr/include/boost/config/detail/select_stdlib_config.hpp \
- /usr/include/boost/config/stdlib/libstdcpp3.hpp \
+ /usr/include/c++/12/version \
+ /usr/include/boost/config/stdlib/libstdcpp3.hpp /usr/include/unistd.h \
+ /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
+ /usr/include/aarch64-linux-gnu/bits/environments.h \
+ /usr/include/aarch64-linux-gnu/bits/confname.h \
+ /usr/include/aarch64-linux-gnu/bits/getopt_posix.h \
+ /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
+ /usr/include/aarch64-linux-gnu/bits/unistd_ext.h \
+ /usr/include/linux/close_range.h \
  /usr/include/boost/config/detail/select_platform_config.hpp \
  /usr/include/boost/config/platform/linux.hpp \
  /usr/include/boost/config/detail/posix_features.hpp \
@@ -580,7 +450,7 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/asio/execution/execute.hpp \
  /usr/include/boost/asio/execution/detail/as_invocable.hpp \
  /usr/include/boost/asio/detail/atomic_count.hpp \
- /usr/include/boost/asio/detail/memory.hpp \
+ /usr/include/c++/12/atomic /usr/include/boost/asio/detail/memory.hpp \
  /usr/include/boost/asio/execution/receiver_invocation_error.hpp \
  /usr/include/boost/asio/detail/push_options.hpp \
  /usr/include/boost/asio/detail/pop_options.hpp \
@@ -645,9 +515,12 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/assert/source_location.hpp \
  /usr/include/boost/current_function.hpp \
  /usr/include/boost/exception/exception.hpp \
- /usr/include/boost/system/system_error.hpp \
+ /usr/include/boost/system/system_error.hpp /usr/include/c++/12/cassert \
  /usr/include/boost/asio/error.hpp /usr/include/netdb.h \
- /usr/include/rpc/netdb.h /usr/include/aarch64-linux-gnu/bits/netdb.h \
+ /usr/include/rpc/netdb.h \
+ /usr/include/aarch64-linux-gnu/bits/types/sigevent_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/__sigval_t.h \
+ /usr/include/aarch64-linux-gnu/bits/netdb.h \
  /usr/include/boost/asio/impl/error.ipp \
  /usr/include/boost/asio/detail/thread_info_base.hpp \
  /usr/include/boost/asio/multiple_exceptions.hpp \
@@ -683,7 +556,7 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/asio/execution/detail/bulk_sender.hpp \
  /usr/include/boost/asio/traits/bulk_execute_member.hpp \
  /usr/include/boost/asio/traits/bulk_execute_free.hpp \
- /usr/include/boost/asio/execution/context.hpp \
+ /usr/include/boost/asio/execution/context.hpp /usr/include/c++/12/any \
  /usr/include/boost/asio/execution/context_as.hpp \
  /usr/include/boost/asio/execution/mapping.hpp \
  /usr/include/boost/asio/execution/occupancy.hpp \
@@ -743,9 +616,29 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/asio/detail/select_interrupter.hpp \
  /usr/include/boost/asio/detail/eventfd_select_interrupter.hpp \
  /usr/include/boost/asio/detail/impl/eventfd_select_interrupter.ipp \
- /usr/include/aarch64-linux-gnu/sys/eventfd.h \
+ /usr/include/aarch64-linux-gnu/sys/stat.h \
+ /usr/include/aarch64-linux-gnu/bits/stat.h \
+ /usr/include/aarch64-linux-gnu/bits/struct_stat.h \
+ /usr/include/aarch64-linux-gnu/bits/statx.h /usr/include/linux/stat.h \
+ /usr/include/linux/types.h /usr/lib/linux/uapi/arm64/asm/types.h \
+ /usr/include/asm-generic/types.h /usr/include/asm-generic/int-ll64.h \
+ /usr/include/aarch64-linux-gnu/bits/statx-generic.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_statx_timestamp.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_statx.h \
+ /usr/include/fcntl.h /usr/include/aarch64-linux-gnu/bits/fcntl.h \
+ /usr/include/aarch64-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/linux/falloc.h /usr/include/aarch64-linux-gnu/sys/eventfd.h \
  /usr/include/aarch64-linux-gnu/bits/eventfd.h \
  /usr/include/boost/asio/detail/socket_types.hpp \
+ /usr/include/aarch64-linux-gnu/sys/ioctl.h \
+ /usr/include/aarch64-linux-gnu/bits/ioctls.h \
+ /usr/lib/linux/uapi/arm64/asm/ioctls.h /usr/include/asm-generic/ioctls.h \
+ /usr/include/linux/ioctl.h /usr/lib/linux/uapi/arm64/asm/ioctl.h \
+ /usr/include/asm-generic/ioctl.h \
+ /usr/include/aarch64-linux-gnu/bits/ioctl-types.h \
+ /usr/include/aarch64-linux-gnu/sys/ttydefaults.h /usr/include/poll.h \
+ /usr/include/aarch64-linux-gnu/sys/poll.h \
+ /usr/include/aarch64-linux-gnu/bits/poll.h \
  /usr/include/aarch64-linux-gnu/sys/uio.h \
  /usr/include/aarch64-linux-gnu/bits/uio-ext.h \
  /usr/include/aarch64-linux-gnu/sys/un.h /usr/include/netinet/tcp.h \
@@ -763,6 +656,34 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/asio/detail/scheduler_thread_info.hpp \
  /usr/include/boost/asio/detail/signal_blocker.hpp \
  /usr/include/boost/asio/detail/posix_signal_blocker.hpp \
+ /usr/include/c++/12/csignal /usr/include/signal.h \
+ /usr/include/aarch64-linux-gnu/bits/signum-generic.h \
+ /usr/include/aarch64-linux-gnu/bits/signum-arch.h \
+ /usr/include/aarch64-linux-gnu/bits/types/sig_atomic_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/siginfo_t.h \
+ /usr/include/aarch64-linux-gnu/bits/siginfo-arch.h \
+ /usr/include/aarch64-linux-gnu/bits/siginfo-consts.h \
+ /usr/include/aarch64-linux-gnu/bits/siginfo-consts-arch.h \
+ /usr/include/aarch64-linux-gnu/bits/types/sigval_t.h \
+ /usr/include/aarch64-linux-gnu/bits/sigevent-consts.h \
+ /usr/include/aarch64-linux-gnu/bits/sigaction.h \
+ /usr/include/aarch64-linux-gnu/bits/sigcontext.h \
+ /usr/lib/linux/uapi/arm64/asm/sigcontext.h \
+ /usr/lib/linux/uapi/arm64/asm/sve_context.h \
+ /usr/include/aarch64-linux-gnu/bits/types/stack_t.h \
+ /usr/include/aarch64-linux-gnu/sys/ucontext.h \
+ /usr/include/aarch64-linux-gnu/sys/procfs.h \
+ /usr/include/aarch64-linux-gnu/sys/user.h \
+ /usr/include/aarch64-linux-gnu/bits/procfs.h \
+ /usr/include/aarch64-linux-gnu/bits/procfs-id.h \
+ /usr/include/aarch64-linux-gnu/bits/procfs-prregset.h \
+ /usr/include/aarch64-linux-gnu/bits/procfs-extra.h \
+ /usr/include/aarch64-linux-gnu/bits/sigstack.h \
+ /usr/include/aarch64-linux-gnu/bits/sigstksz.h \
+ /usr/include/aarch64-linux-gnu/bits/ss_flags.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_sigstack.h \
+ /usr/include/aarch64-linux-gnu/bits/sigthread.h \
+ /usr/include/aarch64-linux-gnu/bits/signal_ext.h \
  /usr/include/boost/asio/detail/thread_group.hpp \
  /usr/include/boost/asio/impl/system_context.hpp \
  /usr/include/boost/asio/impl/system_context.ipp \
@@ -816,7 +737,9 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/core/enable_if.hpp \
  /usr/include/boost/date_time/special_defs.hpp \
  /usr/include/boost/date_time/time_defs.hpp \
- /usr/include/boost/operators.hpp /usr/include/boost/static_assert.hpp \
+ /usr/include/boost/operators.hpp /usr/include/c++/12/iterator \
+ /usr/include/c++/12/bits/stream_iterator.h \
+ /usr/include/boost/static_assert.hpp \
  /usr/include/boost/type_traits/is_integral.hpp \
  /usr/include/boost/type_traits/integral_constant.hpp \
  /usr/include/boost/date_time/time_resolution_traits.hpp \
@@ -1056,7 +979,17 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /usr/include/boost/asio/basic_raw_socket.hpp \
  /usr/include/boost/asio/basic_seq_packet_socket.hpp \
  /usr/include/boost/asio/basic_serial_port.hpp \
- /usr/include/boost/asio/serial_port_base.hpp \
+ /usr/include/boost/asio/serial_port_base.hpp /usr/include/termios.h \
+ /usr/include/aarch64-linux-gnu/bits/termios.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-struct.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-c_cc.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-c_iflag.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-c_oflag.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-baud.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-c_cflag.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-c_lflag.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-tcflow.h \
+ /usr/include/aarch64-linux-gnu/bits/termios-misc.h \
  /usr/include/boost/asio/impl/serial_port_base.hpp \
  /usr/include/boost/asio/impl/serial_port_base.ipp \
  /usr/include/boost/asio/detail/reactive_serial_port_service.hpp \
@@ -1377,7 +1310,6 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/utf8_validator.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/processor.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/base.hpp \
- /usr/include/c++/12/queue /usr/include/c++/12/bits/stl_queue.h \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/connection_impl.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/processors/hybi00.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/common/md5.hpp \
@@ -1387,121 +1319,186 @@ CMakeFiles/kufibot.dir/src/controllers/curl_controller.cpp.o: \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/sha1/sha1.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/version.hpp \
  /home/kufi/workspace/kufibot.cpp/include/websocketpp/impl/endpoint_impl.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/json.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/adl_serializer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/abi_macros.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/from_json.hpp \
+ /usr/include/c++/12/forward_list /usr/include/c++/12/bits/forward_list.h \
+ /usr/include/c++/12/bits/forward_list.tcc /usr/include/c++/12/valarray \
+ /usr/include/c++/12/bits/valarray_array.h \
+ /usr/include/c++/12/bits/valarray_array.tcc \
+ /usr/include/c++/12/bits/valarray_before.h \
+ /usr/include/c++/12/bits/slice_array.h \
+ /usr/include/c++/12/bits/valarray_after.h \
+ /usr/include/c++/12/bits/gslice.h \
+ /usr/include/c++/12/bits/gslice_array.h \
+ /usr/include/c++/12/bits/mask_array.h \
+ /usr/include/c++/12/bits/indirect_array.h \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/exceptions.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/value_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_scope.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/detected.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/void_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_escape.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/position_t.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/cpp_future.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/type_traits.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iterator_traits.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/begin.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/call_std/end.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/json_fwd.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/string_concat.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/identity_tag.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/std_fs.hpp \
+ /usr/include/c++/12/filesystem /usr/include/c++/12/bits/fs_fwd.h \
+ /usr/include/c++/12/bits/fs_path.h /usr/include/c++/12/codecvt \
+ /usr/include/c++/12/bits/fs_dir.h /usr/include/c++/12/bits/fs_ops.h \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_json.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/byte_container_with_subtype.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/hash.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/binary_reader.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/input_adapters.hpp \
+ /usr/include/c++/12/numeric /usr/include/c++/12/bits/stl_numeric.h \
+ /usr/include/c++/12/pstl/glue_numeric_defs.h \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/json_sax.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/lexer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/meta/is_sax.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/input/parser.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/internal_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/iter_impl.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_custom_base_class.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_pointer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/json_ref.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/binary_writer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/output_adapters.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/output/serializer.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/conversions/to_chars.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/ordered_map.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/detail/macro_unscope.hpp \
+ /home/kufi/workspace/kufibot.cpp/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../subscriber.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/main_window.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/final.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fapplication.h \
+ /usr/include/getopt.h /usr/include/aarch64-linux-gnu/bits/getopt_ext.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/ftypes.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/pipedata.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fwidget.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fobject.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/ftimer.h \
+ /usr/include/c++/12/shared_mutex \
+ /home/kufi/workspace/kufibot.cpp/include/final/fevent.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fc.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fconfig.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fdata.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fstring.h \
+ /usr/include/langinfo.h /usr/include/nl_types.h \
+ /usr/include/c++/12/cstdarg \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fpoint.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fwidget_flags.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fwidget_functions.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/foutput.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/fcolorpalette.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvterm.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fterm_functions.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/frect.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fsize.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fstringstream.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvtermattribute.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/vterm/fcolorpair.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/vterm/fvtermbuffer.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fcallback.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/fstartoptions.h \
+ /usr/include/c++/12/fstream \
+ /usr/include/aarch64-linux-gnu/c++/12/bits/basic_file.h \
+ /usr/include/aarch64-linux-gnu/c++/12/bits/c++io.h \
+ /usr/include/c++/12/bits/fstream.tcc \
+ /home/kufi/workspace/kufibot.cpp/include/final/fwidgetcolors.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/dialog/fdialog.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenu.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenulist.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenuitem.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fwindow.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/dialog/ffiledialog.h \
+ /usr/include/aarch64-linux-gnu/sys/param.h \
+ /usr/include/aarch64-linux-gnu/bits/param.h /usr/include/linux/param.h \
+ /usr/lib/linux/uapi/arm64/asm/param.h /usr/include/asm-generic/param.h \
+ /usr/include/dirent.h /usr/include/aarch64-linux-gnu/bits/dirent.h \
+ /usr/include/aarch64-linux-gnu/bits/dirent_ext.h /usr/include/fnmatch.h \
+ /usr/include/libgen.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/dialog/fmessagebox.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fbutton.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fterm.h \
+ /usr/include/ttyent.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdata.h \
+ /usr/include/c++/12/bitset \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/fsystem.h \
+ /usr/include/pwd.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fcheckbox.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/ftogglebutton.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/flineedit.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/flistbox.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fscrollbar.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/flog.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fstatusbar.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/backend_monitor.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/monitor.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/eventloop.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/io_monitor.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/signal_monitor.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/eventloop/timer_monitor.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/input/fkeyboard.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/input/fkey_hashmap.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/input/fkey_map.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/char_ringbuffer.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/input/fmouse.h \
+ /usr/include/linux/keyboard.h /usr/include/linux/wait.h \
+ /usr/include/gpm.h /usr/include/paths.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fcheckmenuitem.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fdialoglistmenu.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fmenubar.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/menu/fradiomenuitem.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/fcharmap.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/foptiattr.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/sgr_optimizer.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/foptimove.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermcap.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermcapquirks.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdebugdata.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermdetection.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermios.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermoutput.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermxterminal.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/emptyfstring.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/util/flogger.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/vterm/fstyle.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fbusyindicator.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/ftooltip.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fbuttongroup.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fscrollview.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fcombobox.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/flabel.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/flistview.h \
+ /usr/include/c++/12/stack /usr/include/c++/12/bits/stl_stack.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fprogressbar.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fradiobutton.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fspinbox.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/fswitch.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/widget/ftextview.h \
+ /home/kufi/workspace/kufibot.cpp/include/final/output/tty/ftermlinux.h \
+ /usr/include/linux/fb.h /usr/include/linux/i2c.h \
+ /usr/include/aarch64-linux-gnu/sys/kd.h /usr/include/linux/kd.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/graph_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/sub_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/compass_rt_graph_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/body_controller_window.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/robot_controller_service.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/service.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../publisher.h \
- /usr/include/opencv4/opencv2/opencv.hpp \
- /usr/include/opencv4/opencv2/opencv_modules.hpp \
- /usr/include/opencv4/opencv2/core.hpp \
- /usr/include/opencv4/opencv2/core/cvdef.h \
- /usr/include/opencv4/opencv2/core/version.hpp \
- /usr/include/opencv4/opencv2/core/hal/interface.h \
- /usr/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
- /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_neon.h \
- /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_fp16.h \
- /usr/lib/gcc/aarch64-linux-gnu/12/include/arm_bf16.h \
- /usr/include/opencv4/opencv2/core/base.hpp \
- /usr/include/opencv4/opencv2/core/cvstd.hpp \
- /usr/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
- /usr/include/opencv4/opencv2/core/neon_utils.hpp \
- /usr/include/opencv4/opencv2/core/vsx_utils.hpp \
- /usr/include/opencv4/opencv2/core/check.hpp \
- /usr/include/opencv4/opencv2/core/traits.hpp \
- /usr/include/opencv4/opencv2/core/matx.hpp \
- /usr/include/opencv4/opencv2/core/saturate.hpp \
- /usr/include/opencv4/opencv2/core/fast_math.hpp \
- /usr/include/opencv4/opencv2/core/types.hpp \
- /usr/include/opencv4/opencv2/core/mat.hpp \
- /usr/include/opencv4/opencv2/core/bufferpool.hpp \
- /usr/include/opencv4/opencv2/core/mat.inl.hpp \
- /usr/include/opencv4/opencv2/core/persistence.hpp \
- /usr/include/opencv4/opencv2/core/operations.hpp \
- /usr/include/opencv4/opencv2/core/cvstd.inl.hpp \
- /usr/include/c++/12/complex \
- /usr/include/opencv4/opencv2/core/utility.hpp \
- /usr/include/opencv4/opencv2/core/optim.hpp \
- /usr/include/opencv4/opencv2/core/ovx.hpp \
- /usr/include/opencv4/opencv2/core/cvdef.h \
- /usr/include/opencv4/opencv2/calib3d.hpp \
- /usr/include/opencv4/opencv2/features2d.hpp \
- /usr/include/opencv4/opencv2/flann/miniflann.hpp \
- /usr/include/opencv4/opencv2/flann/defines.h \
- /usr/include/opencv4/opencv2/flann/config.h \
- /usr/include/opencv4/opencv2/core/affine.hpp \
- /usr/include/opencv4/opencv2/dnn.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/include/opencv4/opencv2/core/async.hpp \
- /usr/include/opencv4/opencv2/dnn/version.hpp \
- /usr/include/opencv4/opencv2/dnn/dict.hpp \
- /usr/include/opencv4/opencv2/dnn/layer.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.inl.hpp \
- /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
- /usr/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/include/opencv4/opencv2/flann.hpp \
- /usr/include/opencv4/opencv2/flann/flann_base.hpp \
- /usr/include/opencv4/opencv2/flann/general.h \
- /usr/include/opencv4/opencv2/flann/matrix.h \
- /usr/include/opencv4/opencv2/flann/params.h \
- /usr/include/opencv4/opencv2/flann/any.h \
- /usr/include/opencv4/opencv2/flann/defines.h \
- /usr/include/opencv4/opencv2/flann/saving.h \
- /usr/include/opencv4/opencv2/flann/nn_index.h \
- /usr/include/opencv4/opencv2/flann/result_set.h /usr/include/c++/12/set \
- /usr/include/c++/12/bits/stl_set.h \
- /usr/include/c++/12/bits/stl_multiset.h \
- /usr/include/opencv4/opencv2/flann/all_indices.h \
- /usr/include/opencv4/opencv2/flann/kdtree_index.h \
- /usr/include/opencv4/opencv2/flann/dynamic_bitset.h \
- /usr/include/opencv4/opencv2/flann/dist.h \
- /usr/include/opencv4/opencv2/flann/heap.h \
- /usr/include/opencv4/opencv2/flann/allocator.h \
- /usr/include/c++/12/stdlib.h /usr/include/opencv4/opencv2/flann/random.h \
- /usr/include/opencv4/opencv2/flann/kdtree_single_index.h \
- /usr/include/opencv4/opencv2/flann/kmeans_index.h \
- /usr/include/opencv4/opencv2/flann/logger.h \
- /usr/include/opencv4/opencv2/flann/composite_index.h \
- /usr/include/opencv4/opencv2/flann/linear_index.h \
- /usr/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
- /usr/include/opencv4/opencv2/flann/lsh_index.h \
- /usr/include/opencv4/opencv2/flann/lsh_table.h \
- /usr/include/c++/12/math.h \
- /usr/include/opencv4/opencv2/flann/autotuned_index.h \
- /usr/include/opencv4/opencv2/flann/ground_truth.h \
- /usr/include/opencv4/opencv2/flann/index_testing.h \
- /usr/include/opencv4/opencv2/flann/timer.h \
- /usr/include/opencv4/opencv2/flann/sampling.h \
- /usr/include/opencv4/opencv2/highgui.hpp \
- /usr/include/opencv4/opencv2/imgcodecs.hpp \
- /usr/include/opencv4/opencv2/videoio.hpp \
- /usr/include/opencv4/opencv2/imgproc.hpp \
- /usr/include/opencv4/opencv2/imgproc/segmentation.hpp \
- /usr/include/opencv4/opencv2/ml.hpp \
- /usr/include/opencv4/opencv2/ml/ml.inl.hpp \
- /usr/include/opencv4/opencv2/objdetect.hpp \
- /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
- /usr/include/opencv4/opencv2/objdetect/face.hpp \
- /usr/include/opencv4/opencv2/photo.hpp \
- /usr/include/opencv4/opencv2/stitching.hpp \
- /usr/include/opencv4/opencv2/stitching/warpers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/include/opencv4/opencv2/core/cuda.hpp \
- /usr/include/opencv4/opencv2/core/cuda_types.hpp \
- /usr/include/opencv4/opencv2/core/cuda.inl.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/util.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/blenders.hpp \
- /usr/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/include/opencv4/opencv2/video.hpp \
- /usr/include/opencv4/opencv2/video/tracking.hpp \
- /usr/include/opencv4/opencv2/video/background_segm.hpp \
- /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../subscriber.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/compass_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/../ui/../services/../controllers/../drivers/median_filter.h \

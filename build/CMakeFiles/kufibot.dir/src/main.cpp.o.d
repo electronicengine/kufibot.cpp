@@ -1443,11 +1443,13 @@ CMakeFiles/kufibot.dir/src/main.cpp.o: \
  /usr/include/portaudio.h \
  /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../controllers/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../controllers/execution_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.h \
  /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/compass_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/controllers/distance_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/controllers/curl_controller.h \
  /home/kufi/workspace/kufibot.cpp/include/final/final.h \
  /home/kufi/workspace/kufibot.cpp/include/final/fapplication.h \
  /usr/include/getopt.h /usr/include/aarch64-linux-gnu/bits/getopt_ext.h \

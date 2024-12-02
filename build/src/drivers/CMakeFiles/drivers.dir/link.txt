@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -pthread -Wall -Wextra -ggdb -g -shared -Wl,-soname,libdrivers.so -o libdrivers.so CMakeFiles/drivers.dir/ina219_driver.cpp.o CMakeFiles/drivers.dir/median_filter.cpp.o CMakeFiles/drivers.dir/pca9685_driver.cpp.o CMakeFiles/drivers.dir/qmc5883l_driver.cpp.o   -L/home/kufi/workspace/kufibot.cpp/lib  -Wl,-rpath,/home/kufi/workspace/kufibot.cpp/lib -lwiringPi 

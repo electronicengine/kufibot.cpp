@@ -1,9 +1,8 @@
 import google.generativeai as genai
-import argparse
-import sys 
+from flask import Flask, request, jsonify
 
 # Set your API key
-key = "AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw"
+key = "AIzaSyAk-DrQQFK-Qt7qgZfbfyM-Pq5X9O6e7Wk"
 
 # Configure the Generative AI with the API key
 genai.configure(api_key=key)
@@ -18,20 +17,32 @@ generation_config = {
 }
 
 model = genai.GenerativeModel(
-    model_name='tunedModels/kufi-2165',
+    # model_name='tunedModels/kufi-2165',
+    model_name='gemini-1.5-flash',
     generation_config=generation_config,
 )
+
+# Initialize Flask app
+app = Flask(__name__)
 
 def generate_text(prompt):
     """Function to generate text from a prompt."""
     result = model.generate_content(prompt)
     return result.text
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Generate text from a prompt')
-    parser.add_argument('prompt', type=str, help='The prompt for text generation')
-    args = parser.parse_args()
+@app.route('/generate', methods=['POST'])
+def generate():
+    """Endpoint to generate text based on a prompt."""
+    data = request.get_json()
+    if not data or 'prompt' not in data:
+        return jsonify({'error': 'Missing "prompt" in request'}), 400
 
-    # Generate and print the text based on the provided prompt
-    print(generate_text(args.prompt))
-    sys.stdout.flush()
+    prompt = data['prompt']
+    try:
+        text = generate_text(prompt)
+        return jsonify({'generated_text': text}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)

@@ -13,9 +13,19 @@
 
 #include "controllers/compass_controller.h"
 #include "controllers/distance_controller.h"
+#include "controllers/curl_controller.h"
 #include "final/final.h"
 #include "ui/main_window.h"
 #include "ui/widget_color_theme.h"
+#include <iostream>
+#include <curl/curl.h>
+#include <string>
+#include <sstream>
+
+#include <iostream>
+#include <string>
+#include <curl/curl.h>
+#include <nlohmann/json.hpp>
 
 using namespace finalcut;
 

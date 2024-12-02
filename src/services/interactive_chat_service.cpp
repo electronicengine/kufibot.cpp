@@ -90,15 +90,15 @@ void InteractiveChatService::service_update_function()
             message = json_msg["text"];
             MainWindow::log("execute_gemini: "  + message, LogLevel::LOG_TRACE);
             //  message = translate("tr", "en", message);
-            std::string result = _curlController->execute_gemini(message);
+            // std::string result = _curlController->execute_gemini(message);
             // result = translate("en", "tr", result);
-            MainWindow::log("result: "  + result, LogLevel::LOG_TRACE);
-            std::vector<std::string> sentences = splitSentences(result);
-            for (const auto& sentence : sentences) {
-                MainWindow::log("sentence: "  + sentence, LogLevel::LOG_TRACE);
+            // MainWindow::log("result: "  + result, LogLevel::LOG_TRACE);
+            // std::vector<std::string> sentences = splitSentences(result);
+            // for (const auto& sentence : sentences) {
+            //     MainWindow::log("sentence: "  + sentence, LogLevel::LOG_TRACE);
 
-                _speechProcessController->speakText(sentence);
-            }
+            //     _speechProcessController->speakText(sentence);
+            // }
 
             _speechRecognitionController->start_listen();
 

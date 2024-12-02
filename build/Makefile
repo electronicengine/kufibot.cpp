@@ -129,6 +129,58 @@ kufibot/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/build
 .PHONY : kufibot/fast
 
+#=============================================================================
+# Target rules for targets named ui
+
+# Build rule for target.
+ui: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ui
+.PHONY : ui
+
+# fast build rule for target.
+ui/fast:
+	$(MAKE) $(MAKESILENT) -f src/ui/CMakeFiles/ui.dir/build.make src/ui/CMakeFiles/ui.dir/build
+.PHONY : ui/fast
+
+#=============================================================================
+# Target rules for targets named drivers
+
+# Build rule for target.
+drivers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drivers
+.PHONY : drivers
+
+# fast build rule for target.
+drivers/fast:
+	$(MAKE) $(MAKESILENT) -f src/drivers/CMakeFiles/drivers.dir/build.make src/drivers/CMakeFiles/drivers.dir/build
+.PHONY : drivers/fast
+
+#=============================================================================
+# Target rules for targets named controllers
+
+# Build rule for target.
+controllers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 controllers
+.PHONY : controllers
+
+# fast build rule for target.
+controllers/fast:
+	$(MAKE) $(MAKESILENT) -f src/controllers/CMakeFiles/controllers.dir/build.make src/controllers/CMakeFiles/controllers.dir/build
+.PHONY : controllers/fast
+
+#=============================================================================
+# Target rules for targets named services
+
+# Build rule for target.
+services: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 services
+.PHONY : services
+
+# fast build rule for target.
+services/fast:
+	$(MAKE) $(MAKESILENT) -f src/services/CMakeFiles/services.dir/build.make src/services/CMakeFiles/services.dir/build
+.PHONY : services/fast
+
 src/controllers/compass_controller.o: src/controllers/compass_controller.cpp.o
 .PHONY : src/controllers/compass_controller.o
 
@@ -344,102 +396,6 @@ src/controllers/speech_recognition_controller.s: src/controllers/speech_recognit
 src/controllers/speech_recognition_controller.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/controllers/speech_recognition_controller.cpp.s
 .PHONY : src/controllers/speech_recognition_controller.cpp.s
-
-src/drivers/ina219_driver.o: src/drivers/ina219_driver.cpp.o
-.PHONY : src/drivers/ina219_driver.o
-
-# target to build an object file
-src/drivers/ina219_driver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.o
-.PHONY : src/drivers/ina219_driver.cpp.o
-
-src/drivers/ina219_driver.i: src/drivers/ina219_driver.cpp.i
-.PHONY : src/drivers/ina219_driver.i
-
-# target to preprocess a source file
-src/drivers/ina219_driver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.i
-.PHONY : src/drivers/ina219_driver.cpp.i
-
-src/drivers/ina219_driver.s: src/drivers/ina219_driver.cpp.s
-.PHONY : src/drivers/ina219_driver.s
-
-# target to generate assembly for a file
-src/drivers/ina219_driver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/ina219_driver.cpp.s
-.PHONY : src/drivers/ina219_driver.cpp.s
-
-src/drivers/median_filter.o: src/drivers/median_filter.cpp.o
-.PHONY : src/drivers/median_filter.o
-
-# target to build an object file
-src/drivers/median_filter.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.o
-.PHONY : src/drivers/median_filter.cpp.o
-
-src/drivers/median_filter.i: src/drivers/median_filter.cpp.i
-.PHONY : src/drivers/median_filter.i
-
-# target to preprocess a source file
-src/drivers/median_filter.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.i
-.PHONY : src/drivers/median_filter.cpp.i
-
-src/drivers/median_filter.s: src/drivers/median_filter.cpp.s
-.PHONY : src/drivers/median_filter.s
-
-# target to generate assembly for a file
-src/drivers/median_filter.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/median_filter.cpp.s
-.PHONY : src/drivers/median_filter.cpp.s
-
-src/drivers/pca9685_driver.o: src/drivers/pca9685_driver.cpp.o
-.PHONY : src/drivers/pca9685_driver.o
-
-# target to build an object file
-src/drivers/pca9685_driver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.o
-.PHONY : src/drivers/pca9685_driver.cpp.o
-
-src/drivers/pca9685_driver.i: src/drivers/pca9685_driver.cpp.i
-.PHONY : src/drivers/pca9685_driver.i
-
-# target to preprocess a source file
-src/drivers/pca9685_driver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.i
-.PHONY : src/drivers/pca9685_driver.cpp.i
-
-src/drivers/pca9685_driver.s: src/drivers/pca9685_driver.cpp.s
-.PHONY : src/drivers/pca9685_driver.s
-
-# target to generate assembly for a file
-src/drivers/pca9685_driver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/pca9685_driver.cpp.s
-.PHONY : src/drivers/pca9685_driver.cpp.s
-
-src/drivers/qmc5883l_driver.o: src/drivers/qmc5883l_driver.cpp.o
-.PHONY : src/drivers/qmc5883l_driver.o
-
-# target to build an object file
-src/drivers/qmc5883l_driver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.o
-.PHONY : src/drivers/qmc5883l_driver.cpp.o
-
-src/drivers/qmc5883l_driver.i: src/drivers/qmc5883l_driver.cpp.i
-.PHONY : src/drivers/qmc5883l_driver.i
-
-# target to preprocess a source file
-src/drivers/qmc5883l_driver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.i
-.PHONY : src/drivers/qmc5883l_driver.cpp.i
-
-src/drivers/qmc5883l_driver.s: src/drivers/qmc5883l_driver.cpp.s
-.PHONY : src/drivers/qmc5883l_driver.s
-
-# target to generate assembly for a file
-src/drivers/qmc5883l_driver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/drivers/qmc5883l_driver.cpp.s
-.PHONY : src/drivers/qmc5883l_driver.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -657,222 +613,6 @@ src/services/web_socket_service.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/services/web_socket_service.cpp.s
 .PHONY : src/services/web_socket_service.cpp.s
 
-src/ui/body_controller_window.o: src/ui/body_controller_window.cpp.o
-.PHONY : src/ui/body_controller_window.o
-
-# target to build an object file
-src/ui/body_controller_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.o
-.PHONY : src/ui/body_controller_window.cpp.o
-
-src/ui/body_controller_window.i: src/ui/body_controller_window.cpp.i
-.PHONY : src/ui/body_controller_window.i
-
-# target to preprocess a source file
-src/ui/body_controller_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.i
-.PHONY : src/ui/body_controller_window.cpp.i
-
-src/ui/body_controller_window.s: src/ui/body_controller_window.cpp.s
-.PHONY : src/ui/body_controller_window.s
-
-# target to generate assembly for a file
-src/ui/body_controller_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/body_controller_window.cpp.s
-.PHONY : src/ui/body_controller_window.cpp.s
-
-src/ui/chat_window.o: src/ui/chat_window.cpp.o
-.PHONY : src/ui/chat_window.o
-
-# target to build an object file
-src/ui/chat_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.o
-.PHONY : src/ui/chat_window.cpp.o
-
-src/ui/chat_window.i: src/ui/chat_window.cpp.i
-.PHONY : src/ui/chat_window.i
-
-# target to preprocess a source file
-src/ui/chat_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.i
-.PHONY : src/ui/chat_window.cpp.i
-
-src/ui/chat_window.s: src/ui/chat_window.cpp.s
-.PHONY : src/ui/chat_window.s
-
-# target to generate assembly for a file
-src/ui/chat_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/chat_window.cpp.s
-.PHONY : src/ui/chat_window.cpp.s
-
-src/ui/compass_rt_graph_window.o: src/ui/compass_rt_graph_window.cpp.o
-.PHONY : src/ui/compass_rt_graph_window.o
-
-# target to build an object file
-src/ui/compass_rt_graph_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.o
-.PHONY : src/ui/compass_rt_graph_window.cpp.o
-
-src/ui/compass_rt_graph_window.i: src/ui/compass_rt_graph_window.cpp.i
-.PHONY : src/ui/compass_rt_graph_window.i
-
-# target to preprocess a source file
-src/ui/compass_rt_graph_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.i
-.PHONY : src/ui/compass_rt_graph_window.cpp.i
-
-src/ui/compass_rt_graph_window.s: src/ui/compass_rt_graph_window.cpp.s
-.PHONY : src/ui/compass_rt_graph_window.s
-
-# target to generate assembly for a file
-src/ui/compass_rt_graph_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/compass_rt_graph_window.cpp.s
-.PHONY : src/ui/compass_rt_graph_window.cpp.s
-
-src/ui/graph_window.o: src/ui/graph_window.cpp.o
-.PHONY : src/ui/graph_window.o
-
-# target to build an object file
-src/ui/graph_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.o
-.PHONY : src/ui/graph_window.cpp.o
-
-src/ui/graph_window.i: src/ui/graph_window.cpp.i
-.PHONY : src/ui/graph_window.i
-
-# target to preprocess a source file
-src/ui/graph_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.i
-.PHONY : src/ui/graph_window.cpp.i
-
-src/ui/graph_window.s: src/ui/graph_window.cpp.s
-.PHONY : src/ui/graph_window.s
-
-# target to generate assembly for a file
-src/ui/graph_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/graph_window.cpp.s
-.PHONY : src/ui/graph_window.cpp.s
-
-src/ui/main_window.o: src/ui/main_window.cpp.o
-.PHONY : src/ui/main_window.o
-
-# target to build an object file
-src/ui/main_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/main_window.cpp.o
-.PHONY : src/ui/main_window.cpp.o
-
-src/ui/main_window.i: src/ui/main_window.cpp.i
-.PHONY : src/ui/main_window.i
-
-# target to preprocess a source file
-src/ui/main_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/main_window.cpp.i
-.PHONY : src/ui/main_window.cpp.i
-
-src/ui/main_window.s: src/ui/main_window.cpp.s
-.PHONY : src/ui/main_window.s
-
-# target to generate assembly for a file
-src/ui/main_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/main_window.cpp.s
-.PHONY : src/ui/main_window.cpp.s
-
-src/ui/measurements_window.o: src/ui/measurements_window.cpp.o
-.PHONY : src/ui/measurements_window.o
-
-# target to build an object file
-src/ui/measurements_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.o
-.PHONY : src/ui/measurements_window.cpp.o
-
-src/ui/measurements_window.i: src/ui/measurements_window.cpp.i
-.PHONY : src/ui/measurements_window.i
-
-# target to preprocess a source file
-src/ui/measurements_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.i
-.PHONY : src/ui/measurements_window.cpp.i
-
-src/ui/measurements_window.s: src/ui/measurements_window.cpp.s
-.PHONY : src/ui/measurements_window.s
-
-# target to generate assembly for a file
-src/ui/measurements_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/measurements_window.cpp.s
-.PHONY : src/ui/measurements_window.cpp.s
-
-src/ui/servo_controller_window.o: src/ui/servo_controller_window.cpp.o
-.PHONY : src/ui/servo_controller_window.o
-
-# target to build an object file
-src/ui/servo_controller_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.o
-.PHONY : src/ui/servo_controller_window.cpp.o
-
-src/ui/servo_controller_window.i: src/ui/servo_controller_window.cpp.i
-.PHONY : src/ui/servo_controller_window.i
-
-# target to preprocess a source file
-src/ui/servo_controller_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.i
-.PHONY : src/ui/servo_controller_window.cpp.i
-
-src/ui/servo_controller_window.s: src/ui/servo_controller_window.cpp.s
-.PHONY : src/ui/servo_controller_window.s
-
-# target to generate assembly for a file
-src/ui/servo_controller_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/servo_controller_window.cpp.s
-.PHONY : src/ui/servo_controller_window.cpp.s
-
-src/ui/sub_window.o: src/ui/sub_window.cpp.o
-.PHONY : src/ui/sub_window.o
-
-# target to build an object file
-src/ui/sub_window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.o
-.PHONY : src/ui/sub_window.cpp.o
-
-src/ui/sub_window.i: src/ui/sub_window.cpp.i
-.PHONY : src/ui/sub_window.i
-
-# target to preprocess a source file
-src/ui/sub_window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.i
-.PHONY : src/ui/sub_window.cpp.i
-
-src/ui/sub_window.s: src/ui/sub_window.cpp.s
-.PHONY : src/ui/sub_window.s
-
-# target to generate assembly for a file
-src/ui/sub_window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/sub_window.cpp.s
-.PHONY : src/ui/sub_window.cpp.s
-
-src/ui/widget_color_theme.o: src/ui/widget_color_theme.cpp.o
-.PHONY : src/ui/widget_color_theme.o
-
-# target to build an object file
-src/ui/widget_color_theme.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.o
-.PHONY : src/ui/widget_color_theme.cpp.o
-
-src/ui/widget_color_theme.i: src/ui/widget_color_theme.cpp.i
-.PHONY : src/ui/widget_color_theme.i
-
-# target to preprocess a source file
-src/ui/widget_color_theme.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.i
-.PHONY : src/ui/widget_color_theme.cpp.i
-
-src/ui/widget_color_theme.s: src/ui/widget_color_theme.cpp.s
-.PHONY : src/ui/widget_color_theme.s
-
-# target to generate assembly for a file
-src/ui/widget_color_theme.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/kufibot.dir/build.make CMakeFiles/kufibot.dir/src/ui/widget_color_theme.cpp.s
-.PHONY : src/ui/widget_color_theme.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -881,7 +621,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... controllers"
+	@echo "... drivers"
 	@echo "... kufibot"
+	@echo "... services"
+	@echo "... ui"
 	@echo "... src/controllers/compass_controller.o"
 	@echo "... src/controllers/compass_controller.i"
 	@echo "... src/controllers/compass_controller.s"
@@ -909,18 +653,6 @@ help:
 	@echo "... src/controllers/speech_recognition_controller.o"
 	@echo "... src/controllers/speech_recognition_controller.i"
 	@echo "... src/controllers/speech_recognition_controller.s"
-	@echo "... src/drivers/ina219_driver.o"
-	@echo "... src/drivers/ina219_driver.i"
-	@echo "... src/drivers/ina219_driver.s"
-	@echo "... src/drivers/median_filter.o"
-	@echo "... src/drivers/median_filter.i"
-	@echo "... src/drivers/median_filter.s"
-	@echo "... src/drivers/pca9685_driver.o"
-	@echo "... src/drivers/pca9685_driver.i"
-	@echo "... src/drivers/pca9685_driver.s"
-	@echo "... src/drivers/qmc5883l_driver.o"
-	@echo "... src/drivers/qmc5883l_driver.i"
-	@echo "... src/drivers/qmc5883l_driver.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -948,33 +680,6 @@ help:
 	@echo "... src/services/web_socket_service.o"
 	@echo "... src/services/web_socket_service.i"
 	@echo "... src/services/web_socket_service.s"
-	@echo "... src/ui/body_controller_window.o"
-	@echo "... src/ui/body_controller_window.i"
-	@echo "... src/ui/body_controller_window.s"
-	@echo "... src/ui/chat_window.o"
-	@echo "... src/ui/chat_window.i"
-	@echo "... src/ui/chat_window.s"
-	@echo "... src/ui/compass_rt_graph_window.o"
-	@echo "... src/ui/compass_rt_graph_window.i"
-	@echo "... src/ui/compass_rt_graph_window.s"
-	@echo "... src/ui/graph_window.o"
-	@echo "... src/ui/graph_window.i"
-	@echo "... src/ui/graph_window.s"
-	@echo "... src/ui/main_window.o"
-	@echo "... src/ui/main_window.i"
-	@echo "... src/ui/main_window.s"
-	@echo "... src/ui/measurements_window.o"
-	@echo "... src/ui/measurements_window.i"
-	@echo "... src/ui/measurements_window.s"
-	@echo "... src/ui/servo_controller_window.o"
-	@echo "... src/ui/servo_controller_window.i"
-	@echo "... src/ui/servo_controller_window.s"
-	@echo "... src/ui/sub_window.o"
-	@echo "... src/ui/sub_window.i"
-	@echo "... src/ui/sub_window.s"
-	@echo "... src/ui/widget_color_theme.o"
-	@echo "... src/ui/widget_color_theme.i"
-	@echo "... src/ui/widget_color_theme.s"
 .PHONY : help
 
 

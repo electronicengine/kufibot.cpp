@@ -1445,6 +1445,7 @@ CMakeFiles/kufibot.dir/src/services/interactive_chat_service.cpp.o: \
  /usr/include/portaudio.h \
  /home/kufi/workspace/kufibot.cpp/include/vosk_api.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../controllers/curl_controller.h \
+ /home/kufi/workspace/kufibot.cpp/src/services/../controllers/../publisher.h \
  /home/kufi/workspace/kufibot.cpp/src/services/../controllers/execution_controller.h \
  /home/kufi/workspace/kufibot.cpp/src/services/mapping_service.h \
  /home/kufi/workspace/kufibot.cpp/src/services/video_stream_service.h \
