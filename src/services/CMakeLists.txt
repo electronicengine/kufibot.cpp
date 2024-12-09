@@ -17,21 +17,6 @@ include_directories(${SERVICES_INC_DIR})
 add_library(${TARGET} SHARED ${SRCS})
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
-target_link_libraries(${TARGET} PRIVATE final
-                                        wiringPi
-                                        mpg123
-                                        vosk
-                                        fmt
-                                        spdlog
-                                        espeak-ng
-                                        piper
-                                        piper_phonemize
-                                        onnxruntime
-                                        ALSA::ALSA
-                                        Boost::system
-                                        portaudio
-                                        final
-                                        ui
-                                        drivers
+target_link_libraries(${TARGET} PRIVATE ui
                                         controllers
                                         )

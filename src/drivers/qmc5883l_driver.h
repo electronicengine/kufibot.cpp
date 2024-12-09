@@ -43,7 +43,7 @@
 
 class QMC5883LDriver {
 public:
-    QMC5883LDriver(int i2c_bus = DFLT_BUS, int address = DFLT_ADDRESS,
+    QMC5883LDriver(int address = DFLT_ADDRESS,
                    int output_data_rate = ODR_10HZ, int output_range = RNG_2G,
                    int oversampling_rate = OSR_512);
 

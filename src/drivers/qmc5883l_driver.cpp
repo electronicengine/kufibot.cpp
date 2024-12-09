@@ -1,7 +1,7 @@
 #include "qmc5883l_driver.h"
 #include "../ui/main_window.h"
 
-QMC5883LDriver::QMC5883LDriver(int i2c_bus, int address,
+QMC5883LDriver::QMC5883LDriver(int address,
                                 int output_data_rate, int output_range,
                                 int oversampling_rate)
     : _address(address) {
@@ -55,9 +55,6 @@ int16_t QMC5883LDriver::read_word(uint8_t registry) {
 
 int16_t QMC5883LDriver::read_word_2c(uint8_t registry) {
     int16_t val = read_word(registry);
-    if (val >= 0x8000) {
-        return val - 0x10000; // Convert to signed
-    }
     return val;
 }
 

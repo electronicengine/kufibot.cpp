@@ -29,7 +29,6 @@ target_link_libraries(${TARGET} PRIVATE wiringPi
                                         ALSA::ALSA
                                         Boost::system
                                         portaudio
-                                        final
                                         drivers
                                         ui
                                         )

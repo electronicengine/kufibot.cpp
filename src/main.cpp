@@ -32,16 +32,29 @@ using namespace finalcut;
 
 auto main (int argc, char* argv[]) -> int
 {
+        // Parse command-line arguments
+    bool standalone = false;
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "--standalone") {
+            standalone = true;
+            break;
+        }
+    }
+
+
     RemoteConnectionService *remote_connection_service = RemoteConnectionService::get_instance();
     VideoStreamService *video_stream_service = VideoStreamService::get_instance();
     RobotControllerService *robot_controller_service = RobotControllerService::get_instance();
     WebSocketService *web_socket_service = WebSocketService::get_instance();
     InteractiveChatService *interactive_chat_service = InteractiveChatService::get_instance();
 
-    web_socket_service->start("192.168.1.44", 8765);
-    video_stream_service->start();
-    robot_controller_service->start();
-    remote_connection_service->start();
+    if(!standalone){
+        web_socket_service->start("192.168.1.44", 8765);
+        video_stream_service->start();
+        robot_controller_service->start();
+        remote_connection_service->start();
+    }
+
     interactive_chat_service->start();
 
     FApplication app {argc, argv};

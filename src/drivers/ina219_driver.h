@@ -113,7 +113,7 @@ class INA219Driver
         uint16_t    read_register(uint8_t register_value);
         void        write_register(uint8_t register_address, uint16_t register_value);
         float       determine_current_lsb(float max_expected_amps, float max_possible_amps);
-        void        calibrate(int bus_volts_max, float shunt_volts_max, float max_expected_amps);
+        void        calibrate(float shunt_volts_max, float max_expected_amps);
     
 
     // Private viarables

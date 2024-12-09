@@ -14,11 +14,7 @@ RobotControllerService *RobotControllerService::get_instance()
 
 RobotControllerService::RobotControllerService() : Service("RobotControllerService")
 {
-    _compassController =  CompassController::get_instance();
-    _distanceController = DistanceController::get_instance();
-    _powerController = PowerController::get_instance();
-    _servoController = ServoMotorController::get_instance();
-    _dcMotorController = DCMotorController::get_instance();
+
 }
 
 RobotControllerService::~RobotControllerService()
@@ -79,7 +75,11 @@ Json RobotControllerService::get_sensor_values()
 
 std::map<std::string, int> RobotControllerService::get_servo_joint_map()
 {
-    return _servoController->get_all_joint_angles();
+    if(_servoController)
+        return _servoController->get_all_joint_angles();
+    else{
+        return {};
+    }
 }
 
 void RobotControllerService::set_servo_joint_map(const std::map<std::string, int> &jointMap)
@@ -118,57 +118,70 @@ int RobotControllerService::control_motion(Json message)
 
 void RobotControllerService::control_body(int angle, int magnitude) {
 
-    if(magnitude == 100)
-        magnitude = 95;
+    if(_dcMotorController){
 
-    MainWindow::log("control_body: " + std::to_string(angle) + " - magnitude: " + std::to_string(magnitude) , LogLevel::LOG_TRACE);
+        if(magnitude == 100)
+            magnitude = 95;
 
-    if (magnitude == 0 && angle == 0) {
-        _dcMotorController->stop();
-    } else if (45 <= angle && angle < 135) {
-         _dcMotorController->forward(magnitude);
-    } else if (-45 <= angle && angle < 45) {
-         _dcMotorController->turn_right(magnitude);
-    } else if (-135 <= angle && angle < -45) {
-         _dcMotorController->backward(magnitude);
-    } else if (angle >= 135 || angle < -135) {
-         _dcMotorController->turn_left(magnitude);
-    } else {
-         _dcMotorController->stop();
+        MainWindow::log("control_body: " + std::to_string(angle) + " - magnitude: " + std::to_string(magnitude) , LogLevel::LOG_TRACE);
+
+        if (magnitude == 0 && angle == 0) {
+            _dcMotorController->stop();
+        } else if (45 <= angle && angle < 135) {
+            _dcMotorController->forward(magnitude);
+        } else if (-45 <= angle && angle < 45) {
+            _dcMotorController->turn_right(magnitude);
+        } else if (-135 <= angle && angle < -45) {
+            _dcMotorController->backward(magnitude);
+        } else if (angle >= 135 || angle < -135) {
+            _dcMotorController->turn_left(magnitude);
+        } else {
+            _dcMotorController->stop();
+        }
     }
 }
 
 void RobotControllerService::control_head(int angle, int magnitude) {
-    if (magnitude == 0 && angle == 0) {
-        return;
-    } else if (45 <= angle && angle < 135) {
-        _servoController->head_up();
-    } else if (-45 <= angle && angle < 45) {
-        _servoController->head_right();
-    } else if (-135 <= angle && angle < -45) {
-        _servoController->head_down(); 
-    } else if (angle >= 135 || angle < -135) {
-        _servoController->head_left();
+    if(_servoController){
+
+        if (magnitude == 0 && angle == 0) {
+            return;
+        } else if (45 <= angle && angle < 135) {
+            _servoController->head_up();
+        } else if (-45 <= angle && angle < 45) {
+            _servoController->head_right();
+        } else if (-135 <= angle && angle < -45) {
+            _servoController->head_down(); 
+        } else if (angle >= 135 || angle < -135) {
+            _servoController->head_left();
+        }
     }
 }
 
 void RobotControllerService::control_arm(const std::string& control_id, int angle) {
-    double mapped_angle = (angle / 100.0) * 180.0;
-    MainWindow::log("control_arm: "+ std::to_string(mapped_angle) , LogLevel::LOG_TRACE);
 
-        if (control_id == "left_arm") {
-        _servoController->set_absolute_servo_angle("left_arm", mapped_angle);
-    } else if (control_id == "right_arm") {
-        _servoController->set_absolute_servo_angle("right_arm", mapped_angle); 
+    if(_servoController){
+        double mapped_angle = (angle / 100.0) * 180.0;
+        MainWindow::log("control_arm: "+ std::to_string(mapped_angle) , LogLevel::LOG_TRACE);
+
+            if (control_id == "left_arm") {
+            _servoController->set_absolute_servo_angle("left_arm", mapped_angle);
+        } else if (control_id == "right_arm") {
+            _servoController->set_absolute_servo_angle("right_arm", mapped_angle); 
+        }
     }
 }
 
 void RobotControllerService::control_eye(int angle) {
-    if (angle == 180) {
-        _servoController->eye_up();
-    } else if (angle == 0) {
-        _servoController->eye_down();
+
+    if(_servoController){
+        if (angle == 180) {
+            _servoController->eye_up();
+        } else if (angle == 0) {
+            _servoController->eye_down();
+        }
     }
+
 }
 
 void RobotControllerService::service_update_function()
@@ -185,7 +198,14 @@ void RobotControllerService::service_update_function()
 void RobotControllerService::start()
 {
     if (!_running) { // Ensure the thread is not already running
+
         _running = true;
+        _compassController =  CompassController::get_instance();
+        _distanceController = DistanceController::get_instance();
+        _powerController = PowerController::get_instance();
+        _servoController = ServoMotorController::get_instance();
+        _dcMotorController = DCMotorController::get_instance();
+
         MainWindow::log("RobotControllerService is starting..." , LogLevel::LOG_INFO);
         _serviceThread = std::thread(&RobotControllerService::service_update_function, this);
     }

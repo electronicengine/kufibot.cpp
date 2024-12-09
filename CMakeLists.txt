@@ -53,18 +53,8 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               ${OPENSSL_LIBRARIES}
                               ${PORTAUDIO_LIBRARIES} 
                               ${CURL_LIBRARIES}
-                              wiringPi
                               mpg123
-                              vosk
-                              fmt
-                              spdlog
-                              espeak-ng
-                              piper
-                              piper_phonemize
                               onnxruntime
-                              ALSA::ALSA
-                              Boost::system
-                              portaudio
                               final
                               ui
                               drivers

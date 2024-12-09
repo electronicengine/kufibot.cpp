@@ -84,13 +84,13 @@ INA219Driver::configure(int voltage_range, int gain, int bus_adc, int shunt_adc)
 	_voltage_range = voltage_range;
 	_gain = gain;
 
-	calibrate(__BUS_RANGE[voltage_range], __GAIN_VOLTS[gain], _max_expected_amps);
+	calibrate(__GAIN_VOLTS[gain], _max_expected_amps);
 	uint16_t calibration = (voltage_range << __BRNG | _gain << __PG0 | bus_adc << __BADC1 | shunt_adc << __SADC1 | __CONT_SH_BUS);
 	write_register(__REG_CONFIG, calibration);
 }
 
 void
-INA219Driver::calibrate(int bus_volts_max, float shunt_volts_max, float max_expected_amps)
+INA219Driver::calibrate(float shunt_volts_max, float max_expected_amps)
 {
 	float max_possible_amps = shunt_volts_max / _shunt_ohms;
 	_current_lsb = determine_current_lsb(max_expected_amps, max_possible_amps);
@@ -105,7 +105,7 @@ INA219Driver::determine_current_lsb(float max_expected_amps, float max_possible_
 
 	float nearest = roundf(max_possible_amps * 1000.0) / 1000.0;
 	if (max_expected_amps > nearest) {
-		char buffer[65];
+		char buffer[256];
 		sprintf(buffer, "Expected current %f A is greater than max possible current %f A", max_expected_amps, max_possible_amps);
 		perror(buffer);
 	}
@@ -162,7 +162,6 @@ INA219Driver::current()
 {
 	uint16_t current_raw = read_register(__REG_CURRENT);
 	int16_t current = (int16_t)current_raw;
-	if (current > 32767) current -= 65536;
 	return  current * _current_lsb * 1000.0;
 }
 float
