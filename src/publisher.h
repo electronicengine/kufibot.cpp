@@ -44,6 +44,12 @@ public:
         }
     }
 
+    void update_llama_gesture(const std::string& gesture){
+        for (const auto& subscriber : _subscribers) {
+            subscriber->update_gesture(gesture); 
+        }
+    }
+
 };
 
 

@@ -1,7 +1,7 @@
 #ifndef INTERACTIVE_CHAT_SERVICE_H
 #define INTERACTIVE_CHAT_SERVICE_H
 
-
+#include "ollama.hpp"
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
@@ -23,8 +23,10 @@
 #include <sstream>
 #include <vector>
 #include <regex>
+#include <atomic>
 
 #include "../subscriber.h"
+#include "../publisher.h"
 #include "service.h"
 #include "robot_controller_service.h"
 #include "../controllers/speech_process_controller.h"
@@ -38,10 +40,8 @@
 
 #include "web_socket_service.h"
 
-using Json = nlohmann::json;
 
-
-class InteractiveChatService : public Subscriber, public Service {
+class InteractiveChatService : public Publisher, public Subscriber, public Service {
 
 private:
     static InteractiveChatService *_instance;
@@ -52,23 +52,30 @@ private:
     CurlController *_curlController;
     ExecutionController *_executionController;
     VideoStreamService *_videoStreamService;
-    
-    InteractiveChatService();
+    std::string _llamaServer;
+    std::string _modelName;
+    std::atomic<bool> _queryRunning{false};
+    std::string _responseStr;
+    std::deque<std::string> _stringQueue;
+    std::mutex _queueMutex;
+    std::condition_variable _queueCondition;
 
+    InteractiveChatService();
     const std::string translate(const std::string& source, const std::string& target, const std::string& Text);
     std::vector<std::string> splitSentences(std::string text);
+    void push_speak_string(const std::string& text);
 
 public:
 
     static InteractiveChatService *get_instance();
     ~InteractiveChatService();
-    void service_update_function();
     void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg);
     void start();
     void stop(); 
-    std::string query(const std::string& message);
-
-
+    bool query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse);
+    void set_llama_server(const std::string& server);
+    void load_model();
+    void service_update_function();
 };
 
 #endif

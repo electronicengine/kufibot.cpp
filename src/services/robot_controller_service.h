@@ -63,7 +63,7 @@ public:
     int control_motion(Json message);
     void control_body(int angle, int magnitude);
     void control_head(int angle, int magnitude);
-    void control_arm(const std::string& control_id, int angle);
+    void control_arm(const std::string& control_id, int angle, bool scale = true);
     void control_eye(int angle);
     void service_update_function();
     void start();

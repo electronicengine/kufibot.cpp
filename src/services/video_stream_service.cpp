@@ -56,15 +56,23 @@ void VideoStreamService::service_update_function(){
     }
 
     while (_running ) {
-        if(!_subscribers.empty()){
-            _cap >> frame;
-            _frame = frame;
-            if (frame.empty()) {
-                MainWindow::log("Warning: Received empty frame!", LogLevel::LOG_WARNING);
-                break;
-            }
-            update_video_frame(frame);  
+        
+        // Wait until there are subscribers
+        if (_subscribers.empty()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            continue;
         }
+
+        _cap >> frame;
+        _frame = frame;
+
+        if (frame.empty()) {
+            MainWindow::log("Warning: Received empty frame!", LogLevel::LOG_WARNING);
+            std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+            continue;
+        }
+
+        update_video_frame(frame);
     }
 }
 

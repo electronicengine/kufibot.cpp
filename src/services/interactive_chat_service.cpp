@@ -20,12 +20,14 @@ InteractiveChatService::InteractiveChatService() : Service("InteractiveChatServi
     _executionController = ExecutionController::get_instance();
     _videoStreamService = VideoStreamService::get_instance();
 
+    _llamaServer = "http://192.168.1.20:11434";
+    _modelName = "kufi";
+
     _executionController->set_venv("/home/kufi/venv");
     // _curlController = CurlController::get_instance("http://192.168.1.20:11434/api/generate");
     _curlController = CurlController::get_instance("https://generativelanguage.googleapis.com/v1beta/tunedModels/kufi-2165:generateContent?key=AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw");
     _speechProcessController->loadModel("../ai.models/trSpeechModel/dfki.onnx",
                     "../ai.models/trSpeechModel/dfki.onnx.json");
-
     _speechRecognitionController->load_model("../ai.models/trRecognizeModel");
     if(!_speechRecognitionController->open()) {
         return ;
@@ -44,132 +46,115 @@ const std::string InteractiveChatService::translate(const std::string& source, c
     return translatedText;
 }
 
-std::vector<std::string> InteractiveChatService::splitSentences(std::string text) {
-
-    std::vector<std::string> sentences;
-    std::string currentSentence;
-    
-    for (size_t i = 0; i < text.length(); ++i) {
-        currentSentence += text[i]; 
-        
-        if (text[i] == '.' || text[i] == '!' || text[i] == '?') {
-            sentences.push_back(currentSentence); 
-            currentSentence.clear();
-        }
-    }
-    
-    if (!currentSentence.empty()) {
-        sentences.push_back(currentSentence);
-    }
-
-    return sentences;
-
-}
-
 
 InteractiveChatService::~InteractiveChatService()
 {
 }
 
+bool InteractiveChatService::query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse){
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    if (_queryRunning) {
+        return false;
+    } else {
+
+        std::function<void(const ollama::response&)> response_callback =
+            [this, onReceiveLlamaResponse](const ollama::response& response) {
+
+                std::string partial = response.as_simple_string();
+
+                _responseStr += partial;
+
+                if (partial.find("#") != std::string::npos) {
+                    std::string sentence;
+                    std::string gesture;
+                    size_t start = _responseStr.find('/') + 1;
+                    size_t end = _responseStr.find('#');    
+
+                    if (start != std::string::npos && end != std::string::npos && start < end) {
+                        sentence = _responseStr.substr(0, start -1);
+                        gesture = _responseStr.substr(start, end - start); 
+                    }
+
+                    push_speak_string(sentence);
+                    onReceiveLlamaResponse(sentence);
+                    _responseStr.clear();
+                }
+
+                if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
+            };
+
+        std::thread new_thread([this, response_callback, message]() {
+            ollama::generate(_modelName, message, response_callback);
+        });
+
+        new_thread.detach();
+
+        _queryRunning = true;
+        return true;
+    }
+}
+
+void InteractiveChatService::set_llama_server(const std::string &server)
+{
+    size_t dashPos = server.find('-');
+
+    if (dashPos != std::string::npos) {
+        _llamaServer = server.substr(0, dashPos);
+        _modelName = server.substr(dashPos + 1);
+
+        ollama::setServerURL(_llamaServer);    
+        MainWindow::log( "set llama server: " + _llamaServer , LogLevel::LOG_TRACE);
+        MainWindow::log( "set model name: " + _modelName , LogLevel::LOG_TRACE);
+
+
+    } else {
+        MainWindow::log( "the server address couldn't parsed" , LogLevel::LOG_ERROR);
+    }
+
+}
+
+void InteractiveChatService::load_model()
+{
+    MainWindow::log("InteractiveChatService:: llama model loading...", LogLevel::LOG_TRACE);
+
+    bool model_loaded = ollama::load_model(_modelName);
+    if (model_loaded) 
+        MainWindow::log("InteractiveChatService:: llama model loaded!", LogLevel::LOG_TRACE);
+    else
+        MainWindow::log("InteractiveChatService:: llama model couldn't loaded!", LogLevel::LOG_ERROR);
+}
+
 void InteractiveChatService::service_update_function()
 {
-    while(_running){
-        std::string message = _speechRecognitionController->get_message();  
-        _speechRecognitionController->stop_listen();
-        Json json_msg = Json::parse(message);
-        message = json_msg["text"];
-        MainWindow::log("message: " + message, LogLevel::LOG_TRACE);
+    while (_running) {
+        std::string textToSpeak;
 
-        if(message.find("kofi") != std::string::npos){
-            _speechProcessController->speakText("dinliyorum");
-
-            _speechRecognitionController->start_listen();
-            std::string message = _speechRecognitionController->get_message();  
-            _speechRecognitionController->stop_listen();
-            Json json_msg = Json::parse(message);
-            message = json_msg["text"];
-            MainWindow::log("execute_gemini: "  + message, LogLevel::LOG_TRACE);
-            //  message = translate("tr", "en", message);
-            // std::string result = _curlController->execute_gemini(message);
-            // result = translate("en", "tr", result);
-            // MainWindow::log("result: "  + result, LogLevel::LOG_TRACE);
-            // std::vector<std::string> sentences = splitSentences(result);
-            // for (const auto& sentence : sentences) {
-            //     MainWindow::log("sentence: "  + sentence, LogLevel::LOG_TRACE);
-
-            //     _speechProcessController->speakText(sentence);
-            // }
-
-            _speechRecognitionController->start_listen();
-
-
-        }else{
-            _speechRecognitionController->start_listen();
+        {
+            std::unique_lock<std::mutex> lock(_queueMutex);
+            _queueCondition.wait(lock, [this] {
+                return !_stringQueue.empty() || !_running;
+            });
+            if (!_running && _stringQueue.empty()) {
+                break;
+            }
+            textToSpeak = _stringQueue.front();
+            _stringQueue.pop_front();
+        }
+        if (!textToSpeak.empty()) {
+            _speechProcessController->speakText(textToSpeak);
         }
     }
 }
 
-std::string InteractiveChatService::query(const std::string& message){
 
-    std::lock_guard<std::mutex> lock(_dataMutex);
-    std::string result;
-
-    if (message.find("mikrofon") != std::string::npos &&  message.find("başlat") != std::string::npos) {
-        _speechProcessController->speakText("mikrofon yayını başlatılıyor.");
-        if (!_speechRecognitionController->start_listen()) {
-            _speechRecognitionController->close();
-            return "_speechRecognitionController error!";
-        }
-        _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
-        result = "mikrofon yayını başlatılıyor.";
-
-    }else if(message.find("mikrofon") != std::string::npos &&  message.find("durdur") != std::string::npos) {
-        _speechProcessController->speakText("mikrofon yayını durduruluyor.");
-        _speechRecognitionController->stop_listen();
-        if (_serviceThread.joinable()) {
-            _serviceThread.join(); 
-        }
-        result = "mikrofon yayını durduruluyor.";
-
-    }else if (message.find("atölye") != std::string::npos && message.find("git") != std::string::npos) {
-        _speechProcessController->speakText("Şu an atolye odasına gidiliyor...");
-        MappingService *map_service = MappingService::get_instance();
-        map_service->go_to_point(22334, 5677);
-        result = "Şu an atolye odasına gidiliyor...";
-
-    }else if(message.find("tanım") != std::string::npos){
-        _speechProcessController->speakText("Şu an inceliyorum...");
-            cv::Mat photo = _videoStreamService->take_snap_shot();
-            if (cv::imwrite("../gemini/image.jpg", photo)) {
-                MainWindow::log( "snap shot" , LogLevel::LOG_INFO);
-
-            } else {
-                MainWindow::log("Error: Could not save the photo." , LogLevel::LOG_ERROR);
-
-            }
-
-            result = _executionController->execute(ExecutionType::imageQuery, "Fotoğrafı Türkçe olarak ve bir resim olduğunu belirtmeden açıkla");
-            std::vector<std::string> sentences = splitSentences(result);
-            for (const auto& sentence : sentences) {
-                MainWindow::log(  "sentence: " + sentence , LogLevel::LOG_TRACE);
-                _speechProcessController->speakText(sentence);
-            }
-
-    }else{
-        // std::string result = _curlController->execute_gemini(message);
-        result = _executionController->execute(ExecutionType::query, message);
-        MainWindow::log(  "result"  + result , LogLevel::LOG_TRACE);
-
-        std::vector<std::string> sentences = splitSentences(result);
-        for (const auto& sentence : sentences) {
-            MainWindow::log(  "sentence"  + sentence , LogLevel::LOG_TRACE);
-            _speechProcessController->speakText(sentence);
-        }
+void InteractiveChatService::push_speak_string(const std::string& text) {
+    {
+        std::lock_guard<std::mutex> lock(_queueMutex);
+        _stringQueue.push_back(text);
     }
-
-    return result;
+    _queueCondition.notify_one();
 }
-
 
 void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
 {
@@ -186,8 +171,15 @@ void InteractiveChatService::update_web_socket_message(websocketpp::connection_h
             std::string incoming_talkie = message["talkie"];
             MainWindow::log( "incoming_talkie: " + incoming_talkie , LogLevel::LOG_TRACE);
 
-            std::thread walkie_thread = std::thread(&InteractiveChatService::query, this, incoming_talkie);
-            walkie_thread.detach();
+        std::function<void(const ollama::response&)> response_callback =
+            [=](const ollama::response& response) {
+                MainWindow::log(response, LogLevel::LOG_TRACE);
+                if (response.as_json()["done"]==true) { _queryRunning =true; }
+
+            };
+
+            query(incoming_talkie, response_callback);
+
 
         }
     }
@@ -197,7 +189,12 @@ void InteractiveChatService::start()
 {
     if (!_running) { // Ensure the thread is not already running
         _running = true;
-         
+        ollama::setServerURL(_llamaServer);    
+
+        ollama::setReadTimeout(120);
+        ollama::setWriteTimeout(120);
+
+        _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
         MainWindow::log("InteractiveChatService::_webSocketService::subscribe", LogLevel::LOG_TRACE);
         _webSocketService->subscribe(this);
         MainWindow::log("InteractiveChatService is starting..." , LogLevel::LOG_INFO);
@@ -217,6 +214,12 @@ void InteractiveChatService::stop()
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
+            {
+        std::lock_guard<std::mutex> lock(_queueMutex);
+        _running = false;
+        }
+        // Notify all waiting threads to wake up and exit
+        _queueCondition.notify_all();
         MainWindow::log("InteractiveChatService is stopped." , LogLevel::LOG_INFO);
     }
 }

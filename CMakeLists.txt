@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 project(kufibot)
 
+add_compile_options(-Wno-unused-function)
+add_compile_options(-Wno-unused-parameter)
+
 set(CMAKE_CXX_STANDARD 17) 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
@@ -53,6 +56,16 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
                               ${OPENSSL_LIBRARIES}
                               ${PORTAUDIO_LIBRARIES} 
                               ${CURL_LIBRARIES}
+                              fmt
+                              spdlog
+                              espeak-ng
+                              onnxruntime
+                              ALSA::ALSA
+                              Boost::system
+                              portaudio
+                              piper
+                              piper_phonemize
+                              vosk
                               mpg123
                               onnxruntime
                               final

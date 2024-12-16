@@ -18,6 +18,7 @@ public:
     virtual void update_video_frame(const cv::Mat& frame){ (void)frame; }
     virtual void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg){ (void) hdl; (void) mg;}
     virtual void update_sensor_values(Json values){(void) values;}
+    virtual void update_gesture(const std::string& gesture){(void) gesture;};
 
 };
 

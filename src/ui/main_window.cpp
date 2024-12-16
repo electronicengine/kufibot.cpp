@@ -63,8 +63,7 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
 
-    addTimer(1000); 
-
+    addTimer(200); 
 }
 
 MainWindow::~MainWindow()

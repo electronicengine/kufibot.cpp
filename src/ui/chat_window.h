@@ -28,13 +28,21 @@ class ChatWindow : public SubWindow
 
     auto operator = (ChatWindow&&) noexcept -> ChatWindow& = delete;
 
-    FLineEdit _promt{finalcut::UniChar::BlackUpPointingTriangle, this};
-    FButton _sendButton{this};
+    FLineEdit _llamaServer{"http://localhost:11434-kufi", this};
+
+    FLineEdit _promt{"", this};
     FTextView _answerView{this};
+
+    FButton _sendButton{this};
+    FButton _setServerButton{this};
+    FButton _loadModelButton{this};
 
     InteractiveChatService *_interactiveChatService;
 
     void send_promt();
+    void set_server();
+    void load_model();
+    void onKeyPress (finalcut::FKeyEvent* ev);
 
 };
 

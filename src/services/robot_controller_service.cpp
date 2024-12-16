@@ -158,10 +158,17 @@ void RobotControllerService::control_head(int angle, int magnitude) {
     }
 }
 
-void RobotControllerService::control_arm(const std::string& control_id, int angle) {
+void RobotControllerService::control_arm(const std::string& control_id, int angle, bool scale) {
 
     if(_servoController){
-        double mapped_angle = (angle / 100.0) * 180.0;
+
+        double mapped_angle;
+        if(scale){
+            mapped_angle = (angle / 100.0) * 180.0;
+        }else {
+            mapped_angle = angle;
+        }
+
         MainWindow::log("control_arm: "+ std::to_string(mapped_angle) , LogLevel::LOG_TRACE);
 
             if (control_id == "left_arm") {
