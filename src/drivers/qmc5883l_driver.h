@@ -64,7 +64,8 @@ private:
     int _mode_cont;
     int _mode_stby;
 
-    std::array<std::array<double, 3>, 2> _calibration; // Calibration matrix
+    double _declination;                          
+    std::array<std::array<double, 3>, 3> _calibration; // Calibration matrix
    // Offsets and scales for calibration
     const std::vector<double> offsets = {3096.95455451, -7452.84550654, 840.2791695};
     const std::vector<double> scales = {16639.36998797, 18514.63340064, 16972.20317855};

@@ -66,18 +66,9 @@ bool InteractiveChatService::query(const std::string& message, std::function<voi
                 _responseStr += partial;
 
                 if (partial.find("#") != std::string::npos) {
-                    std::string sentence;
-                    std::string gesture;
-                    size_t start = _responseStr.find('/') + 1;
-                    size_t end = _responseStr.find('#');    
 
-                    if (start != std::string::npos && end != std::string::npos && start < end) {
-                        sentence = _responseStr.substr(0, start -1);
-                        gesture = _responseStr.substr(start, end - start); 
-                    }
-
-                    push_speak_string(sentence);
-                    onReceiveLlamaResponse(sentence);
+                    push_speak_string(_responseStr);
+                    onReceiveLlamaResponse(_responseStr);
                     _responseStr.clear();
                 }
 
@@ -128,7 +119,7 @@ void InteractiveChatService::load_model()
 void InteractiveChatService::service_update_function()
 {
     while (_running) {
-        std::string textToSpeak;
+        std::string text;
 
         {
             std::unique_lock<std::mutex> lock(_queueMutex);
@@ -138,11 +129,24 @@ void InteractiveChatService::service_update_function()
             if (!_running && _stringQueue.empty()) {
                 break;
             }
-            textToSpeak = _stringQueue.front();
+            text = _stringQueue.front();
             _stringQueue.pop_front();
         }
-        if (!textToSpeak.empty()) {
-            _speechProcessController->speakText(textToSpeak);
+
+
+        if (!text.empty()) {
+            std::string sentence;
+            std::string gesture;
+            size_t start = text.find('/') + 1;
+            size_t end = text.find('#');    
+
+            if (start != std::string::npos && end != std::string::npos && start < end) {
+                sentence = text.substr(0, start -1);
+                gesture = text.substr(start, end - start); 
+            }
+    
+            update_llama_gesture(gesture);
+            _speechProcessController->speakText(sentence);
         }
     }
 }

@@ -3,7 +3,17 @@
 
 DistanceController* DistanceController::_instance = nullptr;
 
-DistanceController* DistanceController::get_instance() {
+bool DistanceController::is_active()
+{
+    if (!uart.is_open()) {
+        return false;
+    }else{
+        return true;
+    }
+}
+
+DistanceController *DistanceController::get_instance()
+{
     if (_instance == nullptr) {
         _instance = new DistanceController();
     }
@@ -32,6 +42,8 @@ void DistanceController::flush_input_buffer() {
 
 
 const std::map<std::string, int> &DistanceController::get_distance() {
+
+
     std::vector<uint8_t> buffer(9);
     boost::system::error_code ec;
     

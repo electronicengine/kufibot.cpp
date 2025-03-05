@@ -20,13 +20,13 @@ ServoMotorController::ServoMotorController(int address) {
     _jointChannels = {
         {"right_arm", 0}, {"left_arm", 1}, {"neck_down", 2},
         {"neck_up", 3}, {"neck_right", 4}, {"eye_right", 5},
-        {"eye_left", 7}
+        {"eye_left", 6}
     };
 
     _jointAngles = {
         {"right_arm", 15}, {"left_arm", 170}, {"neck_down", 78},
-        {"neck_up", 15}, {"neck_right", 90}, {"eye_right", 176},
-        {"eye_left", 90}
+        {"neck_up", 15}, {"neck_right", 90}, {"eye_right", 160},
+        {"eye_left", 20}
     };
 
     MainWindow::log("Servo driver initialized", LogLevel::LOG_TRACE);
@@ -146,13 +146,26 @@ void ServoMotorController::head_right() {
 }
 
 void ServoMotorController::eye_up() {
-    set_absolute_servo_angle("eye_right", 176);
-    set_absolute_servo_angle("eye_left", 90);
+    set_absolute_servo_angle("eye_right", 170);
+    set_absolute_servo_angle("eye_left", 20);
     save_joint_angles();
 }
 
 void ServoMotorController::eye_down() {
-    set_absolute_servo_angle("eye_right", 160);
-    set_absolute_servo_angle("eye_left", 138);
+    set_absolute_servo_angle("eye_right", 130);
+    set_absolute_servo_angle("eye_left", 50);
+    save_joint_angles();
+}
+
+void ServoMotorController::eye_angry() {
+    set_absolute_servo_angle("eye_right", 180);
+    set_absolute_servo_angle("eye_left", 0);
+    save_joint_angles();
+}
+
+void ServoMotorController::eye_wondering()
+{
+    set_absolute_servo_angle("eye_right", 130);
+    set_absolute_servo_angle("eye_left", 0);
     save_joint_angles();
 }

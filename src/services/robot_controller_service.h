@@ -64,6 +64,7 @@ public:
     void control_body(int angle, int magnitude);
     void control_head(int angle, int magnitude);
     void control_arm(const std::string& control_id, int angle, bool scale = true);
+    void set_all_joint_angles(const std::map<std::string, int>& angles);
     void control_eye(int angle);
     void service_update_function();
     void start();

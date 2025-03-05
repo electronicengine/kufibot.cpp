@@ -29,6 +29,8 @@ public:
     void head_right();
     void eye_up();
     void eye_down();
+    void eye_angry();
+    void eye_wondering();
 
 private:
     ServoMotorController(int address);

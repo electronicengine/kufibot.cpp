@@ -17,6 +17,20 @@ QMC5883LDriver::QMC5883LDriver(int address,
     _mode_cont = (MODE_CONT | output_data_rate | output_range | oversampling_rate);
     _mode_stby = (MODE_STBY | ODR_10HZ | RNG_2G | OSR_64);
     mode_continuous();
+
+//calibration matrix;
+    _calibration[0][0] = 1.054714385985517;
+    _calibration[0][1] = 0.0075999534062283075;
+    _calibration[0][2] = 713.2896257128381;
+    _calibration[1][0] = 0.007599953406228315;
+    _calibration[1][1] = 1.001055650917697;
+    _calibration[1][2] = 529.4850645299709;
+    _calibration[2][0] = 0.0;
+    _calibration[2][1] = 0.0;
+    _calibration[2][2] = 1.0;
+
+    _declination = 6.1; // istanbul 
+
 }
 
 
@@ -86,6 +100,7 @@ std::vector<int16_t> QMC5883LDriver::get_data() {
 }
 
 std::vector<int16_t> QMC5883LDriver::get_magnet() {
+
     // Get raw magnetometer data
     std::vector<int16_t> raw_data = get_data();
     int16_t x = raw_data[0];
@@ -106,14 +121,6 @@ std::vector<int16_t> QMC5883LDriver::get_magnet() {
     return {static_cast<int16_t>(x1), static_cast<int16_t>(y1)};
 }
 
-// double QMC5883LDriver::get_bearing() {
-//     std::vector<int16_t> mag = get_data();
-//     if (mag[0] == 0 && mag[1] == 0) {
-//         return NAN; // No data
-//     }
-//     double bearing = atan2(mag[1], mag[0]) * 180 / M_PI;
-//     return (bearing < 0) ? bearing + 360 : bearing; // Normalize bearing
-// }
 
 void QMC5883LDriver::apply_calibration(const std::vector<int16_t>& raw, double& x_cal, double& y_cal, double& z_cal) {
     // Apply calibration: (raw - offset) / scale
@@ -123,21 +130,23 @@ void QMC5883LDriver::apply_calibration(const std::vector<int16_t>& raw, double& 
 }
 
 double QMC5883LDriver::get_bearing() {
-    // Get raw magnetometer data
-    std::vector<int16_t> mag = get_data();
+    auto magnet = get_magnet();
+    double x = magnet[0];
+    double y = magnet[1];
 
-    // Check if data is invalid
-    if (mag.size() < 3 || (mag[0] == 0 && mag[1] == 0)) {
-        return std::numeric_limits<double>::quiet_NaN(); // No valid data
+    if (std::isnan(x) || std::isnan(y)) {
+        return NAN; // Return NaN if invalid data
     }
 
-    // Apply calibration to the raw data
-    double x_cal, y_cal, z_cal;
-    apply_calibration(mag, x_cal, y_cal, z_cal);
-
-    // Calculate bearing in degrees
-    double bearing = atan2(y_cal, x_cal) * 180.0 / M_PI;
-
-    // Normalize the bearing to [0, 360] degrees
-    return (bearing < 0) ? bearing + 360.0 : bearing;
+    double bearing = std::atan2(y, x) * (180.0 / M_PI); // Convert radians to degrees
+    if (bearing < 0) {
+        bearing += 360.0;
+    }
+    bearing += _declination; // Adjust for declination
+    if (bearing < 0.0) {
+        bearing += 360.0;
+    } else if (bearing >= 360.0) {
+        bearing -= 360.0;
+    }
+    return bearing;
 }

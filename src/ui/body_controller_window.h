@@ -16,7 +16,7 @@ using namespace finalcut;
 class BodyControllerWindow : public SubWindow
 {
   public:
-    explicit BodyControllerWindow (finalcut::FWidget* = nullptr);
+    explicit BodyControllerWindow (finalcut::FWidget* parent = nullptr);
 
     BodyControllerWindow (const BodyControllerWindow&) = delete;
 

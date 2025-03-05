@@ -33,6 +33,7 @@ private:
     
 
 public:
+    bool is_active();
     static DistanceController* get_instance();
     ~DistanceController(); // Destructor to close the serial port
     const std::map<std::string, int> &get_distance();

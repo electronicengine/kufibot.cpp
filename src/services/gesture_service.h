@@ -44,7 +44,10 @@ private:
     static GestureService *_instance;
     RobotControllerService *_robotControllerService;
     InteractiveChatService *_interactiveChatService;
-
+    std::queue<std::string> _gestureQueue; 
+    std::mutex _queueMutex;                
+    std::condition_variable _cv;           
+    std::thread _workerThread;             
     std::atomic<bool> _gestureWorking{false};
     GestureService();
 
@@ -58,7 +61,7 @@ public:
     void optimistic();
     void pessimistic();
     void curious();
-    void service_update_function(){};
+    void service_update_function();
 
     void update_gesture(const std::string& gesture);
     void start();

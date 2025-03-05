@@ -15,9 +15,9 @@
 class VideoStreamService : public Publisher, public Service{
 private:
     cv::VideoCapture _cap;
+    int _cameraIndex;
     static VideoStreamService* _instance;
     cv::Mat _frame;
-
     VideoStreamService(int cameraIndex = 0);
     void streamLoop();  
 

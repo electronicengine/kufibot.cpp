@@ -179,6 +179,11 @@ void RobotControllerService::control_arm(const std::string& control_id, int angl
     }
 }
 
+void RobotControllerService::set_all_joint_angles(const std::map<std::string, int> &angles)
+{
+    _servoController->set_all_angles(angles);
+}
+
 void RobotControllerService::control_eye(int angle) {
 
     if(_servoController){
