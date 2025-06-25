@@ -27,8 +27,10 @@ cv::Mat VideoStreamService::take_snap_shot()
     return _frame;
 }
 
-VideoStreamService::VideoStreamService(int cameraIndex) : Service("VideoStreamService") {
-    _cameraIndex = cameraIndex;
+VideoStreamService::VideoStreamService(int cameraIndex) : Service("VideoStreamService") , _cap(cameraIndex){
+    if (!_cap.isOpened()) {
+        throw std::runtime_error("Error: Could not open the camera.");
+    }
 }
 
 VideoStreamService::~VideoStreamService() {
@@ -43,7 +45,7 @@ void VideoStreamService::start() {
 
         if(!_cap.isOpened()){
             _cap.open(_cameraIndex);
-            if(!_cap.isOpened()) {  
+            if(!_cap.isOpened()) {
                 MainWindow::log("VideoStreamService couldn't started!", LogLevel::LOG_ERROR);
                 return;
             }
@@ -59,7 +61,7 @@ void VideoStreamService::service_update_function(){
     cv::Mat frame;
 
     while (_running ) {
-        
+
         // Wait until there are subscribers
         if (_subscribers.empty()) {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -71,7 +73,7 @@ void VideoStreamService::service_update_function(){
 
         if (frame.empty()) {
             MainWindow::log("Warning: Received empty frame!", LogLevel::LOG_WARNING);
-            std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             continue;
         }
 

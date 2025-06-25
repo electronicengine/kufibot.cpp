@@ -13,7 +13,7 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
-    _speechProcessController = SpeechProcessController::get_instance();
+    // _speechProcessController = SpeechProcessController::get_instance();
     _speechRecognitionController = SpeechRecognitionController::get_instance();
     _robotControllerService = RobotControllerService::get_instance();
     _webSocketService = WebSocketService::get_instance();
@@ -162,6 +162,8 @@ void InteractiveChatService::push_speak_string(const std::string& text) {
 
 void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
 {
+    (void) hdl;
+
     if(msg == "on_open"){
         MainWindow::log( "new web socket connection extablished"  , LogLevel::LOG_TRACE);
 

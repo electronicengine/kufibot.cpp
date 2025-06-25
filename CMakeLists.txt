@@ -4,7 +4,7 @@ project(kufibot)
 add_compile_options(-Wno-unused-function)
 add_compile_options(-Wno-unused-parameter)
 
-set(CMAKE_CXX_STANDARD 17) 
+set(CMAKE_CXX_STANDARD 17)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 set(CMAKE_BUILD_TYPE Debug)
 

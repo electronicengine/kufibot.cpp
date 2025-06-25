@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     git \
     gcc \
     g++ \
+    gdb \
     pkg-config \
     libboost-all-dev \
     libssl-dev \
@@ -34,8 +35,6 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# You can copy your application files here if needed
-RUN git clone https://github.com/electronicengine/kufibot.cpp.git /app/kufibot.cpp
 
 # Set the working directory
 WORKDIR /app/kufibot.cpp
