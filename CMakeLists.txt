@@ -11,6 +11,11 @@ set(CMAKE_BUILD_TYPE Debug)
 set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
+# Deployment configuration
+set(DEPLOY_USER kufi)
+set(DEPLOY_HOST 192.168.192.1)
+set(DEPLOY_PATH /home/phi/workspace/kufobot.cpp/build)
+
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
 find_package(ALSA REQUIRED)
@@ -74,3 +79,9 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         controllers
         services
 )
+
+# add_custom_command(TARGET kufibot POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E echo "Auto-deploying kufibot to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
+#         COMMAND scp $<TARGET_FILE:kufibot> ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
+#         COMMENT "Auto-deployment via SCP after build"
+# )

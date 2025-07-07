@@ -10,6 +10,7 @@ set(DRIVERS_LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 set(DRIVERS_INC_DIR ${CMAKE_SOURCE_DIR}/include)
 
 set(TARGET drivers)
+find_library(WIRINGPI_LIB wiringPi PATHS ${CMAKE_SOURCE_DIR}/lib)
 
 file(GLOB_RECURSE SRCS ${DRIVERS_SRC_DIR}/*.cpp ${DRIVERS_SRC_DIR}/*.h)
 include_directories(${DRIVERS_INC_DIR})

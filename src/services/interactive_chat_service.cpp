@@ -26,8 +26,8 @@ InteractiveChatService::InteractiveChatService() : Service("InteractiveChatServi
     _executionController->set_venv("/home/kufi/venv");
     // _curlController = CurlController::get_instance("http://192.168.1.20:11434/api/generate");
     _curlController = CurlController::get_instance("https://generativelanguage.googleapis.com/v1beta/tunedModels/kufi-2165:generateContent?key=AIzaSyAj3z8oiHbljABcdsKRAgO05d7zcNS9Bsw");
-    _speechProcessController->loadModel("../ai.models/trSpeechModel/dfki.onnx",
-                    "../ai.models/trSpeechModel/dfki.onnx.json");
+    // _speechProcessController->loadModel("../ai.models/trSpeechModel/dfki.onnx",
+    //                 "../ai.models/trSpeechModel/dfki.onnx.json");
     _speechRecognitionController->load_model("../ai.models/trRecognizeModel");
     if(!_speechRecognitionController->open()) {
         return ;

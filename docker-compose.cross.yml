@@ -4,11 +4,16 @@ services:
   kufibot-cross:
     build:
       context: .
-      dockerfile: Dockerfile.amd64  # Use the cross-compilation Dockerfile
+      dockerfile: Dockerfile.cross  # Use the cross-compilation Dockerfile
     container_name: kufibot_cross_env
     working_dir: /app/kufibot.cpp
     volumes:
-      - .:/app/kufibot.cpp
+      - ./src:/app/kufibot.cpp/src
+      - ./CMakeLists.txt:/app/kufibot.cpp/CMakeLists.txt
+      - ./arm64Build.cmake:/app/kufibot.cpp/arm64Build.cmake
+      - ./README.md:/app/kufibot.cpp/README.md
+      - ./runKufi.sh:/app/kufibot.cpp/runKufi.sh
+      - ./kufiDev.sh:/app/kufibot.cpp/kufiDev.sh
     tty: true
     stdin_open: true
     environment:

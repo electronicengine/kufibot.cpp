@@ -46,14 +46,14 @@ auto main (int argc, char* argv[]) -> int
   //  interactive_chat_service->start();
 
     FApplication app {argc, argv};
-    //app.setColorTheme<AWidgetColorTheme>();
+    app.setColorTheme<AWidgetColorTheme>();
 
     MainWindow main_dlg {&app};
-    // main_dlg.setText ("Log View");
-    // main_dlg.setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
+    main_dlg.setText ("Log View");
+    main_dlg.setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
 
-   //finalcut::FWidget::setMainWidget (&main_dlg);
-    //main_dlg.show();
+    finalcut::FWidget::setMainWidget (&main_dlg);
+    main_dlg.show();
 
     return app.exec();
 
