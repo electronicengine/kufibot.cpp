@@ -1,0 +1,127 @@
+# Use Debian Bookworm as the base image for cross-compilation to ARM64 Raspberry Pi
+FROM debian:bookworm
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 1. First configure the repositories properly
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    gnupg \
+    wget \
+    software-properties-common && \
+    # Add ARM64 architecture
+    dpkg --add-architecture arm64 && \
+    # Backup and recreate sources.list with proper architecture tags
+    cp /etc/apt/sources.list /etc/apt/sources.list.backup 2>/dev/null || true && \
+    echo "# AMD64 repositories" > /etc/apt/sources.list && \
+    echo "deb [arch=amd64] http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb [arch=amd64] http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb [arch=amd64] http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    # Add ARM64-specific repositories for Raspberry Pi
+    echo "deb [arch=arm64] http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list.d/arm64.list && \
+    echo "deb [arch=arm64] http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/arm64.list && \
+    echo "deb [arch=arm64] http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/arm64.list && \
+    # Update package lists
+    apt-get update
+
+# 2. Install cross-compilation tools for ARM64
+RUN apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    git \
+    gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
+    gdb-multiarch \
+    qemu-user-static \
+    pkg-config \
+    libc6-dev:arm64 \
+    libc6:arm64
+
+# 3. Install ARM64 libraries for Raspberry Pi (install them individually to handle dependencies better)
+RUN apt-get install -y --no-install-recommends \
+    libssl-dev:arm64 \
+    libcurl4-openssl-dev:arm64 \
+    libasound2-dev:arm64 \
+    portaudio19-dev:arm64 \
+    libdbus-1-dev:arm64 \
+    libglib2.0-dev:arm64 \
+    libmpg123-dev:arm64 \
+    libgpm-dev:arm64
+
+# 4. Install Boost libraries separately for ARM64 (avoiding libboost-all-dev which has MPI dependencies)
+RUN apt-get install -y --no-install-recommends \
+    libboost-system-dev:arm64 \
+    libboost-filesystem-dev:arm64 \
+    libboost-thread-dev:arm64 \
+    libboost-program-options-dev:arm64 \
+    libboost-regex-dev:arm64 \
+    libboost-chrono-dev:arm64 \
+    libboost-date-time-dev:arm64 \
+    libboost-iostreams-dev:arm64
+
+# 5. Install OpenCV for ARM64 separately (it might have fewer dependency issues)
+RUN apt-get install -y --no-install-recommends \
+    libopencv-dev:arm64 || \
+    echo "OpenCV installation failed, you may need to build it from source"
+
+# Alternative: If OpenCV still fails, install minimal dependencies
+RUN apt-get install -y --no-install-recommends \
+    libopencv-core-dev:arm64 \
+    libopencv-imgproc-dev:arm64 \
+    libopencv-imgcodecs-dev:arm64 \
+    libopencv-highgui-dev:arm64 || \
+    echo "Some OpenCV components may not be available"
+
+# 6. Install additional Raspberry Pi specific libraries
+RUN apt-get install -y --no-install-recommends \
+    libbcm2835-dev:arm64 \
+    libwiringpi-dev:arm64 \
+    libpigpio-dev:arm64 \
+    libi2c-dev:arm64 \
+    libspi-dev:arm64 \
+    libgpiod-dev:arm64 || \
+    echo "Some Raspberry Pi specific libraries may not be available"
+
+# Clean up
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* && \
+    rm -rf /var/tmp/*
+
+# Set cross-compilation environment for ARM64 Raspberry Pi
+ENV CC=aarch64-linux-gnu-gcc \
+    CXX=aarch64-linux-gnu-g++ \
+    AR=aarch64-linux-gnu-ar \
+    STRIP=aarch64-linux-gnu-strip \
+    PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig \
+    QEMU_LD_PREFIX=/usr/aarch64-linux-gnu \
+    CMAKE_TOOLCHAIN_FILE=/usr/share/cmake/toolchain-aarch64.cmake
+
+# Create a CMake toolchain file for easier cross-compilation to ARM64
+RUN mkdir -p /usr/share/cmake && \
+    echo 'set(CMAKE_SYSTEM_NAME Linux)' > /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_SYSTEM_PROCESSOR aarch64)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_FIND_ROOT_PATH /usr/aarch64-linux-gnu)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)' >> /usr/share/cmake/toolchain-aarch64.cmake && \
+    echo 'set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)' >> /usr/share/cmake/toolchain-aarch64.cmake
+
+WORKDIR /app/kufibot.cpp
+
+# Copy your source code into the container
+# (This would typically be done with a volume mount when running the container)
+# COPY . .
+
+# Example build commands for Raspberry Pi ARM64:
+# For CMake projects:
+# RUN cmake -DCMAKE_TOOLCHAIN_FILE=/usr/share/cmake/toolchain-aarch64.cmake . && make
+# For make projects:
+# RUN make CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
+
+# Additional notes for Raspberry Pi development:
+# - The resulting binaries will be compatible with Raspberry Pi 3/4/5 running 64-bit OS
+# - For GPIO access, you may need to run with appropriate permissions on the Pi
+# - Some Pi-specific libraries may need to be built from source if not available in repos

@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  kufibot-cross:
+    build:
+      context: .
+      dockerfile: Dockerfile.amd64  # Use the cross-compilation Dockerfile
+    container_name: kufibot_cross_env
+    working_dir: /app/kufibot.cpp
+    volumes:
+      - .:/app/kufibot.cpp
+    tty: true
+    stdin_open: true
+    environment:
+      - TERM=xterm-256color
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+      - LD_LIBRARY_PATH=/app/kufibot.cpp/lib
+      - QEMU_LD_PREFIX=/usr/aarch64-linux-gnu  # Important for cross-compilation
+    privileged: true
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined

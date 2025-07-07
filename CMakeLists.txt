@@ -19,7 +19,7 @@ find_package(CURL REQUIRED)
 include_directories(${PORTAUDIO_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/include) 
+include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CURL_INCLUDE_DIRS})
 
 add_subdirectory(src/ui)
@@ -28,15 +28,15 @@ add_subdirectory(src/controllers)
 add_subdirectory(src/services)
 
 
-file(GLOB_RECURSE SRCS 
-                    ${SRC_DIR}/subscriber.h
-                    ${SRC_DIR}/publisher.cpp
-                    ${SRC_DIR}/publisher.h
-                    ${SRC_DIR}/controllers/*.cpp
-                    ${SRC_DIR}/controllers/*.h
-                    ${SRC_DIR}/services/*.cpp
-                    ${SRC_DIR}/services/*.h
-                )
+file(GLOB_RECURSE SRCS
+        ${SRC_DIR}/subscriber.h
+        ${SRC_DIR}/publisher.cpp
+        ${SRC_DIR}/publisher.h
+        ${SRC_DIR}/controllers/*.cpp
+        ${SRC_DIR}/controllers/*.h
+        ${SRC_DIR}/services/*.cpp
+        ${SRC_DIR}/services/*.h
+)
 
 
 
@@ -45,32 +45,32 @@ add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS})
 
 
 target_link_directories(kufibot PUBLIC
-${EXTERNAL_LIB_DIR}
+        ${EXTERNAL_LIB_DIR}
 )
 
 target_include_directories(kufibot PUBLIC
-${EXTERNAL_LIB_DIR}
+        ${EXTERNAL_LIB_DIR}
 )
 
 target_link_libraries(kufibot ${OpenCV_LIBS}
-                              ${OPENSSL_LIBRARIES}
-                              ${PORTAUDIO_LIBRARIES} 
-                              ${CURL_LIBRARIES}
-                              fmt
-                              spdlog
-                              espeak-ng
-                              onnxruntime
-                              ALSA::ALSA
-                              Boost::system
-                              portaudio
-                              piper
-                              piper_phonemize
-                              vosk
-                              mpg123
-                              onnxruntime
-                              final
-                              ui
-                              drivers
-                              controllers
-                              services
-                              )
+        ${OPENSSL_LIBRARIES}
+        ${PORTAUDIO_LIBRARIES}
+        ${CURL_LIBRARIES}
+        fmt
+        spdlog
+        espeak-ng
+        onnxruntime
+        ALSA::ALSA
+        Boost::system
+        portaudio
+        piper
+        piper_phonemize
+        vosk
+        mpg123
+        onnxruntime
+        final
+        ui
+        drivers
+        controllers
+        services
+)
