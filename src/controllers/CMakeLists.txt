@@ -13,7 +13,6 @@ set(TARGET controllers)
 
 file(GLOB_RECURSE SRCS ${CONTROLLERS_SRC_DIR}/*.cpp ${CONTROLLERS_SRC_DIR}/*.h)
 include_directories(${CONTROLLERS_INC_DIR})
-find_library(WIRINGPI_LIB wiringPi PATHS /usr/lib/)
 
 add_library(${TARGET} SHARED ${SRCS})
 target_include_directories(${TARGET} PRIVATE ${CONTROLLERS_INC_DIR})
