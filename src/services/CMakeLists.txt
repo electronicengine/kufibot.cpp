@@ -20,3 +20,4 @@ target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE ui
                                         controllers
                                         )
+install(TARGETS services DESTINATION /usr/local/lib)

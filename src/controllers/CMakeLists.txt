@@ -33,3 +33,5 @@ target_link_libraries(${TARGET} PRIVATE wiringPi
                                         drivers
                                         ui
                                         )
+
+install(TARGETS controllers DESTINATION /usr/local/lib)
