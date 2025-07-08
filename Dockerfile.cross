@@ -103,6 +103,7 @@ WORKDIR /app
 # Copy your source code into the container
 # (This would typically be done with a volume mount when running the container)
 RUN git clone https://github.com/electronicengine/kufibot.cpp.git
+RUN mv kufibot.cpp/lib/* /usr/local/lib
 
 # Example build commands for Raspberry Pi ARM64:
 # For CMake projects:
