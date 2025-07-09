@@ -32,6 +32,8 @@ target_link_libraries(${TARGET} PRIVATE wiringPi
                                         portaudio
                                         drivers
                                         ui
+                                        llama
+                                        common
                                         )
 
 install(TARGETS controllers DESTINATION /usr/local/lib)
