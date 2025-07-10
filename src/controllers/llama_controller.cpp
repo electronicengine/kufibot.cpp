@@ -208,14 +208,7 @@ void LlamaController::batch_decode(llama_context * ctx, llama_batch & batch, flo
 
 
 std::vector<float> LlamaController::calculateEmbeddings(const std::string& text) {
-
-    const llama_vocab * vocab = llama_model_get_vocab(_model);
-
-    const int n_ctx_train = llama_model_n_ctx_train(_model);
-    const int n_ctx = llama_n_ctx(_ctx);
-
-
-
+    
     uint64_t batch_size = 2048;
 
     auto tokens = common_tokenize(_ctx, text, true, true);

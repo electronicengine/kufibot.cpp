@@ -34,6 +34,9 @@ target_link_libraries(${TARGET} PRIVATE wiringPi
                                         ui
                                         llama
                                         common
+                                        ggml
+                                        ggml-base
+                                        ggml-cpu
                                         )
 
 install(TARGETS controllers DESTINATION /usr/local/lib)

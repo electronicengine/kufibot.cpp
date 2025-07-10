@@ -77,6 +77,11 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         drivers
         controllers
         services
+        llama
+        common
+        ggml
+        ggml-base
+        ggml-cpu
 )
 
 include(InstallRequiredSystemLibraries)

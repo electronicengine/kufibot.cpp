@@ -4,7 +4,6 @@ project(services LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -Wall -Wextra -ggdb")
 
-
 set(SERVICES_SRC_DIR ${CMAKE_SOURCE_DIR}/src/services)
 set(SERVICES_LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 set(SERVICES_INC_DIR ${CMAKE_SOURCE_DIR}/include)
