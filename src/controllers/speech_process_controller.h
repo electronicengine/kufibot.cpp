@@ -20,25 +20,9 @@ enum OutputType { OUTPUT_FILE, OUTPUT_DIRECTORY, OUTPUT_STDOUT, OUTPUT_RAW };
 
 class SpeechProcessController {
 public:
-    struct RunConfig {
-        std::filesystem::path modelPath;
-        std::filesystem::path modelConfigPath;
-        OutputType outputType = OUTPUT_DIRECTORY;
-        std::optional<std::filesystem::path> outputPath = std::filesystem::path(".");
-        std::optional<piper::SpeakerId> speakerId;
-        std::optional<float> noiseScale;
-        std::optional<float> lengthScale;
-        std::optional<float> noiseW;
-        std::optional<float> sentenceSilenceSeconds;
-        std::optional<std::filesystem::path> eSpeakDataPath;
-        std::optional<std::filesystem::path> tashkeelModelPath;
-        bool jsonInput = false;
-        std::optional<std::map<piper::Phoneme, float>> phonemeSilenceSeconds;
-        bool useCuda = false;
-    };
 
     static SpeechProcessController* get_instance();
-    void loadModel(const std::string& modelPath, const std::string& modelConfigPath);
+    void loadModel(const std::string& modelPath = "/usr/ai.models/trSpeechModel/dfki.onnx");
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();
@@ -47,18 +31,19 @@ public:
     ~SpeechProcessController();
 
 private:
-    RunConfig runConfig;
-    piper::PiperConfig piperConfig;
-    piper::Voice voice;
-    std::vector<int16_t> audioBuffer;
-    std::vector<int16_t> sharedAudioBuffer;
-    std::mutex mutAudio;
-    std::condition_variable cvAudio;
+    piper::PiperConfig _piperConfig;
+    piper::Voice _voice;
+    std::string _modelPath;
+    std::vector<int16_t> _audioBuffer;
+    std::vector<int16_t> _sharedAudioBuffer;
+    std::optional<piper::SpeakerId> _speakerId;
+    std::mutex _mutAudio;
+    std::condition_variable _cvAudio;
     bool audioReady = false;
     bool audioFinished = false;
     static SpeechProcessController* _instance;
-    mpg123_handle* mh;  // MPG123 handle for MP3 playback
-    int mpg123_err;
+    mpg123_handle* _mh;  // MPG123 handle for MP3 playback
+    int _mpg123Err;
 
     
     SpeechProcessController();
@@ -66,10 +51,3 @@ private:
 };
 
 #endif // PIPERTTS_HPP
-
-    // SpeechProcessController tts;
-    
-    // tts.loadModel("../ai.models/trSpeechModel/dfki.onnx",
-    //               "../ai.models/trSpeechModel/dfki.onnx.json");
-
-    // tts.speakText("Merhaba, bu bir test mesajıdır.");

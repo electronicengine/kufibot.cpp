@@ -16,7 +16,7 @@ set(DEPLOY_USER phi)
 set(DEPLOY_HOST 192.168.191.1)
 set(DEPLOY_PATH /home/phi/workspace/)
 
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED CONFIG COMPONENTS system filesystem)
 find_package(OpenCV REQUIRED)
 find_package(ALSA REQUIRED)
 find_package(CURL REQUIRED)

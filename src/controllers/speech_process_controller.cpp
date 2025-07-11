@@ -11,20 +11,20 @@ SpeechProcessController* SpeechProcessController::get_instance() {
 }
 
 SpeechProcessController::SpeechProcessController() {
+    _piperConfig.eSpeakDataPath = "/usr/local/share/espeak-ng-data/";
     mpg123_init();  // Initialize MPG123
-    mh = mpg123_new(nullptr, &mpg123_err);
-    if (mpg123_err != MPG123_OK) {
-        MainWindow::log("Failed to initialize mpg123: " + std::string(mpg123_plain_strerror(mpg123_err)), LogLevel::LOG_ERROR);
+    _mh = mpg123_new(nullptr, &_mpg123Err);
+    if (_mpg123Err != MPG123_OK) {
+        MainWindow::log("Failed to initialize mpg123: " + std::string(mpg123_plain_strerror(_mpg123Err)), LogLevel::LOG_ERROR);
     }
 }
 
-void SpeechProcessController::loadModel(const std::string& modelPath, const std::string& modelConfigPath){
-    std::optional<piper::SpeakerId> speakerId = 0;
-    piper::initialize(piperConfig);
-    loadVoice(piperConfig, modelPath, modelConfigPath,
-              voice, speakerId, false);
-    MainWindow::log( "Voice loaded successfully.", LogLevel::LOG_INFO);
+void SpeechProcessController::loadModel(const std::string& modelPath){
 
+    _modelPath = modelPath;
+    _speakerId = 0;
+    loadVoice(_piperConfig, _modelPath, _modelPath + ".json", _voice, _speakerId,false);
+    piper::initialize(_piperConfig);
 }
 
 void SpeechProcessController::speakText(const std::string &text)
@@ -36,7 +36,7 @@ void SpeechProcessController::speakText(const std::string &text)
 void SpeechProcessController::synthesizeText(const std::string& text) {
     piper::SynthesisResult result;
     auto audioCallback = [this]() { audioCallbackFunc(); };
-    piper::textToAudio(piperConfig, voice, text, audioBuffer, result, audioCallback);
+    piper::textToAudio(_piperConfig, _voice, text, _audioBuffer, result, audioCallback);
 }
 
 void SpeechProcessController::playAudio() {
@@ -65,11 +65,11 @@ void SpeechProcessController::playAudio() {
 
     std::vector<int16_t> internalBuffer;
     {
-        std::unique_lock lock(mutAudio);
-        cvAudio.wait(lock, [this] { return audioReady; });
+        std::unique_lock lock(_mutAudio);
+        _cvAudio.wait(lock, [this] { return audioReady; });
         if (!audioFinished) {
-            copy(sharedAudioBuffer.begin(), sharedAudioBuffer.end(), back_inserter(internalBuffer));
-            sharedAudioBuffer.clear();
+            copy(_sharedAudioBuffer.begin(), _sharedAudioBuffer.end(), back_inserter(internalBuffer));
+            _sharedAudioBuffer.clear();
             audioReady = false;
         }
     }
@@ -85,14 +85,14 @@ void SpeechProcessController::playAudio() {
 
 
 void SpeechProcessController::playMusic(const std::string& mp3_file) {
-    if (mpg123_open(mh, mp3_file.c_str()) != MPG123_OK) {
+    if (mpg123_open(_mh, mp3_file.c_str()) != MPG123_OK) {
         MainWindow::log("Error opening MP3 file: " + mp3_file, LogLevel::LOG_ERROR);
         return;
     }
 
     unsigned int rate;
     int channels, encoding;
-    mpg123_getformat(mh, reinterpret_cast<long*>(&rate), &channels, &encoding);
+    mpg123_getformat(_mh, reinterpret_cast<long*>(&rate), &channels, &encoding);
 
     snd_pcm_t* pcmHandle;
     snd_pcm_hw_params_t* params;
@@ -112,11 +112,11 @@ void SpeechProcessController::playMusic(const std::string& mp3_file) {
     snd_pcm_hw_params(pcmHandle, params);
     snd_pcm_prepare(pcmHandle);
 
-    size_t buffer_size = mpg123_outblock(mh);
+    size_t buffer_size = mpg123_outblock(_mh);
     unsigned char* buffer = new unsigned char[buffer_size];
     size_t done;
 
-    while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK) {
+    while (mpg123_read(_mh, buffer, buffer_size, &done) == MPG123_OK) {
         if (snd_pcm_writei(pcmHandle, buffer, done / 4) < 0) {
             snd_pcm_prepare(pcmHandle);  // Recover from underrun
         }
@@ -125,19 +125,19 @@ void SpeechProcessController::playMusic(const std::string& mp3_file) {
     delete[] buffer;
     snd_pcm_drain(pcmHandle);
     snd_pcm_close(pcmHandle);
-    mpg123_close(mh);
+    mpg123_close(_mh);
 
 }
 
 
 
 void SpeechProcessController::audioCallbackFunc() {
-    std::unique_lock lock(mutAudio);
-    copy(audioBuffer.begin(), audioBuffer.end(), back_inserter(sharedAudioBuffer));
+    std::unique_lock lock(_mutAudio);
+    copy(_audioBuffer.begin(), _audioBuffer.end(), back_inserter(_sharedAudioBuffer));
     audioReady = true;
-    cvAudio.notify_one();
+    _cvAudio.notify_one();
 }
 
 SpeechProcessController::~SpeechProcessController() {
-    piper::terminate(piperConfig);
+    piper::terminate(_piperConfig);
 }
