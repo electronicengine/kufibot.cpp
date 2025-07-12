@@ -1,6 +1,5 @@
 #include "interactive_chat_service.h"
-#include "../ui/main_window.h"
-
+#include "../logger.h"
 InteractiveChatService* InteractiveChatService::_instance = nullptr;
 
 InteractiveChatService *InteractiveChatService::get_instance()
@@ -19,11 +18,16 @@ InteractiveChatService::InteractiveChatService() : Service("InteractiveChatServi
     _webSocketService = WebSocketService::get_instance();
     _videoStreamService = VideoStreamService::get_instance();
 
-    _ollamaServer = "http://192.168.1.20:11434";
-    _ollamaModelName= "kufi";
-
+    Logger::info("Speech Process Model loading...");
     _speechProcessController->loadModel();
+    Logger::info("Speech Recognition Model loading...");
     _speechRecognitionController->load_model();
+    Logger::info("Llama Chat Model loading...");
+    bool ret = _llamaChatController.loadChatModel();
+    if (!ret) {
+        Logger::error("Llama Chat Model loading failed!");
+    }
+
     if(!_speechRecognitionController->open()) {
         return ;
     }
@@ -69,27 +73,14 @@ bool InteractiveChatService::query(const std::string& message, std::function<voi
         //
         //         if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
         //     };
-
-        std::thread new_thread([this, onReceiveLlamaResponse, message]() {
-            _llamaChatController.setCallBackFunction(onReceiveLlamaResponse);
-            _llamaChatController.chat(message);
-            //ollama::generate(_modelName, message, response_callback);
-        });
-
-        new_thread.detach();
+        _llamaChatController.setCallBackFunction(onReceiveLlamaResponse);
+        _llamaChatController.chat(message);
 
         //_queryRunning = true;
         return true;
     // }
 }
 
-void InteractiveChatService::set_llama_server(const std::string &server)
-{
-    size_t dashPos = server.find('-');
-
-
-
-}
 
 bool InteractiveChatService::load_model(const LlamaOptions &llamaOptions)
 {
@@ -150,21 +141,20 @@ void InteractiveChatService::update_web_socket_message(websocketpp::connection_h
     (void) hdl;
 
     if(msg == "on_open"){
-        MainWindow::log( "new web socket connection extablished"  , LogLevel::LOG_TRACE);
-
+        Logger::trace( "new web socket connection extablished");
     }
     else if(msg == "on_close"){
-        MainWindow::log( "web socket connection is closed." , LogLevel::LOG_TRACE);
+        Logger::trace( "web socket connection is closed." );
     }
     else{
         Json message = Json::parse(msg);
         if (message.contains("talkie")) {
             std::string incoming_talkie = message["talkie"];
-            MainWindow::log( "incoming_talkie: " + incoming_talkie , LogLevel::LOG_TRACE);
+            Logger::trace( "incoming_talkie: {}" + incoming_talkie );
 
         std::function<void(const ollama::response&)> response_callback =
             [=](const ollama::response& response) {
-                MainWindow::log(response, LogLevel::LOG_TRACE);
+                Logger::trace( response);
                 if (response.as_json()["done"]==true) { _queryRunning =true; }
 
             };
@@ -183,9 +173,10 @@ void InteractiveChatService::start()
 
 
         _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
-        MainWindow::log("InteractiveChatService::_webSocketService::subscribe", LogLevel::LOG_TRACE);
+        Logger::info("InteractiveChatService::_webSocketService::subscribe");
         _webSocketService->subscribe(this);
-        MainWindow::log("InteractiveChatService is starting..." , LogLevel::LOG_INFO);
+        Logger::info("InteractiveChatService is starting...");
+
     }
 }
 
@@ -193,7 +184,7 @@ void InteractiveChatService::stop()
 {
     if (_running){
         _running = false;
-        MainWindow::log("InteractiveChatService is stopping..." , LogLevel::LOG_INFO);
+        Logger::info("InteractiveChatService is stopping..." );
 
         _speechRecognitionController->stop_listen();
         _speechRecognitionController->close();
@@ -207,6 +198,6 @@ void InteractiveChatService::stop()
         }
         // Notify all waiting threads to wake up and exit
         _queueCondition.notify_all();
-        MainWindow::log("InteractiveChatService is stopped." , LogLevel::LOG_INFO);
+        Logger::info("InteractiveChatService is stopped."  );
     }
 }

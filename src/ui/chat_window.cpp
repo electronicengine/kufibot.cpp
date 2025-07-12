@@ -87,8 +87,10 @@ void ChatWindow::load_model()
     std::thread loadThread([this, llama_options]() {
         if (_interactiveChatService->load_model(llama_options)) {
             _answerView.append("Chat Model Loaded");
+            _answerView.redraw();
         }else {
             _answerView.append("Chat Model couldn't load!");
+            _answerView.redraw();
         }
     });
 

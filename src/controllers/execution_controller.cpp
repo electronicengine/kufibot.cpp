@@ -1,16 +1,11 @@
 #include <iostream>
 #include <memory>
 #include <array>
-#include <cstdio> // For popen and pclose
-#include <iostream>
-#include <memory>
-#include <array>
 #include <cstdio>
 #include <fcntl.h>
 #include "execution_controller.h"
-#include <unistd.h>  // For read, close
-#include <sys/select.h>  // For select()
-#include "../ui/main_window.h"
+
+#include "../logger.h"
 
 ExecutionController* ExecutionController::_instance = nullptr;
 
@@ -41,14 +36,14 @@ std::string ExecutionController::execute(ExecutionType Type, const std::string& 
 
 std::string ExecutionController::run(const std::string path, const std::string& prompt) {
     std::string command = "bash -c 'python3 " + path + " \"" + prompt + "\" 2>&1'";
-    MainWindow::log("Executing: " + command, LogLevel::LOG_TRACE);
+    Logger::trace("Executing: {}", command);
 
     std::array<char, 256> buffer;
     std::string result;
     std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
 
     if (!pipe) {
-        MainWindow::log("Error: Failed to run the Python script.", LogLevel::LOG_ERROR);
+        Logger::error("Error: Failed to run the Python script.");
         return "Error";
     }
 
@@ -64,7 +59,7 @@ std::string ExecutionController::run(const std::string path, const std::string& 
 
 void ExecutionController::set_venv(const std::string &venv){
     std::string command = "bash -c 'source " + venv + "/bin/activate'";
-    MainWindow::log("Executing: " + command, LogLevel::LOG_TRACE);
+    Logger::trace("Executing: {}", command);
 
     std::system(command.c_str());
 

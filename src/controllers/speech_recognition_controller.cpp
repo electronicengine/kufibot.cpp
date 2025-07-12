@@ -1,5 +1,5 @@
 #include "speech_recognition_controller.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 
 SpeechRecognitionController* SpeechRecognitionController::_instance = nullptr;
@@ -55,7 +55,7 @@ void SpeechRecognitionController::load_model(const std::string &modelPath)
 // Initialize PortAudio and prepare resources
 bool SpeechRecognitionController::open() {
     if (Pa_Initialize() != paNoError) {
-        MainWindow::log("Failed to initialize PortAudio.", LogLevel::LOG_ERROR);
+        Logger::error("Failed to initialize PortAudio.");
         return false;
     }
 
@@ -70,7 +70,7 @@ bool SpeechRecognitionController::open() {
     );
 
     if (err != paNoError) {
-        MainWindow::log("Failed to open audio stream: " + std::string( Pa_GetErrorText(err)), LogLevel::LOG_ERROR);
+        Logger::error("Failed to open audio stream: {}", std::string( Pa_GetErrorText(err)));
         return false;
     }
 
@@ -80,10 +80,10 @@ bool SpeechRecognitionController::open() {
 // Start listening to the microphone
 bool SpeechRecognitionController::start_listen() {
     if (Pa_StartStream(_stream) != paNoError) {
-        MainWindow::log("Failed to start audio stream." , LogLevel::LOG_ERROR);
+        Logger::error("Failed to start audio stream.");
         return false;
     }
-    MainWindow::log("Listening... Press Ctrl+C to stop.", LogLevel::LOG_INFO);
+    Logger::error("Listening... Press Ctrl+C to stop.");
 
     return true;
 }

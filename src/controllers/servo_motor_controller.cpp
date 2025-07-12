@@ -1,6 +1,6 @@
 #include "servo_motor_controller.h"
-#include "../ui/main_window.h"
-
+#include "../logger.h"
+#include <fstream>
 
 ServoMotorController* ServoMotorController::_instance = nullptr;
 
@@ -29,7 +29,7 @@ ServoMotorController::ServoMotorController(int address) {
         {"eye_left", 20}
     };
 
-    MainWindow::log("Servo driver initialized", LogLevel::LOG_TRACE);
+    Logger::info("Servo driver initialized");
 }
 
 void ServoMotorController::save_joint_angles()
@@ -45,7 +45,7 @@ void ServoMotorController::load_joint_angles() {
     if (inFile.is_open()) {
         Json data = Json::parse(inFile);
     }else{
-        MainWindow::log("Error opening file: example.json", LogLevel::LOG_ERROR);
+        Logger::error("Error opening file: example.json");
         return;
     }
 
@@ -55,7 +55,7 @@ void ServoMotorController::load_joint_angles() {
 
 void ServoMotorController::set_all_angles(const std::map<std::string, int>& angles) {
     for (const auto& [joint, angle] : angles) {
-        MainWindow::log(joint + ":" + std::to_string(angle), LogLevel::LOG_TRACE);
+        Logger::info("{} : {}", joint , std::to_string(angle));
 
         set_absolute_servo_angle(joint, angle);
     }

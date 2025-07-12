@@ -31,7 +31,6 @@ target_link_libraries(${TARGET} PRIVATE wiringPi
                                         Boost::system
                                         portaudio
                                         drivers
-                                        ui
                                         llama
                                         common
                                         ggml

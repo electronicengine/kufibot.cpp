@@ -1,5 +1,5 @@
 #include "qmc5883l_driver.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 QMC5883LDriver::QMC5883LDriver(int address,
                                 int output_data_rate, int output_range,
@@ -10,7 +10,7 @@ QMC5883LDriver::QMC5883LDriver(int address,
     wiringPiSetup();
     _bus = wiringPiI2CSetup(address);
     if (_bus == -1) {
-        MainWindow::log("Failed to initialize I2C bus.", LogLevel::LOG_ERROR);
+        Logger::error("Failed to initialize I2C bus.");
         exit(EXIT_FAILURE);
     }
 

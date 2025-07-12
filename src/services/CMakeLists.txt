@@ -16,7 +16,5 @@ include_directories(${SERVICES_INC_DIR})
 add_library(${TARGET} SHARED ${SRCS})
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
-target_link_libraries(${TARGET} PRIVATE ui
-                                        controllers
-                                        )
+target_link_libraries(${TARGET} PRIVATE controllers)
 install(TARGETS services DESTINATION /usr/local/lib)

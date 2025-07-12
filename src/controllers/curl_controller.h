@@ -3,11 +3,8 @@
 #define CURL_CONTROLLER_H
 
 
-#include <iostream>
 #include <string>
-#include <curl/curl.h>
 #include "../publisher.h"
-
 #include "nlohmann/json.hpp"  // Include the nlohmann JSON library
 
 using Json = nlohmann::json;

@@ -27,7 +27,6 @@
 #include "robot_controller_service.h"
 
 
-using Json = nlohmann::json;
 
 class RemoteConnectionService : public Subscriber, public Service{
 
@@ -53,7 +52,8 @@ public:
     void service_update_function(){}
     void update_video_frame(const cv::Mat& frame);
     void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg);
-    void update_sensor_values(Json values);
+    void update_sensor_values(nlohmann::json values);
+    nlohmann::json get_sensor_values();
 
 
 };

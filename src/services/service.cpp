@@ -1,5 +1,5 @@
 #include "service.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 Service::Service(const std::string &name) : _name(name)
 {
@@ -18,20 +18,19 @@ void Service::start()
 {
     if (!_running) { 
         _running = true;
-        MainWindow::log("Service is starting...", LogLevel::LOG_INFO);
+        Logger::info("Service is starting...");
         _serviceThread = std::thread(&Service::service_update_function, this);
     }
 }
 
 void Service::stop()
 {
-
     if (_running){
         _running = false;
-        MainWindow::log("Service is stopping...", LogLevel::LOG_INFO);
+        Logger::info("Service is stopping...");
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
-        MainWindow::log("Service is stopped.", LogLevel::LOG_INFO);
+        Logger::info("Service is stopped.");
     }
 }

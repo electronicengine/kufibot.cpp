@@ -4,7 +4,6 @@
 
 #include "final/final.h"
 #include "sub_window.h"
-#include <deque>
 
 #undef K
 #undef null

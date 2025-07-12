@@ -1,5 +1,5 @@
 #include "remote_connection_service.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 RemoteConnectionService* RemoteConnectionService::_instance = nullptr;
 
@@ -29,18 +29,18 @@ void RemoteConnectionService::start() {
 
     _webSocket->subscribe(this);
     _sensor_values = _robotControllerService->get_sensor_values();
-    MainWindow::log("RemoteConnectionService is starting...", LogLevel::LOG_INFO);
+    Logger::info("RemoteConnectionService is starting...");
 }
 
 
 void RemoteConnectionService::stop() {
-    MainWindow::log("RemoteConnectionService is stopping...", LogLevel::LOG_INFO);
+     Logger::info("RemoteConnectionService is stopping...");
 
-    MainWindow::log("RemoteConnectionService::_webSocket::un_subscribe", LogLevel::LOG_TRACE);
+     Logger::info("RemoteConnectionService::_webSocket::un_subscribe");
     _webSocket->un_subscribe(this); 
-    MainWindow::log("RemoteConnectionService::_videoStream::un_subscribe", LogLevel::LOG_TRACE);
+     Logger::info("RemoteConnectionService::_videoStream::un_subscribe");
     _videoStream->un_subscribe(this); 
-    MainWindow::log("RemoteConnectionService::_robotControllerService::un_subscribe", LogLevel::LOG_TRACE);
+     Logger::info("RemoteConnectionService::_robotControllerService::un_subscribe");
     _robotControllerService->un_subscribe(this);
 }
 
@@ -57,7 +57,7 @@ void RemoteConnectionService::update_video_frame(const cv::Mat& frame) {
         _webSocket->send_message(_hdl, metadata_string);
 
     } catch (const std::exception& e) {
-        MainWindow::log("WebSocket Error: " + std::string(e.what()), LogLevel::LOG_ERROR);
+        Logger::error("WebSocket Error: {} " + std::string(e.what()));
     }
 
 }
@@ -65,18 +65,18 @@ void RemoteConnectionService::update_video_frame(const cv::Mat& frame) {
 void RemoteConnectionService::update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& msg)
 {
     if(msg == "on_open"){
-        MainWindow::log("new web socket connection extablished", LogLevel::LOG_TRACE);
+        Logger::trace("new web socket connection extablished");
         _hdl = hdl;
-        MainWindow::log("RemoteConnectionService::_videoStream::subscribe", LogLevel::LOG_TRACE);
+        Logger::trace("RemoteConnectionService::_videoStream::subscribe");
         _videoStream->subscribe(this);
-        MainWindow::log("RemoteConnectionService::_robotControllerService::subscribe", LogLevel::LOG_TRACE);
+        Logger::trace("RemoteConnectionService::_robotControllerService::subscribe");
         _robotControllerService->subscribe(this);
     }
     else if(msg == "on_close"){
-        MainWindow::log("web socket connection is closed.", LogLevel::LOG_TRACE);
-        MainWindow::log("RemoteConnectionService::_videoStream::un_subscribe", LogLevel::LOG_TRACE);
+        Logger::trace("web socket connection is closed.");
+        Logger::trace("RemoteConnectionService::_videoStream::un_subscribe");
         _videoStream->un_subscribe(this); 
-        MainWindow::log("RemoteConnectionService::_robotControllerService::un_subscribe", LogLevel::LOG_TRACE);
+        Logger::trace("RemoteConnectionService::_robotControllerService::un_subscribe");
         _robotControllerService->un_subscribe(this);
     }
     else{
@@ -89,6 +89,10 @@ void RemoteConnectionService::update_web_socket_message(websocketpp::connection_
     }
 }
 
-void RemoteConnectionService::update_sensor_values(Json values){
+void RemoteConnectionService::update_sensor_values(nlohmann::json values){
     _sensor_values = values;
+}
+
+nlohmann::json RemoteConnectionService::get_sensor_values() {
+    return _sensor_values;
 }

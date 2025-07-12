@@ -1,6 +1,6 @@
 #include "web_socket_service.h"
 #include <memory>
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 WebSocketService* WebSocketService::_instance = nullptr;
 
@@ -25,7 +25,7 @@ void WebSocketService::start(const std::string& address, uint16_t port) {
 
     if (!_running){
         _running = true;
-        MainWindow::log("WebSocketService is starting...", LogLevel::LOG_INFO);
+       Logger::info("WebSocketService is starting...");
         _serviceThread = std::thread(&WebSocketService::run, this, address, port); // Start server in a new thread
     }
 }
@@ -41,7 +41,7 @@ void WebSocketService::run(const std::string &address, uint16_t port)
         boost::asio::ip::tcp::resolver resolver(_server.get_io_service());
         boost::asio::ip::tcp::resolver::results_type endpoints =  resolver.resolve(address, std::to_string(port));
         if (ec) {
-            MainWindow::log("Error resolving address: " + std::string(ec.message()), LogLevel::LOG_ERROR);
+            Logger::error("Error resolving address: " + std::string(ec.message()));
             return;
         }
 
@@ -50,13 +50,13 @@ void WebSocketService::run(const std::string &address, uint16_t port)
         // }
 
         _server.start_accept();
-        MainWindow::log("WebSocket Server listening on " + address + ":" + std::to_string(port), LogLevel::LOG_INFO);
+        Logger::info("WebSocket Server listening on " + address + ":" + std::to_string(port));
 
         _server.run(); // Blocking call to run the server
     } catch (websocketpp::exception const& e) {
-        MainWindow::log("WebSocket++ exception: " + std::string(e.what()), LogLevel::LOG_ERROR);
+        Logger::error("WebSocket++ exception: " + std::string(e.what()));
     } catch (...) {
-        MainWindow::log("Other exception occurred", LogLevel::LOG_ERROR);
+        Logger::error("Other exception occurred");
     }
 
     _running = false;
@@ -67,21 +67,21 @@ void WebSocketService::stop() {
     if (_running){
 
         _running = false;
-        MainWindow::log("WebSocketService is stopping...", LogLevel::LOG_INFO);
+        Logger::info("WebSocketService is stopping...");
         _server.stop_listening();  
         _server.stop();            
 
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
-        MainWindow::log("WebSocketService is stopped.", LogLevel::LOG_INFO);
+        Logger::info("WebSocketService is stopped.");
     }
 
 }
 
 
 void WebSocketService::on_open(websocketpp::connection_hdl hdl) {
-    MainWindow::log("Connection opened!", LogLevel::LOG_INFO);
+    Logger::info("Connection opened!");
     _hdl = hdl;  
    std::string msg = "on_open";
     update_web_socket_message(hdl, msg);
@@ -92,7 +92,7 @@ void WebSocketService::on_message(websocketpp::connection_hdl hdl, Server::messa
 }
 
 void WebSocketService::on_close(websocketpp::connection_hdl hdl) {
-    MainWindow::log("Connection closed!", LogLevel::LOG_INFO);
+    Logger::info("Connection closed!");
     std::string msg =  "on_close";
     update_web_socket_message(hdl, msg);
 }
@@ -101,7 +101,7 @@ void WebSocketService::send_message(websocketpp::connection_hdl hdl, const std::
     try {
         _server.send(hdl, message, websocketpp::frame::opcode::text);
     } catch (websocketpp::exception const& e) {
-        MainWindow::log("Send failed: " + std::string(e.what()), LogLevel::LOG_ERROR);
+        Logger::info("Send failed: " + std::string(e.what()));
     }
 }
 
@@ -109,7 +109,7 @@ void WebSocketService::send_data(websocketpp::connection_hdl hdl, const std::vec
     try {
         _server.send(hdl, buffer.data(), buffer.size(), websocketpp::frame::opcode::binary);
     } catch (websocketpp::exception const& e) {
-        MainWindow::log("Send failed: " + std::string(e.what()), LogLevel::LOG_ERROR);
+        Logger::info("Send failed: " + std::string(e.what()));
     }
 }
 

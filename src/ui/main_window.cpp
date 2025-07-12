@@ -3,11 +3,12 @@
 
 std::deque<std::pair<std::string, LogLevel>> MainWindow::_logHistory;
 std::mutex MainWindow::_loggerViewMtx;
+bool MainWindow::_noTui = false;
 
 MainWindow::MainWindow (finalcut::FWidget* parent)
   : finalcut::FDialog{parent}
 {
-
+    _noTui = true;
     _textView.setGeometry(FPoint{2, 4}, FSize{FVTerm::getFOutput()->getColumnNumber() - 4, FVTerm::getFOutput()->getLineNumber() - 8});
     _textView.addCallback("mouse-wheel-up", this, &MainWindow::text_view_scroll_up);
 
@@ -154,8 +155,10 @@ void MainWindow::append_log_view(const std::string& logLine, LogLevel logLevel){
 
 void MainWindow::log(const std::string &logLine, LogLevel logLevel)
 {
+    if (_noTui)
+        return;
+
     std::lock_guard<std::mutex> lock(_loggerViewMtx); // Ensure thread safety
-    std::cout << logLine << std::endl;
     _logHistory.emplace_back(logLine, logLevel);
 
     while (_logHistory.size() > LOG_HISTORY_SIZE) {

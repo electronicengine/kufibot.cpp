@@ -45,7 +45,9 @@ file(GLOB_RECURSE SRCS
 
 add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS}
         src/controllers/llama_controller.cpp
-        src/controllers/llama_controller.h)
+        src/controllers/llama_controller.h
+        src/logger.cpp
+        src/logger.h)
 
 
 target_link_directories(kufibot PUBLIC

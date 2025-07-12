@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "../drivers/ina219_driver.h"
-#include <unistd.h> // For usleep
 #include <map>
 
 #define SHUNT_OHMS 0.1

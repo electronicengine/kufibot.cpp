@@ -1,5 +1,5 @@
 #include "dc_motor_controller.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 DCMotorController* DCMotorController::_instance = nullptr;
 
@@ -30,7 +30,7 @@ DCMotorController::~DCMotorController() {
 
 void DCMotorController::run(int motor, const std::string& direction, int speed) {
     if (speed > 100) {
-        MainWindow::log("Speed must be between 0 and 100.", LogLevel::LOG_WARNING);
+        Logger::warn("Speed must be between 0 and 100.");
     }
 
     if(motor == 0){

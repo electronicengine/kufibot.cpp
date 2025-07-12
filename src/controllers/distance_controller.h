@@ -2,10 +2,6 @@
 #define DISTANCE_CONTROLLER_H
 
 #include <boost/asio.hpp>
-#include <iostream>
-#include <vector>
-#include <thread>
-#include <chrono> 
 #include <iomanip> 
 #include "../drivers/median_filter.h"
 

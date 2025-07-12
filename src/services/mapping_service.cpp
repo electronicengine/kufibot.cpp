@@ -1,6 +1,4 @@
 #include "mapping_service.h"
-#include "../ui/main_window.h"
-
 
 MappingService* MappingService::_instance = nullptr;
 
@@ -139,7 +137,6 @@ void MappingService::updatePlot(double angle, int magnitude) {
 void MappingService::start() {
     if (!_running) { 
         _running = true;
-        MainWindow::log( "RobotControllerService is starting..." , LogLevel::LOG_INFO);
 
         _serviceThread = std::thread(&MappingService::service_update_function, this);
     }
@@ -149,12 +146,10 @@ void MappingService::stop()
 {
     if (_running){
         _running = false;
-        MainWindow::log("RobotControllerService is stopping..." , LogLevel::LOG_INFO);
 
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
-        MainWindow::log( "RobotControllerService is stopped.", LogLevel::LOG_INFO);
 
     }
 }

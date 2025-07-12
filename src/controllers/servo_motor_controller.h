@@ -1,12 +1,7 @@
 #ifndef SERVO_MOTOR_CONTROLLER_H
 #define SERVO_MOTOR_CONTROLLER_H
 
-#include <iostream>
-#include <fstream>
-#include <vector>
 #include <string>
-#include <cmath>
-#include <unistd.h>
 #include <map>
 #include <nlohmann/json.hpp>
 

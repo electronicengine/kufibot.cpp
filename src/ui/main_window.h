@@ -3,9 +3,7 @@
 
 #include "final/final.h"
 #include <utility>
-#include <vector>
 #include <deque>
-#include <map>
 #include "graph_window.h"
 #include "compass_rt_graph_window.h"
 #include "body_controller_window.h"
@@ -46,7 +44,16 @@ class MainWindow final : public finalcut::FDialog
     void onTimer (finalcut::FTimerEvent*) override;
 
   private:
-
+    static bool _noTui;
+    static std::mutex _logMtx;
+    static std::mutex _logViewMtx;
+    static std::mutex _logFilterMtx;
+    static std::mutex _logLevelMtx;
+    static std::mutex _quitCbMtx;
+    static std::mutex _autoScrollMtx;
+    static std::mutex _searchStringMtx;
+    static std::mutex _fileMenuMtx;
+    static std::mutex _quitMtx;
     LogLevel _currentLogLevel{LogLevel::LOG_INFO};
     static std::deque<std::pair<std::string, LogLevel>> _logHistory;
     static std::mutex _loggerViewMtx;

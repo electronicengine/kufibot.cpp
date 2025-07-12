@@ -1,5 +1,7 @@
 #include "curl_controller.h"
-#include "../ui/main_window.h"
+#include "nlohmann/json.hpp"
+#include <curl/curl.h>
+
 
 using Json = nlohmann::json;
 
@@ -57,7 +59,7 @@ size_t CurlController::write_callback(void *contents, size_t size, size_t nmemb,
 {
     size_t totalSize = size * nmemb; // Total size of the incoming data
     std::string data(static_cast<char*>(contents), totalSize); // Convert to std::string
-    auto jsonData = json::parse(data);
+    auto jsonData = nlohmann::json::parse(data);
     std::string word = jsonData["response"];
     out.append(word );
     if(word.find("!") != std::string::npos || word.find(".")!= std::string::npos ||

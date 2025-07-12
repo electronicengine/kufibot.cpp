@@ -1,5 +1,5 @@
 #include "robot_controller_service.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 RobotControllerService* RobotControllerService::_instance = nullptr;
 
@@ -123,7 +123,8 @@ void RobotControllerService::control_body(int angle, int magnitude) {
         if(magnitude == 100)
             magnitude = 95;
 
-        MainWindow::log("control_body: " + std::to_string(angle) + " - magnitude: " + std::to_string(magnitude) , LogLevel::LOG_TRACE);
+
+        Logger::info("control_body: {} - magnitude: {} ",std::to_string(angle),  std::to_string(magnitude));
 
         if (magnitude == 0 && angle == 0) {
             _dcMotorController->stop();
@@ -169,7 +170,7 @@ void RobotControllerService::control_arm(const std::string& control_id, int angl
             mapped_angle = angle;
         }
 
-        MainWindow::log("control_arm: "+ std::to_string(mapped_angle) , LogLevel::LOG_TRACE);
+        Logger::info("control_arm: {}", std::to_string(mapped_angle));
 
             if (control_id == "left_arm") {
             _servoController->set_absolute_servo_angle("left_arm", mapped_angle);
@@ -218,7 +219,7 @@ void RobotControllerService::start()
         _servoController = ServoMotorController::get_instance();
         _dcMotorController = DCMotorController::get_instance();
 
-        MainWindow::log("RobotControllerService is starting..." , LogLevel::LOG_INFO);
+        Logger::info("RobotControllerService is starting...");
         _serviceThread = std::thread(&RobotControllerService::service_update_function, this);
     }
 }
@@ -227,10 +228,10 @@ void RobotControllerService::stop()
 {
     if (_running){
         _running = false;
-        MainWindow::log("RobotControllerService is stopping..." , LogLevel::LOG_INFO);
+        Logger::info("RobotControllerService is stopping...");
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
-        MainWindow::log("RobotControllerService is stopped." , LogLevel::LOG_INFO);
+        Logger::info("RobotControllerService is stopped.");
     }
 }

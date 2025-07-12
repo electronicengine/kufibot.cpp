@@ -2,14 +2,9 @@
 #ifndef COMPASS_CONTROLLER_H
 #define COMPASS_CONTROLLER_H
 
-#include <iostream>
-#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <numeric>
-#include <vector>
-#include <algorithm>
 #include "../drivers/median_filter.h"
 #include "../drivers/qmc5883l_driver.h"
 

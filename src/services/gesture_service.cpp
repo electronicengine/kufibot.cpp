@@ -1,5 +1,5 @@
 #include "gesture_service.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
 
 GestureService* GestureService::_instance = nullptr;
 
@@ -29,7 +29,8 @@ GestureService::~GestureService()
 
 void GestureService::greeter()
 {
-    MainWindow::log("greeter !", LogLevel::LOG_INFO);
+    
+    Logger::info("greeter !");
      std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
     _robotControllerService->set_all_joint_angles(jointAngles);
 
@@ -50,8 +51,8 @@ void GestureService::greeter()
 
 void GestureService::knowledgeable()
 {
-    MainWindow::log("knowledgeable !", LogLevel::LOG_INFO);
-     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 0}};
+    Logger::info("knowledgeable !");
+    std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 0}};
     _robotControllerService->set_all_joint_angles(jointAngles);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -59,7 +60,7 @@ void GestureService::knowledgeable()
 
 void GestureService::optimistic()
 {
-    MainWindow::log("optimistic !", LogLevel::LOG_INFO);
+    Logger::info("optimistic !");
      std::map<std::string, int> jointAngles = {{"right_arm", 40}, {"left_arm", 140}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
     _robotControllerService->set_all_joint_angles(jointAngles);
 
@@ -68,8 +69,8 @@ void GestureService::optimistic()
 
 void GestureService::pessimistic()
 {
-    MainWindow::log("pessimistic !", LogLevel::LOG_INFO);
-     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 50}};
+    Logger::info("pessimistic !");
+    std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 50}};
     _robotControllerService->set_all_joint_angles(jointAngles);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -77,8 +78,8 @@ void GestureService::pessimistic()
 
 void GestureService::curious()
 {
-    MainWindow::log("curious !", LogLevel::LOG_INFO);
-     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
+    Logger::info("curious !");
+    std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
     _robotControllerService->set_all_joint_angles(jointAngles);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -115,9 +116,8 @@ void GestureService::service_update_function()
         } else if (gesture.find("meraklı") != std::string::npos) {
             curious();
         } else {
-            MainWindow::log("Unknown gesture: " + gesture, LogLevel::LOG_WARNING);
+            Logger::error("Unknown gesture:");
         }
-
     }
 }
 
@@ -125,10 +125,9 @@ void GestureService::start()
 {
     if (!_running) { // Ensure the thread is not already running
         _running = true;
-        
-        MainWindow::log("GestureService::_interactiveChatService::subscribe", LogLevel::LOG_TRACE);
+        Logger::info("GestureService::_interactiveChatService::subscribe");
         _interactiveChatService->subscribe(this);
-        MainWindow::log("GestureService is starting..." , LogLevel::LOG_INFO);
+        Logger::info("GestureService is starting...");
         _serviceThread = std::thread(&GestureService::service_update_function, this);
     }
 }
@@ -137,22 +136,22 @@ void GestureService::stop()
 {
     if (_running){
         _running = false;
-        MainWindow::log("GestureService is stopping..." , LogLevel::LOG_INFO);
+        Logger::info("GestureService is stopping...");
         _interactiveChatService->un_subscribe(this);
-        MainWindow::log("GestureService::_interactiveChatService::un_subscribe", LogLevel::LOG_TRACE);
+        Logger::info("GestureService::_interactiveChatService::un_subscribe");
 
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
 
-        MainWindow::log("GestureService is stopped." , LogLevel::LOG_INFO);
+        Logger::info("GestureService is stopped.");
     }
 }
 
 
 void GestureService::update_gesture(const std::string &gesture)
 {
-    MainWindow::log("update_gesture : " + gesture, LogLevel::LOG_INFO);
+    Logger::info("update_gesture : {}", gesture);
 
     {
         std::lock_guard<std::mutex> lock(_queueMutex);

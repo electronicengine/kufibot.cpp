@@ -2,7 +2,7 @@
 #include "llama_controller.h"
 #include <iostream>
 #include <cstring>
-
+#include "../logger.h"
 
 LlamaController::LlamaController()
 {
@@ -12,14 +12,16 @@ LlamaController::LlamaController()
     _temp = 0.8f;
     _topK = 50;
     _topP = 0.9;
+    _nThreads = 4;
     _model = nullptr;
     _ctx = nullptr;
     _smpl = nullptr;
     _vocab = nullptr;
+    _modelLoaded = false;
 }
 
 LlamaController::~LlamaController() {
-    freeResources();
+    unloadModel();
 }
 
 void LlamaController::setOptions(int ngl, int nThreads, int n_ctx, float minP, float temp, int topK,
@@ -33,11 +35,16 @@ void LlamaController::setOptions(int ngl, int nThreads, int n_ctx, float minP, f
     _nThreads = nThreads;
 }
 
-void LlamaController::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
+bool LlamaController::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
+
+    if (_modelLoaded) {
+        Logger::warn("Embedding Model already loaded");
+        return false;
+    }
 
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            fprintf(stderr, "%s", text);
+            Logger::error("Error: {}", text);
         }
     }, nullptr);
 
@@ -45,7 +52,7 @@ void LlamaController::loadEmbedModel(const std::string & modelPath, const enum l
     model_params.n_gpu_layers = _ngl;
     _model = llama_model_load_from_file(modelPath.c_str(), model_params);
     if (!_model) {
-        throw std::runtime_error("Error: Unable to load model");
+        Logger::error("Error: Unable to load model");
     }
     _vocab = llama_model_get_vocab(_model);
     llama_context_params ctx_params = llama_context_default_params();
@@ -57,22 +64,30 @@ void LlamaController::loadEmbedModel(const std::string & modelPath, const enum l
 
     _ctx = llama_init_from_model(_model, ctx_params);
     if (!_ctx) {
-        throw std::runtime_error("Error: Failed to create llama_context");
+        Logger::error("Error: Failed to create llama_context");
+        return false;
     }
     _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
-    llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
 
     llama_sampler_chain_add(_smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
+
+    _modelLoaded = true;
+    return true;
 }
 
 bool LlamaController::loadChatModel(const std::string & modelPath) {
+    if (_modelLoaded) {
+        Logger::warn("Chat Model already loaded");
+        return false;
+    }
 
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            fprintf(stderr, "%s", text);
+            Logger::error("Error: {}", text);
         }
     }, nullptr);
 
@@ -80,7 +95,7 @@ bool LlamaController::loadChatModel(const std::string & modelPath) {
     model_params.n_gpu_layers = _ngl;
     _model = llama_model_load_from_file(modelPath.c_str(), model_params);
     if (!_model) {
-        //throw std::runtime_error("Error: Unable to load model");
+        Logger::error("Error: Unable to load model");
         return false;
     }
     _vocab = llama_model_get_vocab(_model);
@@ -89,20 +104,23 @@ bool LlamaController::loadChatModel(const std::string & modelPath) {
     ctx_params.n_batch = _nCtx;
     ctx_params.n_threads = _nThreads;
     _ctx = llama_init_from_model(_model, ctx_params);
+
     if (!_ctx) {
-        //throw std::runtime_error("Error: Failed to create llama_context");
+        Logger::error("Error: Failed to create llama_context");
         return false;
     }
     _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
-    llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
-    llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
+    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
 
     llama_sampler_chain_add(_smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
 
+    _modelLoaded = true;
     return true;
 }
+
 
 void LlamaController:: setCallBackFunction(std::function<void(const std::string &)> func) {
     _responseCallbackFunction = func;
@@ -110,34 +128,53 @@ void LlamaController:: setCallBackFunction(std::function<void(const std::string 
 
 
 std::string LlamaController::generateResponse(const std::string& prompt) {
-    std::string response;
-    // We can simply set is_first to true since we're starting a new generation
-    const bool is_first = true;
-    const int n_prompt_tokens = -llama_tokenize(_vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
-    std::vector<llama_token> prompt_tokens(n_prompt_tokens);
-    llama_tokenize(_vocab, prompt.c_str(), prompt.size(), prompt_tokens.data(), prompt_tokens.size(), is_first, true);
-    llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
-    llama_token new_token_id;
-    while (true) {
-        if (llama_decode(_ctx, batch)) {
-            throw std::runtime_error("Error: Failed to decode");
+       std::string response;
+
+        const bool is_first = llama_get_kv_cache_used_cells(_ctx) == 0;
+
+        // tokenize the prompt
+        const int n_prompt_tokens = -llama_tokenize(_vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
+        std::vector<llama_token> prompt_tokens(n_prompt_tokens);
+        if (llama_tokenize(_vocab, prompt.c_str(), prompt.size(), prompt_tokens.data(), prompt_tokens.size(), is_first, true) < 0) {
+            GGML_ABORT("failed to tokenize the prompt\n");
         }
-        new_token_id = llama_sampler_sample(_smpl, _ctx, -1);
-        if (llama_vocab_is_eog(_vocab, new_token_id)) {
-            break;
-        }
-        char buf[256];
-        int n = llama_token_to_piece(_vocab, new_token_id, buf, sizeof(buf), 0, true);
-        if(_responseCallbackFunction)
+
+        // prepare a batch for the prompt
+        llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
+        llama_token new_token_id;
+        while (true) {
+            // check if we have enough space in the context to evaluate this batch
+            int n_ctx = llama_n_ctx(_ctx);
+            int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
+            if (n_ctx_used + batch.n_tokens > n_ctx) {
+                printf("\033[0m\n");
+                fprintf(stderr, "context size exceeded\n");
+                exit(0);
+            }
+
+            if (llama_decode(_ctx, batch)) {
+                GGML_ABORT("failed to decode\n");
+            }
+
+            // sample the next token
+            new_token_id = llama_sampler_sample(_smpl, _ctx, -1);
+
+            // is it an end of generation?
+            if (llama_vocab_is_eog(_vocab, new_token_id)) {
+                break;
+            }
+
+            // convert the token to a string, print it and add it to the response
+            char buf[256];
+            int n = llama_token_to_piece(_vocab, new_token_id, buf, sizeof(buf), 0, true);
+            if (n < 0) {
+                GGML_ABORT("failed to convert token to piece\n");
+            }
             _responseCallbackFunction(std::string(buf, n));
+            batch = llama_batch_get_one(&new_token_id, 1);
+        }
 
-        response += std::string(buf, n);
-        batch = llama_batch_get_one(&new_token_id, 1);
-    }
-    if(_responseCallbackFunction)
-        _responseCallbackFunction("<end>");
-
-    return response;
+        return response;
 }
 
 
@@ -151,8 +188,8 @@ void LlamaController::chat(const std::string &userInput) {
     int new_len = llama_chat_apply_template(tmpl, _messages.data(), _messages.size(), true, formatted.data(), formatted.size());
     std::string prompt(formatted.begin() + prev_len, formatted.begin() + new_len);
     _messages.push_back({"assistant", strdup(generateResponse(prompt).c_str())});
-    prev_len = new_len;
 
+    prev_len = new_len;
 }
 
 void LlamaController::batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id)
@@ -172,14 +209,14 @@ void LlamaController::batch_decode(llama_context * ctx, llama_batch & batch, flo
     if (llama_model_has_encoder(model) && !llama_model_has_decoder(model)) {
         // encoder-only model
         if (llama_encode(ctx, batch) < 0) {
-            std::cout << "error" << std::endl;
+            Logger::error("Error: failed llama_encode");
         }
     } else if (!llama_model_has_encoder(model) && llama_model_has_decoder(model)) {
         // decoder-only model
         int32_t ret = llama_decode(ctx, batch);
 
         if (ret < 0) {
-            std::cout << "error" << std::endl;
+            Logger::error("Error: failed llama_decode");
         }
     }
 
@@ -195,14 +232,15 @@ void LlamaController::batch_decode(llama_context * ctx, llama_batch & batch, flo
             // try to get token embeddings
             embd = llama_get_embeddings_ith(ctx, i);
             embd_pos = i;
-            GGML_ASSERT(embd != NULL && "failed to get token embeddings");
+            if (!embd)
+                Logger::error("failed to get token embeddings");
         } else {
             // try to get sequence embeddings - supported only when pooling_type is not NONE
             auto seq_id = batch.seq_id[i][0];
 
             embd = llama_get_embeddings_seq(ctx, seq_id);
             embd_pos = batch.seq_id[i][0];
-            GGML_ASSERT(embd != NULL && "failed to get sequence embeddings");
+            Logger::error("failed to get sequence embeddings");
         }
 
         float * out = output + embd_pos * n_embd;
@@ -236,7 +274,7 @@ std::vector<float> LlamaController::calculateEmbeddings(const std::string& text)
     return embeddings;
 }
 
-void LlamaController::freeResources() {
+void LlamaController::unloadModel() {
     for (auto& msg : _messages) {
         free(const_cast<char*>(msg.content));
     }

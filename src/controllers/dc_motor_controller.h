@@ -1,8 +1,6 @@
 #ifndef DC_MOTOR_CONTROLLER_H
 #define DC_MOTOR_CONTROLLER_H
 
-#include <iostream>
-#include <wiringPi.h>
 #include <map>
 #include <string>
 

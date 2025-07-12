@@ -88,7 +88,6 @@ public:
     void start();
     void stop(); 
     bool query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse);
-    void set_llama_server(const std::string& server);
     bool load_model(const LlamaOptions &llamaOptions);
     void service_update_function();
 };

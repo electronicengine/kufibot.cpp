@@ -6,6 +6,7 @@
 #include <linux/i2c-dev.h>
 #include <bitset>
 #include <math.h>
+#include "../logger.h"
 
 INA219Driver::INA219Driver(float shunt_resistance, float max_expected_amps)
 {
@@ -36,11 +37,11 @@ INA219Driver::init_i2c(uint8_t address)
 	char *filename = (char*)"/dev/i2c-1";
 	if ((_file_descriptor = open(filename, O_RDWR)) < 0)
 	{
-		perror("Failed to open the i2c bus");
+		Logger::error("Failed to open the i2c bus");
 	}
 	if (ioctl(_file_descriptor, I2C_SLAVE, address) < 0)
 	{
-		perror("Failed to acquire bus access and/or talk to slave device: ");
+		Logger::error("Failed to acquire bus access and/or talk to slave device: ");
 	}
 }
 
@@ -50,11 +51,11 @@ INA219Driver::read_register(uint8_t register_address)
 	uint8_t buf[3];
 	buf[0] = register_address;
 	if (write(_file_descriptor, buf, 1) != 1) {
-		perror("Failed to set register");
+		Logger::error("Failed to set register");
 	}
 	usleep(1000);
 	if (read(_file_descriptor, buf, 2) != 2) {
-		perror("Failed to read register value");
+		Logger::error("Failed to read register value");
 	}
 	return (buf[0] << 8) | buf[1];
 }
@@ -68,7 +69,7 @@ INA219Driver::write_register(uint8_t register_address, uint16_t register_value)
 	
 	if (write(_file_descriptor, buf, 3) != 3)
 	{
-		perror("Failed to write to the i2c bus");
+		Logger::error("Failed to write to the i2c bus");
 	}
 }
 
@@ -79,7 +80,7 @@ INA219Driver::configure(int voltage_range, int gain, int bus_adc, int shunt_adc)
 	
 	int len = sizeof(__BUS_RANGE) / sizeof(__BUS_RANGE[0]);
 	if (voltage_range > len-1) {
-		perror("Invalid voltage range, must be one of: RANGE_16V, RANGE_32");
+		Logger::error("Invalid voltage range, must be one of: RANGE_16V, RANGE_32");
 	}
 	_voltage_range = voltage_range;
 	_gain = gain;
@@ -105,9 +106,7 @@ INA219Driver::determine_current_lsb(float max_expected_amps, float max_possible_
 
 	float nearest = roundf(max_possible_amps * 1000.0) / 1000.0;
 	if (max_expected_amps > nearest) {
-		char buffer[256];
-		sprintf(buffer, "Expected current %f A is greater than max possible current %f A", max_expected_amps, max_possible_amps);
-		perror(buffer);
+		Logger::error("Expected current {} A is greater than max possible current {} A", max_expected_amps, max_possible_amps);
 	}
 
 	if (max_expected_amps < max_possible_amps) {

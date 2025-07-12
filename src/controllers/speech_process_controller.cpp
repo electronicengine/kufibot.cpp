@@ -1,5 +1,6 @@
 #include "speech_process_controller.h"
-#include "../ui/main_window.h"
+#include "../logger.h"
+
 
 SpeechProcessController* SpeechProcessController::_instance = nullptr;
 
@@ -15,7 +16,7 @@ SpeechProcessController::SpeechProcessController() {
     mpg123_init();  // Initialize MPG123
     _mh = mpg123_new(nullptr, &_mpg123Err);
     if (_mpg123Err != MPG123_OK) {
-        MainWindow::log("Failed to initialize mpg123: " + std::string(mpg123_plain_strerror(_mpg123Err)), LogLevel::LOG_ERROR);
+        Logger::error("Failed to initialize mpg123: {}", std::string(mpg123_plain_strerror(_mpg123Err)));
     }
 }
 
@@ -45,7 +46,7 @@ void SpeechProcessController::playAudio() {
     int err;
 
     if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-        MainWindow::log("Error opening PCM device: " + std::string(mpg123_plain_strerror(err)), LogLevel::LOG_ERROR);
+        Logger::error(("Error opening PCM device: {} ", std::string(mpg123_plain_strerror(err))));
 
         return;
     }
@@ -58,7 +59,7 @@ void SpeechProcessController::playAudio() {
     unsigned int sampleRate = 22050;
     snd_pcm_hw_params_set_rate_near(pcmHandle, params, &sampleRate, 0);
     if ((err = snd_pcm_hw_params(pcmHandle, params)) < 0) {
-        MainWindow::log("Error setting PCM parameters: " + std::string(mpg123_plain_strerror(err)), LogLevel::LOG_ERROR);
+        Logger::error(("Error setting PCM parameters: {} ", std::string(mpg123_plain_strerror(err))));
         snd_pcm_close(pcmHandle);
         return;
     }
@@ -76,7 +77,7 @@ void SpeechProcessController::playAudio() {
 
     if ((err = snd_pcm_writei(pcmHandle, internalBuffer.data(), internalBuffer.size())) < 0) {
         snd_pcm_prepare(pcmHandle);
-        MainWindow::log("Error Audio underrun: " + std::string(mpg123_plain_strerror(err)), LogLevel::LOG_ERROR);
+        Logger::error("Error Audio underrun: {}",  std::string(mpg123_plain_strerror(err)));
     }
 
     snd_pcm_drain(pcmHandle);
@@ -86,7 +87,7 @@ void SpeechProcessController::playAudio() {
 
 void SpeechProcessController::playMusic(const std::string& mp3_file) {
     if (mpg123_open(_mh, mp3_file.c_str()) != MPG123_OK) {
-        MainWindow::log("Error opening MP3 file: " + mp3_file, LogLevel::LOG_ERROR);
+        Logger::error("Error opening MP3 file: {}" , mp3_file);
         return;
     }
 
@@ -99,7 +100,7 @@ void SpeechProcessController::playMusic(const std::string& mp3_file) {
     int err;
 
     if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-        MainWindow::log("Error opening PCM device: " + std::to_string(err), LogLevel::LOG_ERROR);
+        Logger::error("Error opening PCM device: {}" , std::to_string(err));
         return;
     }
 
