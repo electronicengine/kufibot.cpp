@@ -23,7 +23,7 @@ public:
 
     void setOptions(int ngl = 99, int nThreads = 4, int n_ctx = 2048, float minP = 0.05f, float temp = 0.8f, int topK = 50, float topP = 0.9);
     void loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType = llama_pooling_type::LLAMA_POOLING_TYPE_MEAN);
-    void loadChatModel(const std::string& modelPath);
+    bool loadChatModel(const std::string& modelPath);
     void setCallBackFunction(std::function<void(const std::string&)> func);
     std::string generateResponse(const std::string& prompt);
     void chat(const std::string &userInput);

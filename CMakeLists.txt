@@ -12,9 +12,9 @@ set(EXTERNAL_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
 # Deployment configuration
-set(DEPLOY_USER phi)
-set(DEPLOY_HOST 192.168.191.1)
-set(DEPLOY_PATH /home/phi/workspace/)
+set(DEPLOY_USER kufi)
+set(DEPLOY_HOST 192.168.1.44)
+set(DEPLOY_PATH /home/kufi/workspace/)
 
 find_package(Boost REQUIRED CONFIG COMPONENTS system filesystem)
 find_package(OpenCV REQUIRED)
@@ -99,17 +99,15 @@ set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 include(CPack)
 
 install(TARGETS kufibot DESTINATION /usr/local/bin)
-install(DIRECTORY include/ DESTINATION /usr/local/include)
-install(DIRECTORY lib/ DESTINATION /usr/local/lib)
 
-#add_custom_command(
-#        TARGET kufibot
-#        POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E echo "Generating .deb package with CPack..."
-#        COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} cpack -G DEB
-#        COMMAND ${CMAKE_COMMAND} -E echo "Deploying .deb package to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
-#        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/kufibot.cpp-1.0.0-Linux.deb ${CMAKE_BINARY_DIR}/kufibot.deb
-#        COMMAND scp ${CMAKE_BINARY_DIR}/kufibot.deb ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
-#        COMMAND ssh ${DEPLOY_USER}@${DEPLOY_HOST} "sudo dpkg -i ${DEPLOY_PATH}/kufibot.deb"
-#        COMMENT "Packaging and deploying kufibot.deb to target"
-#)
+add_custom_command(
+        TARGET kufibot
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Generating .deb package with CPack..."
+        COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} cpack -G DEB
+        COMMAND ${CMAKE_COMMAND} -E echo "Deploying .deb package to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/kufibot.cpp-1.0.0-Linux.deb ${CMAKE_BINARY_DIR}/kufibot.deb
+        COMMAND scp ${CMAKE_BINARY_DIR}/kufibot.deb ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+        COMMAND ssh ${DEPLOY_USER}@${DEPLOY_HOST} "sudo dpkg -i ${DEPLOY_PATH}/kufibot.deb"
+        COMMENT "Packaging and deploying kufibot.deb to target"
+)

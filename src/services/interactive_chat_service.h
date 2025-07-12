@@ -34,11 +34,24 @@
 #include "../controllers/curl_controller.h"
 #include "../controllers/execution_controller.h"
 #include "../controllers/dc_motor_controller.h"
+#include "../controllers/llama_controller.h"
 #include "mapping_service.h"
 
 #include "video_stream_service.h"
 
 #include "web_socket_service.h"
+
+struct LlamaOptions {
+    std::string llamaChatModelPath;
+    std::string llamaEmbeddingModelPath;
+    double temperature;
+    int maxTokenSize;
+    double topK;
+    double topP;
+    int nThreads;
+    int poolingType;
+};
+
 
 
 class InteractiveChatService : public Publisher, public Subscriber, public Service {
@@ -52,13 +65,15 @@ private:
     CurlController *_curlController;
     ExecutionController *_executionController;
     VideoStreamService *_videoStreamService;
-    std::string _llamaServer;
-    std::string _modelName;
+    std::string _ollamaServer;
+    std::string _ollamaModelName;
     std::atomic<bool> _queryRunning{false};
     std::string _responseStr;
     std::deque<std::string> _stringQueue;
     std::mutex _queueMutex;
     std::condition_variable _queueCondition;
+    LlamaOptions _llamaOptions;
+    LlamaController _llamaChatController;
 
     InteractiveChatService();
     const std::string translate(const std::string& source, const std::string& target, const std::string& Text);
@@ -74,7 +89,7 @@ public:
     void stop(); 
     bool query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse);
     void set_llama_server(const std::string& server);
-    void load_model();
+    bool load_model(const LlamaOptions &llamaOptions);
     void service_update_function();
 };
 

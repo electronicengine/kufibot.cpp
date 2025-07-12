@@ -68,7 +68,7 @@ void LlamaController::loadEmbedModel(const std::string & modelPath, const enum l
     llama_sampler_chain_add(_smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
 }
 
-void LlamaController::loadChatModel(const std::string & modelPath) {
+bool LlamaController::loadChatModel(const std::string & modelPath) {
 
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
@@ -80,7 +80,8 @@ void LlamaController::loadChatModel(const std::string & modelPath) {
     model_params.n_gpu_layers = _ngl;
     _model = llama_model_load_from_file(modelPath.c_str(), model_params);
     if (!_model) {
-        throw std::runtime_error("Error: Unable to load model");
+        //throw std::runtime_error("Error: Unable to load model");
+        return false;
     }
     _vocab = llama_model_get_vocab(_model);
     llama_context_params ctx_params = llama_context_default_params();
@@ -89,7 +90,8 @@ void LlamaController::loadChatModel(const std::string & modelPath) {
     ctx_params.n_threads = _nThreads;
     _ctx = llama_init_from_model(_model, ctx_params);
     if (!_ctx) {
-        throw std::runtime_error("Error: Failed to create llama_context");
+        //throw std::runtime_error("Error: Failed to create llama_context");
+        return false;
     }
     _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
     llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
@@ -98,9 +100,11 @@ void LlamaController::loadChatModel(const std::string & modelPath) {
     llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
 
     llama_sampler_chain_add(_smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
+
+    return true;
 }
 
-void LlamaController::setCallBackFunction(std::function<void(const std::string &)> func) {
+void LlamaController:: setCallBackFunction(std::function<void(const std::string &)> func) {
     _responseCallbackFunction = func;
 }
 

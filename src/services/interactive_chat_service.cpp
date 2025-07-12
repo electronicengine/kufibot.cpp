@@ -19,8 +19,8 @@ InteractiveChatService::InteractiveChatService() : Service("InteractiveChatServi
     _webSocketService = WebSocketService::get_instance();
     _videoStreamService = VideoStreamService::get_instance();
 
-    _llamaServer = "http://192.168.1.20:11434";
-    _modelName = "kufi";
+    _ollamaServer = "http://192.168.1.20:11434";
+    _ollamaModelName= "kufi";
 
     _speechProcessController->loadModel();
     _speechRecognitionController->load_model();
@@ -49,66 +49,56 @@ InteractiveChatService::~InteractiveChatService()
 bool InteractiveChatService::query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse){
     std::lock_guard<std::mutex> lock(_dataMutex);
 
-    if (_queryRunning) {
-        return false;
-    } else {
+    // if (_queryRunning) {
+    //     return false;
+    // } else {
 
-        std::function<void(const ollama::response&)> response_callback =
-            [this, onReceiveLlamaResponse](const ollama::response& response) {
+        // std::function<void(const ollama::response&)> response_callback =
+        //     [this, onReceiveLlamaResponse](const ollama::response& response) {
+        //
+        //         std::string partial = response.as_simple_string();
+        //
+        //         _responseStr += partial;
+        //
+        //         if (partial.find("#") != std::string::npos) {
+        //
+        //             push_speak_string(_responseStr);
+        //             onReceiveLlamaResponse(_responseStr);
+        //             _responseStr.clear();
+        //         }
+        //
+        //         if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
+        //     };
 
-                std::string partial = response.as_simple_string();
-
-                _responseStr += partial;
-
-                if (partial.find("#") != std::string::npos) {
-
-                    push_speak_string(_responseStr);
-                    onReceiveLlamaResponse(_responseStr);
-                    _responseStr.clear();
-                }
-
-                if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
-            };
-
-        std::thread new_thread([this, response_callback, message]() {
-            ollama::generate(_modelName, message, response_callback);
+        std::thread new_thread([this, onReceiveLlamaResponse, message]() {
+            _llamaChatController.setCallBackFunction(onReceiveLlamaResponse);
+            _llamaChatController.chat(message);
+            //ollama::generate(_modelName, message, response_callback);
         });
 
         new_thread.detach();
 
-        _queryRunning = true;
+        //_queryRunning = true;
         return true;
-    }
+    // }
 }
 
 void InteractiveChatService::set_llama_server(const std::string &server)
 {
     size_t dashPos = server.find('-');
 
-    if (dashPos != std::string::npos) {
-        _llamaServer = server.substr(0, dashPos);
-        _modelName = server.substr(dashPos + 1);
 
-        ollama::setServerURL(_llamaServer);    
-        MainWindow::log( "set llama server: " + _llamaServer , LogLevel::LOG_TRACE);
-        MainWindow::log( "set model name: " + _modelName , LogLevel::LOG_TRACE);
-
-
-    } else {
-        MainWindow::log( "the server address couldn't parsed" , LogLevel::LOG_ERROR);
-    }
 
 }
 
-void InteractiveChatService::load_model()
+bool InteractiveChatService::load_model(const LlamaOptions &llamaOptions)
 {
-    MainWindow::log("InteractiveChatService:: llama model loading...", LogLevel::LOG_TRACE);
+    _llamaChatController.setCallBackFunction([this](const std::string& text) {
 
-    bool model_loaded = ollama::load_model(_modelName);
-    if (model_loaded) 
-        MainWindow::log("InteractiveChatService:: llama model loaded!", LogLevel::LOG_TRACE);
-    else
-        MainWindow::log("InteractiveChatService:: llama model couldn't loaded!", LogLevel::LOG_ERROR);
+    });
+
+    return _llamaChatController.loadChatModel(llamaOptions.llamaChatModelPath);
+
 }
 
 void InteractiveChatService::service_update_function()
@@ -190,16 +180,12 @@ void InteractiveChatService::start()
 {
     if (!_running) { // Ensure the thread is not already running
         _running = true;
-        ollama::setServerURL(_llamaServer);    
 
-        ollama::setReadTimeout(120);
-        ollama::setWriteTimeout(120);
 
         _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
         MainWindow::log("InteractiveChatService::_webSocketService::subscribe", LogLevel::LOG_TRACE);
         _webSocketService->subscribe(this);
         MainWindow::log("InteractiveChatService is starting..." , LogLevel::LOG_INFO);
-
     }
 }
 

@@ -4,19 +4,44 @@ ChatWindow::ChatWindow(finalcut::FWidget *parent): SubWindow(parent)
 {
     setText("Chat Window");
 
-    _llamaServer.setGeometry(finalcut::FPoint{2,2}, finalcut::FSize{52, 1});
-    _setServerButton.setGeometry(finalcut::FPoint{56,2}, finalcut::FSize{7, 1});
-    _setServerButton.setText("set");
     _loadModelButton.setGeometry(finalcut::FPoint{64,2}, finalcut::FSize{7, 1});
     _loadModelButton.setText("load");
 
-    _promt.setGeometry(finalcut::FPoint{2,4}, finalcut::FSize{52, 1});
-    _sendButton.setGeometry(finalcut::FPoint{56,4}, finalcut::FSize{7, 1});
+    _llamaChatModelPathLabel.setGeometry(finalcut::FPoint{2,2}, finalcut::FSize{7, 1});
+    _llamaChatModelPath.setGeometry(finalcut::FPoint{10,2}, finalcut::FSize{52, 1});
+
+    _llamaEmbeddingModelPathLabel.setGeometry(finalcut::FPoint{2,4}, finalcut::FSize{7, 1});
+    _llamaEmbeddingModelPath.setGeometry(finalcut::FPoint{10,4}, finalcut::FSize{52, 1});
+
+    _systemMessageLabel.setGeometry(finalcut::FPoint{2,6}, finalcut::FSize{7, 1});
+    _systemMessage.setGeometry(finalcut::FPoint{10,6}, finalcut::FSize{52, 1});
+
+    _temperatureLabel.setGeometry(finalcut::FPoint{2,8}, finalcut::FSize{7, 1});
+    _temperature.setGeometry(finalcut::FPoint{10,8}, finalcut::FSize{7, 1});
+
+    _maxTokenLabel.setGeometry(finalcut::FPoint{20,8}, finalcut::FSize{7, 1});
+    _maxTokenSize.setGeometry(finalcut::FPoint{28,8}, finalcut::FSize{7, 1});
+
+    _nthreadslabel.setGeometry(finalcut::FPoint{38,8}, finalcut::FSize{7, 1});
+    _nThreads.setGeometry(finalcut::FPoint{46,8}, finalcut::FSize{7, 1});
+
+    _topKLabel.setGeometry(finalcut::FPoint{2,10}, finalcut::FSize{7, 1});
+    _topK.setGeometry(finalcut::FPoint{10,10}, finalcut::FSize{7, 1});
+
+    _topPLabel.setGeometry(finalcut::FPoint{20,10}, finalcut::FSize{7, 1});
+    _topP.setGeometry(finalcut::FPoint{28,10}, finalcut::FSize{7, 1});
+
+    _poolingTypeLabel.setGeometry(finalcut::FPoint{38,10}, finalcut::FSize{7, 1});
+    _poolingType.setGeometry(finalcut::FPoint{46,10}, finalcut::FSize{7, 1});
+
+    _promtLabel.setGeometry(finalcut::FPoint{2,12}, finalcut::FSize{7, 1});
+    _promt.setGeometry(finalcut::FPoint{10,12}, finalcut::FSize{52, 1});
+
+    _sendButton.setGeometry(finalcut::FPoint{64,12}, finalcut::FSize{7, 1});
     _sendButton.setText("query");
-    _answerView.setGeometry(finalcut::FPoint{2,7}, finalcut::FSize{52, 26});
+    _answerView.setGeometry(finalcut::FPoint{2,14}, finalcut::FSize{71, 26});
 
     add_clicked_callback(&_sendButton, this, &ChatWindow::send_promt);
-    add_clicked_callback(&_setServerButton, this, &ChatWindow::set_server);
     add_clicked_callback(&_loadModelButton, this, &ChatWindow::load_model);
 
     _interactiveChatService = InteractiveChatService::get_instance();
@@ -39,20 +64,32 @@ void ChatWindow::send_promt()
             _answerView.redraw();
         };
 
-    promt = _interactiveChatService->query(promt, response_callback);
+    _interactiveChatService->query(promt, response_callback);
 }
 
-void ChatWindow::set_server()
-{
-    std::string server = _llamaServer.getText().toString();
-    _interactiveChatService->set_llama_server(server);
-}
 
 
 void ChatWindow::load_model()
 {
-    std::thread loadThread([this]() {
-        _interactiveChatService->load_model();
+    LlamaOptions llama_options;
+
+    llama_options.llamaChatModelPath = _llamaChatModelPath.getText().toString();
+    llama_options.llamaEmbeddingModelPath = _llamaEmbeddingModelPath.getText().toString();
+
+    llama_options.temperature = _temperature.getText().toDouble();
+    llama_options.maxTokenSize = _maxTokenSize.getText().toInt();
+    llama_options.nThreads = _nThreads.getText().toInt();
+
+    llama_options.topK = _topK.getText().toDouble();
+    llama_options.topP = _topP.getText().toDouble();
+    llama_options.poolingType = _poolingType.getText().toInt();
+
+    std::thread loadThread([this, llama_options]() {
+        if (_interactiveChatService->load_model(llama_options)) {
+            _answerView.append("Chat Model Loaded");
+        }else {
+            _answerView.append("Chat Model couldn't load!");
+        }
     });
 
     loadThread.detach();
