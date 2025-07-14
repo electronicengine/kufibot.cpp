@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   kufibot-cross:
     build:
@@ -14,6 +12,7 @@ services:
       - ./README.md:/app/kufibot.cpp/README.md
       - ./runKufi.sh:/app/kufibot.cpp/runKufi.sh
       - ./kufiDev.sh:/app/kufibot.cpp/kufiDev.sh
+      - ~/.ssh:/root/.ssh   # <-- SSH anahtarlarını konteynıra geçir
     tty: true
     stdin_open: true
     environment:
@@ -27,3 +26,11 @@ services:
       - SYS_PTRACE
     security_opt:
       - seccomp=unconfined
+    command: >
+      bash -c "
+        chmod 700 /root/.ssh &&
+        chmod 600 /root/.ssh/id_rsa &&
+        chmod 644 /root/.ssh/id_rsa.pub &&
+        [ -f /root/.ssh/config ] && chmod 600 /root/.ssh/config;
+        bash
+      "

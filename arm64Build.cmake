@@ -26,8 +26,12 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 # Additional compiler flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-function -Wno-unused-parameter")
 
+# Python için ek ayarlar
+set(PYTHON_INCLUDE_DIR /usr/include/python3.11)
+set(PYTHON_LIBRARY /usr/lib/aarch64-linux-gnu/libpython3.11.so)
+
 # OpenSSL configuration
-set(OPENSSL_ROOT_DIR /usr/aarch64-linux-gnu)
+set(OPENSSL_ROOT_DIR /usr/aarch664-linux-gnu)
 set(OPENSSL_INCLUDE_DIR /usr/include/aarch64-linux-gnu)
 set(OPENSSL_CRYPTO_LIBRARY /usr/lib/aarch64-linux-gnu/libcrypto.so)
 set(OPENSSL_SSL_LIBRARY /usr/lib/aarch64-linux-gnu/libssl.so)
@@ -39,7 +43,7 @@ set(BOOST_INCLUDEDIR /usr/include/aarch64-linux-gnu)
 set(BOOST_LIBRARYDIR /usr/lib/aarch64-linux-gnu)
 
 # OpenCV configuration
-set(OpenCV_DIR /usr/lib/aarch64-linux-gnu/cmake/opencv4)
+set(OpenCV_DIR /usr/lib/aarch64-linux-gnu/cmake/opencv4) # Bu yol doğru görünüyorsa sorun yok.
 
 # ALSA configuration
 set(ALSA_INCLUDE_DIR /usr/include/aarch64-linux-gnu)
@@ -69,6 +73,7 @@ set(MPG123_LIBRARY /usr/lib/aarch64-linux-gnu/libmpg123.so)
 set(PKG_CONFIG_EXECUTABLE /usr/bin/aarch64-linux-gnu-pkg-config)
 
 # Set PKG_CONFIG_PATH for cross-compilation
+# Bu kısım çok önemli, pkg-config'in arm64 .pc dosyalarını bulmasını sağlar.
 set(ENV{PKG_CONFIG_PATH} /usr/lib/aarch64-linux-gnu/pkgconfig:/usr/share/pkgconfig)
 
 # Fix linker issues by setting proper library paths

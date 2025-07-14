@@ -68,6 +68,9 @@ RUN apt-get install -y --no-install-recommends \
 
 # Alternative: If OpenCV still fails, install minimal dependencies
 RUN apt-get install -y --no-install-recommends \
+    python3:arm64 \
+    python3-dev:arm64 \
+    libpython3-dev:arm64 \
     libopencv-core-dev:arm64 \
     libopencv-imgproc-dev:arm64 \
     libopencv-imgcodecs-dev:arm64 \

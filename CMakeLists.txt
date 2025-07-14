@@ -16,6 +16,10 @@ set(DEPLOY_USER kufi)
 set(DEPLOY_HOST 192.168.1.44)
 set(DEPLOY_PATH /home/kufi/workspace/)
 
+set(PYTHON_INCLUDE_DIR /usr/include/python3.11)
+set(PYTHON_LIBRARY /usr/lib/aarch64-linux-gnu/libpython3.11.so)
+
+
 find_package(Boost REQUIRED CONFIG COMPONENTS system filesystem)
 find_package(OpenCV REQUIRED)
 find_package(ALSA REQUIRED)
@@ -26,12 +30,13 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CURL_INCLUDE_DIRS})
+include_directories(${PYTHON_INCLUDE_DIR})
 
 add_subdirectory(src/ui)
 add_subdirectory(src/drivers)
 add_subdirectory(src/controllers)
 add_subdirectory(src/services)
-
+add_subdirectory(src/processors)
 
 file(GLOB_RECURSE SRCS
         ${SRC_DIR}/subscriber.h
@@ -41,13 +46,11 @@ file(GLOB_RECURSE SRCS
         ${SRC_DIR}/controllers/*.h
         ${SRC_DIR}/services/*.cpp
         ${SRC_DIR}/services/*.h
+        ${SRC_DIR}/processors/*.cpp
+        ${SRC_DIR}/processors/*.h
 )
 
-add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS}
-        src/controllers/llama_controller.cpp
-        src/controllers/llama_controller.h
-        src/logger.cpp
-        src/logger.h)
+add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS})
 
 
 target_link_directories(kufibot PUBLIC
@@ -62,6 +65,7 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         ${OPENSSL_LIBRARIES}
         ${PORTAUDIO_LIBRARIES}
         ${CURL_LIBRARIES}
+        ${PYTHON_LIBRARY}
         fmt
         spdlog
         espeak-ng
