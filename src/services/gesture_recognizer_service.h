@@ -3,19 +3,20 @@
 #define GESTURE_RECOGNIZER_SERVICE_H
 
 #include "service.h"
-#include "../operators/face_gesture_recognizer.h"
-#include "../operators/hand_gesture_recognizer.h"
+#include "../operators/face_gesture_recognizing_operator.h"
+#include "../operators/hand_gesture_recognizing_operator.h"
 #include <opencv2/opencv.hpp>
 #include <map>
 #include <string>
-#include <vector>
+#include "../subscriber.h"
+#include "../publisher.h"
 
-class GestureRecognizerService : public Service {
+class GestureRecognizerService : public Service, public Subscriber, public Publisher{
 private:
     // Kamera ve işleme nesneleri
     cv::VideoCapture cap;
-    FaceGestureRecognizer faceRecognizer;
-    HandGestureRecognizer handRecognizer;
+    FaceGestureRecognizingOperator *_faceGestureRecognizingOperator;
+    HandGestureRecognizingOperator *_handGestureRecognizingOperator;
 
     // Görüntüleme ayarları
     bool showFaceMesh;
@@ -29,14 +30,17 @@ private:
     void processFrame(cv::Mat& frame);
     std::map<std::string, float> parseFaceInfoString(const std::string& faceInfoStr);
     void displayFPS(cv::Mat& frame, double& ptime);
-    void handleKeyPress(int key);
 
 public:
-    GestureRecognizerService(const std::string& name, const std::string& venvPath);
+    GestureRecognizerService(const std::string& name);
     ~GestureRecognizerService();
 
     bool initialize();
     void service_update_function() override;
+    void update_video_frame(const cv::Mat& frame);
+    void start();
+    void stop();
+
 };
 
 #endif // GESTURE_RECOGNIZER_SERVICE_H

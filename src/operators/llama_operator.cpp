@@ -1,10 +1,9 @@
-// LlamaController.cpp
-#include "llama_controller.h"
+#include "llama_operator.h"
 #include <iostream>
 #include <cstring>
 #include "../logger.h"
 
-LlamaController::LlamaController()
+LlamaOperator::LlamaOperator()
 {
     _ngl = 99;
     _nCtx = 2048;
@@ -20,11 +19,11 @@ LlamaController::LlamaController()
     _modelLoaded = false;
 }
 
-LlamaController::~LlamaController() {
+LlamaOperator::~LlamaOperator() {
     unloadModel();
 }
 
-void LlamaController::setOptions(int ngl, int nThreads, int n_ctx, float minP, float temp, int topK,
+void LlamaOperator::setOptions(int ngl, int nThreads, int n_ctx, float minP, float temp, int topK,
                                float topP) {
     _ngl       = ngl;
     _nCtx      = n_ctx;
@@ -35,7 +34,7 @@ void LlamaController::setOptions(int ngl, int nThreads, int n_ctx, float minP, f
     _nThreads = nThreads;
 }
 
-bool LlamaController::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
+bool LlamaOperator::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
 
     if (_modelLoaded) {
         Logger::warn("Embedding Model already loaded");
@@ -79,7 +78,7 @@ bool LlamaController::loadEmbedModel(const std::string & modelPath, const enum l
     return true;
 }
 
-bool LlamaController::loadChatModel(const std::string & modelPath) {
+bool LlamaOperator::loadChatModel(const std::string & modelPath) {
     if (_modelLoaded) {
         Logger::warn("Chat Model already loaded");
         return false;
@@ -122,12 +121,12 @@ bool LlamaController::loadChatModel(const std::string & modelPath) {
 }
 
 
-void LlamaController:: setCallBackFunction(std::function<void(const std::string &)> func) {
+void LlamaOperator:: setCallBackFunction(std::function<void(const std::string &)> func) {
     _responseCallbackFunction = func;
 }
 
 
-std::string LlamaController::generateResponse(const std::string& prompt) {
+std::string LlamaOperator::generateResponse(const std::string& prompt) {
        std::string response;
 
         const bool is_first = llama_get_kv_cache_used_cells(_ctx) == 0;
@@ -178,7 +177,7 @@ std::string LlamaController::generateResponse(const std::string& prompt) {
 }
 
 
-void LlamaController::chat(const std::string &userInput) {
+void LlamaOperator::chat(const std::string &userInput) {
     std::vector<char> formatted(llama_n_ctx(_ctx));
     int prev_len = 0;
 
@@ -192,7 +191,7 @@ void LlamaController::chat(const std::string &userInput) {
     prev_len = new_len;
 }
 
-void LlamaController::batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id)
+void LlamaOperator::batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id)
 {
     size_t n_tokens = tokens.size();
     for (size_t i = 0; i < n_tokens; i++) {
@@ -201,7 +200,7 @@ void LlamaController::batch_add_seq(llama_batch & batch, const std::vector<int32
 }
 
 
-void LlamaController::batch_decode(llama_context * ctx, llama_batch & batch, float * output, int n_seq, int n_embd, int embd_norm) {
+void LlamaOperator::batch_decode(llama_context * ctx, llama_batch & batch, float * output, int n_seq, int n_embd, int embd_norm) {
     const struct llama_model * model = llama_get_model(ctx);
     const enum llama_pooling_type pooling_type = llama_pooling_type(ctx);
 
@@ -249,7 +248,7 @@ void LlamaController::batch_decode(llama_context * ctx, llama_batch & batch, flo
 }
 
 
-std::vector<float> LlamaController::calculateEmbeddings(const std::string& text) {
+std::vector<float> LlamaOperator::calculateEmbeddings(const std::string& text) {
     
     uint64_t batch_size = 2048;
 
@@ -274,7 +273,7 @@ std::vector<float> LlamaController::calculateEmbeddings(const std::string& text)
     return embeddings;
 }
 
-void LlamaController::unloadModel() {
+void LlamaOperator::unloadModel() {
     for (auto& msg : _messages) {
         free(const_cast<char*>(msg.content));
     }

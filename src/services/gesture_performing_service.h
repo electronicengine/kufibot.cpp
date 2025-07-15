@@ -9,16 +9,16 @@
 #include "../subscriber.h"
 #include "service.h"
 #include "robot_controller_service.h"
-#include "../controllers/speech_process_controller.h"
+#include "../operators/speech_performing_operator.h"
 #include "mapping_service.h"
 #include "interactive_chat_service.h"
 #include "web_socket_service.h"
 
 
-class GestureService : public Subscriber, public Service {
+class GesturePerformingService : public Subscriber, public Service {
 
 private:
-    static GestureService *_instance;
+    static GesturePerformingService *_instance;
     RobotControllerService *_robotControllerService;
     InteractiveChatService *_interactiveChatService;
     std::queue<std::string> _gestureQueue; 
@@ -26,12 +26,12 @@ private:
     std::condition_variable _cv;           
     std::thread _workerThread;             
     std::atomic<bool> _gestureWorking{false};
-    GestureService();
+    GesturePerformingService();
 
 public:
 
-    static GestureService *get_instance();
-    ~GestureService();
+    static GesturePerformingService *get_instance();
+    ~GesturePerformingService();
 
     void greeter();
     void knowledgeable();

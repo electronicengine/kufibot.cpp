@@ -3,22 +3,22 @@
 #include <array>
 #include <cstdio>
 #include <fcntl.h>
-#include "execution_controller.h"
+#include "cmdline_execution_operator.h"
 
 #include "../logger.h"
 
-ExecutionController* ExecutionController::_instance = nullptr;
+CmdLineExecutionOperator* CmdLineExecutionOperator::_instance = nullptr;
 
-ExecutionController* ExecutionController::get_instance() {
+CmdLineExecutionOperator* CmdLineExecutionOperator::get_instance() {
     if (_instance == nullptr) {
-        _instance = new ExecutionController();
+        _instance = new CmdLineExecutionOperator();
     }
     return _instance;
 }
 
-ExecutionController::ExecutionController(){}
+CmdLineExecutionOperator::CmdLineExecutionOperator(){}
 
-std::string ExecutionController::execute(ExecutionType Type, const std::string& prompt) {
+std::string CmdLineExecutionOperator::execute(ExecutionType Type, const std::string& prompt) {
 
     switch (Type)
     {
@@ -34,7 +34,7 @@ std::string ExecutionController::execute(ExecutionType Type, const std::string& 
 
 }
 
-std::string ExecutionController::run(const std::string path, const std::string& prompt) {
+std::string CmdLineExecutionOperator::run(const std::string path, const std::string& prompt) {
     std::string command = "bash -c 'python3 " + path + " \"" + prompt + "\" 2>&1'";
     Logger::trace("Executing: {}", command);
 
@@ -57,7 +57,7 @@ std::string ExecutionController::run(const std::string path, const std::string& 
  
 
 
-void ExecutionController::set_venv(const std::string &venv){
+void CmdLineExecutionOperator::set_venv(const std::string &venv){
     std::string command = "bash -c 'source " + venv + "/bin/activate'";
     Logger::trace("Executing: {}", command);
 

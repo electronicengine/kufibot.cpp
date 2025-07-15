@@ -29,12 +29,12 @@
 #include "../publisher.h"
 #include "service.h"
 #include "robot_controller_service.h"
-#include "../controllers/speech_process_controller.h"
-#include "../controllers/speech_recognition_controller.h"
-#include "../controllers/curl_controller.h"
-#include "../controllers/execution_controller.h"
+#include "../operators/speech_performing_operator.h"
+#include "../operators/speech_recognizing_operator.h"
+#include "../operators/http_request_operator.h"
+#include "../operators/cmdline_execution_operator.h"
 #include "../controllers/dc_motor_controller.h"
-#include "../controllers/llama_controller.h"
+#include "../operators/llama_operator.h"
 #include "mapping_service.h"
 
 #include "video_stream_service.h"
@@ -59,11 +59,9 @@ class InteractiveChatService : public Publisher, public Subscriber, public Servi
 private:
     static InteractiveChatService *_instance;
     RobotControllerService *_robotControllerService;
-    SpeechRecognitionController *_speechRecognitionController;
-    SpeechProcessController *_speechProcessController;
+    SpeechRecognizingOperator *_speechRecognizingOperator;
+    SpeechPerformingOperator * _speechPerformingOperator;
     WebSocketService *_webSocketService;
-    CurlController *_curlController;
-    ExecutionController *_executionController;
     VideoStreamService *_videoStreamService;
     std::string _ollamaServer;
     std::string _ollamaModelName;
@@ -73,7 +71,7 @@ private:
     std::mutex _queueMutex;
     std::condition_variable _queueCondition;
     LlamaOptions _llamaOptions;
-    LlamaController _llamaChatController;
+    LlamaOperator _llamaChatOperator;
 
     InteractiveChatService();
     const std::string translate(const std::string& source, const std::string& target, const std::string& Text);

@@ -2,11 +2,10 @@
 #include "gesture_recognizer_service.h"
 #include <iostream>
 #include <algorithm>
+#include "../logger.h"
 
-GestureRecognizerService::GestureRecognizerService(const std::string& name, const std::string& venvPath)
-    : Service(name), venvPath(venvPath), faceRecognizer(venvPath), handRecognizer(venvPath),
-      showFaceMesh(false), showFaceInfo(false), showHandLandmarks(true) {
-    std::cout << "GestureRecognizerService created: " << name << std::endl;
+GestureRecognizerService::GestureRecognizerService(const std::string& name)
+    : Service(name), showFaceMesh(true), showFaceInfo(true), showHandLandmarks(true) {
 }
 
 GestureRecognizerService::~GestureRecognizerService() {
@@ -15,82 +14,58 @@ GestureRecognizerService::~GestureRecognizerService() {
         cap.release();
     }
     cv::destroyAllWindows();
-    std::cout << "GestureRecognizerService destroyed: " << _name << std::endl;
 }
 
 bool GestureRecognizerService::initialize() {
-    std::cout << "Initializing Face Gesture Recognizer..." << std::endl;
-    if (!faceRecognizer.initialize()) {
-        std::cerr << "Python face gesture recognition module failed to initialize!" << std::endl;
+    _faceGestureRecognizingOperator = FaceGestureRecognizingOperator::get_instance();
+    _handGestureRecognizingOperator = HandGestureRecognizingOperator::get_instance();
+
+    if (!_faceGestureRecognizingOperator->initialize()) {
+        Logger::error("Face gesture recognition module failed to initialize!");
         return false;
     }
-    std::cout << "Face Gesture Recognizer Initialized." << std::endl;
+    Logger::info("Face gesture recognition module initialized.");
 
-    std::cout << "Initializing Hand Gesture Recognizer..." << std::endl;
-    if (!handRecognizer.initialize()) {
-        std::cerr << "Python hand gesture recognition module failed to initialize!" << std::endl;
+    if (!_handGestureRecognizingOperator->initialize()) {
+        Logger::error("Hand gesture recognition module failed to initialize!");
         return false;
     }
-    std::cout << "Hand Gesture Recognizer Initialized." << std::endl;
-
-    // Kamera başlatma
-    cap.open(0, cv::CAP_V4L2);
-    if (!cap.isOpened()) {
-        std::cerr << "Camera could not be opened! Please check camera connection." << std::endl;
-        return false;
-    }
-
-    // Kamera çözünürlüğünü ayarla
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-
-    std::cout << "Combined Gesture Recognition started..." << std::endl;
-    std::cout << "Press ESC to exit." << std::endl;
-    std::cout << "Keys:" << std::endl;
-    std::cout << "  'm' - Show/Hide Face Landmarks or full mesh" << std::endl;
-    std::cout << "  'i' - Show/Hide detailed face metrics (EAR, MAR)" << std::endl;
-    std::cout << "  'h' - Show/Hide Hand Landmarks and Bounding Box" << std::endl;
+    Logger::info("Hand gesture recognition module initialized.");
 
     return true;
 }
 
 void GestureRecognizerService::service_update_function() {
-    cv::Mat frame;
-    double ptime = 0;
 
-    while (_running) {
-        cap >> frame;
+}
+
+void GestureRecognizerService::update_video_frame(const cv::Mat &frame) {
+    if (_running) {
+        static double ptime = 0;
+        cv::Mat frame_copy = frame.clone();
         if (frame.empty()) {
-            std::cerr << "Frame not read, ending stream." << std::endl;
-            break;
+            Logger::error("Frame not read, ending stream.");
         }
 
-        processFrame(frame);
-        displayFPS(frame, ptime);
+        processFrame(frame_copy);
+        displayFPS(frame_copy, ptime);
 
-        cv::imshow("Integrated Gesture Recognizer", frame);
-
-        int key = cv::waitKey(1) & 0xFF;
-        if (key == 27) { // ESC tuşu
-            stop();
-            break;
-        }
-        handleKeyPress(key);
+        cv::imshow("Integrated Gesture Recognizer", frame_copy);
     }
+
 }
 
 void GestureRecognizerService::processFrame(cv::Mat& frame) {
-    // --- YÜZ İŞLEME ---
+    // --- Face Processing ---
     std::string faceEmotion;
     std::vector<int> faceLandmarks;
     std::string faceInfoStr;
 
-    if (faceRecognizer.processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
-        // Duygu bilgisini ekrana yaz
+    if (_faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
+        // print emotion info
         cv::putText(frame, "Emotion: " + faceEmotion, cv::Point(10, 30),
                     cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
 
-        // Detaylı yüz bilgilerini (showFaceInfo açıksa) ekrana yaz
         if (showFaceInfo) {
             std::map<std::string, float> faceInfo = parseFaceInfoString(faceInfoStr);
             int y_offset = 70;
@@ -102,33 +77,32 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
             }
         }
 
-        // Yüz Landmarklarını çiz
+        // Draw Face Landmarks
         if (!faceLandmarks.empty() && showFaceMesh) {
-            // Önemli landmark noktalarını vurgula
             for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
                 int id = faceLandmarks[i];
                 int cx = faceLandmarks[i+1];
                 int cy = faceLandmarks[i+2];
 
-                // Göz kenarları
+                // Eye
                 if (id == 33 || id == 133 || id == 362 || id == 263) {
                     cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 255, 0), cv::FILLED);
                 }
-                // Ağız köşeleri ve dudaklar
+                // Mounth
                 else if (id == 78 || id == 308 || id == 13 || id == 14) {
                     cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 0, 255), cv::FILLED);
                 }
-                // Kaşlar
+                // EyeBrow
                 else if (id == 70 || id == 105 || id == 296 || id == 334) {
                     cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(255, 0, 0), cv::FILLED);
                 }
                 else {
-                    // Diğer tüm landmarkları küçük nokta olarak çiz
+                    // other landmarks
                     cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(200, 200, 200), cv::FILLED);
                 }
             }
         } else if (!faceLandmarks.empty() && !showFaceMesh) {
-             // Sadece tüm landmark'ları küçük sarı noktalar olarak çiz
+             //Just draw all landmarks as little yellow dots
             for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
                 int cx = faceLandmarks[i+1];
                 int cy = faceLandmarks[i+2];
@@ -136,28 +110,27 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
             }
         }
     } else {
-        // Python tarafından bir hata oluştuysa
         cv::putText(frame, "Face Detection Failed", cv::Point(10, 30),
                     cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
     }
 
-    // --- EL İŞLEME ---
+    // --- Hand Process ---
     std::string handGesture;
     std::vector<int> handLandmarks, handBbox;
 
-    if (handRecognizer.processFrame(frame, handGesture, handLandmarks, handBbox)) {
+    if (_handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox)) {
         if (showHandLandmarks) {
             if (!handBbox.empty() && handBbox.size() == 4) {
                 cv::rectangle(frame, cv::Point(handBbox[0] - 20, handBbox[1] - 20), // Bbox'ı biraz büyüt
                               cv::Point(handBbox[2] + 20, handBbox[3] + 20),
                               cv::Scalar(255, 0, 255), 2); // Mor renk
                 cv::putText(frame, handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
-                            cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Mor renk
+                            cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Purple color
             }
 
             for (size_t i = 0; i + 2 < handLandmarks.size(); i += 3) {
                 int cx = handLandmarks[i+1], cy = handLandmarks[i+2];
-                cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Sarı renk
+                cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Yellow color
             }
         }
     }
@@ -167,7 +140,7 @@ std::map<std::string, float> GestureRecognizerService::parseFaceInfoString(const
     std::map<std::string, float> infoMap;
     std::string cleanedStr = faceInfoStr;
 
-    // Parantezleri ve tek tırnakları kaldır
+    // remove prantesis and quo's
     cleanedStr.erase(std::remove(cleanedStr.begin(), cleanedStr.end(), '{'), cleanedStr.end());
     cleanedStr.erase(std::remove(cleanedStr.begin(), cleanedStr.end(), '}'), cleanedStr.end());
     cleanedStr.erase(std::remove(cleanedStr.begin(), cleanedStr.end(), '\''), cleanedStr.end());
@@ -183,7 +156,7 @@ std::map<std::string, float> GestureRecognizerService::parseFaceInfoString(const
             try {
                 infoMap[key] = std::stof(valueStr);
             } catch (const std::exception& e) {
-                std::cerr << "Error parsing value '" << valueStr << "': " << e.what() << std::endl;
+                Logger::error("Error parsing value: {} - {}", valueStr, e.what());
             }
         }
     }
@@ -199,15 +172,36 @@ void GestureRecognizerService::displayFPS(cv::Mat& frame, double& ptime) {
                 cv::Scalar(255, 0, 255), 2, cv::LINE_AA);
 }
 
-void GestureRecognizerService::handleKeyPress(int key) {
-    if (key == 'm' || key == 'M') { // 'm' veya 'M' tuşu (Yüz mesh/noktaları)
-        showFaceMesh = !showFaceMesh;
-        std::cout << "Face Mesh/Key Points view: " << (showFaceMesh ? "ON" : "OFF") << std::endl;
-    } else if (key == 'i' || key == 'I') { // 'i' veya 'I' tuşu (Yüz metrikleri)
-        showFaceInfo = !showFaceInfo;
-        std::cout << "Detailed Face Info view: " << (showFaceInfo ? "ON" : "OFF") << std::endl;
-    } else if (key == 'h' || key == 'H') { // 'h' veya 'H' tuşu (El landmarkları/bbox)
-        showHandLandmarks = !showHandLandmarks;
-        std::cout << "Hand Landmarks/BBox view: " << (showHandLandmarks ? "ON" : "OFF") << std::endl;
+
+void GestureRecognizerService::start()
+{
+    if (!_running) {
+        _running = true;
+        Logger::info("GestureRecognizerService is starting...");
+        if (!initialize()) {
+            Logger::error("GestureRecognizerService couldn't initialized correctly!");
+            stop();
+        }
+
+        VideoStreamService *video_stream_service = VideoStreamService::get_instance();
+        video_stream_service->subscribe(this);
+
+        _serviceThread = std::thread(&GestureRecognizerService::service_update_function, this);
+    }
+}
+
+void GestureRecognizerService::stop()
+{
+    if (_running){
+        _running = false;
+        VideoStreamService *video_stream_service = VideoStreamService::get_instance();
+        video_stream_service->un_subscribe(this);
+
+        Logger::info("GestureRecognizerService is stopping...");
+        if (_serviceThread.joinable()) {
+            _serviceThread.join();
+        }
+        Logger::info("GestureRecognizerService is stopped.");
+
     }
 }

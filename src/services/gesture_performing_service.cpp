@@ -1,18 +1,18 @@
-#include "gesture_service.h"
+#include "gesture_performing_service.h"
 #include "../logger.h"
 
-GestureService* GestureService::_instance = nullptr;
+GesturePerformingService* GesturePerformingService::_instance = nullptr;
 
-GestureService *GestureService::get_instance()
+GesturePerformingService *GesturePerformingService::get_instance()
 {
     if (_instance == nullptr) {
-        _instance = new GestureService();
+        _instance = new GesturePerformingService();
     }
     return _instance;
 }
 
 
-GestureService::GestureService() : Service("GestureService") {
+GesturePerformingService::GesturePerformingService() : Service("GesturePerformingService") {
 
     _robotControllerService = RobotControllerService::get_instance();
     _interactiveChatService = InteractiveChatService::get_instance();
@@ -21,13 +21,13 @@ GestureService::GestureService() : Service("GestureService") {
 }
 
 
-GestureService::~GestureService()
+GesturePerformingService::~GesturePerformingService()
 {
 
 }
 
 
-void GestureService::greeter()
+void GesturePerformingService::greeter()
 {
     
     Logger::info("greeter !");
@@ -49,7 +49,7 @@ void GestureService::greeter()
 
 }
 
-void GestureService::knowledgeable()
+void GesturePerformingService::knowledgeable()
 {
     Logger::info("knowledgeable !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 0}};
@@ -58,7 +58,7 @@ void GestureService::knowledgeable()
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
-void GestureService::optimistic()
+void GesturePerformingService::optimistic()
 {
     Logger::info("optimistic !");
      std::map<std::string, int> jointAngles = {{"right_arm", 40}, {"left_arm", 140}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
@@ -67,7 +67,7 @@ void GestureService::optimistic()
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
-void GestureService::pessimistic()
+void GesturePerformingService::pessimistic()
 {
     Logger::info("pessimistic !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 50}};
@@ -76,7 +76,7 @@ void GestureService::pessimistic()
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
-void GestureService::curious()
+void GesturePerformingService::curious()
 {
     Logger::info("curious !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
@@ -89,7 +89,7 @@ void GestureService::curious()
 
 }
 
-void GestureService::service_update_function()
+void GesturePerformingService::service_update_function()
 {
     while(_running){
 
@@ -121,35 +121,35 @@ void GestureService::service_update_function()
     }
 }
 
-void GestureService::start()
+void GesturePerformingService::start()
 {
     if (!_running) { // Ensure the thread is not already running
         _running = true;
-        Logger::info("GestureService::_interactiveChatService::subscribe");
+        Logger::info("GesturePerformingService::_interactiveChatService::subscribe");
         _interactiveChatService->subscribe(this);
-        Logger::info("GestureService is starting...");
-        _serviceThread = std::thread(&GestureService::service_update_function, this);
+        Logger::info("GesturePerformingService is starting...");
+        _serviceThread = std::thread(&GesturePerformingService::service_update_function, this);
     }
 }
 
-void GestureService::stop()
+void GesturePerformingService::stop()
 {
     if (_running){
         _running = false;
-        Logger::info("GestureService is stopping...");
+        Logger::info("GesturePerformingService is stopping...");
         _interactiveChatService->un_subscribe(this);
-        Logger::info("GestureService::_interactiveChatService::un_subscribe");
+        Logger::info("GesturePerformingService::_interactiveChatService::un_subscribe");
 
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
 
-        Logger::info("GestureService is stopped.");
+        Logger::info("GesturePerformingService is stopped.");
     }
 }
 
 
-void GestureService::update_gesture(const std::string &gesture)
+void GesturePerformingService::update_gesture(const std::string &gesture)
 {
     Logger::info("update_gesture : {}", gesture);
 

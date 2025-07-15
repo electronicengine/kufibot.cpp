@@ -1,5 +1,5 @@
-#ifndef SPEECH_PROCESS_CONTROLLER_HPP
-#define SPEECH_PROCESS_CONTROLLER_HPP
+#ifndef SPEECH_PERFORMING_OPERATOR_H
+#define SPEECH_PERFORMING_OPERATOR_H
 
 #include <iostream>
 #include <alsa/asoundlib.h>
@@ -18,17 +18,17 @@
 
 enum OutputType { OUTPUT_FILE, OUTPUT_DIRECTORY, OUTPUT_STDOUT, OUTPUT_RAW };
 
-class SpeechProcessController {
+class SpeechPerformingOperator {
 public:
 
-    static SpeechProcessController* get_instance();
+    static SpeechPerformingOperator* get_instance();
     void loadModel(const std::string& modelPath = "/usr/ai.models/trSpeechModel/dfki.onnx");
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();
     void playMusic(const std::string& mp3_file);
 
-    ~SpeechProcessController();
+    ~SpeechPerformingOperator();
 
 private:
     piper::PiperConfig _piperConfig;
@@ -41,13 +41,13 @@ private:
     std::condition_variable _cvAudio;
     bool audioReady = false;
     bool audioFinished = false;
-    static SpeechProcessController* _instance;
+    static SpeechPerformingOperator* _instance;
     mpg123_handle* _mh;  // MPG123 handle for MP3 playback
     int _mpg123Err;
 
     
-    SpeechProcessController();
+    SpeechPerformingOperator();
     void audioCallbackFunc();
 };
 
-#endif // PIPERTTS_HPP
+#endif // SPEECH_PERFORMING_OPERATOR_H

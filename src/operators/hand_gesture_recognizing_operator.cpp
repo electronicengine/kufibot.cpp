@@ -1,7 +1,18 @@
-#include "hand_gesture_recognizer.h"
+#include "hand_gesture_recognizing_operator.h"
 #include <iostream>
 
-HandGestureRecognizer::HandGestureRecognizer(const std::string& venvPath)
+
+
+HandGestureRecognizingOperator* HandGestureRecognizingOperator::_instance = nullptr;
+
+HandGestureRecognizingOperator* HandGestureRecognizingOperator::get_instance(const std::string& venvPath) {
+    if (_instance == nullptr) {
+        _instance = new HandGestureRecognizingOperator(venvPath);
+    }
+    return _instance;
+}
+
+HandGestureRecognizingOperator::HandGestureRecognizingOperator(const std::string& venvPath)
     : pModule(nullptr), pFuncInit(nullptr), pFuncProcess(nullptr) {
     Py_Initialize();
 
@@ -11,14 +22,14 @@ HandGestureRecognizer::HandGestureRecognizer(const std::string& venvPath)
     PyRun_SimpleString("import os; sys.path.insert(0, os.getcwd())");
 }
 
-HandGestureRecognizer::~HandGestureRecognizer() {
+HandGestureRecognizingOperator::~HandGestureRecognizingOperator() {
     Py_XDECREF(pFuncInit);
     Py_XDECREF(pFuncProcess);
     Py_XDECREF(pModule);
     Py_Finalize();
 }
 
-bool HandGestureRecognizer::initialize() {
+bool HandGestureRecognizingOperator::initialize() {
     PyObject* pName = PyUnicode_DecodeFSDefault("hand_gesture_recognition_module");
     if (!pName) {
         PyErr_Print();
@@ -54,7 +65,7 @@ bool HandGestureRecognizer::initialize() {
     return true;
 }
 
-bool HandGestureRecognizer::processFrame(const cv::Mat& frame, std::string& gesture,
+bool HandGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::string& gesture,
                                          std::vector<int>& landmarks, std::vector<int>& bbox) {
     PyObject* pyFrame = PyBytes_FromStringAndSize(
         reinterpret_cast<const char*>(frame.data),
@@ -92,7 +103,7 @@ bool HandGestureRecognizer::processFrame(const cv::Mat& frame, std::string& gest
     }
 }
 
-std::vector<int> HandGestureRecognizer::pyListToIntVector(PyObject* list) {
+std::vector<int> HandGestureRecognizingOperator::pyListToIntVector(PyObject* list) {
     std::vector<int> result;
     if (PyList_Check(list)) {
         for (Py_ssize_t i = 0; i < PyList_Size(list); ++i) {

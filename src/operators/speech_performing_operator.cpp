@@ -1,17 +1,17 @@
-#include "speech_process_controller.h"
+#include "speech_performing_operator.h"
 #include "../logger.h"
 
 
-SpeechProcessController* SpeechProcessController::_instance = nullptr;
+SpeechPerformingOperator* SpeechPerformingOperator::_instance = nullptr;
 
-SpeechProcessController* SpeechProcessController::get_instance() {
+SpeechPerformingOperator* SpeechPerformingOperator::get_instance() {
     if (_instance == nullptr) {
-        _instance = new SpeechProcessController();
+        _instance = new SpeechPerformingOperator();
     }
     return _instance;
 }
 
-SpeechProcessController::SpeechProcessController() {
+SpeechPerformingOperator::SpeechPerformingOperator() {
     _piperConfig.eSpeakDataPath = "/usr/local/share/espeak-ng-data/";
     mpg123_init();  // Initialize MPG123
     _mh = mpg123_new(nullptr, &_mpg123Err);
@@ -20,7 +20,7 @@ SpeechProcessController::SpeechProcessController() {
     }
 }
 
-void SpeechProcessController::loadModel(const std::string& modelPath){
+void SpeechPerformingOperator::loadModel(const std::string& modelPath){
 
     _modelPath = modelPath;
     _speakerId = 0;
@@ -28,19 +28,19 @@ void SpeechProcessController::loadModel(const std::string& modelPath){
     piper::initialize(_piperConfig);
 }
 
-void SpeechProcessController::speakText(const std::string &text)
+void SpeechPerformingOperator::speakText(const std::string &text)
 {
     synthesizeText(text);
     playAudio();
 }
 
-void SpeechProcessController::synthesizeText(const std::string& text) {
+void SpeechPerformingOperator::synthesizeText(const std::string& text) {
     piper::SynthesisResult result;
     auto audioCallback = [this]() { audioCallbackFunc(); };
     piper::textToAudio(_piperConfig, _voice, text, _audioBuffer, result, audioCallback);
 }
 
-void SpeechProcessController::playAudio() {
+void SpeechPerformingOperator::playAudio() {
     snd_pcm_t* pcmHandle;
     snd_pcm_hw_params_t* params;
     int err;
@@ -85,7 +85,7 @@ void SpeechProcessController::playAudio() {
 }
 
 
-void SpeechProcessController::playMusic(const std::string& mp3_file) {
+void SpeechPerformingOperator::playMusic(const std::string& mp3_file) {
     if (mpg123_open(_mh, mp3_file.c_str()) != MPG123_OK) {
         Logger::error("Error opening MP3 file: {}" , mp3_file);
         return;
@@ -132,13 +132,13 @@ void SpeechProcessController::playMusic(const std::string& mp3_file) {
 
 
 
-void SpeechProcessController::audioCallbackFunc() {
+void SpeechPerformingOperator::audioCallbackFunc() {
     std::unique_lock lock(_mutAudio);
     copy(_audioBuffer.begin(), _audioBuffer.end(), back_inserter(_sharedAudioBuffer));
     audioReady = true;
     _cvAudio.notify_one();
 }
 
-SpeechProcessController::~SpeechProcessController() {
+SpeechPerformingOperator::~SpeechPerformingOperator() {
     piper::terminate(_piperConfig);
 }

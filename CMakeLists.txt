@@ -32,7 +32,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CURL_INCLUDE_DIRS})
 include_directories(${PYTHON_INCLUDE_DIR})
 
-add_subdirectory(src/ui)
+add_subdirectory(src/tui)
 add_subdirectory(src/drivers)
 add_subdirectory(src/controllers)
 add_subdirectory(src/services)
@@ -79,7 +79,7 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         mpg123
         onnxruntime
         final
-        ui
+        tui
         drivers
         controllers
         services

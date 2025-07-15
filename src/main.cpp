@@ -5,8 +5,8 @@
 #include "services/web_socket_service.h"
 #include "services/interactive_chat_service.h"
 #include "final/final.h"
-#include "ui/main_window.h"
-#include "ui/widget_color_theme.h"
+#include "tui/main_window.h"
+#include "tui/widget_color_theme.h"
 #include "logger.h"
 #include <iostream>
 #include <string>

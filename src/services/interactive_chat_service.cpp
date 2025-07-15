@@ -12,37 +12,22 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
-    _speechProcessController = SpeechProcessController::get_instance();
-    _speechRecognitionController = SpeechRecognitionController::get_instance();
+    _speechPerformingOperator = SpeechPerformingOperator::get_instance();
+    _speechRecognizingOperator = SpeechRecognizingOperator::get_instance();
     _robotControllerService = RobotControllerService::get_instance();
     _webSocketService = WebSocketService::get_instance();
     _videoStreamService = VideoStreamService::get_instance();
 
     Logger::info("Speech Process Model loading...");
-    _speechProcessController->loadModel();
+    _speechPerformingOperator->loadModel();
     Logger::info("Speech Recognition Model loading...");
-    _speechRecognitionController->load_model();
+    _speechRecognizingOperator->load_model();
     Logger::info("Llama Chat Model loading...");
-    bool ret = _llamaChatController.loadChatModel();
+    bool ret = _llamaChatOperator.loadChatModel();
     if (!ret) {
         Logger::error("Llama Chat Model loading failed!");
     }
 
-    if(!_speechRecognitionController->open()) {
-        return ;
-    }
-}
-
-
-const std::string InteractiveChatService::translate(const std::string& source, const std::string& target, const std::string& text){
-
-    std::string venvPath = "/home/kufi/venv/bin/activate";
-    std::string scriptPath = "/home/kufi/workspace/translate_test.py";
-
-    std::string command ="trans -b " + source + ":" + target + " \"" + text + "\"";
-    std::string translatedText = _executionController->run(command);
-
-    return translatedText;
 }
 
 
@@ -73,8 +58,8 @@ bool InteractiveChatService::query(const std::string& message, std::function<voi
         //
         //         if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
         //     };
-        _llamaChatController.setCallBackFunction(onReceiveLlamaResponse);
-        _llamaChatController.chat(message);
+        _llamaChatOperator.setCallBackFunction(onReceiveLlamaResponse);
+        _llamaChatOperator.chat(message);
 
         //_queryRunning = true;
         return true;
@@ -84,11 +69,11 @@ bool InteractiveChatService::query(const std::string& message, std::function<voi
 
 bool InteractiveChatService::load_model(const LlamaOptions &llamaOptions)
 {
-    _llamaChatController.setCallBackFunction([this](const std::string& text) {
+    _llamaChatOperator.setCallBackFunction([this](const std::string& text) {
 
     });
 
-    return _llamaChatController.loadChatModel(llamaOptions.llamaChatModelPath);
+    return _llamaChatOperator.loadChatModel(llamaOptions.llamaChatModelPath);
 
 }
 
@@ -122,7 +107,7 @@ void InteractiveChatService::service_update_function()
             }
     
             update_llama_gesture(gesture);
-            _speechProcessController->speakText(sentence);
+            _speechPerformingOperator->speakText(sentence);
         }
     }
 }
@@ -186,8 +171,8 @@ void InteractiveChatService::stop()
         _running = false;
         Logger::info("InteractiveChatService is stopping..." );
 
-        _speechRecognitionController->stop_listen();
-        _speechRecognitionController->close();
+        _speechRecognizingOperator->stop_listen();
+        _speechRecognizingOperator->close();
 
         if (_serviceThread.joinable()) {
             _serviceThread.join(); 

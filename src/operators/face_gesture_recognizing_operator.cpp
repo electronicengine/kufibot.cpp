@@ -1,7 +1,17 @@
-#include "face_gesture_recognizer.h"
+#include "face_gesture_recognizing_operator.h"
 #include <iostream>
 
-FaceGestureRecognizer::FaceGestureRecognizer(const std::string& venvPath)
+
+FaceGestureRecognizingOperator* FaceGestureRecognizingOperator::_instance = nullptr;
+
+FaceGestureRecognizingOperator* FaceGestureRecognizingOperator::get_instance(const std::string& venvPath) {
+    if (_instance == nullptr) {
+        _instance = new FaceGestureRecognizingOperator(venvPath);
+    }
+    return _instance;
+}
+
+FaceGestureRecognizingOperator::FaceGestureRecognizingOperator(const std::string& venvPath)
     : pModule(nullptr), pFuncInit(nullptr), pFuncProcess(nullptr) {
     Py_Initialize();
     
@@ -14,14 +24,14 @@ FaceGestureRecognizer::FaceGestureRecognizer(const std::string& venvPath)
     PyRun_SimpleString("import os; sys.path.insert(0, os.getcwd())");
 }
 
-FaceGestureRecognizer::~FaceGestureRecognizer() {
+FaceGestureRecognizingOperator::~FaceGestureRecognizingOperator() {
     Py_XDECREF(pFuncInit);
     Py_XDECREF(pFuncProcess);
     Py_XDECREF(pModule);
     Py_Finalize();
 }
 
-bool FaceGestureRecognizer::initialize() {
+bool FaceGestureRecognizingOperator::initialize() {
     // Python modülünü import et
     PyObject* pName = PyUnicode_DecodeFSDefault("face_gesture_recognition_module");
     if (!pName) {
@@ -61,7 +71,7 @@ bool FaceGestureRecognizer::initialize() {
     return true;
 }
 
-bool FaceGestureRecognizer::processFrame(const cv::Mat& frame, std::string& emotion,
+bool FaceGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::string& emotion,
                                         std::vector<int>& landmarks, std::string& faceInfo) {
     // OpenCV Mat'i Python'a göndermek için byte array'e dönüştür
     PyObject* pyFrame = PyBytes_FromStringAndSize(
@@ -112,7 +122,7 @@ bool FaceGestureRecognizer::processFrame(const cv::Mat& frame, std::string& emot
     }
 }
 
-std::vector<int> FaceGestureRecognizer::pyListToIntVector(PyObject* list) {
+std::vector<int> FaceGestureRecognizingOperator::pyListToIntVector(PyObject* list) {
     std::vector<int> result;
     if (PyList_Check(list)) {
         for (Py_ssize_t i = 0; i < PyList_Size(list); ++i) {

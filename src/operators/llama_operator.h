@@ -2,8 +2,8 @@
 // Created by ulak on 25.06.2025.
 //
 
-#ifndef LLAMACONTROLLER_H
-#define LLAMACONTROLLER_H
+#ifndef LLAMA_OPERATOR_H
+#define LLAMA_OPERATOR_H
 
 
 #include "llama.h"
@@ -13,10 +13,10 @@
 #include <functional>
 
 
-class LlamaController {
+class LlamaOperator {
 public:
-    LlamaController();
-    ~LlamaController();
+    LlamaOperator();
+    ~LlamaOperator();
 
     void batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id);
     void batch_decode(llama_context * ctx, llama_batch & batch, float * output, int n_seq, int n_embd, int embd_norm);
@@ -55,4 +55,4 @@ private:
 };
 
 
-#endif //LLAMACONTROLLER_H
+#endif //LLAMA_OPERATOR_H

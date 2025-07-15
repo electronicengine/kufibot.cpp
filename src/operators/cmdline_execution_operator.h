@@ -1,5 +1,5 @@
-#ifndef EXECUTION_CONTROLLER_H
-#define EXECUTION_CONTROLLER_H
+#ifndef CMDLINEEXECUTIONOPERATOR_H
+#define CMDLINEEXECUTIONOPERATOR_H
 
 #include <string>
 
@@ -9,20 +9,20 @@ enum class ExecutionType {
     tunning
 };
 
-class ExecutionController {
+class CmdLineExecutionOperator {
 public:
-    static ExecutionController* get_instance();
-    ~ExecutionController() = default;
+    static CmdLineExecutionOperator* get_instance();
+    ~CmdLineExecutionOperator() = default;
 
     std::string run(const std::string path, const std::string& prompt = "");
     std::string execute(ExecutionType Type, const std::string& prompt);
     void set_venv(const std::string &venv);
 private:
-    ExecutionController();
+    CmdLineExecutionOperator();
 
 
     std::string _venv;  
-    static ExecutionController* _instance; 
+    static CmdLineExecutionOperator* _instance;
 };
 
-#endif // EXECUTION_CONTROLLER_H
+#endif // CMDLINEEXECUTIONOPERATOR_H

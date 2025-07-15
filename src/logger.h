@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
-#include "ui/main_window.h"
+#include "tui/main_window.h"
 
 class Logger {
 public:

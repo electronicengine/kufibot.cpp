@@ -1,30 +1,30 @@
-#include "speech_recognition_controller.h"
+#include "speech_performing_operator.h"
 #include "../logger.h"
 
 
-SpeechRecognitionController* SpeechRecognitionController::_instance = nullptr;
+SpeechRecognizingOperator* SpeechRecognizingOperator::_instance = nullptr;
 
-SpeechRecognitionController* SpeechRecognitionController::get_instance() {
+SpeechRecognizingOperator* SpeechRecognizingOperator::get_instance() {
     if (_instance == nullptr) {
-        _instance = new SpeechRecognitionController();
+        _instance = new SpeechRecognizingOperator();
     }
     return _instance;
 }
 
 // Constructor
-SpeechRecognitionController::SpeechRecognitionController(){
+SpeechRecognizingOperator::SpeechRecognizingOperator(){
     _recognizer = nullptr;
     _stream = nullptr;
     _messageReady = false;
 }
 
 // Destructor
-SpeechRecognitionController::~SpeechRecognitionController() {
+SpeechRecognizingOperator::~SpeechRecognizingOperator() {
     close();
 }
 
 // Store message and notify waiting threads
-void SpeechRecognitionController::store_message(const std::string &message) {
+void SpeechRecognizingOperator::store_message(const std::string &message) {
     std::lock_guard<std::mutex> lock(_messageMutex);
     _lastMessage = message;
     _messageReady = true;
@@ -32,12 +32,12 @@ void SpeechRecognitionController::store_message(const std::string &message) {
 }
 
 // PortAudio Callback
-int SpeechRecognitionController::paCallback(const void *input, void *output,
+int SpeechRecognizingOperator::paCallback(const void *input, void *output,
                                             unsigned long frameCount,
                                             const PaStreamCallbackTimeInfo *timeInfo,
                                             PaStreamCallbackFlags statusFlags,
                                             void *userData) {
-    auto *controller = static_cast<SpeechRecognitionController *>(userData);
+    auto *controller = static_cast<SpeechRecognizingOperator *>(userData);
 
     if (vosk_recognizer_accept_waveform(controller->_recognizer, (const char *)input, frameCount * sizeof(short))) {
         std::string result = vosk_recognizer_result(controller->_recognizer);
@@ -46,14 +46,14 @@ int SpeechRecognitionController::paCallback(const void *input, void *output,
     return paContinue;
 }
 
-void SpeechRecognitionController::load_model(const std::string &modelPath)
+void SpeechRecognizingOperator::load_model(const std::string &modelPath)
 {
     _model = vosk_model_new(modelPath.c_str());
     _recognizer = vosk_recognizer_new(_model, SAMPLE_RATE);
 }
 
 // Initialize PortAudio and prepare resources
-bool SpeechRecognitionController::open() {
+bool SpeechRecognizingOperator::open() {
     if (Pa_Initialize() != paNoError) {
         Logger::error("Failed to initialize PortAudio.");
         return false;
@@ -78,7 +78,7 @@ bool SpeechRecognitionController::open() {
 }
 
 // Start listening to the microphone
-bool SpeechRecognitionController::start_listen() {
+bool SpeechRecognizingOperator::start_listen() {
     if (Pa_StartStream(_stream) != paNoError) {
         Logger::error("Failed to start audio stream.");
         return false;
@@ -89,12 +89,12 @@ bool SpeechRecognitionController::start_listen() {
 }
 
 // Stop listening
-void SpeechRecognitionController::stop_listen() {
+void SpeechRecognizingOperator::stop_listen() {
     Pa_StopStream(_stream);
 }
 
 // Wait and return the next final message
-std::string SpeechRecognitionController::get_message() {
+std::string SpeechRecognizingOperator::get_message() {
     std::unique_lock<std::mutex> lock(_messageMutex);
     _messageCv.wait(lock, [this]() { return _messageReady; }); // Block until message is ready
     _messageReady = false;  // Reset the flag
@@ -102,7 +102,7 @@ std::string SpeechRecognitionController::get_message() {
 }
 
 // Clean up and release resources
-void SpeechRecognitionController::close() {
+void SpeechRecognizingOperator::close() {
     if (_stream) {
         Pa_CloseStream(_stream);
     }

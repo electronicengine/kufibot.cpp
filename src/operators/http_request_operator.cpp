@@ -1,30 +1,30 @@
-#include "curl_controller.h"
+#include "http_request_operator.h"
 #include "nlohmann/json.hpp"
 #include <curl/curl.h>
-
+#include "../logger.h"
 
 using Json = nlohmann::json;
 
-CurlController* CurlController::_instance = nullptr;
+HttpRequestOperator* HttpRequestOperator::_instance = nullptr;
 
-CurlController* CurlController::get_instance(const std::string& url) {
+HttpRequestOperator* HttpRequestOperator::get_instance(const std::string& url) {
     if (_instance == nullptr) {
-        _instance = new CurlController(url);
+        _instance = new HttpRequestOperator(url);
     }
     return _instance;
 }
 
 
-CurlController::CurlController(const std::string& url) : url_(url) {
+HttpRequestOperator::HttpRequestOperator(const std::string& url) : url_(url) {
     curl_global_init(CURL_GLOBAL_DEFAULT);
 }
 
-CurlController::~CurlController()
+HttpRequestOperator::~HttpRequestOperator()
 {
         curl_global_cleanup();  
 }
 
-void CurlController::query_llama_text(const std::string& prompt) {
+void HttpRequestOperator::query_llama_text(const std::string& prompt) {
     std::string url = "http://192.168.1.20:11434/api/generate";
     std::string payload = R"({"model": "kufi", "prompt":")" + prompt + R"("})";
 
@@ -47,7 +47,7 @@ void CurlController::query_llama_text(const std::string& prompt) {
     // Perform the request
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        std::cerr << "CURL error: " << curl_easy_strerror(res) << std::endl;
+        Logger::error("CURL error: {}" + std::string(curl_easy_strerror(res)));
         curl_easy_cleanup(curl);
         return;
     }
@@ -55,7 +55,7 @@ void CurlController::query_llama_text(const std::string& prompt) {
     curl_easy_cleanup(curl);
 }
 
-size_t CurlController::write_callback(void *contents, size_t size, size_t nmemb, std::string &out)
+size_t HttpRequestOperator::write_callback(void *contents, size_t size, size_t nmemb, std::string &out)
 {
     size_t totalSize = size * nmemb; // Total size of the incoming data
     std::string data(static_cast<char*>(contents), totalSize); // Convert to std::string
@@ -79,7 +79,7 @@ size_t CurlController::write_callback(void *contents, size_t size, size_t nmemb,
 }
 
 
-std::string CurlController::parse_response_llm(const std::string &response) {
+std::string HttpRequestOperator::parse_response_llm(const std::string &response) {
     // Parse the input response
     std::string combined_response;
     size_t start = 0, end = 0;

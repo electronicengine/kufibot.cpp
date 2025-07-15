@@ -15,7 +15,7 @@ VideoStreamService *VideoStreamService::get_instance()
 cv::Mat VideoStreamService::take_snap_shot()
 {
     if (!_cap.isOpened()) {
-         _cap.open(0);
+         _cap.open(_cameraIndex,cv::CAP_V4L2);
     }
 
     if (_subscribers.empty()) {
@@ -41,8 +41,11 @@ VideoStreamService::~VideoStreamService() {
 void VideoStreamService::start() {
     if (!_running) {
 
+        _cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
+        _cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+
         if(!_cap.isOpened()){
-            _cap.open(_cameraIndex);
+            _cap.open(_cameraIndex, cv::CAP_V4L2);
             if(!_cap.isOpened()) {
                 Logger::error("Error: Could not open the camera.");
                 return;
@@ -68,7 +71,7 @@ void VideoStreamService::service_update_function(){
         }
         // Wait until cap is opened
         if(!_cap.isOpened()) {
-            _cap.open(_cameraIndex);
+            _cap.open(_cameraIndex, cv::CAP_V4L2);
             if (!_cap.isOpened())
                 continue;
         }
