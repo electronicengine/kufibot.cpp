@@ -1,24 +1,12 @@
 #ifndef ROBOT_CONTROLLER_SERVICE_H
 #define ROBOT_CONTROLLER_SERVICE_H
 
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
-#include <thread>
-#include <atomic>
-#include <iostream>
-#include <vector>
 #include <string>
-#include <chrono>
-#include <iostream>
-#include <functional>
 #include <map> 
-#include <unordered_map>
-#include <chrono>
-#include <thread>
+
 
 #include "service.h"
 #include "../subscriber.h"
-#include "../publisher.h"
 #include "../controllers/compass_controller.h"
 #include "../controllers/distance_controller.h"
 #include "../controllers/power_controller.h"
@@ -33,7 +21,13 @@ enum State{
     move
 };
 
-class RobotControllerService : public Publisher, public Service{
+class RobotControllerService : public Service{
+
+public:
+
+    virtual ~RobotControllerService();
+
+    static RobotControllerService *get_instance();
 
 private:
 
@@ -43,19 +37,16 @@ private:
     CompassController *_compassController;
     DistanceController *_distanceController;
     PowerController *_powerController;
-    ServoMotorController *_servoController; 
+    ServoMotorController *_servoController;
     DCMotorController *_dcMotorController;
 
-    void update_sensors(); 
     static RobotControllerService* _instance;
+
     RobotControllerService();
 
+    void service_function();
 
-public:
-
-    ~RobotControllerService();
-
-    static RobotControllerService *get_instance();
+    void update_sensors();
     Json get_sensor_values();
     std::map<std::string, int> get_servo_joint_map();
     void set_servo_joint_map(const std::map<std::string, int>& jointMap);
@@ -66,9 +57,9 @@ public:
     void control_arm(const std::string& control_id, int angle, bool scale = true);
     void set_all_joint_angles(const std::map<std::string, int>& angles);
     void control_eye(int angle);
-    void service_update_function();
-    void start();
-    void stop(); 
+
+    //subscibed control_data
+    virtual void subcribed_data_receive(MessageType type, MessageData* data);
 
 
 };

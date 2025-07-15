@@ -1,8 +1,19 @@
 // gesture_recognizer_service.cpp
 #include "gesture_recognizer_service.h"
-#include <iostream>
+#include "video_stream_service.h"
 #include <algorithm>
 #include "../logger.h"
+#include "../subscriber.h"
+
+GestureRecognizerService* GestureRecognizerService::_instance = nullptr;
+
+GestureRecognizerService *GestureRecognizerService::get_instance()
+{
+    if (_instance == nullptr) {
+        _instance = new GestureRecognizerService();
+    }
+    return _instance;
+}
 
 GestureRecognizerService::GestureRecognizerService(const std::string& name)
     : Service(name), showFaceMesh(true), showFaceInfo(true), showHandLandmarks(true) {
@@ -15,6 +26,7 @@ GestureRecognizerService::~GestureRecognizerService() {
     }
     cv::destroyAllWindows();
 }
+
 
 bool GestureRecognizerService::initialize() {
     _faceGestureRecognizingOperator = FaceGestureRecognizingOperator::get_instance();
@@ -35,11 +47,32 @@ bool GestureRecognizerService::initialize() {
     return true;
 }
 
-void GestureRecognizerService::service_update_function() {
+void GestureRecognizerService::service_function() {
+
+    if (!initialize()) {
+        Logger::error("GestureRecognizerService couldn't initialized correctly!");
+        stop();
+    }
+
+    subscribe_to_service(VideoStreamService::get_instance());
 
 }
 
-void GestureRecognizerService::update_video_frame(const cv::Mat &frame) {
+void GestureRecognizerService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    switch (type) {
+        case MessageType::VideoFrame: {
+            if (data) {
+                cv::Mat frame = static_cast<VideoFrameData*>(data)->frame;
+                video_frame(frame);
+            }
+            break;
+        }
+    }
+}
+
+void GestureRecognizerService::video_frame(const cv::Mat &frame) {
     if (_running) {
         static double ptime = 0;
         cv::Mat frame_copy = frame.clone();
@@ -57,13 +90,12 @@ void GestureRecognizerService::update_video_frame(const cv::Mat &frame) {
 
 void GestureRecognizerService::processFrame(cv::Mat& frame) {
     // --- Face Processing ---
-    std::string faceEmotion;
-    std::vector<int> faceLandmarks;
+    RecognizedGestureData *recognized = new RecognizedGestureData();
     std::string faceInfoStr;
 
-    if (_faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
+    if (_faceGestureRecognizingOperator->processFrame(frame, recognized->faceGesture, recognized->faceLandmark, faceInfoStr)) {
         // print emotion info
-        cv::putText(frame, "Emotion: " + faceEmotion, cv::Point(10, 30),
+        cv::putText(frame, "Emotion: " + recognized->faceGesture, cv::Point(10, 30),
                     cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
 
         if (showFaceInfo) {
@@ -78,11 +110,11 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
         }
 
         // Draw Face Landmarks
-        if (!faceLandmarks.empty() && showFaceMesh) {
-            for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
-                int id = faceLandmarks[i];
-                int cx = faceLandmarks[i+1];
-                int cy = faceLandmarks[i+2];
+        if (!recognized->faceLandmark.empty() && showFaceMesh) {
+            for (size_t i = 0; i < recognized->faceLandmark.size(); i += 3) {
+                int id = recognized->faceLandmark[i];
+                int cx = recognized->faceLandmark[i+1];
+                int cy = recognized->faceLandmark[i+2];
 
                 // Eye
                 if (id == 33 || id == 133 || id == 362 || id == 263) {
@@ -101,11 +133,11 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
                     cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(200, 200, 200), cv::FILLED);
                 }
             }
-        } else if (!faceLandmarks.empty() && !showFaceMesh) {
+        } else if (!recognized->faceLandmark.empty() && !showFaceMesh) {
              //Just draw all landmarks as little yellow dots
-            for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
-                int cx = faceLandmarks[i+1];
-                int cy = faceLandmarks[i+2];
+            for (size_t i = 0; i < recognized->faceLandmark.size(); i += 3) {
+                int cx = recognized->faceLandmark[i+1];
+                int cy = recognized->faceLandmark[i+2];
                 cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(0, 255, 255), cv::FILLED);
             }
         }
@@ -115,25 +147,26 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
     }
 
     // --- Hand Process ---
-    std::string handGesture;
-    std::vector<int> handLandmarks, handBbox;
+    std::vector<int> handBbox;
 
-    if (_handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox)) {
+    if (_handGestureRecognizingOperator->processFrame(frame, recognized->handGesture, recognized->handLandmark, handBbox)) {
         if (showHandLandmarks) {
             if (!handBbox.empty() && handBbox.size() == 4) {
                 cv::rectangle(frame, cv::Point(handBbox[0] - 20, handBbox[1] - 20), // Bbox'ı biraz büyüt
                               cv::Point(handBbox[2] + 20, handBbox[3] + 20),
                               cv::Scalar(255, 0, 255), 2); // Mor renk
-                cv::putText(frame, handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
+                cv::putText(frame, recognized->handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
                             cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Purple color
             }
 
-            for (size_t i = 0; i + 2 < handLandmarks.size(); i += 3) {
-                int cx = handLandmarks[i+1], cy = handLandmarks[i+2];
+            for (size_t i = 0; i + 2 < recognized->handLandmark.size(); i += 3) {
+                int cx = recognized->handLandmark[i+1], cy = recognized->handLandmark[i+2];
                 cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Yellow color
             }
         }
     }
+
+    publish(MessageType::RecognizedGesture,  recognized);
 }
 
 std::map<std::string, float> GestureRecognizerService::parseFaceInfoString(const std::string& faceInfoStr) {
@@ -170,38 +203,4 @@ void GestureRecognizerService::displayFPS(cv::Mat& frame, double& ptime) {
     cv::putText(frame, "FPS: " + std::to_string(static_cast<int>(fps)),
                 cv::Point(10, frame.rows - 20), cv::FONT_HERSHEY_SIMPLEX, 0.7,
                 cv::Scalar(255, 0, 255), 2, cv::LINE_AA);
-}
-
-
-void GestureRecognizerService::start()
-{
-    if (!_running) {
-        _running = true;
-        Logger::info("GestureRecognizerService is starting...");
-        if (!initialize()) {
-            Logger::error("GestureRecognizerService couldn't initialized correctly!");
-            stop();
-        }
-
-        VideoStreamService *video_stream_service = VideoStreamService::get_instance();
-        video_stream_service->subscribe(this);
-
-        _serviceThread = std::thread(&GestureRecognizerService::service_update_function, this);
-    }
-}
-
-void GestureRecognizerService::stop()
-{
-    if (_running){
-        _running = false;
-        VideoStreamService *video_stream_service = VideoStreamService::get_instance();
-        video_stream_service->un_subscribe(this);
-
-        Logger::info("GestureRecognizerService is stopping...");
-        if (_serviceThread.joinable()) {
-            _serviceThread.join();
-        }
-        Logger::info("GestureRecognizerService is stopped.");
-
-    }
 }

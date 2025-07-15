@@ -1,46 +1,36 @@
 #ifndef MAPPING_SERVICE_H
 #define MAPPING_SERVICE_H
 
-#include <opencv2/opencv.hpp>
-#include <vector>
-#include <map>
-#include <thread>
-#include <chrono>
-#include <iostream>
-#include <cmath>
-
 #include "service.h"
-#include "../controllers/distance_controller.h"  
-#include "../controllers/compass_controller.h"
-#include "../controllers/dc_motor_controller.h"
-
-class DistanceController; 
-class CompassController;
 
 
 class MappingService : public Service{
+
+
+public:
+    static MappingService *get_instance();
+
+    virtual ~MappingService();
+
 private:
     int _mapWidth, _mapHeight;
     int _centerX, _centerY;
     int _maxMagnitude;
     cv::Mat _polarPlot;
     static MappingService *_instance;
-    
-
 
     int _index = 0;
+    MappingService();
+    void service_function();
+    void go_to_point(int x, int y);
 
     cv::Point polarToCartesian(double angle, int magnitude) const;
     void updatePlot(double angle, int magnitude);
 
-public:
-    MappingService();
-    void go_to_point(int x, int y);
-    static MappingService *get_instance();
-    void service_update_function();
-    void start(); 
-    void stop();
+    //subscribed sensor_data
+    void subcribed_data_receive(MessageType type, MessageData* data);;
 
+    void sensor_data(Json values);
 
 
 };

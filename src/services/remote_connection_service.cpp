@@ -15,9 +15,16 @@ RemoteConnectionService *RemoteConnectionService::get_instance()
 RemoteConnectionService::RemoteConnectionService(int port) : Service("RemoteConnectionService")
 {
     _port = port;
-    _webSocket = WebSocketService::get_instance();
-    _videoStream = VideoStreamService::get_instance();
+
+}
+
+void RemoteConnectionService::service_function() {
+
+    _webSocketService = WebSocketService::get_instance();
+    _videoStreamService = VideoStreamService::get_instance();
     _robotControllerService = RobotControllerService::get_instance();
+
+    subscribe_to_service(_webSocketService);
 }
 
 RemoteConnectionService::~RemoteConnectionService()
@@ -25,36 +32,24 @@ RemoteConnectionService::~RemoteConnectionService()
     stop(); // Ensure everything is stopped in the destructor
 }
 
-void RemoteConnectionService::start() {
 
-    _webSocket->subscribe(this);
-    _sensor_values = _robotControllerService->get_sensor_values();
-    Logger::info("RemoteConnectionService is starting...");
-}
-
-
-void RemoteConnectionService::stop() {
-     Logger::info("RemoteConnectionService is stopping...");
-
-     Logger::info("RemoteConnectionService::_webSocket::un_subscribe");
-    _webSocket->un_subscribe(this); 
-     Logger::info("RemoteConnectionService::_videoStream::un_subscribe");
-    _videoStream->un_subscribe(this); 
-     Logger::info("RemoteConnectionService::_robotControllerService::un_subscribe");
-    _robotControllerService->un_subscribe(this);
-}
-
-
-void RemoteConnectionService::update_video_frame(const cv::Mat& frame) {
+void RemoteConnectionService::video_frame(const cv::Mat& frame) {
 
     std::vector<uchar> buffer;
     cv::imencode(".jpg", frame, buffer);
 
     try {
-        _webSocket->send_data(_hdl, buffer);
+        WebSocketTransferData *data = new WebSocketTransferData();
+        data->hdl = _hdl;
+        data->msg = std::string(buffer.begin(), buffer.end());
+        data->type = 2;
+        publish(MessageType::WebSocketTransfer, data);
 
-        std::string metadata_string = _sensor_values.dump();
-        _webSocket->send_message(_hdl, metadata_string);
+        data = new WebSocketTransferData();
+        data->hdl = _hdl;
+        data->msg = _sensor_values.dump();
+        data->type = 1;
+        publish(MessageType::WebSocketTransfer, data);
 
     } catch (const std::exception& e) {
         Logger::error("WebSocket Error: {} " + std::string(e.what()));
@@ -62,37 +57,70 @@ void RemoteConnectionService::update_video_frame(const cv::Mat& frame) {
 
 }
 
-void RemoteConnectionService::update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& msg)
+void RemoteConnectionService::web_socket_receive_message(websocketpp::connection_hdl hdl,  const std::string& msg)
 {
     if(msg == "on_open"){
         Logger::trace("new web socket connection extablished");
         _hdl = hdl;
-        Logger::trace("RemoteConnectionService::_videoStream::subscribe");
-        _videoStream->subscribe(this);
-        Logger::trace("RemoteConnectionService::_robotControllerService::subscribe");
-        _robotControllerService->subscribe(this);
+        subscribe_to_service(_videoStreamService);
+        subscribe_to_service(_robotControllerService);
     }
     else if(msg == "on_close"){
-        Logger::trace("web socket connection is closed.");
-        Logger::trace("RemoteConnectionService::_videoStream::un_subscribe");
-        _videoStream->un_subscribe(this); 
-        Logger::trace("RemoteConnectionService::_robotControllerService::un_subscribe");
-        _robotControllerService->un_subscribe(this);
+        unsubscribe_from_service(_videoStreamService);
+        unsubscribe_from_service(_robotControllerService);
     }
     else{
         Json message = Json::parse(msg);
         if (message.contains("talkie")) {
             return;
         }else{
-            _robotControllerService->control_motion(message);
+            ControlData *data = new ControlData();
+            data->controlData = message;
+            publish(MessageType::ControlData, data);
         }
     }
 }
 
-void RemoteConnectionService::update_sensor_values(nlohmann::json values){
+void RemoteConnectionService::sensor_data(nlohmann::json values){
     _sensor_values = values;
 }
 
 nlohmann::json RemoteConnectionService::get_sensor_values() {
     return _sensor_values;
+}
+
+void RemoteConnectionService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    switch (type) {
+        case MessageType::WebSocketReceive: {
+            if (data) {
+                std::string msg = static_cast<WebSocketReceiveData*>(data)->msg;
+                websocketpp::connection_hdl hdl = static_cast<WebSocketReceiveData*>(data)->hdl;
+                web_socket_receive_message(hdl, msg);
+            }
+            break;
+        }
+
+        case MessageType::VideoFrame: {
+            if (data) {
+                cv::Mat frame = static_cast<VideoFrameData*>(data)->frame;
+                video_frame(frame);
+            }
+
+            break;
+        }
+
+        case MessageType::SensorData: {
+            if (data) {
+                Json sensor_json = static_cast<SensorData*>(data)->sensorData;
+                sensor_data(sensor_json);
+            }
+
+            break;
+        }
+
+
+    }
+
 }

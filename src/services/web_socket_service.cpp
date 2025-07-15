@@ -1,5 +1,8 @@
 #include "web_socket_service.h"
 #include <memory>
+#include <variant>
+
+#include "remote_connection_service.h"
 #include "../logger.h"
 
 WebSocketService* WebSocketService::_instance = nullptr;
@@ -13,6 +16,10 @@ WebSocketService *WebSocketService::get_instance()
     return _instance;
 }
 
+WebSocketService::~WebSocketService() {
+
+}
+
 WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.init_asio();
     _server.clear_access_channels(websocketpp::log::alevel::all);
@@ -21,16 +28,19 @@ WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.set_message_handler(bind(&WebSocketService::on_message, this, std::placeholders::_1, std::placeholders::_2));
 }
 
-void WebSocketService::start(const std::string& address, uint16_t port) {
+void WebSocketService::service_function() {
+    std::string address = "192.168.1.44";
+    uint16_t port = 8080;
 
-    if (!_running){
-        _running = true;
-       Logger::info("WebSocketService is starting...");
-        _serviceThread = std::thread(&WebSocketService::run, this, address, port); // Start server in a new thread
-    }
+    Logger::info("WebSocketService is starting...");
+    RemoteConnectionService* _remoteConnectionService = RemoteConnectionService::get_instance();
+    subscribe_to_service(_remoteConnectionService);
+
+    run_web_server(address, port);
 }
 
-void WebSocketService::run(const std::string &address, uint16_t port)
+
+void WebSocketService::run_web_server(const std::string &address, uint16_t port)
 {
     try {
         websocketpp::lib::error_code ec;
@@ -59,42 +69,57 @@ void WebSocketService::run(const std::string &address, uint16_t port)
         Logger::error("Other exception occurred");
     }
 
-    _running = false;
-}
-
-void WebSocketService::stop() {
-
-    if (_running){
-
-        _running = false;
-        Logger::info("WebSocketService is stopping...");
-        _server.stop_listening();  
-        _server.stop();            
-
-        if (_serviceThread.joinable()) {
-            _serviceThread.join(); 
-        }
-        Logger::info("WebSocketService is stopped.");
-    }
-
 }
 
 
 void WebSocketService::on_open(websocketpp::connection_hdl hdl) {
     Logger::info("Connection opened!");
-    _hdl = hdl;  
-   std::string msg = "on_open";
-    update_web_socket_message(hdl, msg);
+    WebSocketReceiveData *data = new WebSocketReceiveData();
+    data->msg ="on_open";
+    data->hdl = hdl;
+    publish(MessageType::WebSocketReceive, data);
 }
 
 void WebSocketService::on_message(websocketpp::connection_hdl hdl, Server::message_ptr msg) {
-    update_web_socket_message(hdl, msg->get_payload());
+    WebSocketReceiveData *data = new WebSocketReceiveData();
+    data->msg = msg->get_payload();
+    data->hdl = hdl;
+    publish(MessageType::WebSocketReceive, data);
 }
+
+void WebSocketService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    switch (type) {
+        case MessageType::WebSocketTransfer: {
+            if(data) {
+
+                websocketpp::connection_hdl &hdl = static_cast<WebSocketTransferData*>(data)->hdl;
+                std::string &mg = static_cast<WebSocketTransferData*>(data)->msg;
+                uint8_t &dataType =static_cast<WebSocketTransferData*>(data)->type;
+
+                if (dataType == 1)
+                    send_message(hdl, mg);
+                else if (dataType == 2) {
+                    std::vector<uchar> buffer(mg.begin(), mg.end());
+                    send_data(hdl, buffer);
+                }
+            }
+            break;
+        }
+    }
+}
+
+
 
 void WebSocketService::on_close(websocketpp::connection_hdl hdl) {
     Logger::info("Connection closed!");
-    std::string msg =  "on_close";
-    update_web_socket_message(hdl, msg);
+
+    WebSocketReceiveData *data = new WebSocketReceiveData();
+    data->msg =  "on_close";
+    data->hdl = hdl;
+    publish(MessageType::WebSocketReceive, data);
+
 }
 
 void WebSocketService::send_message(websocketpp::connection_hdl hdl, const std::string& message) {

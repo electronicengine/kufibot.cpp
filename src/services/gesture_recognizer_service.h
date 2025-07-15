@@ -8,10 +8,15 @@
 #include <opencv2/opencv.hpp>
 #include <map>
 #include <string>
-#include "../subscriber.h"
-#include "../publisher.h"
 
-class GestureRecognizerService : public Service, public Subscriber, public Publisher{
+
+class GestureRecognizerService : public Service{
+
+public:
+    virtual ~GestureRecognizerService();
+    static GestureRecognizerService *get_instance();
+
+
 private:
     // Kamera ve işleme nesneleri
     cv::VideoCapture cap;
@@ -26,20 +31,23 @@ private:
     // Python ortam yolu
     std::string venvPath;
 
+    static GestureRecognizerService *_instance;
+
+    GestureRecognizerService(const std::string& name = "GestureService");
+
+
     // İşleme fonksiyonları
     void processFrame(cv::Mat& frame);
     std::map<std::string, float> parseFaceInfoString(const std::string& faceInfoStr);
     void displayFPS(cv::Mat& frame, double& ptime);
 
-public:
-    GestureRecognizerService(const std::string& name);
-    ~GestureRecognizerService();
-
     bool initialize();
-    void service_update_function() override;
-    void update_video_frame(const cv::Mat& frame);
-    void start();
-    void stop();
+    void service_function();
+
+    //subscribed video_frame
+    void subcribed_data_receive(MessageType type, MessageData* data);
+
+    void video_frame(const cv::Mat& frame);
 
 };
 

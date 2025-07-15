@@ -25,7 +25,6 @@ class CompassRtGraphWindow : public GraphWindow
     auto operator = (CompassRtGraphWindow&&) noexcept -> CompassRtGraphWindow& = delete;
 
  
-  private:
 
 };
 

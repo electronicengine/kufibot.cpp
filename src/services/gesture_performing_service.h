@@ -6,43 +6,40 @@
 #include <atomic>
 
 #include <string>
-#include "../subscriber.h"
 #include "service.h"
 #include "robot_controller_service.h"
 #include "../operators/speech_performing_operator.h"
-#include "mapping_service.h"
 #include "interactive_chat_service.h"
 #include "web_socket_service.h"
 
 
-class GesturePerformingService : public Subscriber, public Service {
-
-private:
-    static GesturePerformingService *_instance;
-    RobotControllerService *_robotControllerService;
-    InteractiveChatService *_interactiveChatService;
-    std::queue<std::string> _gestureQueue; 
-    std::mutex _queueMutex;                
-    std::condition_variable _cv;           
-    std::thread _workerThread;             
-    std::atomic<bool> _gestureWorking{false};
-    GesturePerformingService();
+class GesturePerformingService : public Service {
 
 public:
 
+    virtual ~GesturePerformingService();
     static GesturePerformingService *get_instance();
-    ~GesturePerformingService();
+
+
+private:
+    static GesturePerformingService *_instance;
+
+    std::thread _workerThread;
+    std::atomic<bool> _gestureWorking{false};
+    GesturePerformingService();
 
     void greeter();
     void knowledgeable();
     void optimistic();
     void pessimistic();
     void curious();
-    void service_update_function();
+    void service_function();
 
-    void update_gesture(const std::string& gesture);
-    void start();
-    void stop(); 
+    //subscribed Data Functions
+    void subcribed_data_receive(MessageType type, MessageData* data);
+    void recognized_gesture(const std::string& _faceGesture, std::vector<int> _faceLandMark, const std::string& _handGesture, std::vector<int> _handLandmark);
+    void llm_response(const std::string& response);
+
 };
 
 #endif

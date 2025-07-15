@@ -44,8 +44,6 @@ ChatWindow::ChatWindow(finalcut::FWidget *parent): SubWindow(parent)
     add_clicked_callback(&_sendButton, this, &ChatWindow::send_promt);
     add_clicked_callback(&_loadModelButton, this, &ChatWindow::load_model);
 
-    _interactiveChatService = InteractiveChatService::get_instance();
-
 }
 
 ChatWindow::~ChatWindow() noexcept
@@ -64,37 +62,14 @@ void ChatWindow::send_promt()
             _answerView.redraw();
         };
 
-    _interactiveChatService->query(promt, response_callback);
+    //_interactiveChatService->query(promt, response_callback);
 }
 
 
 
 void ChatWindow::load_model()
 {
-    LlamaOptions llama_options;
 
-    llama_options.llamaChatModelPath = _llamaChatModelPath.getText().toString();
-    llama_options.llamaEmbeddingModelPath = _llamaEmbeddingModelPath.getText().toString();
-
-    llama_options.temperature = _temperature.getText().toDouble();
-    llama_options.maxTokenSize = _maxTokenSize.getText().toInt();
-    llama_options.nThreads = _nThreads.getText().toInt();
-
-    llama_options.topK = _topK.getText().toDouble();
-    llama_options.topP = _topP.getText().toDouble();
-    llama_options.poolingType = _poolingType.getText().toInt();
-
-    std::thread loadThread([this, llama_options]() {
-        if (_interactiveChatService->load_model(llama_options)) {
-            _answerView.append("Chat Model Loaded");
-            _answerView.redraw();
-        }else {
-            _answerView.append("Chat Model couldn't load!");
-            _answerView.redraw();
-        }
-    });
-
-    loadThread.detach();
 }
 
 void ChatWindow::onKeyPress (finalcut::FKeyEvent* ev)

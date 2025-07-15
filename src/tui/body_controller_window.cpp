@@ -20,7 +20,7 @@ BodyControllerWindow::BodyControllerWindow(finalcut::FWidget *parent) : SubWindo
     add_clicked_callback(&_bodyTurnRightButton, this, &BodyControllerWindow::turnRight);
     add_clicked_callback(&_bodyStopButton, this, &BodyControllerWindow::stop);
 
-    _robotControllerService = RobotControllerService::get_instance();
+    //_robotControllerService = RobotControllerService::get_instance();
 }
 
 BodyControllerWindow::~BodyControllerWindow() noexcept
@@ -31,28 +31,28 @@ BodyControllerWindow::~BodyControllerWindow() noexcept
 void BodyControllerWindow::forward()
 {
     int magnitude = _magnitude.getValue();
-    _robotControllerService->control_body(90, magnitude);
+    //_robotControllerService->control_body(90, magnitude);
 }
 
 void BodyControllerWindow::backward()
 {
     int magnitude = _magnitude.getValue();
-    _robotControllerService->control_body(-90, magnitude);
+    //_robotControllerService->control_body(-90, magnitude);
 }
 
 void BodyControllerWindow::stop()
 {
-    _robotControllerService->control_body(0, 0);
+    //_robotControllerService->control_body(0, 0);
 }
 
 void BodyControllerWindow::turnRight()
 {
     int magnitude = _magnitude.getValue();
-    _robotControllerService->control_body(0, magnitude);
+    //_robotControllerService->control_body(0, magnitude);
 }
 
 void BodyControllerWindow::turnLeft()
 {
     int magnitude = _magnitude.getValue();
-    _robotControllerService->control_body(180, magnitude);
+    //_robotControllerService->control_body(180, magnitude);
 }

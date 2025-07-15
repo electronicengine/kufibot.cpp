@@ -10,8 +10,6 @@
 #undef K
 #undef null
 
-#include "../services/robot_controller_service.h"
-
 
 using namespace finalcut;
 
@@ -40,8 +38,6 @@ private:
     FSpinBox _eyeRight{this};
     FButton _setValuesButton{"Save", this};
 
-    RobotControllerService *_robotControllerService;
-
     void set_servo_values();
     void show_current_servo_values();
 
@@ -51,4 +47,4 @@ void onShow(finalcut::FShowEvent *) override;
 
 };
 
-#endif // GRAPHWINDOW_H
+#endif // SERVOCONTROLLERWINDOW_H

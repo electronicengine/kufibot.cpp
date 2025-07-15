@@ -8,11 +8,8 @@
 #undef K
 #undef null
 
-#include "../services/interactive_chat_service.h"
 
 using namespace finalcut;
-
-
 
 class ChatWindow : public SubWindow {
 public:
@@ -61,8 +58,6 @@ public:
     FTextView _answerView{this};
     FButton _sendButton{this};
     FButton _loadModelButton{this};
-
-    InteractiveChatService *_interactiveChatService;
 
     void send_promt();
     void load_model();

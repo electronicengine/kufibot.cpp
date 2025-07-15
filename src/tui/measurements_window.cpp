@@ -21,8 +21,6 @@ MeasurementsWindow::MeasurementsWindow(finalcut::FWidget *parent) : SubWindow(pa
     _voltage.setLabelText ("Voltage");
     _voltage.setDisable();
 
-    _robotControllerService = RobotControllerService::get_instance();
-
 }
 
 MeasurementsWindow::~MeasurementsWindow() noexcept
@@ -49,7 +47,6 @@ void MeasurementsWindow::update_sensor_values(Json values)
 
 void MeasurementsWindow::onClose(finalcut::FCloseEvent *)
 {
-    _robotControllerService->un_subscribe(this);
     hide();
     auto  parent = getParent();
     activate_window((FDialog*) parent);
@@ -57,7 +54,6 @@ void MeasurementsWindow::onClose(finalcut::FCloseEvent *)
 
 void MeasurementsWindow::onShow(finalcut::FShowEvent *)
 {
-    _robotControllerService->subscribe(this);
     activate_window(this);
 
 }

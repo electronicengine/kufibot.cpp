@@ -41,7 +41,6 @@ ServoControllerWindow::ServoControllerWindow(finalcut::FWidget *parent) : SubWin
 
     _setValuesButton.setGeometry(finalcut::FPoint{12,25}, finalcut::FSize{8, 2});
     add_clicked_callback (&_setValuesButton, this, &ServoControllerWindow::set_servo_values);
-    _robotControllerService = RobotControllerService::get_instance();
 
 }
 
@@ -62,14 +61,15 @@ void ServoControllerWindow::set_servo_values()
     values["eye_left"] = _eyeLeft.getValue();
     values["eye_right"] = _eyeRight.getValue();
 
-    _robotControllerService->set_servo_joint_map(values);
+   // _robotControllerService->set_servo_joint_map(values);
 
 }
 
 void ServoControllerWindow::show_current_servo_values()
 {
 
-    std::map<std::string, int> values = _robotControllerService->get_servo_joint_map();
+  //  std::map<std::string, int> values = _robotControllerService->get_servo_joint_map();
+    std::map<std::string, int> values;
 
     _rightArm.setValue (values["rigth_arm"]);
     _rightArm.redraw();

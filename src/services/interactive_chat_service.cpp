@@ -1,5 +1,10 @@
 #include "interactive_chat_service.h"
+#include "gesture_performing_service.h"
+#include "remote_connection_service.h"
+#include "tui_service.h"
 #include "../logger.h"
+
+
 InteractiveChatService* InteractiveChatService::_instance = nullptr;
 
 InteractiveChatService *InteractiveChatService::get_instance()
@@ -12,21 +17,6 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
-    _speechPerformingOperator = SpeechPerformingOperator::get_instance();
-    _speechRecognizingOperator = SpeechRecognizingOperator::get_instance();
-    _robotControllerService = RobotControllerService::get_instance();
-    _webSocketService = WebSocketService::get_instance();
-    _videoStreamService = VideoStreamService::get_instance();
-
-    Logger::info("Speech Process Model loading...");
-    _speechPerformingOperator->loadModel();
-    Logger::info("Speech Recognition Model loading...");
-    _speechRecognizingOperator->load_model();
-    Logger::info("Llama Chat Model loading...");
-    bool ret = _llamaChatOperator.loadChatModel();
-    if (!ret) {
-        Logger::error("Llama Chat Model loading failed!");
-    }
 
 }
 
@@ -35,154 +25,75 @@ InteractiveChatService::~InteractiveChatService()
 {
 }
 
-bool InteractiveChatService::query(const std::string& message, std::function<void(const std::string&)> onReceiveLlamaResponse){
+bool InteractiveChatService::send_query(const std::string& message){
     std::lock_guard<std::mutex> lock(_dataMutex);
 
-    // if (_queryRunning) {
-    //     return false;
-    // } else {
+    _llamaChatOperator.chat(message);
 
-        // std::function<void(const ollama::response&)> response_callback =
-        //     [this, onReceiveLlamaResponse](const ollama::response& response) {
-        //
-        //         std::string partial = response.as_simple_string();
-        //
-        //         _responseStr += partial;
-        //
-        //         if (partial.find("#") != std::string::npos) {
-        //
-        //             push_speak_string(_responseStr);
-        //             onReceiveLlamaResponse(_responseStr);
-        //             _responseStr.clear();
-        //         }
-        //
-        //         if (response.as_json()["done"]==true) { _queryRunning = false; _responseStr.clear();}
-        //     };
-        _llamaChatOperator.setCallBackFunction(onReceiveLlamaResponse);
-        _llamaChatOperator.chat(message);
+    return true;
 
-        //_queryRunning = true;
-        return true;
-    // }
 }
 
 
-bool InteractiveChatService::load_model(const LlamaOptions &llamaOptions)
+void InteractiveChatService::query_response_callback(const std::string &response) {
+    LLMResponseData *data = new LLMResponseData();
+    data->response = response;
+
+    publish(MessageType::LLMResponse, data);
+    if (response == "<end>") {
+        _queryRunning = false;
+        Logger::info("Llama Query finished!");
+    }
+}
+
+bool InteractiveChatService::load_model()
 {
     _llamaChatOperator.setCallBackFunction([this](const std::string& text) {
-
+        query_response_callback(text);
     });
 
-    return _llamaChatOperator.loadChatModel(llamaOptions.llamaChatModelPath);
+    Logger::info("Llama Chat Model loading...");
+    bool ret = _llamaChatOperator.loadChatModel();
+    if (!ret) {
+        Logger::error("Llama Chat Model loading failed!");
+    }
+
+    return ret;
 
 }
 
-void InteractiveChatService::service_update_function()
+void InteractiveChatService::service_function()
 {
-    while (_running) {
-        std::string text;
+    load_model();
 
-        {
-            std::unique_lock<std::mutex> lock(_queueMutex);
-            _queueCondition.wait(lock, [this] {
-                return !_stringQueue.empty() || !_running;
-            });
-            if (!_running && _stringQueue.empty()) {
-                break;
+    subscribe_to_service(TuiService::get_instance());
+    subscribe_to_service(RemoteConnectionService::get_instance());
+    subscribe_to_service(GesturePerformingService::get_instance());
+
+}
+
+void InteractiveChatService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    switch (type) {
+        case MessageType::LLMQuery: {
+            if (data) {
+                std::string queryMsg = static_cast<LLMQueryData*>(data)->query;
+                llm_query(queryMsg);
             }
-            text = _stringQueue.front();
-            _stringQueue.pop_front();
-        }
-
-
-        if (!text.empty()) {
-            std::string sentence;
-            std::string gesture;
-            size_t start = text.find('/') + 1;
-            size_t end = text.find('#');    
-
-            if (start != std::string::npos && end != std::string::npos && start < end) {
-                sentence = text.substr(0, start -1);
-                gesture = text.substr(start, end - start); 
-            }
-    
-            update_llama_gesture(gesture);
-            _speechPerformingOperator->speakText(sentence);
+            break;
         }
     }
 }
 
-
-void InteractiveChatService::push_speak_string(const std::string& text) {
-    {
-        std::lock_guard<std::mutex> lock(_queueMutex);
-        _stringQueue.push_back(text);
+void InteractiveChatService::llm_query(const std::string &query) {
+    if (_queryRunning) {
+        Logger::warn("llama Query is already running!");
+    }else {
+        Logger::info("Llama Query is started!");
+        _queryRunning = true;
+        send_query(query);
     }
-    _queueCondition.notify_one();
+
 }
 
-void InteractiveChatService::update_web_socket_message(websocketpp::connection_hdl hdl, const std::string &msg)
-{
-    (void) hdl;
-
-    if(msg == "on_open"){
-        Logger::trace( "new web socket connection extablished");
-    }
-    else if(msg == "on_close"){
-        Logger::trace( "web socket connection is closed." );
-    }
-    else{
-        Json message = Json::parse(msg);
-        if (message.contains("talkie")) {
-            std::string incoming_talkie = message["talkie"];
-            Logger::trace( "incoming_talkie: {}" + incoming_talkie );
-
-        std::function<void(const ollama::response&)> response_callback =
-            [=](const ollama::response& response) {
-                Logger::trace( response);
-                if (response.as_json()["done"]==true) { _queryRunning =true; }
-
-            };
-
-            query(incoming_talkie, response_callback);
-
-
-        }
-    }
-}
-
-void InteractiveChatService::start()
-{
-    if (!_running) { // Ensure the thread is not already running
-        _running = true;
-
-
-        _serviceThread = std::thread(&InteractiveChatService::service_update_function, this);
-        Logger::info("InteractiveChatService::_webSocketService::subscribe");
-        _webSocketService->subscribe(this);
-        Logger::info("InteractiveChatService is starting...");
-
-    }
-}
-
-void InteractiveChatService::stop()
-{
-    if (_running){
-        _running = false;
-        Logger::info("InteractiveChatService is stopping..." );
-
-        _speechRecognizingOperator->stop_listen();
-        _speechRecognizingOperator->close();
-
-        if (_serviceThread.joinable()) {
-            _serviceThread.join(); 
-        }
-            {
-        std::lock_guard<std::mutex> lock(_queueMutex);
-        _running = false;
-        }
-        // Notify all waiting threads to wake up and exit
-        _queueCondition.notify_all();
-        Logger::info("InteractiveChatService is stopped."  );
-    }
-}

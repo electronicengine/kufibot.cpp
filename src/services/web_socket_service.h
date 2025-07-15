@@ -3,49 +3,40 @@
 #ifndef WEB_SOCKET_SERVICE_H
 #define WEB_SOCKET_SERVICE_H
 
-#include <iostream>
-#include <fstream>
 #include <string>
 #include <nlohmann/json.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
-#include <boost/asio/ip/address.hpp> 
-#include <boost/asio/ip/tcp.hpp> 
-#include <functional>
-#include <csignal>
-#include <mutex>
 #include <condition_variable>
-#include <queue>
-
-
 #include "service.h"
-#include "../publisher.h"
+#include "../subscriber.h"
 
 #define ASIO_STANDALONE
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
 
-class WebSocketService : public Publisher, public Service {
+class WebSocketService : public Service {
 public:
 
     static WebSocketService* get_instance();
-    void run(const std::string& address, uint16_t port);
-    void send_message(websocketpp::connection_hdl hdl, const std::string& message);
-    void send_data(websocketpp::connection_hdl hdl, const std::vector<uchar>& buffer);
-    void service_update_function(){}
-
-    void start(const std::string& address, uint16_t port); 
-    void stop();                
+    virtual ~WebSocketService();
 
 private:
     Server _server;
     websocketpp::connection_hdl _hdl;
     static WebSocketService* _instance;
+
     WebSocketService();
+    void service_function();
+    void run_web_server(const std::string& address, uint16_t port);
+    void send_message(websocketpp::connection_hdl hdl, const std::string& message);
+    void send_data(websocketpp::connection_hdl hdl, const std::vector<uchar>& buffer);
     void on_open(websocketpp::connection_hdl hdl);
     void on_close(websocketpp::connection_hdl hdl);
     void on_message(websocketpp::connection_hdl hdl, Server::message_ptr msg);
 
+    //subscribed WebSocketTransfer
+    void subcribed_data_receive(MessageType type, MessageData *data);
 };
 
 #endif

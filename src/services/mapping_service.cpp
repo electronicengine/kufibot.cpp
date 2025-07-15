@@ -1,4 +1,5 @@
 #include "mapping_service.h"
+#include "robot_controller_service.h"
 
 MappingService* MappingService::_instance = nullptr;
 
@@ -8,6 +9,9 @@ MappingService *MappingService::get_instance()
         _instance = new MappingService();
     }
     return _instance;
+}
+
+MappingService::~MappingService() {
 }
 
 
@@ -58,8 +62,9 @@ void MappingService::go_to_point(int targetX, int targetY)
     // motor->stop();
 }
 
-void MappingService::service_update_function()
+void MappingService::service_function()
 {
+    subscribe_to_service(RobotControllerService::get_instance());
 
     // _mapWidth = 1000;
     // _mapHeight = 1000; 
@@ -134,22 +139,17 @@ void MappingService::updatePlot(double angle, int magnitude) {
     (void)magnitude;
 }
 
-void MappingService::start() {
-    if (!_running) { 
-        _running = true;
+void MappingService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
 
-        _serviceThread = std::thread(&MappingService::service_update_function, this);
-    }
-}
 
-void MappingService::stop()
-{
-    if (_running){
-        _running = false;
+    switch (type) {
+        case MessageType::SensorData: {
+            if (data) {
 
-        if (_serviceThread.joinable()) {
-            _serviceThread.join(); 
+            }
+            break;
         }
-
     }
 }
+

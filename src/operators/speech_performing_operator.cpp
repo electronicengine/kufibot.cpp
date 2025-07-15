@@ -46,7 +46,7 @@ void SpeechPerformingOperator::playAudio() {
     int err;
 
     if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-        Logger::error(("Error opening PCM device: {} ", std::string(mpg123_plain_strerror(err))));
+        Logger::error("Error opening PCM device: {} ", mpg123_plain_strerror(err));
 
         return;
     }
@@ -59,7 +59,7 @@ void SpeechPerformingOperator::playAudio() {
     unsigned int sampleRate = 22050;
     snd_pcm_hw_params_set_rate_near(pcmHandle, params, &sampleRate, 0);
     if ((err = snd_pcm_hw_params(pcmHandle, params)) < 0) {
-        Logger::error(("Error setting PCM parameters: {} ", std::string(mpg123_plain_strerror(err))));
+        Logger::error("Error setting PCM parameters: {} ", mpg123_plain_strerror(err));
         snd_pcm_close(pcmHandle);
         return;
     }

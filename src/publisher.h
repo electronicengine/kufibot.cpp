@@ -18,37 +18,17 @@ class Publisher {
 protected:
     std::vector<Subscriber*> _subscribers;  
     std::mutex _mutex;
+    std::string _publisherName;
+
 
 public:
+    Publisher(std::string serviceName) : _publisherName(serviceName) {};
     virtual ~Publisher() = default;
+
 
     void subscribe(Subscriber* subscriber);
     void un_subscribe(Subscriber* subscriber);
-
-
-    void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& msg){
-        for (const auto& subscriber : _subscribers) {
-            subscriber->update_web_socket_message(hdl, msg); 
-        }
-    }
-
-    void update_video_frame(const cv::Mat& frame){
-        for (const auto& subscriber : _subscribers) {
-            subscriber->update_video_frame(frame); 
-        }
-    }
-
-    void update_sensor_values(Json values){
-        for (const auto& subscriber : _subscribers) {
-            subscriber->update_sensor_values(values); 
-        }
-    }
-
-    void update_llama_gesture(const std::string& gesture){
-        for (const auto& subscriber : _subscribers) {
-            subscriber->update_gesture(gesture); 
-        }
-    }
+    void publish(MessageType type, MessageData* data);
 
 };
 

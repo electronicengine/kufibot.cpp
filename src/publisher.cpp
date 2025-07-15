@@ -17,3 +17,14 @@ void Publisher::un_subscribe(Subscriber* subscriber) {
         _subscribers.end()
     );
 }
+
+void Publisher::publish(MessageType type, MessageData* data) {
+
+    for (const auto& sub : _subscribers) {
+        if (sub) {
+            sub->subcribed_data_receive(type, data);
+            delete data;
+        }
+    }
+
+}

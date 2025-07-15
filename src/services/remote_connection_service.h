@@ -3,22 +3,9 @@
 
 
 #include <opencv2/opencv.hpp>
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
-#include <thread>
-#include <atomic>
-#include <iostream>
-#include <vector>
 #include <string>
-#include <chrono>
-#include <nlohmann/json.hpp>
-#include <iostream>
-#include <functional>
-#include <map> 
-#include <unordered_map>
-#include <chrono>
-#include <thread>
+
 
 #include "service.h"
 #include "../subscriber.h"
@@ -28,32 +15,36 @@
 
 
 
-class RemoteConnectionService : public Subscriber, public Service{
+class RemoteConnectionService : public Service{
+
+
+public:
+
+    static RemoteConnectionService *get_instance();
+    virtual ~RemoteConnectionService();
 
 private:
     int _port;
     std::string _ip;
-    WebSocketService *_webSocket;
-    VideoStreamService *_videoStream;
+    WebSocketService *_webSocketService;
+    VideoStreamService *_videoStreamService;
     RobotControllerService *_robotControllerService;
     websocketpp::connection_hdl _hdl;
     Json _sensor_values;
     static RemoteConnectionService *_instance;
 
+
     RemoteConnectionService(int port = 8765);
+    void service_function();
 
-public:
-
-    static RemoteConnectionService *get_instance();
-    ~RemoteConnectionService();
-
-    void start();
-    void stop(); 
-    void service_update_function(){}
-    void update_video_frame(const cv::Mat& frame);
-    void update_web_socket_message(websocketpp::connection_hdl hdl,  const std::string& mg);
-    void update_sensor_values(nlohmann::json values);
     nlohmann::json get_sensor_values();
+
+    //subscribed video_frame, web_socket_receive_message,sensor_data
+    virtual void subcribed_data_receive(MessageType type, MessageData* data);
+
+    void video_frame(const cv::Mat& frame);
+    void web_socket_receive_message(websocketpp::connection_hdl hdl,  const std::string& msg);
+    void sensor_data(nlohmann::json values);
 
 
 };

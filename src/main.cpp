@@ -33,13 +33,13 @@ void commandLinePrompt() {
             interactive_chat_service->stop();
             break;
         }else if(input == "sensors") {
-            Logger::info(remote_connection_service->get_sensor_values());
+            // Logger::info(remote_connection_service->get_sensor_values());
         }else {
-            interactive_chat_service->query(input, [](const std::string& message) {
-
-                printf("%s", message.c_str());
-                fflush(stdout);
-            });
+            // interactive_chat_service->query(input, [](const std::string& message) {
+            //
+            //     printf("%s", message.c_str());
+            //     fflush(stdout);
+            // });
         }
     }
 }
@@ -62,7 +62,7 @@ auto main(int argc, char *argv[]) -> int {
     web_socket_service = WebSocketService::get_instance();
     interactive_chat_service = InteractiveChatService::get_instance();
 
-    web_socket_service->start("192.168.1.44", 8765);
+    web_socket_service->start();
     video_stream_service->start();
     robot_controller_service->start();
     remote_connection_service->start();

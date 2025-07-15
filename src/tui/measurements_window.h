@@ -11,11 +11,10 @@
 #undef null
 
 #include "../subscriber.h"
-#include "../services/robot_controller_service.h"
 
 
 
-class MeasurementsWindow : public SubWindow, public Subscriber
+class MeasurementsWindow : public SubWindow
 {
   public:
     explicit MeasurementsWindow (finalcut::FWidget* = nullptr);
@@ -29,7 +28,7 @@ class MeasurementsWindow : public SubWindow, public Subscriber
     auto operator = (const MeasurementsWindow&) -> MeasurementsWindow& = delete;
 
     auto operator = (MeasurementsWindow&&) noexcept -> MeasurementsWindow& = delete;
-    void update_sensor_values(Json values) override;
+    void update_sensor_values(Json values);
 
 
 private:
@@ -38,8 +37,6 @@ private:
     finalcut::FLineEdit _distance {this};
     finalcut::FLineEdit _current {this};
     finalcut::FLineEdit _voltage {this};
-
-    RobotControllerService *_robotControllerService;
 
     void onClose (finalcut::FCloseEvent*) override;
     void onShow  (finalcut::FShowEvent*) override;

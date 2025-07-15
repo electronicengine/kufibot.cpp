@@ -16,8 +16,8 @@ include_directories(${SERVICES_INC_DIR})
 add_library(${TARGET} SHARED ${SRCS}
         gesture_recognizer_service.cpp
         gesture_recognizer_service.h
-        ui_service.cpp
-        ui_service.h)
+        tui_service.cpp
+        tui_service.h)
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE controllers operators)

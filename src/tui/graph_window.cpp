@@ -41,16 +41,16 @@ FPoint GraphWindow::transform_to_screen(double x, double y) const
 }
 
 void GraphWindow::onClose(finalcut::FCloseEvent *close_event) {
-  RobotControllerService *robotControllerService = RobotControllerService::get_instance();
-  robotControllerService->un_subscribe(this);
+  // RobotControllerService *robotControllerService = RobotControllerService::get_instance();
+  // robotControllerService->un_subscribe(this);
   hide();
   auto  parent = getParent();
   activate_window((FDialog*) parent);
 }
 
 void GraphWindow::onShow(finalcut::FShowEvent *show_event) {
-  RobotControllerService *robotControllerService = RobotControllerService::get_instance();
-  robotControllerService->subscribe(this);
+  // RobotControllerService *robotControllerService = RobotControllerService::get_instance();
+  // robotControllerService->subscribe(this);
   activate_window(this);
 }
 
@@ -187,7 +187,7 @@ void GraphWindow::draw_line(double angle, double magnitude, FColor color, bool o
   {
     // y = slope * x + intercept => x = (y - intercept) / slope
     int x = static_cast<int>((y - intercept) / slope);
-    if (x >= 0 && x < getWidth())
+    if (x >= 0 && x < (int)getWidth())
     {
       FPoint p{x, y};
       print() << p << UniChar::BlackCircle;

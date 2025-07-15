@@ -10,11 +10,10 @@
 #undef null
 
 #include "../subscriber.h"
-#include "../services/robot_controller_service.h"
 
 using namespace finalcut;
 
-class GraphWindow : public SubWindow, public Subscriber
+class GraphWindow : public SubWindow
 {
   public:
     explicit GraphWindow (finalcut::FWidget* = nullptr, double xMin = -10, double xMax = 10, double yMin = -10, double yMax = 10);
@@ -33,7 +32,7 @@ class GraphWindow : public SubWindow, public Subscriber
     void add_realtime_point(double val, double interval = 1);
     void draw_line(double x1, double y1, double x2, double y2, FColor color);
     void draw_line(double angle, double magnitude, FColor color, bool overWritePrevious = true);
-    void update_sensor_values(Json values) override;
+    void update_sensor_values(Json values);
 
   private:
     void draw() override;

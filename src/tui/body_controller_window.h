@@ -9,8 +9,6 @@
 #undef K
 #undef null
 
-#include "../services/robot_controller_service.h"
-
 using namespace finalcut;
 
 class BodyControllerWindow : public SubWindow
@@ -35,9 +33,6 @@ class BodyControllerWindow : public SubWindow
     FButton _bodyStopButton{finalcut::UniChar::BlackCircle, this};
     FSpinBox _magnitude{this};
 
-    RobotControllerService *_robotControllerService;
-
-    
     void forward();
     void backward();
     void stop();

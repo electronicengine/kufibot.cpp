@@ -38,43 +38,24 @@ VideoStreamService::~VideoStreamService() {
     }
 }
 
-void VideoStreamService::start() {
-    if (!_running) {
-
-        _cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-        _cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-
-        if(!_cap.isOpened()){
-            _cap.open(_cameraIndex, cv::CAP_V4L2);
-            if(!_cap.isOpened()) {
-                Logger::error("Error: Could not open the camera.");
-                return;
-            }
-        }
-
-        _running = true;
-        Logger::info("VideoStreamService is starting...");
-
-        _serviceThread = std::thread(&VideoStreamService::service_update_function, this);
-    }
-}
-
-void VideoStreamService::service_update_function(){
+void VideoStreamService::service_function(){
     cv::Mat frame;
+
+    _cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    _cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+
+    if(!_cap.isOpened()){
+        _cap.open(_cameraIndex, cv::CAP_V4L2);
+        if(!_cap.isOpened()) {
+            Logger::error("Error: Could not open the camera.");
+            return;
+        }
+    }
+
+    Logger::info("VideoStreamService is starting...");
 
     while (_running ) {
 
-        // Wait until there are subscribers
-        if (_subscribers.empty()) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            continue;
-        }
-        // Wait until cap is opened
-        if(!_cap.isOpened()) {
-            _cap.open(_cameraIndex, cv::CAP_V4L2);
-            if (!_cap.isOpened())
-                continue;
-        }
         _cap >> frame;
         _frame = frame;
 
@@ -84,21 +65,8 @@ void VideoStreamService::service_update_function(){
             continue;
         }
 
-        update_video_frame(frame);
-    }
-}
-
-void VideoStreamService::stop() {
-
-    if (_running){
-
-        _running = false;
-
-        Logger::info("VideoStreamService is stopping...");
-        if (_serviceThread.joinable()) {
-            _serviceThread.join();
-        }
-        _cap.release();
-        Logger::info("VideoStreamService is stopped");
+        VideoFrameData *data = new VideoFrameData();
+        data->frame = frame;
+        publish(MessageType::VideoFrame, data);
     }
 }

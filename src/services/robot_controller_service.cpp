@@ -1,4 +1,8 @@
 #include "robot_controller_service.h"
+#include "gesture_performing_service.h"
+#include "mapping_service.h"
+#include "tui_service.h"
+
 #include "../logger.h"
 
 RobotControllerService* RobotControllerService::_instance = nullptr;
@@ -15,6 +19,30 @@ RobotControllerService *RobotControllerService::get_instance()
 RobotControllerService::RobotControllerService() : Service("RobotControllerService")
 {
 
+}
+
+void RobotControllerService::service_function() {
+
+    _compassController =  CompassController::get_instance();
+    _distanceController = DistanceController::get_instance();
+    _powerController = PowerController::get_instance();
+    _servoController = ServoMotorController::get_instance();
+    _dcMotorController = DCMotorController::get_instance();
+
+    subscribe_to_service(MappingService::get_instance());
+    subscribe_to_service(GesturePerformingService::get_instance());
+    subscribe_to_service(TuiService::get_instance());
+
+    while (_running) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        if(!_subscribers.empty()){
+
+            SensorData *data = new SensorData();
+            data->sensorData = get_sensor_values();;
+
+            publish(MessageType::SensorData, data);
+        }
+    }
 }
 
 RobotControllerService::~RobotControllerService()
@@ -197,41 +225,26 @@ void RobotControllerService::control_eye(int angle) {
 
 }
 
-void RobotControllerService::service_update_function()
-{
-    while (_running) {
-        std::this_thread::sleep_for(std::chrono::seconds(1)); 
-        if(!_subscribers.empty()){
-            _sensor_values = get_sensor_values(); 
-            update_sensor_values(_sensor_values);
+void RobotControllerService::subcribed_data_receive(MessageType type, MessageData *data) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+
+    switch (type) {
+        case MessageType::ControlData: {
+            if (data) {
+                auto controlData = static_cast<ControlData*>(data)->controlData;
+                control_motion(controlData);
+            }
+            break;
+        }
+        case MessageType::WebSocketReceive:
+        case MessageType::WebSocketTransfer:
+        case MessageType::SensorData:
+        case MessageType::LLMQuery:
+        case MessageType::LLMResponse:
+        case MessageType::RecognizedGesture: {
+            // Şu an için işlem yapmıyorsan, en azından bir log veya boş blok bırak
+            break;
         }
     }
 }
 
-void RobotControllerService::start()
-{
-    if (!_running) { // Ensure the thread is not already running
-
-        _running = true;
-        _compassController =  CompassController::get_instance();
-        _distanceController = DistanceController::get_instance();
-        _powerController = PowerController::get_instance();
-        _servoController = ServoMotorController::get_instance();
-        _dcMotorController = DCMotorController::get_instance();
-
-        Logger::info("RobotControllerService is starting...");
-        _serviceThread = std::thread(&RobotControllerService::service_update_function, this);
-    }
-}
-
-void RobotControllerService::stop()
-{
-    if (_running){
-        _running = false;
-        Logger::info("RobotControllerService is stopping...");
-        if (_serviceThread.joinable()) {
-            _serviceThread.join(); 
-        }
-        Logger::info("RobotControllerService is stopped.");
-    }
-}
