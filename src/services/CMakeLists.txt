@@ -18,5 +18,5 @@ add_library(${TARGET} SHARED ${SRCS}
         gesture_recognizer_service.h)
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
-target_link_libraries(${TARGET} PRIVATE controllers)
+target_link_libraries(${TARGET} PRIVATE controllers operators)
 install(TARGETS services DESTINATION /usr/local/lib)

@@ -3,8 +3,8 @@
 #define GESTURE_RECOGNIZER_SERVICE_H
 
 #include "service.h"
-#include "../processors/face_gesture_recognizer.h"
-#include "../processors/hand_gesture_recognizer.h"
+#include "../operators/face_gesture_recognizer.h"
+#include "../operators/hand_gesture_recognizer.h"
 #include <opencv2/opencv.hpp>
 #include <map>
 #include <string>

@@ -36,7 +36,7 @@ add_subdirectory(src/ui)
 add_subdirectory(src/drivers)
 add_subdirectory(src/controllers)
 add_subdirectory(src/services)
-add_subdirectory(src/processors)
+add_subdirectory(src/operators)
 
 file(GLOB_RECURSE SRCS
         ${SRC_DIR}/subscriber.h
@@ -46,8 +46,8 @@ file(GLOB_RECURSE SRCS
         ${SRC_DIR}/controllers/*.h
         ${SRC_DIR}/services/*.cpp
         ${SRC_DIR}/services/*.h
-        ${SRC_DIR}/processors/*.cpp
-        ${SRC_DIR}/processors/*.h
+        ${SRC_DIR}/operators/*.cpp
+        ${SRC_DIR}/operators/*.h
 )
 
 add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS})
@@ -83,6 +83,7 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         drivers
         controllers
         services
+        operators
         llama
         common
         ggml

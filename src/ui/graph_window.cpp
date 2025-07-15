@@ -40,6 +40,20 @@ FPoint GraphWindow::transform_to_screen(double x, double y) const
   return FPoint{screenX, screenY};
 }
 
+void GraphWindow::onClose(finalcut::FCloseEvent *close_event) {
+  RobotControllerService *robotControllerService = RobotControllerService::get_instance();
+  robotControllerService->un_subscribe(this);
+  hide();
+  auto  parent = getParent();
+  activate_window((FDialog*) parent);
+}
+
+void GraphWindow::onShow(finalcut::FShowEvent *show_event) {
+  RobotControllerService *robotControllerService = RobotControllerService::get_instance();
+  robotControllerService->subscribe(this);
+  activate_window(this);
+}
+
 
 void GraphWindow::draw()
 {
@@ -120,45 +134,76 @@ void GraphWindow::draw_line(double x1, double y1, double x2, double y2, FColor c
   }
 }
 
-void GraphWindow::draw_line(double angle, double magnitude, FColor color)
+void GraphWindow::draw_line(double angle, double magnitude, FColor color, bool overWritePrevious)
 {
+  // 1. Eğer overwrite isteniyorsa, önceki çizgiyi sil
+  if (overWritePrevious)
+  {
+    setColor(FColor::Black, FColor::Black); // Arka plan rengi ile sil
+    for (const auto& p : _lastLinePoints)
+      print() << p << ' ';  // Boş karakterle üstünü kapat
+    _lastLinePoints.clear();
+  }
+
+  // 2. Yeni çizgi için renk ayarla
   setColor(color, FColor::Black);
 
   const double radians = angle * (M_PI / 180.0);
-
   double xEnd = magnitude * std::cos(radians);
   double yEnd = magnitude * std::sin(radians);
 
   FPoint start = transform_to_screen(0, 0);
   FPoint end = transform_to_screen(xEnd, yEnd);
 
-  int dx = std::abs(end.getX() - start.getX());
-  int dy = std::abs(end.getY() - start.getY());
-  int sx = (start.getX() < end.getX()) ? 1 : -1;
-  int sy = (start.getY() < end.getY()) ? 1 : -1;
-  int err = dx - dy;
+  int x0 = start.getX();
+  int y0 = start.getY();
+  int x1 = end.getX();
+  int y1 = end.getY();
 
-  int x = start.getX();
-  int y = start.getY();
-
-  while (true)
-  {
-    print() << FPoint{x, y} << UniChar::BlackCircle; 
-    if (x == end.getX() && y == end.getY())
-      break;
-
-    int e2 = 2 * err;
-    if (e2 > -dy)
+  // Dikey çizgi özel durum
+  if (x0 == x1) {
+    std::deque<FPoint> newPoints;
+    int yStart = std::min(y0, y1);
+    int yEnd = std::max(y0, y1);
+    for (int y = yStart; y <= yEnd; ++y)
     {
-      err -= dy;
-      x += sx;
+      FPoint p{x0, y};
+      print() << p << UniChar::BlackCircle;
+      newPoints.push_back(p);
     }
-    if (e2 < dx)
+    _lastLinePoints = std::move(newPoints);
+    return;
+  }
+
+  // Eğimi hesapla (float olarak)
+  double slope = static_cast<double>(y1 - y0) / static_cast<double>(x1 - x0);
+  double intercept = y0 - slope * x0;
+
+  // 3. Her satır için sadece bir tane nokta çiz
+  std::deque<FPoint> newPoints;
+  int yStart = std::min(y0, y1);
+  int yLast = std::max(y0, y1);
+  for (int y = yStart; y <= yLast; ++y)
+  {
+    // y = slope * x + intercept => x = (y - intercept) / slope
+    int x = static_cast<int>((y - intercept) / slope);
+    if (x >= 0 && x < getWidth())
     {
-      err += dx;
-      y += sy;
+      FPoint p{x, y};
+      print() << p << UniChar::BlackCircle;
+      newPoints.push_back(p);
     }
   }
+
+  _lastLinePoints = std::move(newPoints); // Yeni çizilen çizgiyi kaydet
 }
+
+void GraphWindow::update_sensor_values(Json values) {
+
+  int angle = values["compass"]["angle"].get<int>();
+  draw_line(angle, 80, FColor::Blue, true);
+
+}
+
 
 
