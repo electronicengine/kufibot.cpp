@@ -5,7 +5,7 @@
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
-#include <variant>
+#include <optional>
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
@@ -25,7 +25,7 @@ typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
 struct MessageData {
-    std::string publisherName;
+    std::optional<std::string> publisherName;
 };
 
 // Message types as simple structs

@@ -19,8 +19,6 @@ BodyControllerWindow::BodyControllerWindow(finalcut::FWidget *parent) : SubWindo
     add_clicked_callback(&_bodyTurnLeftButton, this, &BodyControllerWindow::turnLeft);
     add_clicked_callback(&_bodyTurnRightButton, this, &BodyControllerWindow::turnRight);
     add_clicked_callback(&_bodyStopButton, this, &BodyControllerWindow::stop);
-
-    //_robotControllerService = RobotControllerService::get_instance();
 }
 
 BodyControllerWindow::~BodyControllerWindow() noexcept
