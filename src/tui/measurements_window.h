@@ -10,8 +10,7 @@
 #undef K
 #undef null
 
-#include "../subscriber.h"
-
+#include "../public_data_messages.h"
 
 
 class MeasurementsWindow : public SubWindow
@@ -28,11 +27,12 @@ class MeasurementsWindow : public SubWindow
     auto operator = (const MeasurementsWindow&) -> MeasurementsWindow& = delete;
 
     auto operator = (MeasurementsWindow&&) noexcept -> MeasurementsWindow& = delete;
-    void update_sensor_values(Json values);
 
+    std::function<void(const SensorData&)> get_sensor_data_callback_function() {
+        return std::bind(&MeasurementsWindow::update_sensor_data_callback, this, std::placeholders::_1);
+    }
 
 private:
-
     finalcut::FLineEdit _compassAngle {this};
     finalcut::FLineEdit _distance {this};
     finalcut::FLineEdit _current {this};
@@ -40,6 +40,7 @@ private:
 
     void onClose (finalcut::FCloseEvent*) override;
     void onShow  (finalcut::FShowEvent*) override;
+    void update_sensor_data_callback(const SensorData& data);
 
 };
 

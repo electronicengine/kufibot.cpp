@@ -28,23 +28,6 @@ MeasurementsWindow::~MeasurementsWindow() noexcept
 
 }
 
-void MeasurementsWindow::update_sensor_values(Json values)
-{
-
-    _compassAngle.setText(values["compass"]["angle"].dump() + " °");
-    _compassAngle.redraw();
-
-    _distance.setText(values["distance"]["Distance"].dump() + " cm");
-    _distance.redraw();
-
-    _current.setText(values["power"]["BusCurrent"].dump().substr(0,6) + "  maH");
-    _current.redraw();
-
-    _voltage.setText(values["power"]["BusVoltage"].dump().substr(0,4) + "  V");
-    _voltage.redraw();
-
-}
-
 void MeasurementsWindow::onClose(finalcut::FCloseEvent *)
 {
     hide();
@@ -55,5 +38,20 @@ void MeasurementsWindow::onClose(finalcut::FCloseEvent *)
 void MeasurementsWindow::onShow(finalcut::FShowEvent *)
 {
     activate_window(this);
+
+}
+
+void MeasurementsWindow::update_sensor_data_callback(const SensorData &data) {
+    _compassAngle.setText(std::to_string(data.compassData->angle) + " °");
+    _compassAngle.redraw();
+
+    _distance.setText(std::to_string(data.distanceData->distance) + " cm");
+    _distance.redraw();
+
+    _current.setText(std::to_string(data.powerData->current) + "  maH");
+    _current.redraw();
+
+    _voltage.setText(std::to_string(data.powerData->busVoltage) + "  V");
+    _voltage.redraw();
 
 }

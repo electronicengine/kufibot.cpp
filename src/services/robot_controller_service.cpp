@@ -106,8 +106,10 @@ void RobotControllerService::control_body(int angle, int magnitude) {
         _dcMotorController->backward(magnitude);
     } else if (angle >= LEFT_MIN || angle < LEFT_MAX) {
         _dcMotorController->turn_left(magnitude);
-    } else {
+    } else if (angle == 0 || magnitude == 0) {
         _dcMotorController->stop();  // Optional: fallback safety
+    }else {
+        Logger::warn("control_body: unknown angle: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
     }
 }
 

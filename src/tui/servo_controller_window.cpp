@@ -14,20 +14,20 @@ ServoControllerWindow::ServoControllerWindow(finalcut::FWidget *parent) : SubWin
     _leftArm.setRange (0, 180);
     _leftArm.setValue (0);
 
-    _neckDown.setGeometry(finalcut::FPoint{12,9}, finalcut::FSize{7, 1});
-    _neckDown.setLabelText ("Neck Down");
-    _neckDown.setRange (0, 180);
-    _neckDown.setValue (0);
+    _neck.setGeometry(finalcut::FPoint{12,9}, finalcut::FSize{7, 1});
+    _neck.setLabelText ("Neck Down");
+    _neck.setRange (0, 180);
+    _neck.setValue (0);
 
-    _neckUp.setGeometry(finalcut::FPoint{12, 12}, finalcut::FSize{7, 1});
-    _neckUp.setLabelText ("Neck Up");
-    _neckUp.setRange (0, 180);
-    _neckUp.setValue (0);
+    _headUpDown.setGeometry(finalcut::FPoint{12, 12}, finalcut::FSize{7, 1});
+    _headUpDown.setLabelText ("Head Up");
+    _headUpDown.setRange (0, 180);
+    _headUpDown.setValue (0);
 
-    _neckRight.setGeometry(finalcut::FPoint{12,15}, finalcut::FSize{7, 1});
-    _neckRight.setLabelText ("Neck Right");
-    _neckRight.setRange (0, 180);
-    _neckRight.setValue (0);
+    _headLeftRight.setGeometry(finalcut::FPoint{12,15}, finalcut::FSize{7, 1});
+    _headUpDown.setLabelText ("Head Left");
+    _headUpDown.setRange (0, 180);
+    _headUpDown.setValue (0);
 
     _eyeLeft.setGeometry(finalcut::FPoint{12,18}, finalcut::FSize{7, 1});
     _eyeLeft.setLabelText ("Eye Left");
@@ -51,52 +51,46 @@ ServoControllerWindow::~ServoControllerWindow() noexcept
 
 void ServoControllerWindow::set_servo_values()
 {
-    std::map<std::string, int> values;
+    ControlData data;
 
-    values["rigth_arm"] = _rightArm.getValue();
-    values["left_arm"] = _leftArm.getValue();
-    values["neck_down"] = _neckDown.getValue();
-    values["neck_up"] = _neckUp.getValue();
-    values["neck_right"] = _neckRight.getValue();
-    values["eye_left"] = _eyeLeft.getValue();
-    values["eye_right"] = _eyeRight.getValue();
+    data.jointAngles.emplace();
+    data.jointAngles.value()[ServoMotorJoint::rightArm] = _rightArm.getValue();
+    data.jointAngles.value()[ServoMotorJoint::leftArm] = _leftArm.getValue();
+    data.jointAngles.value()[ServoMotorJoint::neck] = _neck.getValue();
+    data.jointAngles.value()[ServoMotorJoint::headUpDown] = _headUpDown.getValue();
+    data.jointAngles.value()[ServoMotorJoint::headLeftRight] = _headLeftRight.getValue();
+    data.jointAngles.value()[ServoMotorJoint::eyeLeft] = _eyeLeft.getValue();
+    data.jointAngles.value()[ServoMotorJoint::eyeRight] = _eyeRight.getValue();
 
-   // _robotControllerService->set_servo_joint_map(values);
-
+    _controlRobotFunctionCallBack(data);
 }
 
-void ServoControllerWindow::show_current_servo_values()
-{
+void ServoControllerWindow::update_servo_joints_callback(const std::map<ServoMotorJoint, uint8_t> &jointAngles) {
 
-  //  std::map<std::string, int> values = _robotControllerService->get_servo_joint_map();
-    std::map<std::string, int> values;
-
-    _rightArm.setValue (values["rigth_arm"]);
+    _rightArm.setValue (jointAngles.at(ServoMotorJoint::rightArm));
     _rightArm.redraw();
 
-    _leftArm.setValue (values["left_arm"]);
+    _leftArm.setValue (jointAngles.at(ServoMotorJoint::leftArm));
     _leftArm.redraw();
 
-    _neckDown.setValue (values["neck_down"]);
-    _neckDown.redraw();
+    _neck.setValue (jointAngles.at(ServoMotorJoint::neck));
+    _neck.redraw();
 
-    _neckUp.setValue (values["neck_up"]);
-    _neckUp.redraw();
+    _headUpDown.setValue (jointAngles.at(ServoMotorJoint::headUpDown));
+    _headUpDown.redraw();
 
-    _neckRight.setValue (values["neck_right"]);
-    _neckRight.redraw();
+    _headUpDown.setValue (jointAngles.at(ServoMotorJoint::headUpDown));
+    _headUpDown.redraw();
 
-    _eyeLeft.setValue (values["eye_left"]);
+    _eyeLeft.setValue (jointAngles.at(ServoMotorJoint::eyeLeft));
     _eyeLeft.redraw();
 
-    _eyeRight.setValue (values["eye_right"]);
+    _eyeRight.setValue (jointAngles.at(ServoMotorJoint::eyeRight));
     _eyeRight.redraw();
-
 }
 
 void ServoControllerWindow::onShow(finalcut::FShowEvent *)
 {
     activate_window(this);
-    show_current_servo_values();
 }
 

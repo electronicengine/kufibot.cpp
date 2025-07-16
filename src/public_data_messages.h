@@ -12,6 +12,19 @@
 #include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
 
+// Define directional angle thresholds
+constexpr int RIGHT_MIN = -45;
+constexpr int RIGHT     = 0;
+constexpr int RIGHT_MAX = 45;
+constexpr int UP_MIN    = 45;
+constexpr int UP        = 90;
+constexpr int UP_MAX    = 135;
+constexpr int LEFT_MIN  = 135;
+constexpr int LEFT      = 180;
+constexpr int LEFT_MAX  = -135; // wraps around
+constexpr int DOWN_MIN  = -135;
+constexpr int DOWN      = -90;
+constexpr int DOWN_MAX  = -45;
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;

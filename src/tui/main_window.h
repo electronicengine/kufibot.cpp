@@ -34,6 +34,13 @@ class MainWindow final : public finalcut::FDialog
     // Destructor
     ~MainWindow() override;
 
+  CompassRtGraphWindow *_compassRTGraphWindow;
+  BodyControllerWindow *_bodyControllerWindow;
+  ServoControllerWindow *_servoControllerWindow;
+  MeasurementsWindow *_measurementsWindow;
+  ChatWindow *_chatWindow;
+
+
   protected:
     struct LogItem {
       LogLevel logLevel;
@@ -62,11 +69,6 @@ class MainWindow final : public finalcut::FDialog
     std::wstring _searchString;
     std::function<void(void)> _quitCb;
 
-    CompassRtGraphWindow *_compassRTGraphWindow;
-    BodyControllerWindow *_bodyControllerWindow;
-    ServoControllerWindow *_servoControllerWindow;
-    MeasurementsWindow *_measurementsWindow;
-    ChatWindow *_chatWindow;
 
     finalcut::FTextView _textView{this};
     finalcut::FButtonGroup _radiobutton_group {L"Log Level", this};

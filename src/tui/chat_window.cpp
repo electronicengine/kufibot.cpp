@@ -53,19 +53,8 @@ ChatWindow::~ChatWindow() noexcept
 
 void ChatWindow::send_promt()
 {
-    std::string promt = _promt.getText().toString();
-
-    std::function<void(const std::string&)> response_callback =
-        [&](const std::string& response) {
-
-            _answerView.append(response);
-            _answerView.redraw();
-        };
-
-    //_interactiveChatService->query(promt, response_callback);
+    _llmQueryFunctionCallBack(_promt.getText().toString());
 }
-
-
 
 void ChatWindow::load_model()
 {
@@ -84,4 +73,10 @@ void ChatWindow::onKeyPress (finalcut::FKeyEvent* ev)
     }
 
     FDialog::onKeyPress(ev);
+}
+
+void ChatWindow::llm_response_callback(const std::string &response) {
+
+    _answerView.append(response);
+    _answerView.redraw();
 }

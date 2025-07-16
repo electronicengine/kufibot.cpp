@@ -87,7 +87,6 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
             Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
-
 }
 
 void InteractiveChatService::llm_query(const std::string &query) {

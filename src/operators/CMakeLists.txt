@@ -39,5 +39,5 @@ target_compile_options(${TARGET} PRIVATE
 
 
 install(TARGETS ${TARGET} DESTINATION /usr/local/lib)
-install(FILES face_gesture_recognition_module.py DESTINATION /usr/local/bin)
-install(FILES hand_gesture_recognition_module.py DESTINATION /usr/local/bin)
+install(FILES python_modules/face_gesture_recognition_module.py DESTINATION /usr/local/bin)
+install(FILES python_modules/hand_gesture_recognition_module.py DESTINATION /usr/local/bin)

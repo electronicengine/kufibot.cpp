@@ -6,10 +6,7 @@
 #include "sub_window.h"
 #include <utility>
 #include <deque>
-#undef K
-#undef null
 
-#include "../subscriber.h"
 
 using namespace finalcut;
 
@@ -32,7 +29,6 @@ class GraphWindow : public SubWindow
     void add_realtime_point(double val, double interval = 1);
     void draw_line(double x1, double y1, double x2, double y2, FColor color);
     void draw_line(double angle, double magnitude, FColor color, bool overWritePrevious = true);
-    void update_sensor_values(Json values);
 
   private:
     void draw() override;

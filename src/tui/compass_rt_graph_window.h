@@ -6,6 +6,10 @@
 #include "graph_window.h"
 #include <deque>
 
+#undef K
+#undef null
+
+#include "../public_data_messages.h"
 
 using namespace finalcut;
 
@@ -24,7 +28,16 @@ class CompassRtGraphWindow : public GraphWindow
 
     auto operator = (CompassRtGraphWindow&&) noexcept -> CompassRtGraphWindow& = delete;
 
- 
+    std::function<void(const int&)> get_compas_direction_callback_function() {
+        return std::bind(&CompassRtGraphWindow::update_compas_direction_callback, this, std::placeholders::_1);
+    }
+
+
+private:
+
+    void draw_compas_direction(int angle);
+
+    void update_compas_direction_callback(const int& angle);
 
 };
 

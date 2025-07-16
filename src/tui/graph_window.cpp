@@ -198,12 +198,6 @@ void GraphWindow::draw_line(double angle, double magnitude, FColor color, bool o
   _lastLinePoints = std::move(newPoints); // Yeni çizilen çizgiyi kaydet
 }
 
-void GraphWindow::update_sensor_values(Json values) {
-
-  int angle = values["compass"]["angle"].get<int>();
-  draw_line(angle, 80, FColor::Blue, true);
-
-}
 
 
 

@@ -9,6 +9,11 @@
 #undef K
 #undef null
 
+#include "../public_data_messages.h"
+
+#undef K
+#undef null
+
 using namespace finalcut;
 
 class BodyControllerWindow : public SubWindow
@@ -26,6 +31,14 @@ class BodyControllerWindow : public SubWindow
 
     auto operator = (BodyControllerWindow&&) noexcept -> BodyControllerWindow& = delete;
 
+    void setControlFunctionCallBack(std::function<void(const ControlData&)> controlFunctionCallBack) {
+        _controlRobotFunctionCallBack = controlFunctionCallBack;
+    }
+
+
+private:
+    std::function<void(const ControlData&)> _controlRobotFunctionCallBack;
+
     FButton _bodyForwardButton{finalcut::UniChar::BlackUpPointingTriangle, this};
     FButton _bodyTurnLeftButton{finalcut::UniChar::BlackLeftPointingTriangle, this};
     FButton _bodyTurnRightButton{finalcut::UniChar::BlackRightPointingTriangle, this};
@@ -38,7 +51,6 @@ class BodyControllerWindow : public SubWindow
     void stop();
     void turnRight();
     void turnLeft();
-
 
 
 };

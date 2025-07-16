@@ -5,9 +5,6 @@
 #include "final/final.h"
 #include "sub_window.h"
 
-#undef K
-#undef null
-
 
 using namespace finalcut;
 
@@ -24,6 +21,17 @@ public:
     auto operator = (const ChatWindow&) -> ChatWindow& = delete;
 
     auto operator = (ChatWindow&&) noexcept -> ChatWindow& = delete;
+
+    std::function<void(const std::string&)> get_llm_response_callback_function() {
+        return std::bind(&ChatWindow::llm_response_callback, this, std::placeholders::_1);
+    }
+
+    void set_llm_query_function_callback(std::function<void(const std::string&)> llmQueryFunctionCallBack) {
+        _llmQueryFunctionCallBack = llmQueryFunctionCallBack;
+    }
+
+private:
+    std::function<void(const std::string&)> _llmQueryFunctionCallBack;
 
     FLabel _llamaChatModelPathLabel{"Chat", this};
     FLineEdit _llamaChatModelPath{"/usr/ai.models/trLlamaModel/dolphin3.gguf", this};
@@ -62,6 +70,7 @@ public:
     void send_promt();
     void load_model();
     void onKeyPress (finalcut::FKeyEvent* ev);
+    void llm_response_callback(const std::string& response);
 
 };
 

@@ -28,29 +28,50 @@ BodyControllerWindow::~BodyControllerWindow() noexcept
 
 void BodyControllerWindow::forward()
 {
-    int magnitude = _magnitude.getValue();
-    //_robotControllerService->control_body(90, magnitude);
+    ControlData data;
+
+    data.bodyJoystick.emplace();
+    data.bodyJoystick->angle = UP;
+    data.bodyJoystick->strength = _magnitude.getValue();
+    _controlRobotFunctionCallBack(data);
+
 }
 
 void BodyControllerWindow::backward()
 {
-    int magnitude = _magnitude.getValue();
-    //_robotControllerService->control_body(-90, magnitude);
+    ControlData data;
+
+    data.bodyJoystick.emplace();
+    data.bodyJoystick->angle = DOWN;
+    data.bodyJoystick->strength = _magnitude.getValue();
+    _controlRobotFunctionCallBack(data);
 }
 
 void BodyControllerWindow::stop()
 {
-    //_robotControllerService->control_body(0, 0);
-}
+    ControlData data;
+
+    data.bodyJoystick.emplace();
+    data.bodyJoystick->angle = 0;
+    data.bodyJoystick->strength = 0;
+    _controlRobotFunctionCallBack(data);}
 
 void BodyControllerWindow::turnRight()
 {
-    int magnitude = _magnitude.getValue();
-    //_robotControllerService->control_body(0, magnitude);
+    ControlData data;
+
+    data.bodyJoystick.emplace();
+    data.bodyJoystick->angle = RIGHT;
+    data.bodyJoystick->strength = _magnitude.getValue();
+    _controlRobotFunctionCallBack(data);
 }
 
 void BodyControllerWindow::turnLeft()
 {
-    int magnitude = _magnitude.getValue();
-    //_robotControllerService->control_body(180, magnitude);
+    ControlData data;
+
+    data.bodyJoystick.emplace();
+    data.bodyJoystick->angle = LEFT;
+    data.bodyJoystick->strength = _magnitude.getValue();
+    _controlRobotFunctionCallBack(data);
 }
