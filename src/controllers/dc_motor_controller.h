@@ -1,8 +1,7 @@
 #ifndef DC_MOTOR_CONTROLLER_H
 #define DC_MOTOR_CONTROLLER_H
 
-#include <map>
-#include <string>
+#include "controller_data_structures.h"
 
 #include "../drivers/pca9685_driver.h"
 
@@ -22,6 +21,8 @@ public:
     DCMotorController(const DCMotorController&) = delete;
     DCMotorController& operator=(const DCMotorController&) = delete;
 
+    DCMotorState get_current_state(){return _currentState;};
+
     void forward(int magnitude);
     void backward(int magnitude);
     void turn_right(int magnitude);
@@ -32,13 +33,13 @@ private:
     DCMotorController(int address);
     ~DCMotorController();
 
-    void run(int motor, const std::string& direction, int speed);
-    void set_direction(int pin1, int pin2, const std::string& direction);
+    void run(DCMotor motor, DCMotorDirection direction, int speed);
+    void set_direction(int pin1, int pin2, DCMotorDirection direction);
 
     static DCMotorController* _instance;
     PCA9685Driver _driver;
-    std::map<std::string, int> _directions;
-    std::map<std::string, int> _motor;
+    DCMotorState _currentState;
+
 };
 
 #endif // MOTOR_DRIVER_H

@@ -2,9 +2,8 @@
 #ifndef COMPASS_CONTROLLER_H
 #define COMPASS_CONTROLLER_H
 
-#include <string>
-#include <unordered_map>
 #include <vector>
+#include "controller_data_structures.h"
 #include "../drivers/median_filter.h"
 #include "../drivers/qmc5883l_driver.h"
 
@@ -27,9 +26,9 @@ public:
 
     // Get singleton instance
     static CompassController* get_instance();
-    double get_angle();
+    uint16_t get_angle();
     std::vector<int16_t> get_magnet();
-    const std::unordered_map<std::string, double> get_all() ;
+    CompassData get_all() ;
 };
 
 

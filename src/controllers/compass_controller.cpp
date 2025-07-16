@@ -11,8 +11,8 @@ CompassController* CompassController::get_instance() {
 }
 
 
-double CompassController::get_angle() {
-    int angle = sensor.get_bearing(); 
+uint16_t CompassController::get_angle() {
+    int angle = sensor.get_bearing();
     angle = _medianFilter.apply(angle);
     angle += OFFSET_ANGLE;
     angle = angle % 360; 
@@ -23,10 +23,7 @@ std::vector<int16_t> CompassController::get_magnet() {
     return sensor.get_magnet();
 }
 
-const std::unordered_map<std::string, double> CompassController::get_all() {
-    return {
-        {"angle", get_angle()},
-        {"magnet_x", static_cast<double>(get_magnet()[0])},
-        {"magnet_y", static_cast<double>(get_magnet()[1])}
-    };
+CompassData CompassController::get_all() {
+    std::vector<int16_t> magnet = get_magnet();
+    return CompassData{get_angle(), magnet[0], magnet[1] };
 }

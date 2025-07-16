@@ -1,11 +1,9 @@
 #ifndef QMC5883L_DRIVER_H
 #define QMC5883L_DRIVER_H
 
-#include <iostream>
-#include <iomanip>
-#include <math.h>
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
+
+#include "wiringPi.h"
+#include "wiringPiI2C.h"
 #include <vector>
 #include <array>
 

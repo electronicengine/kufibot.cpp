@@ -30,21 +30,18 @@ private:
     VideoStreamService *_videoStreamService;
     RobotControllerService *_robotControllerService;
     websocketpp::connection_hdl _hdl;
-    Json _sensor_values;
+    SensorData _sensorData;
     static RemoteConnectionService *_instance;
 
 
     RemoteConnectionService(int port = 8765);
     void service_function();
 
-    nlohmann::json get_sensor_values();
-
     //subscribed video_frame, web_socket_receive_message,sensor_data
     virtual void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
     void video_frame(const cv::Mat& frame);
     void web_socket_receive_message(websocketpp::connection_hdl hdl,  const std::string& msg);
-    void sensor_data(nlohmann::json values);
 
 
 };

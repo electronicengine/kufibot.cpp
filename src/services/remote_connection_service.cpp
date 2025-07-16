@@ -15,7 +15,6 @@ RemoteConnectionService *RemoteConnectionService::get_instance()
 RemoteConnectionService::RemoteConnectionService(int port) : Service("RemoteConnectionService")
 {
     _port = port;
-
 }
 
 void RemoteConnectionService::service_function() {
@@ -46,7 +45,7 @@ void RemoteConnectionService::video_frame(const cv::Mat& frame) {
         publish(MessageType::WebSocketTransfer, data);
 
         static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl;
-        static_cast<WebSocketTransferData*>(data.get())->msg = _sensor_values.dump();
+        static_cast<WebSocketTransferData*>(data.get())->msg = _sensorData.to_json().dump();
         static_cast<WebSocketTransferData*>(data.get())->type = 1;
         publish(MessageType::WebSocketTransfer, data);
 
@@ -74,18 +73,10 @@ void RemoteConnectionService::web_socket_receive_message(websocketpp::connection
             return;
         }else{
             std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-            static_cast<ControlData*>(data.get())->controlData = message;
+            *static_cast<ControlData*>(data.get()) = ControlData(message);
             publish(MessageType::ControlData, data);
         }
     }
-}
-
-void RemoteConnectionService::sensor_data(nlohmann::json values){
-    _sensor_values = values;
-}
-
-nlohmann::json RemoteConnectionService::get_sensor_values() {
-    return _sensor_values;
 }
 
 void RemoteConnectionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
@@ -112,8 +103,7 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
 
         case MessageType::SensorData: {
             if (data) {
-                Json sensor_json = static_cast<SensorData*>(data.get())->sensorData;
-                sensor_data(sensor_json);
+                _sensorData = *static_cast<SensorData*>(data.get());
             }
 
             break;

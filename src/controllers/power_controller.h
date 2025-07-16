@@ -1,19 +1,18 @@
 #ifndef POWER_CONTROLLER_H
 #define POWER_CONTROLLER_H
 
-#include <iostream>
 #include "../drivers/ina219_driver.h"
-#include <map>
+#include "controller_data_structures.h"
 
 #define SHUNT_OHMS 0.1
 #define MAX_EXPECTED_AMPS 3.0
 
+
 class PowerController {
 public:
     static PowerController* get_instance();
-    std::map<std::string, double> _data;
 
-    const std::map<std::string, double>& get_consumption();
+    PowerData get_consumption();
 
 private:
     INA219Driver ina; 

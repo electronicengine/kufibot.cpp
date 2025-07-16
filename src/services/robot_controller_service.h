@@ -13,13 +13,22 @@
 #include "../controllers/servo_motor_controller.h"
 #include "../controllers/dc_motor_controller.h"
 
-using Json = nlohmann::json;
-
 enum State{
     stop,
     idle,
     move
 };
+
+// Define directional angle thresholds
+constexpr int RIGHT_MIN = -45;
+constexpr int RIGHT_MAX = 45;
+constexpr int UP_MIN    = 45;
+constexpr int UP_MAX    = 135;
+constexpr int LEFT_MIN  = 135;
+constexpr int LEFT_MAX  = -135; // wraps around
+constexpr int DOWN_MIN  = -135;
+constexpr int DOWN_MAX  = -45;
+
 
 class RobotControllerService : public Service{
 
@@ -47,16 +56,21 @@ private:
     void service_function();
 
     void update_sensors();
-    Json get_sensor_values();
-    std::map<std::string, int> get_servo_joint_map();
-    void set_servo_joint_map(const std::map<std::string, int>& jointMap);
+    SensorData get_sensor_values();
 
-    int control_motion(Json message);
+    void control_motion(const ControlData& controlData);
     void control_body(int angle, int magnitude);
     void control_head(int angle, int magnitude);
-    void control_arm(const std::string& control_id, int angle, bool scale = true);
+    void control_arm(ServoMotorJoint joint, int angle, bool scale = true) const;
     void set_all_joint_angles(const std::map<std::string, int>& angles);
-    void control_eye(int angle);
+    void control_eye(ServoMotorJoint joint, bool state);
+
+    void head_down();
+    void head_up();
+    void head_left();
+    void head_right();
+    void eye_up();
+    void eye_down();
 
     //subscibed control_data
     virtual void subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data);

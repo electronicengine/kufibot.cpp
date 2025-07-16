@@ -4,15 +4,9 @@
 #include <boost/asio.hpp>
 #include <iomanip> 
 #include "../drivers/median_filter.h"
+#include "controller_data_structures.h"
 
 using namespace boost::asio;
-
-// Parse the data and return as a struct
-struct Data {
-    int distance;
-    int strength;
-    int temperature;
-};
 
 
 class DistanceController {
@@ -32,7 +26,7 @@ public:
     bool is_active();
     static DistanceController* get_instance();
     ~DistanceController(); // Destructor to close the serial port
-    const std::map<std::string, int> &get_distance();
+    DistanceData get_distance();
 
    
 };

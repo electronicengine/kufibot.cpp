@@ -13,14 +13,14 @@ PowerController::PowerController() : ina(SHUNT_OHMS, MAX_EXPECTED_AMPS) {
     ina.configure(RANGE_16V, GAIN_8_320MV, ADC_12BIT, ADC_12BIT); 
 } 
 
-const std::map<std::string, double>& PowerController::get_consumption() {
+PowerData PowerController::get_consumption() {
 
-    _data["busVoltage"] = ina.voltage();
-    _data["shuntVoltage"] = ina.shunt_voltage();
-    _data["current"] = ina.current();
-    _data["power"] = ina.power();
-
-    return _data;
+    PowerData data;
+    data.busVoltage = ina.voltage();
+    data. shuntVoltage = ina.shunt_voltage();
+    data. current = ina.current();
+    data.power = ina.power();
+    return data;
 }
 
 

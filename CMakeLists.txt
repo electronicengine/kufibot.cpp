@@ -50,7 +50,8 @@ file(GLOB_RECURSE SRCS
         ${SRC_DIR}/operators/*.h
 )
 
-add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS})
+add_executable(kufibot  ${SRC_DIR}/main.cpp ${SRCS}
+        src/public_data_messages.h)
 
 
 target_link_directories(kufibot PUBLIC

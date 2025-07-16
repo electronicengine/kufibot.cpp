@@ -2,15 +2,10 @@
 #ifndef MEDIAN_FILTER_H
 #define MEDIAN_FILTER_H
 
-#include <iostream>
-#include <memory>
-#include <string>
-#include <unordered_map>
+
 #include <vector>
-#include <numeric>
-#include <vector>
+#include <cstddef>
 #include <algorithm>
-#include "../drivers/qmc5883l_driver.h"
 
 #define OFFSET_ANGLE 79
 

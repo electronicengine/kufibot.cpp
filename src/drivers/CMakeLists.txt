@@ -15,7 +15,8 @@ find_library(WIRINGPI_LIB wiringPi PATHS ${CMAKE_SOURCE_DIR}/lib)
 file(GLOB_RECURSE SRCS ${DRIVERS_SRC_DIR}/*.cpp ${DRIVERS_SRC_DIR}/*.h)
 include_directories(${DRIVERS_INC_DIR})
 
-add_library(${TARGET} SHARED ${SRCS})
+add_library(${TARGET} SHARED ${SRCS}
+        ../controllers/controller_data_structures.h)
 target_include_directories(${TARGET} PRIVATE ${DRIVERS_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${DRIVERS_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE wiringPi)
