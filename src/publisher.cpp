@@ -18,13 +18,12 @@ void Publisher::un_subscribe(Subscriber* subscriber) {
     );
 }
 
-void Publisher::publish(MessageType type, MessageData* data) {
+void Publisher::publish(MessageType type, const std::unique_ptr<MessageData>& data) {
 
     for (const auto& sub : _subscribers) {
         if (sub) {
             sub->subcribed_data_receive(type, data);
-            delete data;
         }
     }
-
 }
+

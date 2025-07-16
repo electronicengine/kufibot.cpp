@@ -117,29 +117,32 @@ void GesturePerformingService::service_function()
 
 }
 
-void GesturePerformingService::subcribed_data_receive(MessageType type, MessageData *data) {
+void GesturePerformingService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
 
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::LLMResponse: {
             if (data) {
-                std::string msg = static_cast<LLMResponseData*>(data)->response;
+                std::string msg = static_cast<LLMResponseData*>(data.get())->response;
                 llm_response(msg);
             }
             break;
         }
         case MessageType::RecognizedGesture:{
             if (data) {
-                std::string face_gesture = static_cast<RecognizedGestureData*>(data)->faceGesture;
-                std::vector<int> face_landmark = static_cast<RecognizedGestureData*>(data)->faceLandmark;
-                std::string hand_gesture = static_cast<RecognizedGestureData*>(data)->handGesture;
-                std::vector<int> hand_landmark = static_cast<RecognizedGestureData*>(data)->handLandmark;
+                std::string face_gesture = static_cast<RecognizedGestureData*>(data.get())->faceGesture;
+                std::vector<int> face_landmark = static_cast<RecognizedGestureData*>(data.get())->faceLandmark;
+                std::string hand_gesture = static_cast<RecognizedGestureData*>(data.get())->handGesture;
+                std::vector<int> hand_landmark = static_cast<RecognizedGestureData*>(data.get())->handLandmark;
 
                 recognized_gesture(face_gesture, face_landmark, hand_gesture, hand_landmark);
             }
             break;
         }
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            break;
     }
 }
 

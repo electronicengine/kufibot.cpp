@@ -65,8 +65,8 @@ void VideoStreamService::service_function(){
             continue;
         }
 
-        VideoFrameData *data = new VideoFrameData();
-        data->frame = frame;
+        std::unique_ptr<MessageData> data = std::make_unique<VideoFrameData>();
+        static_cast<VideoFrameData*>(data.get())->frame = frame;
         publish(MessageType::VideoFrame, data);
     }
 }

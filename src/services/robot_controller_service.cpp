@@ -37,9 +37,8 @@ void RobotControllerService::service_function() {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         if(!_subscribers.empty()){
 
-            SensorData *data = new SensorData();
-            data->sensorData = get_sensor_values();;
-
+            std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+            static_cast<SensorData*>(data.get())->sensorData = get_sensor_values();
             publish(MessageType::SensorData, data);
         }
     }
@@ -225,26 +224,20 @@ void RobotControllerService::control_eye(int angle) {
 
 }
 
-void RobotControllerService::subcribed_data_receive(MessageType type, MessageData *data) {
+void RobotControllerService::subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::ControlData: {
             if (data) {
-                auto controlData = static_cast<ControlData*>(data)->controlData;
+                auto controlData = static_cast<ControlData*>(data.get())->controlData;
                 control_motion(controlData);
             }
             break;
         }
-        case MessageType::WebSocketReceive:
-        case MessageType::WebSocketTransfer:
-        case MessageType::SensorData:
-        case MessageType::LLMQuery:
-        case MessageType::LLMResponse:
-        case MessageType::RecognizedGesture: {
-            // Şu an için işlem yapmıyorsan, en azından bir log veya boş blok bırak
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
-        }
     }
 }
 

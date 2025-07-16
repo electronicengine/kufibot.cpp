@@ -36,10 +36,10 @@ bool InteractiveChatService::send_query(const std::string& message){
 
 
 void InteractiveChatService::query_response_callback(const std::string &response) {
-    LLMResponseData *data = new LLMResponseData();
-    data->response = response;
-
+    std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
+    static_cast<LLMResponseData*>(data.get())->response = response;
     publish(MessageType::LLMResponse, data);
+
     if (response == "<end>") {
         _queryRunning = false;
         Logger::info("Llama Query finished!");
@@ -72,18 +72,22 @@ void InteractiveChatService::service_function()
 
 }
 
-void InteractiveChatService::subcribed_data_receive(MessageType type, MessageData *data) {
+void InteractiveChatService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::LLMQuery: {
             if (data) {
-                std::string queryMsg = static_cast<LLMQueryData*>(data)->query;
+                std::string queryMsg = static_cast<LLMQueryData*>(data.get())->query;
                 llm_query(queryMsg);
             }
             break;
         }
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            break;
     }
+
 }
 
 void InteractiveChatService::llm_query(const std::string &query) {

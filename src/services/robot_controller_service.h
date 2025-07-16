@@ -59,7 +59,7 @@ private:
     void control_eye(int angle);
 
     //subscibed control_data
-    virtual void subcribed_data_receive(MessageType type, MessageData* data);
+    virtual void subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data);
 
 
 };

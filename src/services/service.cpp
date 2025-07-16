@@ -1,7 +1,7 @@
 #include "service.h"
 #include "../logger.h"
 
-Service::Service(const std::string &name) : _name(name), Publisher(name)
+Service::Service(const std::string &name) : Publisher(name), _name(name)
 {
 }
 

@@ -73,30 +73,32 @@ void WebSocketService::run_web_server(const std::string &address, uint16_t port)
 
 
 void WebSocketService::on_open(websocketpp::connection_hdl hdl) {
-    Logger::info("Connection opened!");
-    WebSocketReceiveData *data = new WebSocketReceiveData();
-    data->msg ="on_open";
-    data->hdl = hdl;
+    Logger::warn("Connection opened!");
+
+    std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+    static_cast<WebSocketReceiveData*>(data.get())->msg = "on_open";
+    static_cast<WebSocketReceiveData*>(data.get())->hdl = hdl;
     publish(MessageType::WebSocketReceive, data);
 }
 
 void WebSocketService::on_message(websocketpp::connection_hdl hdl, Server::message_ptr msg) {
-    WebSocketReceiveData *data = new WebSocketReceiveData();
-    data->msg = msg->get_payload();
-    data->hdl = hdl;
+    std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+    static_cast<WebSocketReceiveData*>(data.get())->msg = msg->get_payload();
+    static_cast<WebSocketReceiveData*>(data.get())->hdl = hdl;
     publish(MessageType::WebSocketReceive, data);
+
 }
 
-void WebSocketService::subcribed_data_receive(MessageType type, MessageData *data) {
+void WebSocketService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::WebSocketTransfer: {
             if(data) {
 
-                websocketpp::connection_hdl &hdl = static_cast<WebSocketTransferData*>(data)->hdl;
-                std::string &mg = static_cast<WebSocketTransferData*>(data)->msg;
-                uint8_t &dataType =static_cast<WebSocketTransferData*>(data)->type;
+                websocketpp::connection_hdl hdl = static_cast<WebSocketTransferData*>(data.get())->hdl;
+                std::string mg = static_cast<WebSocketTransferData*>(data.get())->msg;
+                uint8_t dataType =static_cast<WebSocketTransferData*>(data.get())->type;
 
                 if (dataType == 1)
                     send_message(hdl, mg);
@@ -107,19 +109,21 @@ void WebSocketService::subcribed_data_receive(MessageType type, MessageData *dat
             }
             break;
         }
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            break;
     }
 }
 
 
 
 void WebSocketService::on_close(websocketpp::connection_hdl hdl) {
-    Logger::info("Connection closed!");
+    Logger::warn("Connection closed!");
 
-    WebSocketReceiveData *data = new WebSocketReceiveData();
-    data->msg =  "on_close";
-    data->hdl = hdl;
+    std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+    static_cast<WebSocketReceiveData*>(data.get())->msg = "on_close";
+    static_cast<WebSocketReceiveData*>(data.get())->hdl = hdl;
     publish(MessageType::WebSocketReceive, data);
-
 }
 
 void WebSocketService::send_message(websocketpp::connection_hdl hdl, const std::string& message) {

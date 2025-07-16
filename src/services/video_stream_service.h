@@ -25,7 +25,7 @@ private:
     void service_function();
 
     //subscribed to noting
-    void subcribed_data_receive(MessageType type, MessageData* data){(void) type, (void) data; };
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data){(void) type, (void) data; };
 
 };
 

@@ -17,14 +17,14 @@ private:
 
     TuiService();
 
-    void service_update_function();
+    void service_function();
 
     //subscribed sensor_data, llm_response
     void sensor_data(Json values);
     void llm_response(const std::string& response);
 
     //subscribed sensor_data, llm_response
-    void subcribed_data_receive(MessageType type, MessageData *data);
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
 };
 

@@ -39,16 +39,15 @@ void RemoteConnectionService::video_frame(const cv::Mat& frame) {
     cv::imencode(".jpg", frame, buffer);
 
     try {
-        WebSocketTransferData *data = new WebSocketTransferData();
-        data->hdl = _hdl;
-        data->msg = std::string(buffer.begin(), buffer.end());
-        data->type = 2;
+        std::unique_ptr<MessageData> data= std::make_unique<WebSocketTransferData>();
+        static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl;
+        static_cast<WebSocketTransferData*>(data.get())->msg = std::string(buffer.begin(), buffer.end());
+        static_cast<WebSocketTransferData*>(data.get())->type = 2;
         publish(MessageType::WebSocketTransfer, data);
 
-        data = new WebSocketTransferData();
-        data->hdl = _hdl;
-        data->msg = _sensor_values.dump();
-        data->type = 1;
+        static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl;
+        static_cast<WebSocketTransferData*>(data.get())->msg = _sensor_values.dump();
+        static_cast<WebSocketTransferData*>(data.get())->type = 1;
         publish(MessageType::WebSocketTransfer, data);
 
     } catch (const std::exception& e) {
@@ -74,8 +73,8 @@ void RemoteConnectionService::web_socket_receive_message(websocketpp::connection
         if (message.contains("talkie")) {
             return;
         }else{
-            ControlData *data = new ControlData();
-            data->controlData = message;
+            std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+            static_cast<ControlData*>(data.get())->controlData = message;
             publish(MessageType::ControlData, data);
         }
     }
@@ -89,14 +88,14 @@ nlohmann::json RemoteConnectionService::get_sensor_values() {
     return _sensor_values;
 }
 
-void RemoteConnectionService::subcribed_data_receive(MessageType type, MessageData *data) {
+void RemoteConnectionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::WebSocketReceive: {
             if (data) {
-                std::string msg = static_cast<WebSocketReceiveData*>(data)->msg;
-                websocketpp::connection_hdl hdl = static_cast<WebSocketReceiveData*>(data)->hdl;
+                std::string msg = static_cast<WebSocketReceiveData*>(data.get())->msg;
+                websocketpp::connection_hdl hdl = static_cast<WebSocketReceiveData*>(data.get())->hdl;
                 web_socket_receive_message(hdl, msg);
             }
             break;
@@ -104,7 +103,7 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, MessageDa
 
         case MessageType::VideoFrame: {
             if (data) {
-                cv::Mat frame = static_cast<VideoFrameData*>(data)->frame;
+                cv::Mat frame = static_cast<VideoFrameData*>(data.get())->frame;
                 video_frame(frame);
             }
 
@@ -113,12 +112,15 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, MessageDa
 
         case MessageType::SensorData: {
             if (data) {
-                Json sensor_json = static_cast<SensorData*>(data)->sensorData;
+                Json sensor_json = static_cast<SensorData*>(data.get())->sensorData;
                 sensor_data(sensor_json);
             }
 
             break;
         }
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            break;
 
 
     }

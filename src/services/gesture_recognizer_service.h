@@ -45,7 +45,7 @@ private:
     void service_function();
 
     //subscribed video_frame
-    void subcribed_data_receive(MessageType type, MessageData* data);
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
     void video_frame(const cv::Mat& frame);
 

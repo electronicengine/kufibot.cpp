@@ -28,7 +28,7 @@ public:
 
     void subscribe(Subscriber* subscriber);
     void un_subscribe(Subscriber* subscriber);
-    void publish(MessageType type, MessageData* data);
+    void publish(MessageType type, const std::unique_ptr<MessageData>& data);
 
 };
 

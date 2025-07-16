@@ -36,7 +36,7 @@ private:
     void on_message(websocketpp::connection_hdl hdl, Server::message_ptr msg);
 
     //subscribed WebSocketTransfer
-    void subcribed_data_receive(MessageType type, MessageData *data);
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data);
 };
 
 #endif

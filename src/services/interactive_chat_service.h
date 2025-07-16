@@ -47,7 +47,7 @@ private:
     void service_function();
 
     //subscribed data functions
-    void subcribed_data_receive(MessageType type, MessageData* data);
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
     void llm_query(const std::string &query);
 

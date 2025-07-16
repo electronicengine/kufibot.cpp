@@ -58,17 +58,20 @@ void GestureRecognizerService::service_function() {
 
 }
 
-void GestureRecognizerService::subcribed_data_receive(MessageType type, MessageData *data) {
+void GestureRecognizerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::VideoFrame: {
             if (data) {
-                cv::Mat frame = static_cast<VideoFrameData*>(data)->frame;
+                cv::Mat frame = static_cast<VideoFrameData*>(data.get())->frame;
                 video_frame(frame);
             }
             break;
         }
+        default:
+            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            break;
     }
 }
 
@@ -90,12 +93,13 @@ void GestureRecognizerService::video_frame(const cv::Mat &frame) {
 
 void GestureRecognizerService::processFrame(cv::Mat& frame) {
     // --- Face Processing ---
-    RecognizedGestureData *recognized = new RecognizedGestureData();
+    std::unique_ptr<MessageData> data = std::make_unique<RecognizedGestureData>();
     std::string faceInfoStr;
 
-    if (_faceGestureRecognizingOperator->processFrame(frame, recognized->faceGesture, recognized->faceLandmark, faceInfoStr)) {
+    if (_faceGestureRecognizingOperator->processFrame(frame, static_cast<RecognizedGestureData*>(data.get())->faceGesture,
+        static_cast<RecognizedGestureData*>(data.get())->faceLandmark, faceInfoStr)) {
         // print emotion info
-        cv::putText(frame, "Emotion: " + recognized->faceGesture, cv::Point(10, 30),
+        cv::putText(frame, "Emotion: " + static_cast<RecognizedGestureData*>(data.get())->faceGesture, cv::Point(10, 30),
                     cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
 
         if (showFaceInfo) {
@@ -110,11 +114,11 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
         }
 
         // Draw Face Landmarks
-        if (!recognized->faceLandmark.empty() && showFaceMesh) {
-            for (size_t i = 0; i < recognized->faceLandmark.size(); i += 3) {
-                int id = recognized->faceLandmark[i];
-                int cx = recognized->faceLandmark[i+1];
-                int cy = recognized->faceLandmark[i+2];
+        if (!static_cast<RecognizedGestureData*>(data.get())->faceLandmark.empty() && showFaceMesh) {
+            for (size_t i = 0; i < static_cast<RecognizedGestureData*>(data.get())->faceLandmark.size(); i += 3) {
+                int id = static_cast<RecognizedGestureData*>(data.get())->faceLandmark[i];
+                int cx = static_cast<RecognizedGestureData*>(data.get())->faceLandmark[i+1];
+                int cy = static_cast<RecognizedGestureData*>(data.get())->faceLandmark[i+2];
 
                 // Eye
                 if (id == 33 || id == 133 || id == 362 || id == 263) {
@@ -133,11 +137,11 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
                     cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(200, 200, 200), cv::FILLED);
                 }
             }
-        } else if (!recognized->faceLandmark.empty() && !showFaceMesh) {
+        } else if (!static_cast<RecognizedGestureData*>(data.get())->faceLandmark.empty() && !showFaceMesh) {
              //Just draw all landmarks as little yellow dots
-            for (size_t i = 0; i < recognized->faceLandmark.size(); i += 3) {
-                int cx = recognized->faceLandmark[i+1];
-                int cy = recognized->faceLandmark[i+2];
+            for (size_t i = 0; i < static_cast<RecognizedGestureData*>(data.get())->faceLandmark.size(); i += 3) {
+                int cx = static_cast<RecognizedGestureData*>(data.get())->faceLandmark[i+1];
+                int cy = static_cast<RecognizedGestureData*>(data.get())->faceLandmark[i+2];
                 cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(0, 255, 255), cv::FILLED);
             }
         }
@@ -149,24 +153,24 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
     // --- Hand Process ---
     std::vector<int> handBbox;
 
-    if (_handGestureRecognizingOperator->processFrame(frame, recognized->handGesture, recognized->handLandmark, handBbox)) {
+    if (_handGestureRecognizingOperator->processFrame(frame, static_cast<RecognizedGestureData*>(data.get())->handGesture, static_cast<RecognizedGestureData*>(data.get())->handLandmark, handBbox)) {
         if (showHandLandmarks) {
             if (!handBbox.empty() && handBbox.size() == 4) {
                 cv::rectangle(frame, cv::Point(handBbox[0] - 20, handBbox[1] - 20), // Bbox'ı biraz büyüt
                               cv::Point(handBbox[2] + 20, handBbox[3] + 20),
                               cv::Scalar(255, 0, 255), 2); // Mor renk
-                cv::putText(frame, recognized->handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
+                cv::putText(frame, static_cast<RecognizedGestureData*>(data.get())->handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
                             cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Purple color
             }
 
-            for (size_t i = 0; i + 2 < recognized->handLandmark.size(); i += 3) {
-                int cx = recognized->handLandmark[i+1], cy = recognized->handLandmark[i+2];
+            for (size_t i = 0; i + 2 < static_cast<RecognizedGestureData*>(data.get())->handLandmark.size(); i += 3) {
+                int cx = static_cast<RecognizedGestureData*>(data.get())->handLandmark[i+1], cy = static_cast<RecognizedGestureData*>(data.get())->handLandmark[i+2];
                 cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Yellow color
             }
         }
     }
 
-    publish(MessageType::RecognizedGesture,  recognized);
+    publish(MessageType::RecognizedGesture,  data);
 }
 
 std::map<std::string, float> GestureRecognizerService::parseFaceInfoString(const std::string& faceInfoStr) {

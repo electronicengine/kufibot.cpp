@@ -36,7 +36,7 @@ private:
     void service_function();
 
     //subscribed Data Functions
-    void subcribed_data_receive(MessageType type, MessageData* data);
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
     void recognized_gesture(const std::string& _faceGesture, std::vector<int> _faceLandMark, const std::string& _handGesture, std::vector<int> _handLandmark);
     void llm_response(const std::string& response);
 

@@ -73,8 +73,7 @@ class Subscriber {
 public:
     virtual ~Subscriber() = default;
 
-    virtual void subcribed_data_receive(MessageType type, MessageData* data) = 0;
-
+    virtual void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) = 0;
 };
 
 #endif // SUBSCRIBER_H
