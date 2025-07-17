@@ -33,16 +33,16 @@ bool GestureRecognizerService::initialize() {
     _handGestureRecognizingOperator = HandGestureRecognizingOperator::get_instance();
 
     if (!_faceGestureRecognizingOperator->initialize()) {
-        Logger::error("Face gesture recognition module failed to initialize!");
+        ERROR("Face gesture recognition module failed to initialize!");
         return false;
     }
-    Logger::info("Face gesture recognition module initialized.");
+    INFO("Face gesture recognition module initialized.");
 
     if (!_handGestureRecognizingOperator->initialize()) {
-        Logger::error("Hand gesture recognition module failed to initialize!");
+        ERROR("Hand gesture recognition module failed to initialize!");
         return false;
     }
-    Logger::info("Hand gesture recognition module initialized.");
+    INFO("Hand gesture recognition module initialized.");
 
     return true;
 }
@@ -50,7 +50,7 @@ bool GestureRecognizerService::initialize() {
 void GestureRecognizerService::service_function() {
 
     if (!initialize()) {
-        Logger::error("GestureRecognizerService couldn't initialized correctly!");
+        ERROR("GestureRecognizerService couldn't initialized correctly!");
         stop();
     }
 
@@ -70,7 +70,7 @@ void GestureRecognizerService::subcribed_data_receive(MessageType type, const st
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }
@@ -80,7 +80,7 @@ void GestureRecognizerService::video_frame(const cv::Mat &frame) {
         static double ptime = 0;
         cv::Mat frame_copy = frame.clone();
         if (frame.empty()) {
-            Logger::error("Frame not read, ending stream.");
+            ERROR("Frame not read, ending stream.");
         }
 
         processFrame(frame_copy);
@@ -193,7 +193,7 @@ std::map<std::string, float> GestureRecognizerService::parseFaceInfoString(const
             try {
                 infoMap[key] = std::stof(valueStr);
             } catch (const std::exception& e) {
-                Logger::error("Error parsing value: {} - {}", valueStr, e.what());
+                ERROR("Error parsing value: {} - {}", valueStr, e.what());
             }
         }
     }

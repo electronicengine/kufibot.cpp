@@ -23,7 +23,7 @@ ServoMotorController::ServoMotorController(int address) {
         {ServoMotorJoint::eyeLeft, 20}
     };
 
-    Logger::info("Servo driver initialized");
+    INFO("Servo driver initialized");
 }
 
 void ServoMotorController::save_joint_angles()
@@ -38,7 +38,7 @@ void ServoMotorController::load_joint_angles() {
     // if (inFile.is_open()) {
     //     Json data = Json::parse(inFile);
     // }else{
-    //     Logger::error("Error opening file: example.json");
+    //     ERROR("Error opening file: example.json");
     //     return;
     // }
     //
@@ -47,7 +47,7 @@ void ServoMotorController::load_joint_angles() {
 
 void ServoMotorController::set_current_joint_angles(std::map<ServoMotorJoint, uint8_t>& angles) {
     for (const auto& [joint, angle] : angles) {
-        Logger::info("{} : {}", Servo_Motor_Joint_Names.at(joint) , std::to_string(angle));
+        INFO("{} : {}", Servo_Motor_Joint_Names.at(joint) , std::to_string(angle));
 
         set_absolute_servo_angle(joint, angle);
     }

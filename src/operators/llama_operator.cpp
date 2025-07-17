@@ -35,43 +35,59 @@ void LlamaOperator::setOptions(int ngl, int nThreads, int n_ctx, float minP, flo
 }
 
 bool LlamaOperator::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
-
     if (_modelLoaded) {
-        Logger::warn("Embedding Model already loaded");
+        WARNING("Embedding Model already loaded");
         return false;
     }
 
+    // Initialize llama backend
+    llama_backend_init();
+
+    // Set up logging
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            Logger::error("Error: {}", text);
+            ERROR("Error: {}", text);
         }
     }, nullptr);
 
+    // Load model
     llama_model_params model_params = llama_model_default_params();
     model_params.n_gpu_layers = _ngl;
+
     _model = llama_model_load_from_file(modelPath.c_str(), model_params);
     if (!_model) {
-        Logger::error("Error: Unable to load model");
+        ERROR("Error: Unable to load model");
+        return false;
     }
+
+    // Get vocab
     _vocab = llama_model_get_vocab(_model);
+
+    // Set up context parameters
     llama_context_params ctx_params = llama_context_default_params();
     ctx_params.n_ctx = _nCtx;
     ctx_params.n_batch = _nCtx;
+    ctx_params.n_ubatch = _nCtx;  // For embeddings, ubatch should equal batch
     ctx_params.pooling_type = poolingType;
     ctx_params.embeddings = true;
     ctx_params.n_threads = _nThreads;
 
     _ctx = llama_init_from_model(_model, ctx_params);
     if (!_ctx) {
-        Logger::error("Error: Failed to create llama_context");
+        ERROR("Error: Failed to create llama_context");
+        llama_model_free(_model);
         return false;
     }
-    _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
-    // llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
-    // llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
-    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
-    // llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
 
+    // Check if model supports embeddings
+    if (llama_model_has_encoder(_model) && llama_model_has_decoder(_model)) {
+        ERROR("Error: computing embeddings in encoder-decoder models is not supported");
+        llama_model_free(_model);
+        return false;
+    }
+
+    // Initialize sampler (optional for embeddings but kept for compatibility)
+    _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
     llama_sampler_chain_add(_smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
 
     _modelLoaded = true;
@@ -80,13 +96,13 @@ bool LlamaOperator::loadEmbedModel(const std::string & modelPath, const enum lla
 
 bool LlamaOperator::loadChatModel(const std::string & modelPath) {
     if (_modelLoaded) {
-        Logger::warn("Chat Model already loaded");
+        WARNING("Chat Model already loaded");
         return false;
     }
 
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            Logger::error("Error: {}", text);
+            ERROR("Error: {}", text);
         }
     }, nullptr);
 
@@ -94,7 +110,7 @@ bool LlamaOperator::loadChatModel(const std::string & modelPath) {
     model_params.n_gpu_layers = _ngl;
     _model = llama_model_load_from_file(modelPath.c_str(), model_params);
     if (!_model) {
-        Logger::error("Error: Unable to load model");
+        ERROR("Error: Unable to load model");
         return false;
     }
     _vocab = llama_model_get_vocab(_model);
@@ -105,12 +121,12 @@ bool LlamaOperator::loadChatModel(const std::string & modelPath) {
     _ctx = llama_init_from_model(_model, ctx_params);
 
     if (!_ctx) {
-        Logger::error("Error: Failed to create llama_context");
+        ERROR("Error: Failed to create llama_context");
         return false;
     }
     _smpl = llama_sampler_chain_init(llama_sampler_chain_default_params());
     // llama_sampler_chain_add(_smpl, llama_sampler_init_min_p(_minP, 1));
-    // llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
+    llama_sampler_chain_add(_smpl, llama_sampler_init_temp(_temp));
     // llama_sampler_chain_add(_smpl, llama_sampler_init_top_k(_topK));
     // llama_sampler_chain_add(_smpl, llama_sampler_init_top_p(_topP, 1));
 
@@ -146,7 +162,7 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
             int n_ctx = llama_n_ctx(_ctx);
             int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
             if (n_ctx_used + batch.n_tokens > n_ctx) {
-                printf("\033[0m\n");
+                //printf("\033[0m\n");
                 fprintf(stderr, "context size exceeded\n");
                 exit(0);
             }
@@ -173,6 +189,8 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
             batch = llama_batch_get_one(&new_token_id, 1);
         }
 
+        _responseCallbackFunction("<end>");
+
         return response;
 }
 
@@ -191,8 +209,7 @@ void LlamaOperator::chat(const std::string &userInput) {
     prev_len = new_len;
 }
 
-void LlamaOperator::batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id)
-{
+void LlamaOperator::batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id) {
     size_t n_tokens = tokens.size();
     for (size_t i = 0; i < n_tokens; i++) {
         common_batch_add(batch, tokens[i], i, { seq_id }, true);
@@ -204,21 +221,22 @@ void LlamaOperator::batch_decode(llama_context * ctx, llama_batch & batch, float
     const struct llama_model * model = llama_get_model(ctx);
     const enum llama_pooling_type pooling_type = llama_pooling_type(ctx);
 
-    // run model
+    // Run model
     if (llama_model_has_encoder(model) && !llama_model_has_decoder(model)) {
         // encoder-only model
         if (llama_encode(ctx, batch) < 0) {
-            Logger::error("Error: failed llama_encode");
+            ERROR("Error: failed llama_encode");
+            return;
         }
     } else if (!llama_model_has_encoder(model) && llama_model_has_decoder(model)) {
         // decoder-only model
-        int32_t ret = llama_decode(ctx, batch);
-
-        if (ret < 0) {
-            Logger::error("Error: failed llama_decode");
+        if (llama_decode(ctx, batch) < 0) {
+            ERROR("Error: failed llama_decode");
+            return;
         }
     }
 
+    // Extract embeddings
     for (int i = 0; i < batch.n_tokens; i++) {
         if (!batch.logits[i]) {
             continue;
@@ -228,18 +246,21 @@ void LlamaOperator::batch_decode(llama_context * ctx, llama_batch & batch, float
         int embd_pos = 0;
 
         if (pooling_type == LLAMA_POOLING_TYPE_NONE) {
-            // try to get token embeddings
+            // Get token embeddings
             embd = llama_get_embeddings_ith(ctx, i);
             embd_pos = i;
-            if (!embd)
-                Logger::error("failed to get token embeddings");
+            if (!embd) {
+                ERROR("Failed to get token embeddings");
+                return;
+            }
         } else {
-            // try to get sequence embeddings - supported only when pooling_type is not NONE
-            auto seq_id = batch.seq_id[i][0];
-
-            embd = llama_get_embeddings_seq(ctx, seq_id);
+            // Get sequence embeddings - supported only when pooling_type is not NONE
+            embd = llama_get_embeddings_seq(ctx, batch.seq_id[i][0]);
             embd_pos = batch.seq_id[i][0];
-            Logger::error("failed to get sequence embeddings");
+            if (!embd) {
+                ERROR("Failed to get sequence embeddings");
+                return;
+            }
         }
 
         float * out = output + embd_pos * n_embd;
@@ -247,22 +268,63 @@ void LlamaOperator::batch_decode(llama_context * ctx, llama_batch & batch, float
     }
 }
 
+void LlamaOperator::unloadEmbedModel() {
+    if (_smpl) {
+        llama_sampler_free(_smpl);
+        _smpl = nullptr;
+    }
+
+    if (_model) {
+        llama_model_free(_model);
+        _model = nullptr;
+    }
+    _vocab = nullptr;
+    _modelLoaded = false;
+    llama_backend_free();
+}
 
 std::vector<float> LlamaOperator::calculateEmbeddings(const std::string& text) {
-    
-    uint64_t batch_size = 2048;
+    if (!_modelLoaded || !_ctx || !_model) {
+        ERROR("Model not loaded");
+        return std::vector<float>();
+    }
 
+    // Tokenize the text
     auto tokens = common_tokenize(_ctx, text, true, true);
+
+    // Check if tokens exceed batch size
+    const uint64_t batch_size = _nCtx;
+    if (tokens.size() > batch_size) {
+        ERROR("Number of tokens ({}) exceeds batch size ({})", tokens.size(), batch_size);
+        return std::vector<float>();
+    }
+
+    // Check if the last token is SEP (optional warning)
+    if (!tokens.empty() && tokens.back() != llama_vocab_sep(_vocab)) {
+        WARNING("Last token in the prompt is not SEP");
+    }
 
     // Initialize batch
     llama_batch batch = llama_batch_init(batch_size, 0, 1);
 
-    // Prepare output embeddings
-    const int embedding_dim = llama_model_n_embd(_model);
-    std::vector<float> embeddings(embedding_dim, 0);
+    // Clear any previous KV cache
+    llama_kv_cache_clear(_ctx);
 
-    // Process tokens in batch
-    batch_add_seq(batch, tokens, 0);  // Add all tokens at once (simplified)
+    // Add tokens to batch
+    batch_add_seq(batch, tokens, 0);
+
+    // Get embedding dimensions
+    const int embedding_dim = llama_model_n_embd(_model);
+    const enum llama_pooling_type pooling_type = llama_pooling_type(_ctx);
+
+    // Calculate number of embeddings we'll get
+    int n_embd_count = 1;  // For sequence pooling, we get one embedding per sequence
+    if (pooling_type == LLAMA_POOLING_TYPE_NONE) {
+        n_embd_count = tokens.size();  // For token pooling, we get one embedding per token
+    }
+
+    // Prepare output embeddings
+    std::vector<float> embeddings(n_embd_count * embedding_dim, 0.0f);
 
     // Decode and get embeddings
     batch_decode(_ctx, batch, embeddings.data(), 1, embedding_dim, 2);

@@ -15,7 +15,7 @@ PCA9685Driver::~PCA9685Driver() {
 void PCA9685Driver::write(uint8_t reg, uint8_t value) {
   int result = wiringPiI2CWriteReg8(i2c_fd, reg, value);
   if (result<0){
-    Logger::error("write error wiringPiI2CWriteReg8. reg: {}  val: {}", std::to_string(reg), std::to_string(value));
+    ERROR("write error wiringPiI2CWriteReg8. reg: {}  val: {}", std::to_string(reg), std::to_string(value));
   }
 }
 

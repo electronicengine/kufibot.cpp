@@ -10,29 +10,37 @@
 #include "servo_controller_window.h"
 #include "measurements_window.h"
 #include "chat_window.h"
+#include "spdlog/spdlog.h"
 
 #define LOG_HISTORY_SIZE    2000
 
 using namespace std;
 using namespace finalcut;
 
-enum class LogLevel : uint_fast8_t {
-  LOG_TRACE = 0,
-  LOG_INFO,
-  LOG_WARNING,
-  LOG_ERROR
+enum class LogLevel {
+  trace,
+  info,
+  debug,
+  warn,
+  error,
+  critical
 };
 
+const inline std::map<LogLevel, std::string> Log_Level_Strings = {{LogLevel::trace, "trace"},
+                                                                  {LogLevel::info, "info "},
+                                                                  {LogLevel::debug, "debug"},
+                                                                  {LogLevel::warn, "warn."},
+                                                                  {LogLevel::error, "error"},
+                                                                  {LogLevel::critical, "crit."}};
 
 class MainWindow final : public finalcut::FDialog
 {
   public:
     // Constructor
-    explicit MainWindow (finalcut::FWidget* = nullptr);
-
-    static void log(const std::string& logLine, LogLevel logLevel);
+  explicit MainWindow (finalcut::FWidget* = nullptr);
     // Destructor
-    ~MainWindow() override;
+  ~MainWindow() override;
+  static void log(const std::string& logLine, LogLevel logLevel, const std::string& className = "");
 
   CompassRtGraphWindow *_compassRTGraphWindow;
   BodyControllerWindow *_bodyControllerWindow;
@@ -61,14 +69,12 @@ class MainWindow final : public finalcut::FDialog
     static std::mutex _searchStringMtx;
     static std::mutex _fileMenuMtx;
     static std::mutex _quitMtx;
-    LogLevel _currentLogLevel{LogLevel::LOG_INFO};
-    static std::deque<std::pair<std::string, LogLevel>> _logHistory;
     static std::mutex _loggerViewMtx;
 
     bool _autoScroll{true};
     std::wstring _searchString;
     std::function<void(void)> _quitCb;
-
+    static std::deque<std::tuple<std::string, LogLevel, std::string>> _logHistory;
 
     finalcut::FTextView _textView{this};
     finalcut::FButtonGroup _radiobutton_group {L"Log Level", this};
@@ -91,7 +97,7 @@ class MainWindow final : public finalcut::FDialog
     finalcut::FMenuItem       _measurementsWindowMenuButton{"&Open Measurements Window", &_windowsMenu};
     finalcut::FMenuItem       _chatWindowMenuButton{"&Open Chat Window", &_windowsMenu};
 
-    void append_log_view(const std::string& logLine, LogLevel logLevel);
+
     void configure_file_nenu_items();
     void activate_window (finalcut::FDialog*) const;
     void text_view_scroll_up(void);

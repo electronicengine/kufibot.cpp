@@ -8,12 +8,23 @@
 #include <string>
 #include <iostream>
 #include "tui/main_window.h"
+#include <spdlog/fmt/fmt.h>
+#include <source_location>
+#include <regex>
+
 
 class Logger {
+    Logger() = default;  // Prevent instantiation
+    ~Logger() = default;
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+    static bool _useTui;
+
 public:
-    static void init(const std::string& logger_name = "kufiBot",
+    static void init(bool useTui = true, const std::string& logger_name = "kufiBot",
                     const std::string& file_name = "/var/log/kufibot.log") {
         try {
+            _useTui = useTui;
             // Create rotating file sink - 5MB size, 3 rotated files
             auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
                 file_name, 1024 * 1024 * 5, 3);
@@ -30,77 +41,115 @@ public:
             // Set log pattern
             spdlog::set_pattern("[%H:%M:%S.%e] [%^%l%$] [%t] %v");
             // Set log level
-            spdlog::set_level(spdlog::level::debug);
+            spdlog::set_level(spdlog::level::trace);
 
         } catch (const spdlog::spdlog_ex& ex) {
             std::cerr << "Logger initialization failed: " << ex.what() << std::endl;
         }
     }
 
-    static void trace(const std::string& message) {
-        spdlog::trace(message);
-        MainWindow::log(message, LogLevel::LOG_TRACE);
+    static inline std::string extract_class_name(const std::string& pretty_function) {
+        std::regex class_regex(R"((\w+)::\w+\(.*\))");
+        std::smatch match;
+        if (std::regex_search(pretty_function, match, class_regex)) {
+            return match[1];
+        }
+        return "UnknownClass";
     }
 
-    static void debug(const std::string& message) {
-        spdlog::debug(message);
-        MainWindow::log(message, LogLevel::LOG_INFO);
+    template <class... LogStrArgs>
+    static void trace(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}",
+                                       class_name,
+                                       formattedStr);
+            spdlog::trace(full_message);
+        }else {
+            MainWindow::log(formattedStr, LogLevel::trace, class_name);
+        }
     }
 
-    static void info(const std::string& message) {
-        spdlog::info(message);
-        MainWindow::log(message, LogLevel::LOG_INFO);
+    template <class... LogStrArgs>
+    static void info(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, std::forward<LogStrArgs>(logStrArgs)...);
+
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}", class_name, formattedStr);
+            spdlog::info(full_message);
+        } else {
+            MainWindow::log(formattedStr, LogLevel::info, class_name);
+        }
     }
 
-    static void warn(const std::string& message) {
-        spdlog::warn(message);
-        MainWindow::log(message, LogLevel::LOG_WARNING);
+    template <class... LogStrArgs>
+    static void debug(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}",
+                                       class_name,
+                                       formattedStr);
+            spdlog::debug(full_message);
+        }else {
+            MainWindow::log(formattedStr, LogLevel::debug, class_name);
+        }
     }
 
-    static void error(const std::string& message) {
-        spdlog::error(message);
-        MainWindow::log(message, LogLevel::LOG_ERROR);
+    template <class... LogStrArgs>
+    static void warning(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}",
+                                       class_name,
+                                       formattedStr);
+            spdlog::warn(full_message);
+        }else {
+            MainWindow::log(formattedStr, LogLevel::warn, class_name);
+        }
     }
 
-    static void critical(const std::string& message) {
-        spdlog::critical(message);
-        MainWindow::log(message, LogLevel::LOG_WARNING);
+    template <class... LogStrArgs>
+    static void error(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}",
+                                       class_name,
+                                       formattedStr);
+            spdlog::error(full_message);
+        }else {
+            MainWindow::log(formattedStr, LogLevel::error, class_name);
+        }
     }
 
-    // Template versions for logging with formatting
-    template<typename... Args>
-    static void trace(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::trace(fmt, std::forward<Args>(args)...);
-    }
+    template <class... LogStrArgs>
+    static void critical(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::string class_name = extract_class_name(function);
+        auto formattedStr = fmt::format(logStr, logStrArgs...);
 
-    template<typename... Args>
-    static void debug(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::debug(fmt, std::forward<Args>(args)...);
+        if (!_useTui) {
+            std::string full_message = fmt::format("<{}> {}",
+                                       class_name,
+                                       formattedStr);
+            spdlog::critical(full_message);
+        }else {
+            MainWindow::log(formattedStr, LogLevel::critical, class_name);
+        }
     }
-
-    template<typename... Args>
-    static void info(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::info(fmt, std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    static void warn(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::warn(fmt, std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    static void error(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::error(fmt, std::forward<Args>(args)...);
-    }
-
-    template<typename... Args>
-    static void critical(fmt::format_string<Args...> fmt, Args&&... args) {
-        spdlog::critical(fmt, std::forward<Args>(args)...);
-    }
-
-private:
-    Logger() = default;  // Prevent instantiation
-    ~Logger() = default;
-    Logger(const Logger&) = delete;
-    Logger& operator=(const Logger&) = delete;
 };
+
+
+#define TRACE(logStr, ...) Logger::trace(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+#define INFO(logStr, ...) Logger::info(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+#define DEBUG(logStr, ...) Logger::debug(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+#define WARNING(logStr, ...) Logger::warning(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+#define ERROR(logStr, ...) Logger::error(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+#define CRITICAL(logStr, ...) Logger::critical(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)

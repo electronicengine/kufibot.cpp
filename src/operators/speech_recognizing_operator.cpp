@@ -55,7 +55,7 @@ void SpeechRecognizingOperator::load_model(const std::string &modelPath)
 // Initialize PortAudio and prepare resources
 bool SpeechRecognizingOperator::open() {
     if (Pa_Initialize() != paNoError) {
-        Logger::error("Failed to initialize PortAudio.");
+        ERROR("Failed to initialize PortAudio.");
         return false;
     }
 
@@ -70,7 +70,7 @@ bool SpeechRecognizingOperator::open() {
     );
 
     if (err != paNoError) {
-        Logger::error("Failed to open audio stream: {}", std::string( Pa_GetErrorText(err)));
+        ERROR("Failed to open audio stream: {}", std::string( Pa_GetErrorText(err)));
         return false;
     }
 
@@ -80,10 +80,10 @@ bool SpeechRecognizingOperator::open() {
 // Start listening to the microphone
 bool SpeechRecognizingOperator::start_listen() {
     if (Pa_StartStream(_stream) != paNoError) {
-        Logger::error("Failed to start audio stream.");
+        ERROR("Failed to start audio stream.");
         return false;
     }
-    Logger::error("Listening... Press Ctrl+C to stop.");
+    ERROR("Listening... Press Ctrl+C to stop.");
 
     return true;
 }

@@ -50,7 +50,7 @@ void RemoteConnectionService::video_frame(const cv::Mat& frame) {
         publish(MessageType::WebSocketTransfer, data);
 
     } catch (const std::exception& e) {
-        Logger::error("WebSocket Error: {} " + std::string(e.what()));
+        ERROR("WebSocket Error: {} " + std::string(e.what()));
     }
 
 }
@@ -58,7 +58,7 @@ void RemoteConnectionService::video_frame(const cv::Mat& frame) {
 void RemoteConnectionService::web_socket_receive_message(websocketpp::connection_hdl hdl,  const std::string& msg)
 {
     if(msg == "on_open"){
-        Logger::trace("new web socket connection extablished");
+        TRACE("new web socket connection extablished");
         _hdl = hdl;
         subscribe_to_service(_videoStreamService);
         subscribe_to_service(_robotControllerService);
@@ -109,7 +109,7 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
 
 

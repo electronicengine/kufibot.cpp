@@ -151,7 +151,7 @@ void MappingService::subcribed_data_receive(MessageType type, const std::unique_
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

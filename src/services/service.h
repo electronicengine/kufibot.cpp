@@ -12,16 +12,17 @@
 class Service : public Publisher, public Subscriber{
 
 public:
-
     Service(const std::string &name);
     virtual ~Service();
 
     std::string get_service_name();
     virtual void service_function() = 0;
+    void run();
     void start();
     void stop();
     void disable();
     void enable();
+    bool is_running();
 
 protected:
     std::thread _serviceThread;

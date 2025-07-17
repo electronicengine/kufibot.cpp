@@ -51,7 +51,9 @@ void TuiService::commandLinePrompt() {
         std::string input;
         std::cout << std::endl << "> ";
         std::getline(std::cin, input);
-        if (input == "exit") {
+        if (input.empty()) {
+            continue;
+        }else if (input == "exit") {
             WebSocketService::get_instance()->stop();
             VideoStreamService::get_instance()->stop();
             RobotControllerService::get_instance()->stop();
@@ -63,7 +65,7 @@ void TuiService::commandLinePrompt() {
 
         }else if(input == "sensors") {
             _tuiSensorCallBackFunction = [this](const SensorData &sensor_data) {
-                Logger::info(sensor_data.to_json().dump());
+                INFO(sensor_data.to_json().dump());
                 _tuiSensorCallBackFunction = nullptr;
             };
         }else {
@@ -74,13 +76,11 @@ void TuiService::commandLinePrompt() {
 
 void TuiService::service_function() {
 
-    subscribe_to_service(RobotControllerService::get_instance());
-    subscribe_to_service(InteractiveChatService::get_instance());
     bool useUI = true;
 
     for (int i = 1; i < _argc; i++) {
         std::string arg = _argv[i];
-        if (arg == "-no-tui") {
+        if (arg == "--no-tui") {
             useUI = false;
             break;
         }
@@ -93,18 +93,22 @@ void TuiService::service_function() {
         main_dlg.setText ("Log View");
         main_dlg.setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
 
-        //set tui Callback Functions
+        //set tui Prob Callback Functions
         _tuiSensorCallBackFunction = main_dlg._measurementsWindow->get_sensor_data_callback_function();
         _tuiLlmResponseCallBackFunction = main_dlg._chatWindow->get_llm_response_callback_function();
         _tuiCompasDirectionCallBackFunction = main_dlg._compassRTGraphWindow->get_compas_direction_callback_function();
         _tuiServoJointInfoCallBackFunction = main_dlg._servoControllerWindow->get_servo_joints_callback_function();
 
+        //set tui control CallBack Functions
         main_dlg._chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
         main_dlg._bodyControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
         main_dlg._servoControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
 
         finalcut::FWidget::setMainWidget (&main_dlg);
         main_dlg.show();
+
+        subscribe_to_service(RobotControllerService::get_instance());
+        subscribe_to_service(InteractiveChatService::get_instance());
 
         app.exec();
     }else {
@@ -141,7 +145,7 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
             }
             break;
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

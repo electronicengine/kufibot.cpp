@@ -29,6 +29,27 @@ constexpr int DOWN_MAX  = -45;
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
+
+enum class LlamaResponseEmotion {
+    greeting,
+    serious,
+    curious,
+    worried,
+    optimistic,
+    pessimistic,
+    confident,
+};
+
+const inline std::map<LlamaResponseEmotion, std::string> Response_Emotion_Names_EN = {
+    {LlamaResponseEmotion::greeting, "greeting"},
+    {LlamaResponseEmotion::serious, "serious"},
+    {LlamaResponseEmotion::curious, "curious"},
+    {LlamaResponseEmotion::worried, "worried"},
+    {LlamaResponseEmotion::optimistic, "optimistic"},
+    {LlamaResponseEmotion::pessimistic, "pessimistic"},
+    {LlamaResponseEmotion::confident, "confident"}
+};
+
 enum class MessageType {
     VideoFrame,
     WebSocketReceive,

@@ -23,7 +23,7 @@ DCMotorController::~DCMotorController() {
 
 void DCMotorController::run(DCMotor motor, DCMotorDirection direction, int speed) {
     if (speed > 100) {
-        Logger::warn("Speed must be between 0 and 100.");
+        WARNING("Speed must be between 0 and 100.");
     }
 
     if(motor == DCMotor::left){

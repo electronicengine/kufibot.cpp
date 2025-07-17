@@ -30,7 +30,7 @@ GesturePerformingService::~GesturePerformingService()
 void GesturePerformingService::greeter()
 {
     
-    Logger::info("greeter !");
+    INFO("greeter !");
      std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
 
     for(int i=0; i<2; i++){
@@ -48,7 +48,7 @@ void GesturePerformingService::greeter()
 
 void GesturePerformingService::knowledgeable()
 {
-    Logger::info("knowledgeable !");
+    INFO("knowledgeable !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 0}};
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -56,7 +56,7 @@ void GesturePerformingService::knowledgeable()
 
 void GesturePerformingService::optimistic()
 {
-    Logger::info("optimistic !");
+    INFO("optimistic !");
      std::map<std::string, int> jointAngles = {{"right_arm", 40}, {"left_arm", 140}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -64,7 +64,7 @@ void GesturePerformingService::optimistic()
 
 void GesturePerformingService::pessimistic()
 {
-    Logger::info("pessimistic !");
+    INFO("pessimistic !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 130},{"eye_left", 50}};
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -72,7 +72,7 @@ void GesturePerformingService::pessimistic()
 
 void GesturePerformingService::curious()
 {
-    Logger::info("curious !");
+    INFO("curious !");
     std::map<std::string, int> jointAngles = {{"right_arm", 20}, {"left_arm", 170}, {"neck_down", 78},{"neck_up", 15}, {"neck_right", 90}, {"eye_right", 170},{"eye_left", 20}};
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -105,13 +105,13 @@ void GesturePerformingService::llm_response(const std::string &response) {
     } else if (gesture.find("meraklı") != std::string::npos) {
         curious();
     } else {
-        Logger::error("Unknown gesture:");
+        ERROR("Unknown gesture:");
     }
 }
 
 void GesturePerformingService::service_function()
 {
-    Logger::info("GesturePerformingService::_interactiveChatService::subscribe");
+    INFO("GesturePerformingService::_interactiveChatService::subscribe");
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
 
@@ -141,7 +141,7 @@ void GesturePerformingService::subcribed_data_receive(MessageType type, const st
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

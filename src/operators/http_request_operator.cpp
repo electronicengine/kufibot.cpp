@@ -47,7 +47,7 @@ void HttpRequestOperator::query_llama_text(const std::string& prompt) {
     // Perform the request
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        Logger::error("CURL error: {}" + std::string(curl_easy_strerror(res)));
+        ERROR("CURL error: {}" + std::string(curl_easy_strerror(res)));
         curl_easy_cleanup(curl);
         return;
     }

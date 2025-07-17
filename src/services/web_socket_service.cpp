@@ -32,7 +32,7 @@ void WebSocketService::service_function() {
     std::string address = "192.168.1.44";
     uint16_t port = 8080;
 
-    Logger::info("WebSocketService is starting...");
+    INFO("WebSocketService is starting...");
     RemoteConnectionService* _remoteConnectionService = RemoteConnectionService::get_instance();
     subscribe_to_service(_remoteConnectionService);
 
@@ -51,7 +51,7 @@ void WebSocketService::run_web_server(const std::string &address, uint16_t port)
         boost::asio::ip::tcp::resolver resolver(_server.get_io_service());
         boost::asio::ip::tcp::resolver::results_type endpoints =  resolver.resolve(address, std::to_string(port));
         if (ec) {
-            Logger::error("Error resolving address: " + std::string(ec.message()));
+            ERROR("Error resolving address: " + std::string(ec.message()));
             return;
         }
 
@@ -60,20 +60,20 @@ void WebSocketService::run_web_server(const std::string &address, uint16_t port)
         // }
 
         _server.start_accept();
-        Logger::info("WebSocket Server listening on " + address + ":" + std::to_string(port));
+        INFO("WebSocket Server listening on " + address + ":" + std::to_string(port));
 
         _server.run(); // Blocking call to run the server
     } catch (websocketpp::exception const& e) {
-        Logger::error("WebSocket++ exception: " + std::string(e.what()));
+        ERROR("WebSocket++ exception: " + std::string(e.what()));
     } catch (...) {
-        Logger::error("Other exception occurred");
+        ERROR("Other exception occurred");
     }
 
 }
 
 
 void WebSocketService::on_open(websocketpp::connection_hdl hdl) {
-    Logger::warn("Connection opened!");
+    WARNING("Connection opened!");
 
     std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
     static_cast<WebSocketReceiveData*>(data.get())->msg = "on_open";
@@ -110,7 +110,7 @@ void WebSocketService::subcribed_data_receive(MessageType type, const std::uniqu
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }
@@ -118,7 +118,7 @@ void WebSocketService::subcribed_data_receive(MessageType type, const std::uniqu
 
 
 void WebSocketService::on_close(websocketpp::connection_hdl hdl) {
-    Logger::warn("Connection closed!");
+    WARNING("Connection closed!");
 
     std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
     static_cast<WebSocketReceiveData*>(data.get())->msg = "on_close";
@@ -130,7 +130,7 @@ void WebSocketService::send_message(websocketpp::connection_hdl hdl, const std::
     try {
         _server.send(hdl, message, websocketpp::frame::opcode::text);
     } catch (websocketpp::exception const& e) {
-        Logger::info("Send failed: " + std::string(e.what()));
+        INFO("Send failed: " + std::string(e.what()));
     }
 }
 
@@ -138,7 +138,7 @@ void WebSocketService::send_data(websocketpp::connection_hdl hdl, const std::vec
     try {
         _server.send(hdl, buffer.data(), buffer.size(), websocketpp::frame::opcode::binary);
     } catch (websocketpp::exception const& e) {
-        Logger::info("Send failed: " + std::string(e.what()));
+        INFO("Send failed: " + std::string(e.what()));
     }
 }
 

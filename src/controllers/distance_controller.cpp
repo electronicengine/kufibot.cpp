@@ -51,7 +51,7 @@ DistanceData DistanceController::get_distance() {
     size_t bytes_read = boost::asio::read(uart, boost::asio::buffer(buffer), ec);
 
     if (ec || bytes_read != 9) {
-        Logger::error("Failed to read data: {}" +  ec.message());
+        ERROR("Failed to read data: {}" +  ec.message());
         return data;  // Error case
     }
 

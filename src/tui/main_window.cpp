@@ -1,7 +1,8 @@
 
 #include "main_window.h"
 
-std::deque<std::pair<std::string, LogLevel>> MainWindow::_logHistory;
+
+std::deque<std::tuple<std::string, LogLevel, std::string>> MainWindow::_logHistory;
 std::mutex MainWindow::_loggerViewMtx;
 bool MainWindow::_noTui = false;
 
@@ -16,7 +17,6 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     _lineEditFilter.setLabelOrientation(finalcut::FLineEdit::LabelOrientation::Above);
     _lineEditFilter.setGeometry(finalcut::FPoint{3,2}, finalcut::FSize{12, 1});
 
-
     _radiobutton_group.setGeometry(finalcut::FPoint{18,1}, finalcut::FSize{25, 3});
     _error.setGeometry(finalcut::FPoint{1,1}, finalcut::FSize{5, 1});
     _warning.setGeometry(finalcut::FPoint{7,1}, finalcut::FSize{5, 1});
@@ -28,7 +28,6 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     _toggleAutoScroll.setGeometry(finalcut::FPoint{2,1}, finalcut::FSize{12, 1});
     _toggleAutoScroll.setChecked(true);
     _toggleAutoScroll.addCallback("toggled", this, &MainWindow::auto_scroll_toggle);
-
 
     _compassRTGraphWindow = new CompassRtGraphWindow{this, -200, 200, -200, 200};
     _compassRTGraphWindow->setGeometry (FPoint{8, 16}, FSize{60, 30});
@@ -64,7 +63,7 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
 
-    addTimer(200); 
+    addTimer(200);
 }
 
 MainWindow::~MainWindow()
@@ -74,13 +73,83 @@ MainWindow::~MainWindow()
 
 void MainWindow::onTimer(finalcut::FTimerEvent *)
 {
-    std::lock_guard<std::mutex> lock(_loggerViewMtx); // Ensure thread safety
 
-    while (_logHistory.size() > 0) {
-        std::pair<std::string, LogLevel> log = _logHistory.front();
-        append_log_view(log.first, log.second);
+    while (!_logHistory.empty()) {
+        std::tuple<std::string, LogLevel, std::string> log = _logHistory.front();
         _logHistory.pop_front();
+        std::string logLine = std::get<0>(log);
+        LogLevel logLevel = std::get<1>(log);
+        std::string className = std::get<2>(log);
+
+
+        finalcut::FString logLineFstring{logLine};
+
+        switch (logLevel) {
+            case LogLevel::trace:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::White, finalcut::FColor::Black}});
+                break;
+            case LogLevel::info:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Green, finalcut::FColor::Black}});
+                break;
+            case LogLevel::debug:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Blue, finalcut::FColor::Black}});
+                break;
+            case LogLevel::warn:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Orange1, finalcut::FColor::Black}});
+                break;
+            case LogLevel::error:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Red, finalcut::FColor::Black}});
+                break;
+            case LogLevel::critical:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::DarkRed2, finalcut::FColor::Black}});
+                break;
+            default:
+                _textView.append(logLineFstring);
+                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Magenta, finalcut::FColor::Black}});
+                return;
+        }
+
+        if(_autoScroll)
+            _textView.scrollToEnd();
+        _textView.redraw();
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
+}
+
+
+void MainWindow::log(const std::string &logLine, LogLevel logLevel, const std::string &className)
+{
+    if (_noTui)
+        return;
+
+    std::lock_guard<std::mutex> lock(_loggerViewMtx);
+
+    auto now = std::chrono::system_clock::now();
+    auto time_t_now = std::chrono::system_clock::to_time_t(now);
+    std::tm local_tm = *std::localtime(&time_t_now);
+
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(
+        now.time_since_epoch()) % 1000;
+
+    std::stringstream timestamp;
+    timestamp << std::put_time(&local_tm, "[%H:%M:%S")
+              << "." << std::setfill('0') << std::setw(3) << milliseconds.count() << "]";
+
+    std::stringstream full_log_line;
+    full_log_line << timestamp.str()
+                  << " [" << Log_Level_Strings.at(logLevel) << "]"
+                  << " [" << syscall(SYS_gettid) << "]"
+                  << " <" << className << "> "
+                  << logLine;
+
+    _logHistory.push_back(std::make_tuple(full_log_line.str(), logLevel, className));
+
 }
 
 void MainWindow::configure_file_nenu_items()
@@ -116,55 +185,6 @@ void MainWindow::text_view_scroll_up(void) {
     }
 }
 
-
-void MainWindow::append_log_view(const std::string& logLine, LogLevel logLevel){
-    finalcut::FString logLineFstring{logLine};
-
-    switch (logLevel) {
-        case LogLevel::LOG_TRACE:
-            _textView.append(logLineFstring);
-            _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{0, logLine.size(), finalcut::FColorPair{finalcut::FColor::White, finalcut::FColor::Black}});
-            break;
-
-        case LogLevel::LOG_INFO:
-            _textView.append(logLineFstring);
-            _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{0, logLine.size(), finalcut::FColorPair{finalcut::FColor::Blue, finalcut::FColor::Black}});
-            break;
-
-        case LogLevel::LOG_WARNING:
-            _textView.append(logLineFstring);
-            _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{0, logLine.size(), finalcut::FColorPair{finalcut::FColor::Orange1, finalcut::FColor::Black}});
-            break;
-
-        case LogLevel::LOG_ERROR:
-            _textView.append(logLineFstring);
-            _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{0, logLine.size(), finalcut::FColorPair{finalcut::FColor::Red, finalcut::FColor::Black}});
-            break;
-
-        default:
-            _textView.append(logLineFstring);
-            _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{0, logLine.size(), finalcut::FColorPair{finalcut::FColor::Magenta, finalcut::FColor::Black}});
-            return;
-    }
-
-    if(_autoScroll)
-        _textView.scrollToEnd();
-
-    _textView.redraw();
-}
-
-void MainWindow::log(const std::string &logLine, LogLevel logLevel)
-{
-    if (_noTui)
-        return;
-
-    std::lock_guard<std::mutex> lock(_loggerViewMtx); // Ensure thread safety
-    _logHistory.emplace_back(logLine, logLevel);
-
-    while (_logHistory.size() > LOG_HISTORY_SIZE) {
-        _logHistory.pop_front();
-    }
-}
 
 void MainWindow::activate_window (finalcut::FDialog* win) const
 {

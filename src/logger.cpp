@@ -3,3 +3,5 @@
 //
 
 #include "logger.h"
+
+bool Logger::_useTui = true;

@@ -16,7 +16,7 @@ SpeechPerformingOperator::SpeechPerformingOperator() {
     mpg123_init();  // Initialize MPG123
     _mh = mpg123_new(nullptr, &_mpg123Err);
     if (_mpg123Err != MPG123_OK) {
-        Logger::error("Failed to initialize mpg123: {}", std::string(mpg123_plain_strerror(_mpg123Err)));
+        ERROR("Failed to initialize mpg123: {}", std::string(mpg123_plain_strerror(_mpg123Err)));
     }
 }
 
@@ -46,7 +46,7 @@ void SpeechPerformingOperator::playAudio() {
     int err;
 
     if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-        Logger::error("Error opening PCM device: {} ", mpg123_plain_strerror(err));
+        ERROR("Error opening PCM device: {} ", mpg123_plain_strerror(err));
 
         return;
     }
@@ -59,7 +59,7 @@ void SpeechPerformingOperator::playAudio() {
     unsigned int sampleRate = 22050;
     snd_pcm_hw_params_set_rate_near(pcmHandle, params, &sampleRate, 0);
     if ((err = snd_pcm_hw_params(pcmHandle, params)) < 0) {
-        Logger::error("Error setting PCM parameters: {} ", mpg123_plain_strerror(err));
+        ERROR("Error setting PCM parameters: {} ", mpg123_plain_strerror(err));
         snd_pcm_close(pcmHandle);
         return;
     }
@@ -77,7 +77,7 @@ void SpeechPerformingOperator::playAudio() {
 
     if ((err = snd_pcm_writei(pcmHandle, internalBuffer.data(), internalBuffer.size())) < 0) {
         snd_pcm_prepare(pcmHandle);
-        Logger::error("Error Audio underrun: {}",  std::string(mpg123_plain_strerror(err)));
+        ERROR("Error Audio underrun: {}",  std::string(mpg123_plain_strerror(err)));
     }
 
     snd_pcm_drain(pcmHandle);
@@ -87,7 +87,7 @@ void SpeechPerformingOperator::playAudio() {
 
 void SpeechPerformingOperator::playMusic(const std::string& mp3_file) {
     if (mpg123_open(_mh, mp3_file.c_str()) != MPG123_OK) {
-        Logger::error("Error opening MP3 file: {}" , mp3_file);
+        ERROR("Error opening MP3 file: {}" , mp3_file);
         return;
     }
 
@@ -100,7 +100,7 @@ void SpeechPerformingOperator::playMusic(const std::string& mp3_file) {
     int err;
 
     if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
-        Logger::error("Error opening PCM device: {}" , std::to_string(err));
+        ERROR("Error opening PCM device: {}" , std::to_string(err));
         return;
     }
 

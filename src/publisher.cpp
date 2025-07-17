@@ -1,5 +1,6 @@
 #include "publisher.h"
 #include <opencv2/opencv.hpp>
+#include "services/service.h"
 
 void Publisher::subscribe(Subscriber* subscriber) {
     std::lock_guard<std::mutex> lock(_mutex);
@@ -22,7 +23,8 @@ void Publisher::publish(MessageType type, const std::unique_ptr<MessageData>& da
 
     for (const auto& sub : _subscribers) {
         if (sub) {
-            sub->subcribed_data_receive(type, data);
+            if (static_cast<Service*>(sub)->is_running())
+                sub->subcribed_data_receive(type, data);
         }
     }
 }

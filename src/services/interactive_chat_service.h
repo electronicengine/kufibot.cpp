@@ -7,6 +7,7 @@
 #include <nlohmann/json.hpp>
 #include "service.h"
 #include "../operators/llama_operator.h"
+#include "../public_data_messages.h"
 
 
 struct LlamaOptions {
@@ -19,7 +20,6 @@ struct LlamaOptions {
     int nThreads;
     int poolingType;
 };
-
 
 
 class InteractiveChatService : public Service {
@@ -36,14 +36,19 @@ private:
     std::atomic<bool> _queryRunning{false};
     LlamaOptions _llamaChatOptions;
     LlamaOptions _llamaEmbeddingOptions;
+    std::map<LlamaResponseEmotion, std::vector<float>> _emotionEmbeddings;
 
     LlamaOperator _llamaChatOperator;
+    LlamaOperator _llamaEmbeddingOperator;
 
     InteractiveChatService();
 
     bool send_query(const std::string& message);
     void query_response_callback(const std::string& response);
-    bool load_model();
+    bool load_models();
+    void calculate_emotion_embeddings();
+    void calculate_directive_embeddigns();
+    LlamaResponseEmotion find_sentence_emotion(const std::string& sentence);
     void service_function();
 
     //subscribed data functions

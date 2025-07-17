@@ -9,24 +9,34 @@
 #include "logger.h"
 #include <iostream>
 #include <string>
-
 #include "services/tui_service.h"
 
 
 
 auto main(int argc, char *argv[]) -> int {
-    Logger::init();
+    bool useUI = true;
 
-    RemoteConnectionService::get_instance()->start();
-    VideoStreamService::get_instance()->start();
-    RobotControllerService::get_instance()->start();
-    WebSocketService::get_instance()->start();
-    InteractiveChatService::get_instance()->start();
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "--no-tui") {
+            useUI = false;
+            break;
+        }
+    }
+
+    Logger::init(useUI);
+
+    RemoteConnectionService::get_instance()->disable();
+    VideoStreamService::get_instance()->disable();
+    RobotControllerService::get_instance()->disable();
+    WebSocketService::get_instance()->disable();
+    InteractiveChatService::get_instance()->disable();
 
     TuiService *tui_service = TuiService::get_instance(argc, argv);
     tui_service->start();
 
     while (1) {
-        sleep(1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
+
 }

@@ -36,14 +36,14 @@ std::string CmdLineExecutionOperator::execute(ExecutionType Type, const std::str
 
 std::string CmdLineExecutionOperator::run(const std::string path, const std::string& prompt) {
     std::string command = "bash -c 'python3 " + path + " \"" + prompt + "\" 2>&1'";
-    Logger::trace("Executing: {}", command);
+    TRACE("Executing: {}", command);
 
     std::array<char, 256> buffer;
     std::string result;
     std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
 
     if (!pipe) {
-        Logger::error("Error: Failed to run the Python script.");
+        ERROR("Error: Failed to run the Python script.");
         return "Error";
     }
 
@@ -59,7 +59,7 @@ std::string CmdLineExecutionOperator::run(const std::string path, const std::str
 
 void CmdLineExecutionOperator::set_venv(const std::string &venv){
     std::string command = "bash -c 'source " + venv + "/bin/activate'";
-    Logger::trace("Executing: {}", command);
+    TRACE("Executing: {}", command);
 
     std::system(command.c_str());
 

@@ -10,7 +10,7 @@ QMC5883LDriver::QMC5883LDriver(int address,
     wiringPiSetup();
     _bus = wiringPiI2CSetup(address);
     if (_bus == -1) {
-        Logger::error("Failed to initialize I2C bus.");
+        ERROR("Failed to initialize I2C bus.");
         exit(EXIT_FAILURE);
     }
 

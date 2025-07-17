@@ -88,7 +88,7 @@ void RobotControllerService::control_body(int angle, int magnitude) {
         magnitude = 95;
     }
 
-    Logger::info("control_body: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
+    INFO("control_body: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
 
     if (magnitude == 0 && angle == 0) {
         _dcMotorController->stop();
@@ -109,7 +109,7 @@ void RobotControllerService::control_body(int angle, int magnitude) {
     } else if (angle == 0 || magnitude == 0) {
         _dcMotorController->stop();  // Optional: fallback safety
     }else {
-        Logger::warn("control_body: unknown angle: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
+        WARNING("control_body: unknown angle: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
     }
 }
 
@@ -141,7 +141,7 @@ void RobotControllerService::control_arm(ServoMotorJoint joint, int angle, bool 
             mapped_angle = angle;
         }
 
-        Logger::info("control_arm: {}", Servo_Motor_Joint_Names.at(joint));
+        INFO("control_arm: {}", Servo_Motor_Joint_Names.at(joint));
         _servoController->set_absolute_servo_angle(joint, mapped_angle);
     }
 }
@@ -179,7 +179,7 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
             break;
         }
         default:
-            Logger::warn("{} subcribed_data_receive unknown message type!", get_service_name());
+            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }
