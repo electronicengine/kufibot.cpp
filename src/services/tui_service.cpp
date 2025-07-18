@@ -43,8 +43,7 @@ TuiService::TuiService(int argc, char *argv[]) : Service("TuiService"), _argc(ar
 void TuiService::commandLinePrompt() {
 
     _tuiLlmResponseCallBackFunction = [this](const std::string& response) {
-        printf("%s", response.c_str());
-        fflush(stdout);
+        INFO(response);
     };
 
     while (1) {
@@ -86,6 +85,9 @@ void TuiService::service_function() {
         }
     }
 
+    subscribe_to_service(RobotControllerService::get_instance());
+    subscribe_to_service(InteractiveChatService::get_instance());
+
     if (useUI) {
         FApplication app{_argc, _argv};
         app.setColorTheme<AWidgetColorTheme>();
@@ -107,9 +109,6 @@ void TuiService::service_function() {
         finalcut::FWidget::setMainWidget (&main_dlg);
         main_dlg.show();
 
-        subscribe_to_service(RobotControllerService::get_instance());
-        subscribe_to_service(InteractiveChatService::get_instance());
-
         app.exec();
     }else {
         commandLinePrompt();
@@ -127,7 +126,17 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
     switch (type) {
         case MessageType::LLMResponse:
             if (data) {
-                std::string response = static_cast<LLMResponseData*>(data.get())->response;
+                std::string response = static_cast<LLMResponseData*>(data.get())->sentence;
+                EmotionType emotion = static_cast<LLMResponseData*>(data.get())->emotion;
+                ReactionType reaction = static_cast<LLMResponseData*>(data.get())->reaction;
+                float emotionSimilarity = static_cast<LLMResponseData*>(data.get())->emotionSimilarity;
+                float reactionSimilarity = static_cast<LLMResponseData*>(data.get())->reactionSimilarity;
+
+                response += " <" + get_emotion_symbol(emotion) + "> ";
+                response += " similarity: " + std::to_string(emotionSimilarity);
+                response += " <" + get_reaction_symbol(reaction) + "> ";
+                response += " similarity: " + std::to_string(reactionSimilarity);
+
                 _tuiLlmResponseCallBackFunction(response);
             }
             break;
@@ -135,13 +144,16 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
         case MessageType::SensorData:
             if (data) {
                 SensorData sensor_data = *static_cast<SensorData*>(data.get());
-                _tuiSensorCallBackFunction(sensor_data);
+                if (_tuiSensorCallBackFunction)
+                    _tuiSensorCallBackFunction(sensor_data);
 
                 if (sensor_data.compassData.has_value())
-                    _tuiCompasDirectionCallBackFunction(sensor_data.compassData->angle);
+                    if (_tuiSensorCallBackFunction)
+                        _tuiCompasDirectionCallBackFunction(sensor_data.compassData->angle);
 
                 if (sensor_data.currentJointAngles.has_value())
-                    _tuiServoJointInfoCallBackFunction(sensor_data.currentJointAngles.value());
+                    if (_tuiSensorCallBackFunction)
+                        _tuiServoJointInfoCallBackFunction(sensor_data.currentJointAngles.value());
             }
             break;
         default:

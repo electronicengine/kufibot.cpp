@@ -1,6 +1,6 @@
 
 #include "main_window.h"
-
+#include "../logger.h"
 
 std::deque<std::tuple<std::string, LogLevel, std::string>> MainWindow::_logHistory;
 std::mutex MainWindow::_loggerViewMtx;
@@ -63,7 +63,7 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
 
-    addTimer(200);
+    addTimer(100);
 }
 
 MainWindow::~MainWindow()
@@ -73,6 +73,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::onTimer(finalcut::FTimerEvent *)
 {
+    DEBUG("onTimer");
 
     while (!_logHistory.empty()) {
         std::tuple<std::string, LogLevel, std::string> log = _logHistory.front();

@@ -28,9 +28,9 @@ auto main(int argc, char *argv[]) -> int {
 
     RemoteConnectionService::get_instance()->disable();
     VideoStreamService::get_instance()->disable();
-    RobotControllerService::get_instance()->disable();
+    RobotControllerService::get_instance()->start();
     WebSocketService::get_instance()->disable();
-    InteractiveChatService::get_instance()->disable();
+    InteractiveChatService::get_instance()->start();
 
     TuiService *tui_service = TuiService::get_instance(argc, argv);
     tui_service->start();

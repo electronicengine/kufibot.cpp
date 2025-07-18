@@ -124,8 +124,8 @@ void GesturePerformingService::subcribed_data_receive(MessageType type, const st
     switch (type) {
         case MessageType::LLMResponse: {
             if (data) {
-                std::string msg = static_cast<LLMResponseData*>(data.get())->response;
-                llm_response(msg);
+                // std::string msg = static_cast<LLMResponseData*>(data.get())->response;
+                // llm_response(msg);
             }
             break;
         }

@@ -34,7 +34,7 @@ void RobotControllerService::service_function() {
     subscribe_to_service(TuiService::get_instance());
 
     while (_running) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::microseconds(100));
         if(!_subscribers.empty()){
             std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
             *static_cast<SensorData*>(data.get()) = get_sensor_values();
@@ -132,7 +132,6 @@ void RobotControllerService::control_head(int angle, int magnitude) {
 }
 
 void RobotControllerService::control_arm(ServoMotorJoint joint, int angle, bool scale) const {
-
     if(_servoController){
         double mapped_angle;
         if(scale){

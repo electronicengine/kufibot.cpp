@@ -64,12 +64,14 @@ DistanceData DistanceController::get_distance() {
         data.distance = distL + (distH << 8);
         data.strength = stL + (stH << 8);
 
+
+
         int tempL = static_cast<int>(buffer[6]);
         int tempH = static_cast<int>(buffer[7]);
         data.temperature = (tempL + (tempH << 8)) / 8 - 256;
 
         flush_input_buffer();
-        data.distance =_medianFilter.apply(data.distance);
+        //data.distance =_medianFilter.apply(data.distance);
 
         return data;
     }

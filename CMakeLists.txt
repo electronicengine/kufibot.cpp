@@ -42,6 +42,9 @@ file(GLOB_RECURSE SRCS
         ${SRC_DIR}/subscriber.h
         ${SRC_DIR}/publisher.cpp
         ${SRC_DIR}/publisher.h
+        ${SRC_DIR}/logger.h
+        ${SRC_DIR}/logger.cpp
+        ${SRC_DIR}/gesture_defs.h
         ${SRC_DIR}/controllers/*.cpp
         ${SRC_DIR}/controllers/*.h
         ${SRC_DIR}/services/*.cpp
@@ -108,14 +111,14 @@ include(CPack)
 
 install(TARGETS kufibot DESTINATION /usr/local/bin)
 
-#add_custom_command(
-#        TARGET kufibot
-#        POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E echo "Generating .deb package with CPack..."
-#        COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} cpack -G DEB
-#        COMMAND ${CMAKE_COMMAND} -E echo "Deploying .deb package to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
-#        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/kufibot.cpp-1.0.0-Linux.deb ${CMAKE_BINARY_DIR}/kufibot.deb
-#        COMMAND scp ${CMAKE_BINARY_DIR}/kufibot.deb ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
-#        COMMAND ssh ${DEPLOY_USER}@${DEPLOY_HOST} "sudo dpkg -i ${DEPLOY_PATH}/kufibot.deb"
-#        COMMENT "Packaging and deploying kufibot.deb to target"
-#)
+add_custom_command(
+        TARGET kufibot
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Generating .deb package with CPack..."
+        COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} cpack -G DEB
+        COMMAND ${CMAKE_COMMAND} -E echo "Deploying .deb package to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_BINARY_DIR}/kufibot.cpp-1.0.0-Linux.deb ${CMAKE_BINARY_DIR}/kufibot.deb
+        COMMAND scp ${CMAKE_BINARY_DIR}/kufibot.deb ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+        COMMAND ssh ${DEPLOY_USER}@${DEPLOY_HOST} "sudo dpkg -i ${DEPLOY_PATH}/kufibot.deb"
+        COMMENT "Packaging and deploying kufibot.deb to target"
+)

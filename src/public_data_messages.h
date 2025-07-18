@@ -12,6 +12,8 @@
 #include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
 
+#include "gesture_defs.h"
+
 // Define directional angle thresholds
 constexpr int RIGHT_MIN = -45;
 constexpr int RIGHT     = 0;
@@ -29,26 +31,6 @@ constexpr int DOWN_MAX  = -45;
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
-
-enum class LlamaResponseEmotion {
-    greeting,
-    serious,
-    curious,
-    worried,
-    optimistic,
-    pessimistic,
-    confident,
-};
-
-const inline std::map<LlamaResponseEmotion, std::string> Response_Emotion_Names_EN = {
-    {LlamaResponseEmotion::greeting, "greeting"},
-    {LlamaResponseEmotion::serious, "serious"},
-    {LlamaResponseEmotion::curious, "curious"},
-    {LlamaResponseEmotion::worried, "worried"},
-    {LlamaResponseEmotion::optimistic, "optimistic"},
-    {LlamaResponseEmotion::pessimistic, "pessimistic"},
-    {LlamaResponseEmotion::confident, "confident"}
-};
 
 enum class MessageType {
     VideoFrame,
@@ -186,7 +168,11 @@ struct LLMQueryData : public MessageData{
 };
 
 struct LLMResponseData : public MessageData {
-    std::string response;
+    std::string sentence;
+    EmotionType emotion;
+    ReactionType reaction;
+    float emotionSimilarity;
+    float reactionSimilarity;
 };
 
 struct RecognizedGestureData : public MessageData  {

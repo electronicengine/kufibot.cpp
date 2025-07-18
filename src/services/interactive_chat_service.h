@@ -8,6 +8,7 @@
 #include "service.h"
 #include "../operators/llama_operator.h"
 #include "../public_data_messages.h"
+#include "../gesture_defs.h"
 
 
 struct LlamaOptions {
@@ -36,7 +37,6 @@ private:
     std::atomic<bool> _queryRunning{false};
     LlamaOptions _llamaChatOptions;
     LlamaOptions _llamaEmbeddingOptions;
-    std::map<LlamaResponseEmotion, std::vector<float>> _emotionEmbeddings;
 
     LlamaOperator _llamaChatOperator;
     LlamaOperator _llamaEmbeddingOperator;
@@ -46,9 +46,10 @@ private:
     bool send_query(const std::string& message);
     void query_response_callback(const std::string& response);
     bool load_models();
-    void calculate_emotion_embeddings();
-    void calculate_directive_embeddigns();
-    LlamaResponseEmotion find_sentence_emotion(const std::string& sentence);
+    void calculate_embeddings();
+    std::pair<EmotionType, float> find_sentence_emotion(const std::string& sentence);
+    std::pair<ReactionType, float> find_sentence_reaction(const std::string& sentence);
+
     void service_function();
 
     //subscribed data functions
