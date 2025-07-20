@@ -34,7 +34,7 @@ void RobotControllerService::service_function() {
     subscribe_to_service(TuiService::get_instance());
 
     while (_running) {
-        std::this_thread::sleep_for(std::chrono::microseconds(100));
+        std::this_thread::sleep_for(std::chrono::microseconds(200));
         if(!_subscribers.empty()){
             std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
             *static_cast<SensorData*>(data.get()) = get_sensor_values();
@@ -75,6 +75,14 @@ void RobotControllerService::control_motion(const ControlData& controlData)
         control_eye(ServoMotorJoint::eyeLeft, controlData.leftEye.value());
     }else if (controlData.rightEye.has_value()) {
         control_eye(ServoMotorJoint::rightArm, controlData.rightEye.value());
+    }else if (controlData.jointAngles.has_value()) {
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::leftArm, controlData.jointAngles->at(ServoMotorJoint::leftArm));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::rightArm, controlData.jointAngles->at(ServoMotorJoint::rightArm));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::neck, controlData.jointAngles->at(ServoMotorJoint::neck));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::headUpDown, controlData.jointAngles->at(ServoMotorJoint::headUpDown));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::headLeftRight, controlData.jointAngles->at(ServoMotorJoint::headLeftRight));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeLeft, controlData.jointAngles->at(ServoMotorJoint::eyeLeft));
+        _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeRight, controlData.jointAngles->at(ServoMotorJoint::eyeRight));
     }
 }
 
@@ -114,6 +122,7 @@ void RobotControllerService::control_body(int angle, int magnitude) {
 }
 
 void RobotControllerService::control_head(int angle, int magnitude) {
+    INFO("Control head: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
     if (!_servoController || (magnitude == 0 && angle == 0)) {
         return;
     }
@@ -172,6 +181,8 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
     switch (type) {
         case MessageType::ControlData: {
             if (data) {
+                INFO("RobotControllerService::subcribed_data_receive-ControlData");
+
                 ControlData controlData = *static_cast<ControlData*>(data.get());
                 control_motion(controlData);
             }
@@ -185,6 +196,8 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
 
 
 void RobotControllerService::head_down() {
+    INFO("Head Down");
+
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
     int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] + 1;
     if (targetAngle >= 180) {
@@ -202,6 +215,7 @@ void RobotControllerService::head_down() {
 }
 
 void RobotControllerService::head_up() {
+    INFO("Head Up");
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
     int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] - 1;
@@ -220,6 +234,8 @@ void RobotControllerService::head_up() {
 }
 
 void RobotControllerService::head_left() {
+    INFO("Head Left");
+
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
     int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] + 1;
@@ -231,6 +247,8 @@ void RobotControllerService::head_left() {
 }
 
 void RobotControllerService::head_right() {
+    INFO("Head Right");
+
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
     int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] - 1;

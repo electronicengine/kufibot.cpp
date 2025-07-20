@@ -27,13 +27,14 @@ private:
     bool showFaceMesh;
     bool showFaceInfo;
     bool showHandLandmarks;
+    bool _initialized;
 
     // Python ortam yolu
     std::string venvPath;
 
     static GestureRecognizerService *_instance;
 
-    GestureRecognizerService(const std::string& name = "GestureService");
+    GestureRecognizerService(const std::string& name = "GestureRecognizerService");
 
 
     // İşleme fonksiyonları
@@ -47,7 +48,7 @@ private:
     //subscribed video_frame
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
-    void video_frame(const cv::Mat& frame);
+    void video_frame(cv::Mat& frame);
 
 };
 

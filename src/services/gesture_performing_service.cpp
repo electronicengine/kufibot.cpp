@@ -5,6 +5,7 @@
 
 GesturePerformingService* GesturePerformingService::_instance = nullptr;
 
+
 GesturePerformingService *GesturePerformingService::get_instance()
 {
     if (_instance == nullptr) {
@@ -15,6 +16,10 @@ GesturePerformingService *GesturePerformingService::get_instance()
 
 
 GesturePerformingService::GesturePerformingService() : Service("GesturePerformingService") {
+
+    // Load models
+    SpeechPerformingOperator::get_instance()->loadModel();
+    SpeechRecognizingOperator::get_instance()->load_model();
 
     _gestureWorking = false;
 
@@ -112,6 +117,7 @@ void GesturePerformingService::llm_response(const std::string &response) {
 void GesturePerformingService::service_function()
 {
     INFO("GesturePerformingService::_interactiveChatService::subscribe");
+
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
 

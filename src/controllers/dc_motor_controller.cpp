@@ -27,6 +27,11 @@ void DCMotorController::run(DCMotor motor, DCMotorDirection direction, int speed
     }
 
     if(motor == DCMotor::left){
+        if (direction == DCMotorDirection::forward)
+            direction = DCMotorDirection::backward;
+        else
+            direction = DCMotorDirection::forward;
+
         _driver.set_duty_cycle(PWMA, speed);
         set_direction(AIN1, AIN2, direction);
     }else{

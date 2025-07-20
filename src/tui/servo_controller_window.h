@@ -34,12 +34,11 @@ class ServoControllerWindow : public SubWindow
         _controlRobotFunctionCallBack = controlFunctionCallBack;
     }
 
-    std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> get_servo_joints_callback_function() {
-        return std::bind(&ServoControllerWindow::update_servo_joints_callback, this, std::placeholders::_1);
-    }
 
 private:
     std::function<void(const ControlData&)> _controlRobotFunctionCallBack;
+
+
 
     FSpinBox _rightArm{this};
     FSpinBox _leftArm{this};
@@ -52,7 +51,6 @@ private:
 
     void set_servo_values();
 
-    void update_servo_joints_callback(const std::map<ServoMotorJoint, uint8_t>& jointAngles);
 
 protected:
 

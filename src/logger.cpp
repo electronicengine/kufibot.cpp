@@ -5,3 +5,4 @@
 #include "logger.h"
 
 bool Logger::_useTui = true;
+MainWindow *Logger::_mainWindow = nullptr;

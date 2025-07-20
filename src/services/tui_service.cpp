@@ -16,8 +16,10 @@
 #undef null
 
 #include "../logger.h"
+#include "final/final.h"
 #include "../tui/main_window.h"
 #include "../tui/widget_color_theme.h"
+
 
 using namespace finalcut;
 
@@ -25,17 +27,16 @@ using namespace finalcut;
 TuiService* TuiService::_instance = nullptr;
 
 
-TuiService *TuiService::get_instance(int argc, char *argv[])
+TuiService *TuiService::get_instance(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui)
 {
 
-
     if (_instance == nullptr) {
-        _instance = new TuiService(argc, argv);
+        _instance = new TuiService(mainWindow, app, useTui);
     }
     return _instance;
 }
 
-TuiService::TuiService(int argc, char *argv[]) : Service("TuiService"), _argc(argc), _argv(argv)  {
+TuiService::TuiService(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui) : Service("TuiService"), _mainWindow(mainWindow), _app(app), _useTui(useTui)  {
 
 }
 
@@ -58,7 +59,6 @@ void TuiService::commandLinePrompt() {
             RobotControllerService::get_instance()->stop();
             RemoteConnectionService::get_instance()->stop();
             InteractiveChatService::get_instance()->stop();
-            stop();
 
             std::exit(0);
 
@@ -75,44 +75,32 @@ void TuiService::commandLinePrompt() {
 
 void TuiService::service_function() {
 
-    bool useUI = true;
+    if (_useTui) {
 
-    for (int i = 1; i < _argc; i++) {
-        std::string arg = _argv[i];
-        if (arg == "--no-tui") {
-            useUI = false;
-            break;
-        }
-    }
-
-    subscribe_to_service(RobotControllerService::get_instance());
-    subscribe_to_service(InteractiveChatService::get_instance());
-
-    if (useUI) {
-        FApplication app{_argc, _argv};
-        app.setColorTheme<AWidgetColorTheme>();
-        MainWindow main_dlg {&app};
-        main_dlg.setText ("Log View");
-        main_dlg.setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
-
-        //set tui Prob Callback Functions
-        _tuiSensorCallBackFunction = main_dlg._measurementsWindow->get_sensor_data_callback_function();
-        _tuiLlmResponseCallBackFunction = main_dlg._chatWindow->get_llm_response_callback_function();
-        _tuiCompasDirectionCallBackFunction = main_dlg._compassRTGraphWindow->get_compas_direction_callback_function();
-        _tuiServoJointInfoCallBackFunction = main_dlg._servoControllerWindow->get_servo_joints_callback_function();
+        _tuiSensorCallBackFunction = _mainWindow->_measurementsWindow-> get_sensor_data_callback_function();
+        _tuiLlmResponseCallBackFunction = _mainWindow->_chatWindow->get_llm_response_callback_function();
+        _tuiCompasDirectionCallBackFunction = _mainWindow->_compassRTGraphWindow->get_compas_direction_callback_function();
+        _tuiMotorFeedBackInfoCallBackFunction = _mainWindow->_bodyControllerWindow->get_servo_joints_callback_function();
 
         //set tui control CallBack Functions
-        main_dlg._chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
-        main_dlg._bodyControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
-        main_dlg._servoControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
+        _mainWindow->_chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
+        _mainWindow->_bodyControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
+        _mainWindow->_servoControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
 
-        finalcut::FWidget::setMainWidget (&main_dlg);
-        main_dlg.show();
+        finalcut::FWidget::setMainWidget (_mainWindow);
+        _mainWindow->show();
 
-        app.exec();
+        subscribe_to_service(RobotControllerService::get_instance());
+        subscribe_to_service(InteractiveChatService::get_instance());
+
+        _app->exec();
+        Logger::_useTui = false;
+        exit(0);
+
     }else {
         commandLinePrompt();
     }
+
 
 }
 
@@ -144,16 +132,20 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
         case MessageType::SensorData:
             if (data) {
                 SensorData sensor_data = *static_cast<SensorData*>(data.get());
-                if (_tuiSensorCallBackFunction)
+                if (_tuiSensorCallBackFunction) {
                     _tuiSensorCallBackFunction(sensor_data);
+                }
 
-                if (sensor_data.compassData.has_value())
+                if (sensor_data.compassData.has_value()) {
                     if (_tuiSensorCallBackFunction)
                         _tuiCompasDirectionCallBackFunction(sensor_data.compassData->angle);
+                }
 
-                if (sensor_data.currentJointAngles.has_value())
-                    if (_tuiSensorCallBackFunction)
-                        _tuiServoJointInfoCallBackFunction(sensor_data.currentJointAngles.value());
+                if (sensor_data.currentJointAngles.has_value()) {
+                    if (_tuiMotorFeedBackInfoCallBackFunction)
+                        _tuiMotorFeedBackInfoCallBackFunction(sensor_data.currentJointAngles.value());
+                }
+
             }
             break;
         default:

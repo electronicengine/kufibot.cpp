@@ -6,23 +6,21 @@
 #include <string>
 #include <vector>
 
+
 class FaceGestureRecognizingOperator {
 public:
+    FaceGestureRecognizingOperator(const std::string& venvPath);
     ~FaceGestureRecognizingOperator();
-    
+
     bool initialize();
-    bool processFrame(const cv::Mat& frame, std::string& emotion, 
+    bool processFrame(const cv::Mat& frame, std::string& emotion,
                      std::vector<int>& landmarks, std::string& faceInfo);
-    static FaceGestureRecognizingOperator* get_instance(const std::string& venvPath = "/home/kufi/venv");
 
 private:
     PyObject* pModule;
     PyObject* pFuncInit;
     PyObject* pFuncProcess;
 
-    static FaceGestureRecognizingOperator* _instance;
-
-    FaceGestureRecognizingOperator(const std::string& venvPath);
     std::vector<int> pyListToIntVector(PyObject* list);
 };
 

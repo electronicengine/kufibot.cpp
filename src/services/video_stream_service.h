@@ -14,13 +14,11 @@ public:
 
 
 private:
-    cv::VideoCapture _cap;
     int _cameraIndex;
     static VideoStreamService* _instance;
 
     VideoStreamService(int cameraIndex = 0);
     void streamLoop();
-    cv::Mat take_snap_shot();
     void service_function();
 
     //subscribed to noting

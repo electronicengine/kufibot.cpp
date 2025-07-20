@@ -9,6 +9,7 @@
 #include "service.h"
 #include "robot_controller_service.h"
 #include "../operators/speech_performing_operator.h"
+#include "../operators/speech_recognizing_operator.h"
 #include "interactive_chat_service.h"
 #include "web_socket_service.h"
 

@@ -18,12 +18,15 @@ class Logger {
     ~Logger() = default;
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
-    static bool _useTui;
+    static MainWindow* _mainWindow;
 
 public:
-    static void init(bool useTui = true, const std::string& logger_name = "kufiBot",
+    static bool _useTui;
+
+    static void init(MainWindow *mainWindow, bool useTui = true, const std::string& logger_name = "kufiBot",
                     const std::string& file_name = "/var/log/kufibot.log") {
         try {
+            _mainWindow = mainWindow;
             _useTui = useTui;
             // Create rotating file sink - 5MB size, 3 rotated files
             auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -68,7 +71,7 @@ public:
                                        formattedStr);
             spdlog::trace(full_message);
         }else {
-            MainWindow::log(formattedStr, LogLevel::trace, class_name);
+            _mainWindow->log(formattedStr, LogLevel::trace, class_name);
         }
     }
 
@@ -81,7 +84,7 @@ public:
             std::string full_message = fmt::format("<{}> {}", class_name, formattedStr);
             spdlog::info(full_message);
         } else {
-            MainWindow::log(formattedStr, LogLevel::info, class_name);
+            _mainWindow->log(formattedStr, LogLevel::info, class_name);
         }
     }
 
@@ -96,7 +99,7 @@ public:
                                        formattedStr);
             spdlog::debug(full_message);
         }else {
-            MainWindow::log(formattedStr, LogLevel::debug, class_name);
+            _mainWindow->log(formattedStr, LogLevel::debug, class_name);
         }
     }
 
@@ -111,7 +114,7 @@ public:
                                        formattedStr);
             spdlog::warn(full_message);
         }else {
-            MainWindow::log(formattedStr, LogLevel::warn, class_name);
+            _mainWindow->log(formattedStr, LogLevel::warn, class_name);
         }
     }
 
@@ -126,7 +129,7 @@ public:
                                        formattedStr);
             spdlog::error(full_message);
         }else {
-            MainWindow::log(formattedStr, LogLevel::error, class_name);
+            _mainWindow->log(formattedStr, LogLevel::error, class_name);
         }
     }
 
@@ -141,7 +144,7 @@ public:
                                        formattedStr);
             spdlog::critical(full_message);
         }else {
-            MainWindow::log(formattedStr, LogLevel::critical, class_name);
+            _mainWindow->log(formattedStr, LogLevel::critical, class_name);
         }
     }
 };

@@ -17,8 +17,8 @@ PowerData PowerController::get_consumption() {
 
     PowerData data;
     data.busVoltage = ina.voltage();
-    data. shuntVoltage = ina.shunt_voltage();
-    data. current = ina.current();
+    data.shuntVoltage = ina.shunt_voltage();
+    data.current = ina.current();
     data.power = ina.power();
     return data;
 }

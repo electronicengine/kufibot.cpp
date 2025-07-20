@@ -3381,7 +3381,7 @@
       "id": "IMW8dzhKMXyAAv7jRWlTk",
       "type": "arrow",
       "x": 3170.7613565254514,
-      "y": 439.70044866165074,
+      "y": 441.70044866165074,
       "width": 514.0307887148979,
       "height": 321.4113167950211,
       "angle": 0,
@@ -3398,11 +3398,11 @@
         "type": 2
       },
       "seed": 634045423,
-      "version": 353,
-      "versionNonce": 652231271,
+      "version": 356,
+      "versionNonce": 459352036,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1752590619748,
+      "updated": 1752917761089,
       "link": null,
       "locked": false,
       "points": [
@@ -3422,12 +3422,12 @@
       "lastCommittedPoint": null,
       "startBinding": {
         "elementId": "DcqEnQbD6sjP0jrkeL5HE",
-        "gap": 23.591791014242517,
-        "focus": 0.17692612115607403
+        "focus": 0.17131497799966497,
+        "gap": 23.591791014241608
       },
       "endBinding": {
         "elementId": "HtYb_WaKB9guxodPfd3IB",
-        "focus": 0.37365330567695804,
+        "focus": 0.38591470277941153,
         "gap": 28.619231769932412
       },
       "startArrowhead": null,

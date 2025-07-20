@@ -42,14 +42,16 @@ void MeasurementsWindow::onShow(finalcut::FShowEvent *)
 }
 
 void MeasurementsWindow::update_sensor_data_callback(const SensorData &data) {
+    std::ostringstream stream;
+
     _compassAngle.setText(std::to_string(data.compassData->angle) + " °");
     _compassAngle.redraw();
 
     _distance.setText(std::to_string(data.distanceData->distance) + " cm");
     _distance.redraw();
 
-    _current.setText(std::to_string(data.powerData->current) + "  maH");
-    _current.redraw();
+    stream << std::fixed << std::setprecision(2) << data.powerData->current;
+    _current.setText(stream.str() + " mA");    _current.redraw();
 
     _voltage.setText(std::to_string(data.powerData->busVoltage) + "  V");
     _voltage.redraw();

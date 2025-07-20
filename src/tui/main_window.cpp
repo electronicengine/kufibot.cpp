@@ -2,9 +2,7 @@
 #include "main_window.h"
 #include "../logger.h"
 
-std::deque<std::tuple<std::string, LogLevel, std::string>> MainWindow::_logHistory;
-std::mutex MainWindow::_loggerViewMtx;
-bool MainWindow::_noTui = false;
+bool MainWindow::_noTui = true;
 
 MainWindow::MainWindow (finalcut::FWidget* parent)
   : finalcut::FDialog{parent}
@@ -63,7 +61,6 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
 
-    addTimer(100);
 }
 
 MainWindow::~MainWindow()
@@ -71,87 +68,70 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::onTimer(finalcut::FTimerEvent *)
-{
-    DEBUG("onTimer");
-
-    while (!_logHistory.empty()) {
-        std::tuple<std::string, LogLevel, std::string> log = _logHistory.front();
-        _logHistory.pop_front();
-        std::string logLine = std::get<0>(log);
-        LogLevel logLevel = std::get<1>(log);
-        std::string className = std::get<2>(log);
-
-
-        finalcut::FString logLineFstring{logLine};
-
-        switch (logLevel) {
-            case LogLevel::trace:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::White, finalcut::FColor::Black}});
-                break;
-            case LogLevel::info:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Green, finalcut::FColor::Black}});
-                break;
-            case LogLevel::debug:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Blue, finalcut::FColor::Black}});
-                break;
-            case LogLevel::warn:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Orange1, finalcut::FColor::Black}});
-                break;
-            case LogLevel::error:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Red, finalcut::FColor::Black}});
-                break;
-            case LogLevel::critical:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::DarkRed2, finalcut::FColor::Black}});
-                break;
-            default:
-                _textView.append(logLineFstring);
-                _textView.addHighlight(_textView.getLines().size()-1, finalcut::FTextView::FTextHighlight{16, 5, finalcut::FColorPair{finalcut::FColor::Magenta, finalcut::FColor::Black}});
-                return;
-        }
-
-        if(_autoScroll)
-            _textView.scrollToEnd();
-        _textView.redraw();
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
-    }
-}
-
 
 void MainWindow::log(const std::string &logLine, LogLevel logLevel, const std::string &className)
 {
-    if (_noTui)
-        return;
-
     std::lock_guard<std::mutex> lock(_loggerViewMtx);
 
-    auto now = std::chrono::system_clock::now();
-    auto time_t_now = std::chrono::system_clock::to_time_t(now);
-    std::tm local_tm = *std::localtime(&time_t_now);
+    auto now = std::chrono::high_resolution_clock::now();
+    auto time_t_now = std::chrono::system_clock::to_time_t(
+        std::chrono::system_clock::now());
+
+    thread_local std::tm local_tm;
+    local_tm = *std::localtime(&time_t_now);
 
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(
         now.time_since_epoch()) % 1000;
 
-    std::stringstream timestamp;
-    timestamp << std::put_time(&local_tm, "[%H:%M:%S")
-              << "." << std::setfill('0') << std::setw(3) << milliseconds.count() << "]";
+    std::string full_log_line;
+    full_log_line.reserve(256); // Adjust based on typical log line length
 
-    std::stringstream full_log_line;
-    full_log_line << timestamp.str()
-                  << " [" << Log_Level_Strings.at(logLevel) << "]"
-                  << " [" << syscall(SYS_gettid) << "]"
-                  << " <" << className << "> "
-                  << logLine;
+    std::ostringstream oss;
+    oss << '[' << std::put_time(&local_tm, "%H:%M:%S")
+        << '.' << std::setfill('0') << std::setw(3) << milliseconds.count() << ']'
+        << " [" << Log_Level_Strings.at(logLevel) << ']'
+        << " [" << syscall(SYS_gettid) << ']'
+        << " <" << className << "> "
+        << logLine;
 
-    _logHistory.push_back(std::make_tuple(full_log_line.str(), logLevel, className));
+    full_log_line = oss.str();
+
+    _textView.append(full_log_line);
+
+     auto lineIndex = _textView.getLines().size() - 1;
+     finalcut::FColorPair colorPair;
+
+     switch (logLevel) {
+         case LogLevel::trace:
+             colorPair = FColorPair{finalcut::FColor::White, finalcut::FColor::Black};
+             break;
+         case LogLevel::info:
+             colorPair = FColorPair{finalcut::FColor::Green, finalcut::FColor::Black};
+             break;
+         case LogLevel::debug:
+             colorPair = FColorPair{finalcut::FColor::Blue, finalcut::FColor::Black};
+             break;
+         case LogLevel::warn:
+             colorPair = FColorPair{finalcut::FColor::Orange1, finalcut::FColor::Black};
+             break;
+         case LogLevel::error:
+             colorPair = FColorPair{finalcut::FColor::Red, finalcut::FColor::Black};
+             break;
+         case LogLevel::critical:
+             colorPair = FColorPair{finalcut::FColor::DarkRed2, finalcut::FColor::Black};
+             break;
+         default:
+             colorPair = FColorPair{finalcut::FColor::Magenta, finalcut::FColor::Black};
+             break;
+     }
+    _textView.addHighlight(lineIndex, finalcut::FTextView::FTextHighlight{16, 5, colorPair});
+
+    if(_autoScroll)
+        _textView.scrollToEnd();
+    _textView.redraw();
 
 }
+
 
 void MainWindow::configure_file_nenu_items()
 {

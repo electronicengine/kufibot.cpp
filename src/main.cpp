@@ -5,35 +5,59 @@
 #include "services/web_socket_service.h"
 #include "services/interactive_chat_service.h"
 #include "services/tui_service.h"
+#include "services/gesture_recognizer_service.h"
+#include "services/gesture_performing_service.h"
 #include "final/final.h"
 #include "logger.h"
-#include <iostream>
 #include <string>
-#include "services/tui_service.h"
+
+#include "final/ftypes.h"
+#include "final/ftypes.h"
+#include "tui/widget_color_theme.h"
 
 
 
 auto main(int argc, char *argv[]) -> int {
-    bool useUI = true;
+    bool useTui = true;
+
+    GesturePerformingService::get_instance();
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
         if (arg == "--no-tui") {
-            useUI = false;
+            useTui = false;
             break;
         }
     }
 
-    Logger::init(useUI);
+    FApplication *app;
+    MainWindow *main_window;
+    if (useTui) {
+        app = new FApplication{argc, argv};
+        app->setColorTheme<AWidgetColorTheme>();
+        main_window = new MainWindow{app};
+        main_window->setText ("Log View");
+        main_window->setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
+        Logger::init(main_window, useTui);
 
+        TuiService *tui_service = TuiService::get_instance(main_window, app, useTui);
+        tui_service->start();
+
+    }else {
+        Logger::init(nullptr, useTui);
+
+        TuiService *tui_service = TuiService::get_instance(nullptr, nullptr, useTui);
+        tui_service->start();
+    }
+
+    GestureRecognizerService::get_instance()->start();
+    GesturePerformingService::get_instance()->start();
     RemoteConnectionService::get_instance()->disable();
-    VideoStreamService::get_instance()->disable();
-    RobotControllerService::get_instance()->start();
+    RobotControllerService::get_instance()->disable();
     WebSocketService::get_instance()->disable();
     InteractiveChatService::get_instance()->start();
+    VideoStreamService::get_instance()->start();
 
-    TuiService *tui_service = TuiService::get_instance(argc, argv);
-    tui_service->start();
 
     while (1) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

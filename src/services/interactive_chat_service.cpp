@@ -194,7 +194,6 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
             break;
         }
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

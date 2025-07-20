@@ -4,26 +4,32 @@
 
 #include "service.h"
 
+namespace finalcut {
+    class FApplication;
+}
 
+class MainWindow;
 
 class TuiService : public Service {
 
 public:
     virtual ~TuiService();
 
-    static TuiService *get_instance(int argc = 0, char *argv[] = nullptr);
+    static TuiService *get_instance(MainWindow* mainWindow = nullptr, finalcut::FApplication *app = nullptr, bool useTui = true);
 
 
 private:
     static TuiService* _instance;
-    int _argc;
-    char **_argv;
+
     std::function<void(const SensorData&)> _tuiSensorCallBackFunction;
     std::function<void(const std::string&)> _tuiLlmResponseCallBackFunction;
     std::function<void(const int&)> _tuiCompasDirectionCallBackFunction;
-    std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> _tuiServoJointInfoCallBackFunction;
+    std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> _tuiMotorFeedBackInfoCallBackFunction;
+    MainWindow* _mainWindow;
+    finalcut::FApplication * _app;
+    bool _useTui;
 
-    TuiService(int argc, char *argv[]);
+    TuiService(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui);
 
     void service_function();
 

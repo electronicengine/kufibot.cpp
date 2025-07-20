@@ -68,7 +68,7 @@ void ServoMotorController::set_absolute_servo_angle(ServoMotorJoint joint, int t
         }
 
         int pulse = 500 + (currentAngle / 180.0) * 2000;
-        _driver.set_servo_pulse(_currentJointAngles[joint], pulse);
+        _driver.set_servo_pulse((int)joint, pulse);
         usleep(delayMs * 1000);
     }
     _currentJointAngles[joint] = targetAngle;

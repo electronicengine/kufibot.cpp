@@ -1,16 +1,10 @@
 #include "hand_gesture_recognizing_operator.h"
 #include <iostream>
+#include <cstdio>
+#include <unistd.h>
+#include <fcntl.h>
 
 
-
-HandGestureRecognizingOperator* HandGestureRecognizingOperator::_instance = nullptr;
-
-HandGestureRecognizingOperator* HandGestureRecognizingOperator::get_instance(const std::string& venvPath) {
-    if (_instance == nullptr) {
-        _instance = new HandGestureRecognizingOperator(venvPath);
-    }
-    return _instance;
-}
 
 HandGestureRecognizingOperator::HandGestureRecognizingOperator(const std::string& venvPath)
     : pModule(nullptr), pFuncInit(nullptr), pFuncProcess(nullptr) {
@@ -20,6 +14,18 @@ HandGestureRecognizingOperator::HandGestureRecognizingOperator(const std::string
     std::string cmdPath = "import sys; sys.path.insert(0, '" + sitePackages + "')";
     PyRun_SimpleString(cmdPath.c_str());
     PyRun_SimpleString("import os; sys.path.insert(0, os.getcwd())");
+
+    // Redirect Python stdout and stderr to a dummy class
+    int saved_stderr;
+    int dev_null;
+
+    // Call this before running Python
+
+    saved_stderr = dup(STDERR_FILENO);
+    dev_null = open("/dev/null", O_WRONLY);
+    dup2(dev_null, STDERR_FILENO);  // Redirect stderr to /dev/null
+
+
 }
 
 HandGestureRecognizingOperator::~HandGestureRecognizingOperator() {

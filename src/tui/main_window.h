@@ -37,17 +37,17 @@ class MainWindow final : public finalcut::FDialog
 {
   public:
     // Constructor
-  explicit MainWindow (finalcut::FWidget* = nullptr);
     // Destructor
+  explicit MainWindow (finalcut::FWidget* = nullptr);
   ~MainWindow() override;
-  static void log(const std::string& logLine, LogLevel logLevel, const std::string& className = "");
+
+  void log(const std::string& logLine, LogLevel logLevel, const std::string& className = "");
 
   CompassRtGraphWindow *_compassRTGraphWindow;
   BodyControllerWindow *_bodyControllerWindow;
   ServoControllerWindow *_servoControllerWindow;
   MeasurementsWindow *_measurementsWindow;
   ChatWindow *_chatWindow;
-
 
   protected:
     struct LogItem {
@@ -56,26 +56,16 @@ class MainWindow final : public finalcut::FDialog
     };
     using LogList = std::list<LogItem>;
 
-    void onTimer (finalcut::FTimerEvent*) override;
-
   private:
     static bool _noTui;
-    static std::mutex _logMtx;
-    static std::mutex _logViewMtx;
-    static std::mutex _logFilterMtx;
-    static std::mutex _logLevelMtx;
-    static std::mutex _quitCbMtx;
-    static std::mutex _autoScrollMtx;
-    static std::mutex _searchStringMtx;
-    static std::mutex _fileMenuMtx;
-    static std::mutex _quitMtx;
-    static std::mutex _loggerViewMtx;
+    std::mutex _loggerViewMtx;
 
     bool _autoScroll{true};
     std::wstring _searchString;
     std::function<void(void)> _quitCb;
-    static std::deque<std::tuple<std::string, LogLevel, std::string>> _logHistory;
 
+
+    FApplication *_app;
     finalcut::FTextView _textView{this};
     finalcut::FButtonGroup _radiobutton_group {L"Log Level", this};
     finalcut::FButtonGroup _toggleGroup {L"Auto Scroll", this};
@@ -96,7 +86,6 @@ class MainWindow final : public finalcut::FDialog
     finalcut::FMenuItem       _servoControllerWindowMenuButton{"&Open Servo Controller Window", &_windowsMenu};
     finalcut::FMenuItem       _measurementsWindowMenuButton{"&Open Measurements Window", &_windowsMenu};
     finalcut::FMenuItem       _chatWindowMenuButton{"&Open Chat Window", &_windowsMenu};
-
 
     void configure_file_nenu_items();
     void activate_window (finalcut::FDialog*) const;
@@ -123,8 +112,6 @@ class MainWindow final : public finalcut::FDialog
 
     void filter(const LogList&);
     void print_with_search(const LogItem&);
-
-   
 
 };
 
