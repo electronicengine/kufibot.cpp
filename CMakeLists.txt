@@ -110,6 +110,9 @@ set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 include(CPack)
 
 install(TARGETS kufibot DESTINATION /usr/local/bin)
+install(DIRECTORY config/
+        DESTINATION /usr/local/etc/
+        FILES_MATCHING PATTERN "*.json")
 
 add_custom_command(
         TARGET kufibot

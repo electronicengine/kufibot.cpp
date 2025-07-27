@@ -42,7 +42,6 @@ auto main(int argc, char *argv[]) -> int {
 
         TuiService *tui_service = TuiService::get_instance(main_window, app, useTui);
         tui_service->start();
-
     }else {
         Logger::init(nullptr, useTui);
 
@@ -50,14 +49,13 @@ auto main(int argc, char *argv[]) -> int {
         tui_service->start();
     }
 
-    GestureRecognizerService::get_instance()->start();
     GesturePerformingService::get_instance()->start();
+    GestureRecognizerService::get_instance()->start();
     RemoteConnectionService::get_instance()->disable();
     RobotControllerService::get_instance()->disable();
     WebSocketService::get_instance()->disable();
     InteractiveChatService::get_instance()->start();
     VideoStreamService::get_instance()->start();
-
 
     while (1) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

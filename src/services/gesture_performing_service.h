@@ -24,6 +24,7 @@ public:
 
 private:
     static GesturePerformingService *_instance;
+    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointGesturePositionList;
 
     std::thread _workerThread;
     std::atomic<bool> _gestureWorking{false};

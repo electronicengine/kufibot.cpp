@@ -169,8 +169,8 @@ struct LLMQueryData : public MessageData{
 
 struct LLMResponseData : public MessageData {
     std::string sentence;
-    EmotionType emotion;
-    ReactionType reaction;
+    EmotionalGesture emotionalGesture;
+    ReactionalGesture reactionalGesture;
     float emotionSimilarity;
     float reactionSimilarity;
 };

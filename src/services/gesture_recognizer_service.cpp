@@ -186,7 +186,7 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
 
 
     // FPS hesaplama ve gösterme
-    double ctime = static_cast<double>(cv::getTickCount()) / cv::getTickFrequency();
+    //double ctime = static_cast<double>(cv::getTickCount()) / cv::getTickFrequency();
 
 }
 

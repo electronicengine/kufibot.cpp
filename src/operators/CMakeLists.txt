@@ -22,7 +22,9 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 file(GLOB_RECURSE SRCS ${OPERATORS_SRC_DIR}/*.cpp ${OPERATORS_SRC_DIR}/*.h)
 include_directories(${OPERATORS_INC_DIR})
 
-add_library(${TARGET} SHARED ${SRCS})
+add_library(${TARGET} SHARED ${SRCS}
+        json_parser_operator.cpp
+        json_parser_operator.h)
 
 # Linking
 target_link_libraries(${TARGET}

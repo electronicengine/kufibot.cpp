@@ -44,8 +44,11 @@ TuiService::TuiService(MainWindow* mainWindow, finalcut::FApplication *app, bool
 void TuiService::commandLinePrompt() {
 
     _tuiLlmResponseCallBackFunction = [this](const std::string& response) {
-        INFO(response);
+        INFO("{}", response);
     };
+
+    subscribe_to_service(RobotControllerService::get_instance());
+    subscribe_to_service(InteractiveChatService::get_instance());
 
     while (1) {
         std::string input;
@@ -115,15 +118,17 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
         case MessageType::LLMResponse:
             if (data) {
                 std::string response = static_cast<LLMResponseData*>(data.get())->sentence;
-                EmotionType emotion = static_cast<LLMResponseData*>(data.get())->emotion;
-                ReactionType reaction = static_cast<LLMResponseData*>(data.get())->reaction;
+                EmotionalGesture emotion = static_cast<LLMResponseData*>(data.get())->emotionalGesture;
+                ReactionalGesture reaction = static_cast<LLMResponseData*>(data.get())->reactionalGesture;
                 float emotionSimilarity = static_cast<LLMResponseData*>(data.get())->emotionSimilarity;
                 float reactionSimilarity = static_cast<LLMResponseData*>(data.get())->reactionSimilarity;
 
-                response += " <" + get_emotion_symbol(emotion) + "> ";
+                response += emotion.symbol;
                 response += " similarity: " + std::to_string(emotionSimilarity);
-                response += " <" + get_reaction_symbol(reaction) + "> ";
+                response += reaction.symbol;
                 response += " similarity: " + std::to_string(reactionSimilarity);
+
+                INFO("{}", response);
 
                 _tuiLlmResponseCallBackFunction(response);
             }

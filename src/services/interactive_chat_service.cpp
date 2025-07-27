@@ -5,6 +5,8 @@
 #include "../logger.h"
 #include <regex>
 
+#include "../operators/json_parser_operator.h"
+
 
 InteractiveChatService* InteractiveChatService::_instance = nullptr;
 
@@ -19,6 +21,23 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
 
+    INFO("gesture list is parsing from json...");
+    JsonParserOperator::get_instance()->loadGesturesFromFile("/usr/local/etc/gesture_config.json", _emotionalList, _reactionalList, _directiveList);
+
+    TRACE("Emotional List:");
+    for (auto &emotion : _emotionalList) {
+        TRACE("{}: {} ",emotion.symbol, emotion.description);
+    }
+
+    TRACE("Reactional List:");
+    for (auto &reaction : _reactionalList) {
+        TRACE("{}: {} ",reaction.symbol, reaction.description);
+    }
+
+    TRACE("Directive List:");
+    for (auto &directive : _directiveList) {
+        TRACE("{}: {} ",directive.symbol, directive.description);
+    }
 }
 
 
@@ -57,7 +76,6 @@ void InteractiveChatService::query_response_callback(const std::string &response
     std::smatch match;
 
     std::string remaining_text = accumulated_text;
-    size_t last_processed_pos = 0;
 
     while (std::regex_search(remaining_text, match, sentence_end_regex)) {
         size_t sentence_end_pos = match.position() + match[1].length();
@@ -70,12 +88,12 @@ void InteractiveChatService::query_response_callback(const std::string &response
             std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
             static_cast<LLMResponseData*>(data.get())->sentence = trimmed_sentence;
 
-            std::pair<EmotionType,float> emotion = find_sentence_emotion(trimmed_sentence);
-            static_cast<LLMResponseData*>(data.get())->emotion = emotion.first;
+            std::pair<EmotionalGesture,float> emotion = find_sentence_emotion(trimmed_sentence);
+            static_cast<LLMResponseData*>(data.get())->emotionalGesture = emotion.first;
             static_cast<LLMResponseData*>(data.get())->emotionSimilarity = emotion.second;
 
-            std::pair<ReactionType,float> reaction = find_sentence_reaction(trimmed_sentence);
-            static_cast<LLMResponseData*>(data.get())->reaction = reaction.first;
+            std::pair<ReactionalGesture,float> reaction = find_sentence_reaction(trimmed_sentence);
+            static_cast<LLMResponseData*>(data.get())->reactionalGesture = reaction.first;
             static_cast<LLMResponseData*>(data.get())->reactionSimilarity = reaction.second;
             publish(MessageType::LLMResponse, data);
 
@@ -85,9 +103,7 @@ void InteractiveChatService::query_response_callback(const std::string &response
                 remaining_text = remaining_text.substr(match[2].length() - 1);
             }
 
-            last_processed_pos = sentence_end_pos;
         } else {
-            // Cümle kısa olduğu için parçayı işlemeye devam et (accumulate etmeye devam)
             break;
         }
     }
@@ -119,52 +135,52 @@ bool InteractiveChatService::load_models()
 
 void InteractiveChatService::calculate_embeddings() {
     INFO("Calculating Emotional Embeddings...");
-    for (auto& emotion : Emotional_Gesture_List) {
+    for (auto& emotion : _emotionalList) {
         emotion.embedding = _llamaEmbeddingOperator.calculateEmbeddings(emotion.description);
     }
 
     INFO("Calculating Reactional Embeddings...");
-    for (auto &reaction : Reactional_Gesture_List) {
+    for (auto &reaction : _reactionalList) {
         reaction.embedding = _llamaEmbeddingOperator.calculateEmbeddings(reaction.description);
     }
 
     INFO("Calculating Directive Embeddings...");
-    for (auto &directive : Directive_List) {
+    for (auto &directive : _directiveList) {
         directive.embedding = _llamaEmbeddingOperator.calculateEmbeddings(directive.description);
     }
 }
 
 
-std::pair<EmotionType,float> InteractiveChatService::find_sentence_emotion(const std::string &sentence) {
+std::pair<EmotionalGesture,float> InteractiveChatService::find_sentence_emotion(const std::string &sentence) {
     float max_similarity = 0.0f;
-    EmotionType best_match;
+    EmotionalGesture best_match;
     std::vector<float> sentence_embeddings = _llamaEmbeddingOperator.calculateEmbeddings(sentence);
 
-    for (auto emotion : Emotional_Gesture_List) {
+    for (auto emotion : _emotionalList) {
 
         float sim = _llamaEmbeddingOperator.getSimilarity(sentence_embeddings, emotion.embedding);
 
         if (sim > max_similarity && sim > 0.5f ) {
             max_similarity = sim;
-            best_match = emotion.emotion;
+            best_match = emotion;
         }
     }
 
     return std::make_pair(best_match, max_similarity);
 }
 
-std::pair<ReactionType, float> InteractiveChatService::find_sentence_reaction(const std::string &sentence) {
+std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reaction(const std::string &sentence) {
     float max_similarity = 0.0f;
-    ReactionType best_match;
+    ReactionalGesture best_match;
     std::vector<float> sentence_embeddings = _llamaEmbeddingOperator.calculateEmbeddings(sentence);
 
-    for (auto reaction : Reactional_Gesture_List) {
+    for (auto reaction : _reactionalList) {
 
         float sim = _llamaEmbeddingOperator.getSimilarity(sentence_embeddings, reaction.embedding);
 
         if (sim > max_similarity && sim > 0.5f ) {
             max_similarity = sim;
-            best_match = reaction.reaction;
+            best_match = reaction;
         }
     }
 

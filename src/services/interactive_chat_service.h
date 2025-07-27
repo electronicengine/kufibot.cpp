@@ -41,14 +41,18 @@ private:
     LlamaOperator _llamaChatOperator;
     LlamaOperator _llamaEmbeddingOperator;
 
+    std::list<EmotionalGesture> _emotionalList;
+    std::list<ReactionalGesture> _reactionalList;
+    std::list<Directive> _directiveList;
+
     InteractiveChatService();
 
     bool send_query(const std::string& message);
     void query_response_callback(const std::string& response);
     bool load_models();
     void calculate_embeddings();
-    std::pair<EmotionType, float> find_sentence_emotion(const std::string& sentence);
-    std::pair<ReactionType, float> find_sentence_reaction(const std::string& sentence);
+    std::pair<EmotionalGesture, float> find_sentence_emotion(const std::string& sentence);
+    std::pair<ReactionalGesture, float> find_sentence_reaction(const std::string& sentence);
 
     void service_function();
 

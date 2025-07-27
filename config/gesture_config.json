@@ -1,0 +1,29 @@
+{
+  "emotional_gestures": [
+    {"type": "happy", "tag": "<happy>", "description": "Feeling joyful, cheerful, and content."},
+    {"type": "angry", "tag": "<angry>", "description": "Feeling irritated, annoyed, or full of rage."},
+    {"type": "funny", "tag": "<funny>", "description": "Lighthearted, humorous, or amusing in nature."},
+    {"type": "serious", "tag": "<serious>", "description": "Focused, thoughtful, or deeply concerned."},
+    {"type": "curious", "tag": "<curious>", "description": "Eager to learn, interested, or inquisitive."},
+    {"type": "worried", "tag": "<worried>", "description": "Anxious, uneasy, or full of concern."},
+    {"type": "surprised", "tag": "<surprised>", "description": "Shocked, amazed, or caught off guard."},
+    {"type": "confident", "tag": "<confident>", "description": "Self-assured, assertive, and secure in actions."}
+  ],
+  "reactional_gestures": [
+    {"type": "greeting", "reply": "greeting", "tag": "<greeting>", "description": "Waving or expressing a friendly welcome to someone."},
+    {"type": "listening", "reply": "talking", "tag": "<listening>", "description": "Paying close attention and showing engagement without speaking."},
+    {"type": "talking", "reply": "listening", "tag": "<talking>", "description": "Speaking or expressing thoughts verbally to someone."},
+    {"type": "accepting", "reply": "agreeing", "tag": "<accepting>", "description": "Showing agreement or willingness to receive an idea or offer."},
+    {"type": "rejecting", "reply": "thinking", "tag": "<rejecting>", "description": "Expressing disagreement or refusal of an idea or offer."},
+    {"type": "thinking", "reply": "thinking", "tag": "<thinking>", "description": "Pausing to reflect, analyze, or consider something deeply."},
+    {"type": "agreeing", "reply": "accepting", "tag": "<agreeing>", "description": "Nodding or expressing alignment or approval with an idea or statement."}
+  ],
+  "directives": [
+    {"type": "go", "tag": "<go>", "description": "Move forward or away from the current position."},
+    {"type": "come", "tag": "<come>", "description": "Approach or move closer to the speaker."},
+    {"type": "stop", "tag": "<stop>", "description": "Cease movement or activity immediately."},
+    {"type": "look", "tag": "<look>", "description": "Direct your gaze or attention toward something."},
+    {"type": "turnAround", "tag": "<turnAround>", "description": "Rotate your body or direction in the opposite way."},
+    {"type": "standBack", "tag": "<standBack>", "description": "Move away or create distance from a person or object."}
+  ]
+}

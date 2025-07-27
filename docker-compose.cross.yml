@@ -7,6 +7,7 @@ services:
     working_dir: /app/kufibot.cpp
     volumes:
       - ./src:/app/kufibot.cpp/src
+      - ./config:/app/kufibot.cpp/config
       - ./CMakeLists.txt:/app/kufibot.cpp/CMakeLists.txt
       - ./arm64Build.cmake:/app/kufibot.cpp/arm64Build.cmake
       - ./README.md:/app/kufibot.cpp/README.md

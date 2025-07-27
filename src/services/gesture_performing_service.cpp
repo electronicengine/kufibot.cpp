@@ -2,6 +2,7 @@
 
 #include "tui_service.h"
 #include "../logger.h"
+#include "../operators/json_parser_operator.h"
 
 GesturePerformingService* GesturePerformingService::_instance = nullptr;
 
@@ -20,6 +21,7 @@ GesturePerformingService::GesturePerformingService() : Service("GesturePerformin
     // Load models
     SpeechPerformingOperator::get_instance()->loadModel();
     SpeechRecognizingOperator::get_instance()->load_model();
+    JsonParserOperator::get_instance()->loadGestureJointAnglesFromJson("/usr/local/etc/joint_angles.json", _jointGesturePositionList);
 
     _gestureWorking = false;
 

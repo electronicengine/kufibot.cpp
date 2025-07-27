@@ -1,0 +1,51 @@
+{
+  "leftArm": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "rightArm": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "neck": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "headUpDown": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "headLeftRight": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "eyeLeft": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  },
+  "eyeRight": {
+    "fullup":   { "angle": 0, "name": "fullup" },
+    "halfup":   { "angle": 0, "name": "halfup" },
+    "middle":   { "angle": 0, "name": "middle" },
+    "halfdown": { "angle": 0, "name": "halfdown" },
+    "fulldown": { "angle": 0, "name": "fulldown" }
+  }
+}
