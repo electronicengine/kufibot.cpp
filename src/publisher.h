@@ -16,7 +16,7 @@ using Json = nlohmann::json;
 class Publisher {
 
 protected:
-    std::vector<Subscriber*> _subscribers;  
+    std::list<Subscriber*> _subscribers;
     std::mutex _mutex;
     std::string _publisherName;
 

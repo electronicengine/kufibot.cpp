@@ -21,7 +21,6 @@ GesturePerformingService::GesturePerformingService() : Service("GesturePerformin
     // Load models
     SpeechPerformingOperator::get_instance()->loadModel();
     SpeechRecognizingOperator::get_instance()->load_model();
-    JsonParserOperator::get_instance()->loadGestureJointAnglesFromJson("/usr/local/etc/joint_angles.json", _jointGesturePositionList);
 
     _gestureWorking = false;
 
@@ -118,7 +117,8 @@ void GesturePerformingService::llm_response(const std::string &response) {
 
 void GesturePerformingService::service_function()
 {
-    INFO("GesturePerformingService::_interactiveChatService::subscribe");
+    INFO("loading GestureJointAngles From json...");
+    JsonParserOperator::get_instance()->loadGestureJointAnglesFromJson("/usr/local/etc/joint_angles.json", _jointGesturePositionList);
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());

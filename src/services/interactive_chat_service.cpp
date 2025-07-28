@@ -21,23 +21,7 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
 
-    INFO("gesture list is parsing from json...");
-    JsonParserOperator::get_instance()->loadGesturesFromFile("/usr/local/etc/gesture_config.json", _emotionalList, _reactionalList, _directiveList);
 
-    TRACE("Emotional List:");
-    for (auto &emotion : _emotionalList) {
-        TRACE("{}: {} ",emotion.symbol, emotion.description);
-    }
-
-    TRACE("Reactional List:");
-    for (auto &reaction : _reactionalList) {
-        TRACE("{}: {} ",reaction.symbol, reaction.description);
-    }
-
-    TRACE("Directive List:");
-    for (auto &directive : _directiveList) {
-        TRACE("{}: {} ",directive.symbol, directive.description);
-    }
 }
 
 
@@ -189,6 +173,24 @@ std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reacti
 
 void InteractiveChatService::service_function()
 {
+    INFO("gesture list is parsing from json...");
+    JsonParserOperator::get_instance()->loadGesturesFromFile("/usr/local/etc/gesture_config.json", _emotionalList, _reactionalList, _directiveList);
+
+    TRACE("Emotional List:");
+    for (auto &emotion : _emotionalList) {
+        TRACE("{}: {} ",emotion.symbol, emotion.description);
+    }
+
+    TRACE("Reactional List:");
+    for (auto &reaction : _reactionalList) {
+        TRACE("{}: {} ",reaction.symbol, reaction.description);
+    }
+
+    TRACE("Directive List:");
+    for (auto &directive : _directiveList) {
+        TRACE("{}: {} ",directive.symbol, directive.description);
+    }
+
     load_models();
     calculate_embeddings();
 

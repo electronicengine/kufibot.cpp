@@ -128,8 +128,6 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
                 response += reaction.symbol;
                 response += " similarity: " + std::to_string(reactionSimilarity);
 
-                INFO("{}", response);
-
                 _tuiLlmResponseCallBackFunction(response);
             }
             break;

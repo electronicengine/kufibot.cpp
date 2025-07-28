@@ -20,7 +20,13 @@
 auto main(int argc, char *argv[]) -> int {
     bool useTui = true;
 
-    GesturePerformingService::get_instance();
+    GesturePerformingService* gesturePerformingService = GesturePerformingService::get_instance();
+    GestureRecognizerService* gestureRecognizerService = GestureRecognizerService::get_instance();
+    RemoteConnectionService* remoteConnectionService = RemoteConnectionService::get_instance();
+    RobotControllerService* robotControllerService = RobotControllerService::get_instance();
+    WebSocketService* webSocketService = WebSocketService::get_instance();
+    InteractiveChatService* interactiveChatService = InteractiveChatService::get_instance();
+    VideoStreamService* videoStreamService = VideoStreamService::get_instance();
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
@@ -49,13 +55,13 @@ auto main(int argc, char *argv[]) -> int {
         tui_service->start();
     }
 
-    GesturePerformingService::get_instance()->start();
-    GestureRecognizerService::get_instance()->start();
-    RemoteConnectionService::get_instance()->disable();
-    RobotControllerService::get_instance()->disable();
-    WebSocketService::get_instance()->disable();
-    InteractiveChatService::get_instance()->start();
-    VideoStreamService::get_instance()->start();
+    gesturePerformingService->start();
+    gestureRecognizerService->disable();
+    remoteConnectionService->disable();
+    robotControllerService->disable();
+    webSocketService->disable();
+    interactiveChatService->start();
+    videoStreamService->disable();
 
     while (1) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
