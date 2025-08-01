@@ -1,51 +1,51 @@
 {
   "leftArm": {
-    "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "fullup":   { "angle": 60, "name": "fullup" },
+    "halfup":   { "angle": 90, "name": "halfup" },
+    "middle":   { "angle": 140, "name": "middle" },
+    "halfdown": { "angle": 150, "name": "halfdown" },
+    "fulldown": { "angle": 170, "name": "fulldown" }
   },
   "rightArm": {
-    "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "fullup":   { "angle": 120, "name": "fullup" },
+    "halfup":   { "angle": 90, "name": "halfup" },
+    "middle":   { "angle": 60, "name": "middle" },
+    "halfdown": { "angle": 30, "name": "halfdown" },
+    "fulldown": { "angle": 10, "name": "fulldown" }
   },
   "neck": {
-    "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "fullup":   { "angle": 170, "name": "fullup" },
+    "halfup":   { "angle": 150, "name": "halfup" },
+    "middle":   { "angle": 120, "name": "middle" },
+    "halfdown": { "angle": 90, "name": "halfdown" },
+    "fulldown": { "angle": 40, "name": "fulldown" }
   },
   "headUpDown": {
     "fullup":   { "angle": 0, "name": "fullup" },
     "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "middle":   { "angle": 10, "name": "middle" },
+    "halfdown": { "angle": 30, "name": "halfdown" },
+    "fulldown": { "angle": 70, "name": "fulldown" }
   },
   "headLeftRight": {
     "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "halfup":   { "angle": 40, "name": "halfup" },
+    "middle":   { "angle": 90, "name": "middle" },
+    "halfdown": { "angle": 135, "name": "halfdown" },
+    "fulldown": { "angle": 180, "name": "fulldown" }
   },
   "eyeLeft": {
     "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "halfup":   { "angle": 30, "name": "halfup" },
+    "middle":   { "angle": 35, "name": "middle" },
+    "halfdown": { "angle": 45, "name": "halfdown" },
+    "fulldown": { "angle": 60, "name": "fulldown" }
   },
   "eyeRight": {
-    "fullup":   { "angle": 0, "name": "fullup" },
-    "halfup":   { "angle": 0, "name": "halfup" },
-    "middle":   { "angle": 0, "name": "middle" },
-    "halfdown": { "angle": 0, "name": "halfdown" },
-    "fulldown": { "angle": 0, "name": "fulldown" }
+    "fullup":   { "angle": 180, "name": "fullup" },
+    "halfup":   { "angle": 160, "name": "halfup" },
+    "middle":   { "angle": 150, "name": "middle" },
+    "halfdown": { "angle": 140, "name": "halfdown" },
+    "fulldown": { "angle": 130, "name": "fulldown" }
   }
 }

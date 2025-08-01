@@ -14,7 +14,9 @@
 #include <alsa/asoundlib.h>
 
 #include "piper.hpp"
+#include "../public_data_messages.h"
 
+#define TR_SPEECH_MODEL_PATH "/usr/local/ai.models/trSpeechModel/dfki.onnx"
 
 enum OutputType { OUTPUT_FILE, OUTPUT_DIRECTORY, OUTPUT_STDOUT, OUTPUT_RAW };
 
@@ -22,7 +24,7 @@ class SpeechPerformingOperator {
 public:
 
     static SpeechPerformingOperator* get_instance();
-    void loadModel(const std::string& modelPath = "/usr/local/ai.models/trSpeechModel/dfki.onnx");
+    void loadModel(const std::string& modelPath = TR_SPEECH_MODEL_PATH);
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();

@@ -12,6 +12,8 @@
 #include "../public_data_messages.h"
 
 
+
+
 class JsonParserOperator {
 
 
@@ -32,12 +34,41 @@ public:
     static void writeGestureJointAnglesToJson(
         const std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>& data,
         const std::string& filename);
-
+    // Main motion loading/saving methods
+    static void loadMotionsFromFile(
+        const std::string& filename,
+        std::map<EmotionType, EmotionalMotion>& emotionalMotions,
+        std::map<ReactionType, ReactionalMotion>& reactionalMotions,
+        std::map<DirectiveType, DirectiveMotion>& directiveMotions,
+        std::map<ServoMotorJoint, GestureJointState>& idlePosition
+    );
 private:
 
     static JsonParserOperator* _instance;
 
     JsonParserOperator();
+
+    // String conversion methods for enum types
+    std::string to_string(EmotionType emotion);
+    std::string to_string(ReactionType reaction);
+    std::string to_string(DirectiveType directive);
+
+    // Motion parsing methods
+    static MotionSequenceItem parseMotionSequenceItem(const nlohmann::json& sequenceJson);
+    static  std::map<ServoMotorJoint, GestureJointState> parseJointPositions(const nlohmann::json& jointsJson);
+    static EmotionalMotion parseEmotionalMotion(const nlohmann::json& motionJson);
+    static ReactionalMotion parseReactionalMotion(const nlohmann::json& motionJson);
+    static DirectiveMotion parseDirectiveMotion(const nlohmann::json& motionJson);
+
+
+
+    void writeMotionsToFile(
+        const std::string& filename,
+        const std::map<EmotionType, EmotionalMotion>& emotionalMotions,
+        const std::map<ReactionType, ReactionalMotion>& reactionalMotions,
+        const std::map<DirectiveType, DirectiveMotion>& directiveMotions,
+        const std::map<ServoMotorJoint, GestureJointState>& idlePosition
+    );
 
     static EmotionType emotionTypeFromString(const std::string& str);
     static ReactionType reactionTypeFromString(const std::string& str);

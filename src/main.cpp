@@ -6,33 +6,21 @@
 #include "services/interactive_chat_service.h"
 #include "services/tui_service.h"
 #include "services/gesture_recognizer_service.h"
-#include "services/gesture_performing_service.h"
-#include "final/final.h"
+#include "services/gesture_performer_service.h"
+#include "services/mapping_service.h"
 #include "logger.h"
 #include <string>
 
-#include "final/ftypes.h"
-#include "final/ftypes.h"
-#include "tui/widget_color_theme.h"
-
-
 
 auto main(int argc, char *argv[]) -> int {
-    bool useTui = true;
+    bool useTui = false;
+    bool startAllServices = false;
     int logLevel = 1;
-
-    GesturePerformingService* gesturePerformingService = GesturePerformingService::get_instance();
-    GestureRecognizerService* gestureRecognizerService = GestureRecognizerService::get_instance();
-    RemoteConnectionService* remoteConnectionService = RemoteConnectionService::get_instance();
-    RobotControllerService* robotControllerService = RobotControllerService::get_instance();
-    WebSocketService* webSocketService = WebSocketService::get_instance();
-    InteractiveChatService* interactiveChatService = InteractiveChatService::get_instance();
-    VideoStreamService* videoStreamService = VideoStreamService::get_instance();
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
-        if (arg == "--no-tui") {
-            useTui = false;
+        if (arg == "--start-all-services") {
+            startAllServices = true;
             break;
         }
         if (arg == "--log-level") {
@@ -50,32 +38,21 @@ auto main(int argc, char *argv[]) -> int {
         }
     }
 
-    FApplication *app;
-    MainWindow *main_window;
-    if (useTui) {
-        app = new FApplication{argc, argv};
-        app->setColorTheme<AWidgetColorTheme>();
-        main_window = new MainWindow{app};
-        main_window->setText ("Log View");
-        main_window->setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
-        Logger::init(main_window, useTui, logLevel);
+    Logger::init(nullptr, useTui, logLevel);
 
-        TuiService *tui_service = TuiService::get_instance(main_window, app, useTui);
-        tui_service->start();
-    }else {
-        Logger::init(nullptr, useTui, logLevel);
-
-        TuiService *tui_service = TuiService::get_instance(nullptr, nullptr, useTui);
-        tui_service->start();
+    if (startAllServices) {
+        WebSocketService::get_instance()->start();
+        VideoStreamService::get_instance()->start();
+        RobotControllerService::get_instance()->start();
+        RemoteConnectionService::get_instance()->start();
+        InteractiveChatService::get_instance()->start();
+        GesturePerformerService::get_instance()->start();
+        GestureRecognizerService::get_instance()->start();
+        MappingService::get_instance()->start();
     }
 
-    gesturePerformingService->start();
-    gestureRecognizerService->disable();
-    remoteConnectionService->disable();
-    robotControllerService->disable();
-    webSocketService->disable();
-    interactiveChatService->disable();
-    videoStreamService->disable();
+    TuiService *tui_service = TuiService::get_instance();
+    tui_service->start();
 
     while (1) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

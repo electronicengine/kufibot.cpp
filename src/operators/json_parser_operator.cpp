@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include "../logger.h"
 
-
 using json = nlohmann::json;
 
 JsonParserOperator* JsonParserOperator::_instance = nullptr;
@@ -80,7 +79,6 @@ GestureJointState JsonParserOperator::gestureStateFromString(const std::string& 
 }
 
 std::string JsonParserOperator::to_string(ServoMotorJoint joint) {
-
     switch (joint) {
         case ServoMotorJoint::leftArm: return "leftArm";
         case ServoMotorJoint::rightArm: return "rightArm";
@@ -104,7 +102,297 @@ std::string JsonParserOperator::to_string(GestureJointState state) {
     return "unknown";
 }
 
-// ======================= JSON LOADERS =======================
+std::string JsonParserOperator::to_string(EmotionType emotion) {
+    switch (emotion) {
+        case EmotionType::happy: return "happy";
+        case EmotionType::angry: return "angry";
+        case EmotionType::funny: return "funny";
+        case EmotionType::serious: return "serious";
+        case EmotionType::curious: return "curious";
+        case EmotionType::worried: return "worried";
+        case EmotionType::surprised: return "surprised";
+        case EmotionType::confident: return "confident";
+        default: return "unknown";
+    }
+}
+
+std::string JsonParserOperator::to_string(ReactionType reaction) {
+    switch (reaction) {
+        case ReactionType::greeting: return "greeting";
+        case ReactionType::listening: return "listening";
+        case ReactionType::talking: return "talking";
+        case ReactionType::accepting: return "accepting";
+        case ReactionType::rejecting: return "rejecting";
+        case ReactionType::thinking: return "thinking";
+        case ReactionType::agreeing: return "agreeing";
+        default: return "unknown";
+    }
+}
+
+std::string JsonParserOperator::to_string(DirectiveType directive) {
+    switch (directive) {
+        case DirectiveType::go: return "go";
+        case DirectiveType::come: return "come";
+        case DirectiveType::stop: return "stop";
+        case DirectiveType::look: return "look";
+        case DirectiveType::turnAround: return "turnAround";
+        case DirectiveType::standBack: return "standBack";
+        default: return "unknown";
+    }
+}
+
+// ======================= MOTION JSON PARSERS =======================
+
+MotionSequenceItem JsonParserOperator::parseMotionSequenceItem(const json& sequenceJson) {
+    MotionSequenceItem item;
+    item.time = sequenceJson["time"];
+
+    for (const auto& [jointKey, stateKey] : sequenceJson["joints"].items()) {
+        ServoMotorJoint joint = servoJointFromString(jointKey);
+        GestureJointState state = gestureStateFromString(stateKey);
+        item.joints[joint] = state;
+    }
+
+    return item;
+}
+
+std::map<ServoMotorJoint, GestureJointState> JsonParserOperator::parseJointPositions(const json& jointsJson) {
+    std::map<ServoMotorJoint, GestureJointState> positions;
+
+    for (const auto& [jointKey, stateKey] : jointsJson.items()) {
+        ServoMotorJoint joint = servoJointFromString(jointKey);
+        GestureJointState state = gestureStateFromString(stateKey);
+        positions[joint] = state;
+    }
+
+    return positions;
+}
+
+EmotionalMotion JsonParserOperator::parseEmotionalMotion(const json& motionJson) {
+    EmotionalMotion motion;
+    motion.name = motionJson["name"];
+    motion.description = motionJson["description"];
+    motion.duration = motionJson["duration"];
+    motion.joints = parseJointPositions(motionJson["joints"]);
+
+    // Parse sequence if it exists
+    if (motionJson.contains("sequence")) {
+        for (const auto& seqItem : motionJson["sequence"]) {
+            motion.sequence.push_back(parseMotionSequenceItem(seqItem));
+        }
+    }
+
+    return motion;
+}
+
+ReactionalMotion JsonParserOperator::parseReactionalMotion(const json& motionJson) {
+    ReactionalMotion motion;
+    motion.name = motionJson["name"];
+    motion.description = motionJson["description"];
+    motion.duration = motionJson["duration"];
+    motion.joints = parseJointPositions(motionJson["joints"]);
+
+    // Parse sequence if it exists
+    if (motionJson.contains("sequence")) {
+        for (const auto& seqItem : motionJson["sequence"]) {
+            motion.sequence.push_back(parseMotionSequenceItem(seqItem));
+        }
+    }
+
+    return motion;
+}
+
+DirectiveMotion JsonParserOperator::parseDirectiveMotion(const json& motionJson) {
+    DirectiveMotion motion;
+    motion.name = motionJson["name"];
+    motion.description = motionJson["description"];
+    motion.duration = motionJson["duration"];
+    motion.joints = parseJointPositions(motionJson["joints"]);
+
+    // Parse sequence if it exists
+    if (motionJson.contains("sequence")) {
+        for (const auto& seqItem : motionJson["sequence"]) {
+            motion.sequence.push_back(parseMotionSequenceItem(seqItem));
+        }
+    }
+
+    return motion;
+}
+
+void JsonParserOperator::loadMotionsFromFile(
+    const std::string& filename,
+    std::map<EmotionType, EmotionalMotion>& emotionalMotions,
+    std::map<ReactionType, ReactionalMotion>& reactionalMotions,
+    std::map<DirectiveType, DirectiveMotion>& directiveMotions,
+    std::map<ServoMotorJoint, GestureJointState>& idlePosition) {
+
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            ERROR("Failed to open motion file: {}", filename);
+            return;
+        }
+
+        json j;
+        inFile >> j;
+
+        // Load emotional gestures
+        if (j.contains("motions") && j["motions"].contains("emotional_gestures")) {
+            for (const auto& [emotionKey, motionData] : j["motions"]["emotional_gestures"].items()) {
+                EmotionType emotionType = emotionTypeFromString(emotionKey);
+                emotionalMotions[emotionType] = parseEmotionalMotion(motionData);
+                INFO("Loaded emotional motion: {}", emotionKey);
+            }
+        }
+
+        // Load reactional gestures
+        if (j.contains("motions") && j["motions"].contains("reactional_gestures")) {
+            for (const auto& [reactionKey, motionData] : j["motions"]["reactional_gestures"].items()) {
+                ReactionType reactionType = reactionTypeFromString(reactionKey);
+                reactionalMotions[reactionType] = parseReactionalMotion(motionData);
+                INFO("Loaded reactional motion: {}", reactionKey);
+            }
+        }
+
+        // Load directive motions
+        if (j.contains("motions") && j["motions"].contains("directives")) {
+            for (const auto& [directiveKey, motionData] : j["motions"]["directives"].items()) {
+                DirectiveType directiveType = directiveTypeFromString(directiveKey);
+                directiveMotions[directiveType] = parseDirectiveMotion(motionData);
+                INFO("Loaded directive motion: {}", directiveKey);
+            }
+        }
+
+        // Load default idle position
+        if (j.contains("default_idle") && j["default_idle"].contains("joints")) {
+            idlePosition = parseJointPositions(j["default_idle"]["joints"]);
+            INFO("Loaded idle position");
+        }
+
+        INFO("Successfully loaded motion definitions from: {}", filename);
+
+    } catch (const std::exception& e) {
+        ERROR("Error loading motion file {}: {}", filename, e.what());
+    }
+}
+
+void JsonParserOperator::writeMotionsToFile(
+    const std::string& filename,
+    const std::map<EmotionType, EmotionalMotion>& emotionalMotions,
+    const std::map<ReactionType, ReactionalMotion>& reactionalMotions,
+    const std::map<DirectiveType, DirectiveMotion>& directiveMotions,
+    const std::map<ServoMotorJoint, GestureJointState>& idlePosition) {
+
+    try {
+        json j;
+
+        // Write emotional motions
+        for (const auto& [emotionType, motion] : emotionalMotions) {
+            std::string emotionKey = to_string(emotionType);
+            json motionJson;
+            motionJson["name"] = motion.name;
+            motionJson["description"] = motion.description;
+            motionJson["duration"] = motion.duration;
+
+            // Write joints
+            for (const auto& [joint, state] : motion.joints) {
+                motionJson["joints"][to_string(joint)] = to_string(state);
+            }
+
+            // Write sequence if not empty
+            if (!motion.sequence.empty()) {
+                for (const auto& seqItem : motion.sequence) {
+                    json seqJson;
+                    seqJson["time"] = seqItem.time;
+                    for (const auto& [joint, state] : seqItem.joints) {
+                        seqJson["joints"][to_string(joint)] = to_string(state);
+                    }
+                    motionJson["sequence"].push_back(seqJson);
+                }
+            }
+
+            j["motions"]["emotional_gestures"][emotionKey] = motionJson;
+        }
+
+        // Write reactional motions
+        for (const auto& [reactionType, motion] : reactionalMotions) {
+            std::string reactionKey = to_string(reactionType);
+            json motionJson;
+            motionJson["name"] = motion.name;
+            motionJson["description"] = motion.description;
+            motionJson["duration"] = motion.duration;
+
+            // Write joints
+            for (const auto& [joint, state] : motion.joints) {
+                motionJson["joints"][to_string(joint)] = to_string(state);
+            }
+
+            // Write sequence if not empty
+            if (!motion.sequence.empty()) {
+                for (const auto& seqItem : motion.sequence) {
+                    json seqJson;
+                    seqJson["time"] = seqItem.time;
+                    for (const auto& [joint, state] : seqItem.joints) {
+                        seqJson["joints"][to_string(joint)] = to_string(state);
+                    }
+                    motionJson["sequence"].push_back(seqJson);
+                }
+            }
+
+            j["motions"]["reactional_gestures"][reactionKey] = motionJson;
+        }
+
+        // Write directive motions
+        for (const auto& [directiveType, motion] : directiveMotions) {
+            std::string directiveKey = to_string(directiveType);
+            json motionJson;
+            motionJson["name"] = motion.name;
+            motionJson["description"] = motion.description;
+            motionJson["duration"] = motion.duration;
+
+            // Write joints
+            for (const auto& [joint, state] : motion.joints) {
+                motionJson["joints"][to_string(joint)] = to_string(state);
+            }
+
+            // Write sequence if not empty
+            if (!motion.sequence.empty()) {
+                for (const auto& seqItem : motion.sequence) {
+                    json seqJson;
+                    seqJson["time"] = seqItem.time;
+                    for (const auto& [joint, state] : seqItem.joints) {
+                        seqJson["joints"][to_string(joint)] = to_string(state);
+                    }
+                    motionJson["sequence"].push_back(seqJson);
+                }
+            }
+
+            j["motions"]["directives"][directiveKey] = motionJson;
+        }
+
+        // Write idle position
+        for (const auto& [joint, state] : idlePosition) {
+            j["default_idle"]["joints"][to_string(joint)] = to_string(state);
+        }
+        j["default_idle"]["name"] = "idle";
+        j["default_idle"]["description"] = "Neutral resting position";
+
+        // Write transition settings
+        j["transition_settings"]["default_transition_time"] = 500;
+        j["transition_settings"]["smooth_interpolation"] = true;
+        j["transition_settings"]["ease_type"] = "ease-in-out";
+
+        std::ofstream file(filename);
+        file << j.dump(4);
+
+        INFO("Successfully wrote motion definitions to: {}", filename);
+
+    } catch (const std::exception& e) {
+        ERROR("Error writing motion file {}: {}", filename, e.what());
+    }
+}
+
+// ======================= ORIGINAL JSON LOADERS =======================
 
 void JsonParserOperator::loadGesturesFromFile(
     const std::string& filename,

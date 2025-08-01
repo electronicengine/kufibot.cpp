@@ -15,8 +15,7 @@ class TuiService : public Service {
 public:
     virtual ~TuiService();
 
-    static TuiService *get_instance(MainWindow* mainWindow = nullptr, finalcut::FApplication *app = nullptr, bool useTui = true);
-
+    static TuiService *get_instance();
 
 private:
     static TuiService* _instance;
@@ -25,18 +24,15 @@ private:
     std::function<void(const std::string&)> _tuiLlmResponseCallBackFunction;
     std::function<void(const int&)> _tuiCompasDirectionCallBackFunction;
     std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> _tuiMotorFeedBackInfoCallBackFunction;
-    MainWindow* _mainWindow;
-    finalcut::FApplication * _app;
-    bool _useTui;
-
-    TuiService(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui);
+    SensorData _currentSensorData;
+    TuiService();
 
     void service_function();
 
     //subscribed sensor_data, llm_response
-    void sensor_data(Json values);
-    void llm_response(const std::string& response);
-    void commandLinePrompt();
+    void openTui();
+    void printHelp();
+    void setJointAngle(ServoMotorJoint joint, int angle);
     //subscribed sensor_data, llm_response
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
     void tui_control_function_callback(const ControlData& data);

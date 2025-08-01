@@ -24,8 +24,30 @@ void SpeechPerformingOperator::loadModel(const std::string& modelPath){
 
     _modelPath = modelPath;
     _speakerId = 0;
+
+    // stderr'ı geçici log dosyasına yönlendir
+    int stderr_copy = dup(STDERR_FILENO);
+    FILE* log_file = fopen("/tmp/so_logs.txt", "w");
+    dup2(fileno(log_file), STDERR_FILENO);
+
     loadVoice(_piperConfig, _modelPath, _modelPath + ".json", _voice, _speakerId,false);
     piper::initialize(_piperConfig);
+
+    // stderr'ı geri yükle
+    dup2(stderr_copy, STDERR_FILENO);
+    close(stderr_copy);
+    fclose(log_file);
+
+    // // Log dosyasını oku ve TRACE ile göster
+    // std::ifstream logFile("/tmp/so_logs.txt");
+    // std::string line;
+    // while (std::getline(logFile, line)) {
+    //     if (!line.empty()) {
+    //         TRACE("SO: {}", line);
+    //     }
+    // }
+    // logFile.close();
+    unlink("/tmp/so_logs.txt"); // Geçici dosyayı sil
 }
 
 void SpeechPerformingOperator::speakText(const std::string &text)

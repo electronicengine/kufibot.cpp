@@ -1,5 +1,5 @@
 #include "interactive_chat_service.h"
-#include "gesture_performing_service.h"
+#include "gesture_performer_service.h"
 #include "remote_connection_service.h"
 #include "tui_service.h"
 #include "../logger.h"
@@ -196,7 +196,7 @@ void InteractiveChatService::service_function()
 
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
-    subscribe_to_service(GesturePerformingService::get_instance());
+    subscribe_to_service(GesturePerformerService::get_instance());
 
 }
 

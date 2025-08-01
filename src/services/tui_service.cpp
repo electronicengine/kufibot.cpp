@@ -7,7 +7,7 @@
 #include "robot_controller_service.h"
 #include "remote_connection_service.h"
 #include "video_stream_service.h"
-#include "gesture_performing_service.h"
+#include "gesture_performer_service.h"
 #include "mapping_service.h"
 #include "interactive_chat_service.h"
 #include "robot_controller_service.h"
@@ -15,6 +15,9 @@
 #undef K
 #undef null
 
+#include <oneapi/tbb/detail/_range_common.h>
+
+#include "gesture_recognizer_service.h"
 #include "../logger.h"
 #include "final/final.h"
 #include "../tui/main_window.h"
@@ -27,21 +30,21 @@ using namespace finalcut;
 TuiService* TuiService::_instance = nullptr;
 
 
-TuiService *TuiService::get_instance(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui)
+TuiService *TuiService::get_instance()
 {
 
     if (_instance == nullptr) {
-        _instance = new TuiService(mainWindow, app, useTui);
+        _instance = new TuiService();
     }
     return _instance;
 }
 
-TuiService::TuiService(MainWindow* mainWindow, finalcut::FApplication *app, bool useTui) : Service("TuiService"), _mainWindow(mainWindow), _app(app), _useTui(useTui)  {
+TuiService::TuiService() : Service("TuiService"){
 
 }
 
 
-void TuiService::commandLinePrompt() {
+void TuiService::service_function() {
 
     _tuiLlmResponseCallBackFunction = [this](const std::string& response) {
         INFO("{}", response);
@@ -62,49 +65,165 @@ void TuiService::commandLinePrompt() {
             RobotControllerService::get_instance()->stop();
             RemoteConnectionService::get_instance()->stop();
             InteractiveChatService::get_instance()->stop();
+            GesturePerformerService::get_instance()->stop();
+            GestureRecognizerService::get_instance()->stop();
+            MappingService::get_instance()->stop();
 
             std::exit(0);
 
+        }else if (input =="openTui") {
+            openTui();
+        }else if (input == "help") {
+            printHelp();
+        }else if (input == "startAll") {
+            WebSocketService::get_instance()->start();
+            VideoStreamService::get_instance()->start();
+            RobotControllerService::get_instance()->start();
+            RemoteConnectionService::get_instance()->start();
+            InteractiveChatService::get_instance()->start();
+            GesturePerformerService::get_instance()->start();
+            GestureRecognizerService::get_instance()->start();
+            MappingService::get_instance()->start();
+        }else if (input.find("start") != std::string::npos) {
+            if (input.find("RobotController") != std::string::npos) {
+                RobotControllerService::get_instance()->start();
+            }else if (input.find("InteractiveChat") != std::string::npos) {
+                InteractiveChatService::get_instance()->start();
+            }else if (input.find("RemoteConnection") != std::string::npos) {
+                RemoteConnectionService::get_instance()->start();
+            }else if (input.find("VideoStream") != std::string::npos) {
+                VideoStreamService::get_instance()->start();
+            }else if (input.find("Mapping") != std::string::npos) {
+                MappingService::get_instance()->start();
+            }else if (input.find("GesturePerformer") != std::string::npos) {
+                GesturePerformerService::get_instance()->start();
+            }else if (input.find("GestureRecognizer") != std::string::npos) {
+                GestureRecognizerService::get_instance()->start();
+            }else if (input.find("WebSocket") != std::string::npos) {
+                WebSocketService::get_instance()->start();
+            }
+        }else if (input.find("stop") != std::string::npos) {
+            if (input.find("RobotController") != std::string::npos) {
+                RobotControllerService::get_instance()->stop();
+            }else if (input.find("InteractiveChat") != std::string::npos) {
+                InteractiveChatService::get_instance()->stop();
+            }else if (input.find("RemoteConnection") != std::string::npos) {
+                RemoteConnectionService::get_instance()->stop();
+            }else if (input.find("VideoStream") != std::string::npos) {
+                VideoStreamService::get_instance()->stop();
+            }else if (input.find("Mapping") != std::string::npos) {
+                MappingService::get_instance()->stop();
+            }else if (input.find("GesturePerformer") != std::string::npos) {
+                GesturePerformerService::get_instance()->stop();
+            }else if (input.find("GestureRecognizer") != std::string::npos) {
+                GestureRecognizerService::get_instance()->stop();
+            }else if (input.find("WebSocket") != std::string::npos) {
+                WebSocketService::get_instance()->stop();
+            }
         }else if(input == "sensors") {
-            _tuiSensorCallBackFunction = [this](const SensorData &sensor_data) {
-                INFO(sensor_data.to_json().dump());
-                _tuiSensorCallBackFunction = nullptr;
-            };
-        }else {
-            tui_llm_query_callback(input);
+            INFO("{} ",_currentSensorData.to_json().dump().c_str());
+        }else if (input.find("llm") != std::string::npos) {
+            tui_llm_query_callback(std::string(input.begin() + 4, input.end()));
+        }else if (input.find("set") != std::string::npos) {
+            if (RobotControllerService::get_instance()->is_running()) {
+                std::istringstream iss(input);
+                std::string command;
+                std::string joint;
+                int angle;
+                iss >> command >> joint >> angle;
+                if (joint == "rightArm") {
+                    setJointAngle(ServoMotorJoint::rightArm, angle);
+                }else if (joint == "leftArm") {
+                    setJointAngle(ServoMotorJoint::leftArm, angle);
+                }else if (joint == "neck") {
+                    setJointAngle(ServoMotorJoint::neck, angle);
+                }else if (joint == "headUpDown") {
+                    setJointAngle(ServoMotorJoint::headUpDown, angle);
+                }else if (joint == "headLeftRight") {
+                    setJointAngle(ServoMotorJoint::headLeftRight, angle);
+                }else if (joint == "eyeLeft") {
+                    setJointAngle(ServoMotorJoint::eyeLeft, angle);
+                }else if (joint == "eyeRight") {
+                    setJointAngle(ServoMotorJoint::eyeRight, angle);
+                }else {
+                    WARNING("There is no joint with this name");
+                }
+
+            }else {
+                WARNING("Start robot controller service first!");
+            }
         }
     }
 }
 
-void TuiService::service_function() {
+void TuiService::openTui() {
 
-    if (_useTui) {
+    int argc = 0;
+    char **argv = nullptr;
 
-        _tuiSensorCallBackFunction = _mainWindow->_measurementsWindow-> get_sensor_data_callback_function();
-        _tuiLlmResponseCallBackFunction = _mainWindow->_chatWindow->get_llm_response_callback_function();
-        _tuiCompasDirectionCallBackFunction = _mainWindow->_compassRTGraphWindow->get_compas_direction_callback_function();
-        _tuiMotorFeedBackInfoCallBackFunction = _mainWindow->_bodyControllerWindow->get_servo_joints_callback_function();
+    FApplication *app;
+    MainWindow *main_window;
 
-        //set tui control CallBack Functions
-        _mainWindow->_chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
-        _mainWindow->_bodyControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
-        _mainWindow->_servoControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
+    app = new FApplication{argc, argv};
+    app->setColorTheme<AWidgetColorTheme>();
+    main_window = new MainWindow{app};
+    main_window->setText ("Log View");
+    main_window->setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
 
-        finalcut::FWidget::setMainWidget (_mainWindow);
-        _mainWindow->show();
+    _tuiSensorCallBackFunction = main_window->_measurementsWindow-> get_sensor_data_callback_function();
+    _tuiLlmResponseCallBackFunction = main_window->_chatWindow->get_llm_response_callback_function();
+    _tuiCompasDirectionCallBackFunction = main_window->_compassRTGraphWindow->get_compas_direction_callback_function();
+    _tuiMotorFeedBackInfoCallBackFunction = main_window->_bodyControllerWindow->get_servo_joints_callback_function();
 
-        subscribe_to_service(RobotControllerService::get_instance());
-        subscribe_to_service(InteractiveChatService::get_instance());
+    //set tui control CallBack Functions
+    main_window->_chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
+    main_window->_bodyControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
+    main_window->_servoControllerWindow->setControlFunctionCallBack(std::bind(&TuiService::tui_control_function_callback, this, std::placeholders::_1));
 
-        _app->exec();
-        Logger::_useTui = false;
-        exit(0);
+    finalcut::FWidget::setMainWidget (main_window);
+    Logger::_mainWindow = main_window;
+    Logger::_useTui = true;
+    main_window->show();
 
+    app->exec();
+    Logger::_useTui = false;
+    exit(0);
+
+}
+
+void TuiService::printHelp() {
+    INFO("Available Commands: ");
+    INFO("--> exit : close app");
+    INFO("--> openTui");
+    INFO("--> startAll : start all services");
+    INFO("--> sensors  : get sensor values");
+    INFO("--> set <joint> <value>: set servo angle");
+    INFO("--> llm <query> : query llm");
+    INFO("--> start|stop <service> : start or stop a service");
+    INFO("----> Available Services: ");
+    INFO("------> WebSocket");
+    INFO("------> VideoStream");
+    INFO("------> RobotController");
+    INFO("------> RemoteConnection");
+    INFO("------> InteractiveChat");
+    INFO("------> GestureRecognizer");
+    INFO("------> Mapping");
+}
+
+void TuiService::setJointAngle(ServoMotorJoint joint, int angle) {
+
+    if (_currentSensorData.currentJointAngles.has_value()) {
+        std::map<ServoMotorJoint, uint8_t> jointAngles = _currentSensorData.currentJointAngles.value();
+        jointAngles.at(joint) = angle;
+
+        std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+        static_cast<ControlData*>(data.get())->jointAngles.emplace();
+        static_cast<ControlData*>(data.get())->jointAngles = jointAngles;
+
+        publish(MessageType::ControlData, data);
     }else {
-        commandLinePrompt();
+        ERROR("The current Servo Values couldn't get");
     }
-
-
 }
 
 TuiService::~TuiService() {
@@ -134,19 +253,19 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
 
         case MessageType::SensorData:
             if (data) {
-                SensorData sensor_data = *static_cast<SensorData*>(data.get());
+                _currentSensorData = *static_cast<SensorData*>(data.get());
                 if (_tuiSensorCallBackFunction) {
-                    _tuiSensorCallBackFunction(sensor_data);
+                    _tuiSensorCallBackFunction(_currentSensorData);
                 }
 
-                if (sensor_data.compassData.has_value()) {
+                if (_currentSensorData.compassData.has_value()) {
                     if (_tuiSensorCallBackFunction)
-                        _tuiCompasDirectionCallBackFunction(sensor_data.compassData->angle);
+                        _tuiCompasDirectionCallBackFunction(_currentSensorData.compassData->angle);
                 }
 
-                if (sensor_data.currentJointAngles.has_value()) {
+                if (_currentSensorData.currentJointAngles.has_value()) {
                     if (_tuiMotorFeedBackInfoCallBackFunction)
-                        _tuiMotorFeedBackInfoCallBackFunction(sensor_data.currentJointAngles.value());
+                        _tuiMotorFeedBackInfoCallBackFunction(_currentSensorData.currentJointAngles.value());
                 }
 
             }

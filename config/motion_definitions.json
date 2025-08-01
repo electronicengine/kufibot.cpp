@@ -1,0 +1,516 @@
+{
+  "motions": {
+    "emotional_gestures": {
+      "happy": {
+        "name": "happy",
+        "description": "Joyful, uplifting posture with raised arms and upward head tilt",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "halfup",
+          "rightArm": "halfup",
+          "neck": "halfup",
+          "headUpDown": "halfup",
+          "headLeftRight": "middle",
+          "eyeLeft": "halfup",
+          "eyeRight": "halfup"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "leftArm": "middle",
+              "rightArm": "middle"
+            }
+          },
+          {
+            "time": 500,
+            "joints": {
+              "leftArm": "halfup",
+              "rightArm": "halfup",
+              "neck": "halfup"
+            }
+          }
+        ]
+      },
+      "angry": {
+        "name": "angry",
+        "description": "Tense, aggressive posture with lowered head and clenched positioning",
+        "duration": 2500,
+        "joints": {
+          "leftArm": "halfdown",
+          "rightArm": "halfdown",
+          "neck": "halfdown",
+          "headUpDown": "halfdown",
+          "headLeftRight": "middle",
+          "eyeLeft": "halfdown",
+          "eyeRight": "halfdown"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "leftArm": "fulldown",
+              "rightArm": "fulldown"
+            }
+          },
+          {
+            "time": 800,
+            "joints": {
+              "neck": "halfdown",
+              "headUpDown": "halfdown"
+            }
+          }
+        ]
+      },
+      "funny": {
+        "name": "funny",
+        "description": "Playful, animated gestures with head tilts and asymmetric arm positions",
+        "duration": 3000,
+        "joints": {
+          "leftArm": "halfup",
+          "rightArm": "middle",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "halfup",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "headLeftRight": "halfdown",
+              "leftArm": "fullup"
+            }
+          },
+          {
+            "time": 2000,
+            "joints": {
+              "headLeftRight": "middle",
+              "leftArm": "halfup"
+            }
+          }
+        ]
+      },
+      "serious": {
+        "name": "serious",
+        "description": "Focused, steady posture with direct gaze and neutral positioning",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "middle",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        }
+      },
+      "curious": {
+        "name": "curious",
+        "description": "Inquisitive posture with head tilted and slightly raised arms",
+        "duration": 2500,
+        "joints": {
+          "leftArm": "halfup",
+          "rightArm": "halfup",
+          "neck": "halfup",
+          "headUpDown": "halfup",
+          "headLeftRight": "halfup",
+          "eyeLeft": "halfup",
+          "eyeRight": "halfup"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "headLeftRight": "halfdown"
+            }
+          },
+          {
+            "time": 2000,
+            "joints": {
+              "headLeftRight": "middle"
+            }
+          }
+        ]
+      },
+      "worried": {
+        "name": "worried",
+        "description": "Anxious posture with lowered head and protective arm positioning",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "halfdown",
+          "rightArm": "halfdown",
+          "neck": "halfdown",
+          "headUpDown": "halfdown",
+          "headLeftRight": "middle",
+          "eyeLeft": "halfdown",
+          "eyeRight": "halfdown"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "headLeftRight": "halfdown"
+            }
+          }
+        ]
+      },
+      "surprised": {
+        "name": "surprised",
+        "description": "Startled posture with raised head and open arm positioning",
+        "duration": 1500,
+        "joints": {
+          "leftArm": "fullup",
+          "rightArm": "fullup",
+          "neck": "fullup",
+          "headUpDown": "fullup",
+          "headLeftRight": "middle",
+          "eyeLeft": "fullup",
+          "eyeRight": "fullup"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "leftArm": "middle",
+              "rightArm": "middle"
+            }
+          },
+          {
+            "time": 300,
+            "joints": {
+              "leftArm": "fullup",
+              "rightArm": "fullup",
+              "neck": "fullup"
+            }
+          }
+        ]
+      },
+      "confident": {
+        "name": "confident",
+        "description": "Assertive posture with raised chest and steady positioning",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "middle",
+          "neck": "halfup",
+          "headUpDown": "halfup",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        }
+      }
+    },
+    "reactional_gestures": {
+      "greeting": {
+        "name": "greeting",
+        "description": "Friendly wave with raised arm and welcoming posture",
+        "duration": 3000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "fullup",
+          "neck": "halfup",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "rightArm": "middle"
+            }
+          },
+          {
+            "time": 500,
+            "joints": {
+              "rightArm": "fullup"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "rightArm": "halfup"
+            }
+          },
+          {
+            "time": 1500,
+            "joints": {
+              "rightArm": "fullup"
+            }
+          },
+          {
+            "time": 2000,
+            "joints": {
+              "rightArm": "halfup"
+            }
+          },
+          {
+            "time": 2500,
+            "joints": {
+              "rightArm": "middle"
+            }
+          }
+        ]
+      },
+      "listening": {
+        "name": "listening",
+        "description": "Attentive posture with slightly tilted head and focused gaze",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "middle",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "halfup",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headLeftRight": "middle"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          }
+        ]
+      },
+      "talking": {
+        "name": "talking",
+        "description": "Expressive gestures with moderate arm movements and direct gaze",
+        "duration": 3000,
+        "joints": {
+          "leftArm": "halfup",
+          "rightArm": "halfup",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "leftArm": "middle",
+              "rightArm": "middle"
+            }
+          },
+          {
+            "time": 800,
+            "joints": {
+              "leftArm": "halfup"
+            }
+          },
+          {
+            "time": 1600,
+            "joints": {
+              "rightArm": "halfup",
+              "leftArm": "middle"
+            }
+          },
+          {
+            "time": 2400,
+            "joints": {
+              "leftArm": "halfup",
+              "rightArm": "middle"
+            }
+          }
+        ]
+      },
+      "accepting": {
+        "name": "accepting",
+        "description": "Welcoming gesture with open arms and nodding motion",
+        "duration": 2500,
+        "joints": {
+          "leftArm": "halfup",
+          "rightArm": "halfup",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headUpDown": "halfup"
+            }
+          },
+          {
+            "time": 800,
+            "joints": {
+              "headUpDown": "halfdown"
+            }
+          },
+          {
+            "time": 1600,
+            "joints": {
+              "headUpDown": "middle"
+            }
+          }
+        ]
+      },
+      "rejecting": {
+        "name": "rejecting",
+        "description": "Dismissive gesture with head shake and protective arm positioning",
+        "duration": 2500,
+        "joints": {
+          "leftArm": "halfdown",
+          "rightArm": "halfdown",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "halfdown",
+          "eyeRight": "halfdown"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 600,
+            "joints": {
+              "headLeftRight": "halfdown"
+            }
+          },
+          {
+            "time": 1200,
+            "joints": {
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 1800,
+            "joints": {
+              "headLeftRight": "middle"
+            }
+          }
+        ]
+      },
+      "thinking": {
+        "name": "thinking",
+        "description": "Contemplative posture with hand near head and upward gaze",
+        "duration": 3000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "halfup",
+          "neck": "halfup",
+          "headUpDown": "halfup",
+          "headLeftRight": "halfup",
+          "eyeLeft": "halfup",
+          "eyeRight": "halfup"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "rightArm": "middle"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "rightArm": "halfup",
+              "headLeftRight": "halfup"
+            }
+          },
+          {
+            "time": 2000,
+            "joints": {
+              "headLeftRight": "middle"
+            }
+          }
+        ]
+      },
+      "agreeing": {
+        "name": "agreeing",
+        "description": "Affirming nod with positive arm positioning",
+        "duration": 2000,
+        "joints": {
+          "leftArm": "middle",
+          "rightArm": "middle",
+          "neck": "middle",
+          "headUpDown": "middle",
+          "headLeftRight": "middle",
+          "eyeLeft": "middle",
+          "eyeRight": "middle"
+        },
+        "sequence": [
+          {
+            "time": 0,
+            "joints": {
+              "headUpDown": "halfup"
+            }
+          },
+          {
+            "time": 500,
+            "joints": {
+              "headUpDown": "halfdown"
+            }
+          },
+          {
+            "time": 1000,
+            "joints": {
+              "headUpDown": "halfup"
+            }
+          },
+          {
+            "time": 1500,
+            "joints": {
+              "headUpDown": "middle"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "default_idle": {
+    "name": "idle",
+    "description": "Neutral resting position",
+    "joints": {
+      "leftArm": "middle",
+      "rightArm": "middle",
+      "neck": "middle",
+      "headUpDown": "middle",
+      "headLeftRight": "middle",
+      "eyeLeft": "middle",
+      "eyeRight": "middle"
+    }
+  },
+  "transition_settings": {
+    "default_transition_time": 500,
+    "smooth_interpolation": true,
+    "ease_type": "ease-in-out"
+  }
+}

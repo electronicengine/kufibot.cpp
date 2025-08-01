@@ -12,6 +12,8 @@
 #include <vector>
 #include <functional>
 
+#define LLAMA_CHAT_MODEL_PATH "/usr/local/ai.models/trLlamaModel/dolphin3.gguf"
+#define LLAMA_EMBED_MODEL_PATH "/usr/local/ai.models/trLlamaModel/mxbaiV1.gguf"
 
 class LlamaOperator {
 public:
@@ -22,9 +24,9 @@ public:
     void batch_decode(llama_context * ctx, llama_batch & batch, float * output, int n_seq, int n_embd, int embd_norm);
 
     void setOptions(int ngl = 99, int nThreads = 4, int n_ctx = 2048, float minP = 0.05f, float temp = 0.8f, int topK = 50, float topP = 0.9);
-    bool loadEmbedModel(const std::string & modelPath ="/usr/ai.models/trLlamaModel/mxbaiV1.gguf",
+    bool loadEmbedModel(const std::string & modelPath = LLAMA_EMBED_MODEL_PATH,
                             const enum llama_pooling_type poolingType = llama_pooling_type::LLAMA_POOLING_TYPE_MEAN);
-    bool loadChatModel(const std::string& modelPath = "/usr/ai.models/trLlamaModel/dolphin3.gguf");
+    bool loadChatModel(const std::string& modelPath = LLAMA_CHAT_MODEL_PATH);
     void unloadModel();
 
     void setCallBackFunction(std::function<void(const std::string&)> func);

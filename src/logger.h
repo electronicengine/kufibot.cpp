@@ -18,10 +18,10 @@ class Logger {
     ~Logger() = default;
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
-    static MainWindow* _mainWindow;
 
 public:
     static bool _useTui;
+    static MainWindow* _mainWindow;
 
     static void init(MainWindow *mainWindow, bool useTui = true, int logLevel = 1, const std::string& logger_name = "kufiBot",
                     const std::string& file_name = "/var/log/kufibot.log") {

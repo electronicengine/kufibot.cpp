@@ -11,12 +11,12 @@
 
 #define SAMPLE_RATE 16000
 #define FRAMES_PER_BUFFER 8000
-
+#define TR_RECOGNIZE_MODEL_PATH "/usr/local/ai.models/trRecognizeModel"
 class SpeechRecognizingOperator {
 public:
     ~SpeechRecognizingOperator();
 
-    void load_model(const std::string &modelPath = "/usr/local/ai.models/trRecognizeModel");
+    void load_model(const std::string &modelPath = TR_RECOGNIZE_MODEL_PATH);
     bool open();              // Initialize resources
     bool start_listen();       // Start the audio stream
     void stop_listen();        // Stop the audio stream

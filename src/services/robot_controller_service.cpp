@@ -1,5 +1,5 @@
 #include "robot_controller_service.h"
-#include "gesture_performing_service.h"
+#include "gesture_performer_service.h"
 #include "mapping_service.h"
 #include "tui_service.h"
 
@@ -30,7 +30,7 @@ void RobotControllerService::service_function() {
     _dcMotorController = DCMotorController::get_instance();
 
     subscribe_to_service(MappingService::get_instance());
-    subscribe_to_service(GesturePerformingService::get_instance());
+    subscribe_to_service(GesturePerformerService::get_instance());
     subscribe_to_service(TuiService::get_instance());
 
     while (_running) {
@@ -76,13 +76,37 @@ void RobotControllerService::control_motion(const ControlData& controlData)
     }else if (controlData.rightEye.has_value()) {
         control_eye(ServoMotorJoint::rightArm, controlData.rightEye.value());
     }else if (controlData.jointAngles.has_value()) {
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::leftArm, controlData.jointAngles->at(ServoMotorJoint::leftArm));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::rightArm, controlData.jointAngles->at(ServoMotorJoint::rightArm));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::neck, controlData.jointAngles->at(ServoMotorJoint::neck));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::headUpDown, controlData.jointAngles->at(ServoMotorJoint::headUpDown));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::headLeftRight, controlData.jointAngles->at(ServoMotorJoint::headLeftRight));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeLeft, controlData.jointAngles->at(ServoMotorJoint::eyeLeft));
-        _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeRight, controlData.jointAngles->at(ServoMotorJoint::eyeRight));
+        std::map<ServoMotorJoint, uint8_t> jointAngles = _servoController->get_current_joint_angles();
+
+        if (jointAngles.at(ServoMotorJoint::leftArm) != controlData.jointAngles->at(ServoMotorJoint::leftArm)) {
+            INFO("setting leftArm absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::leftArm));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::leftArm, controlData.jointAngles->at(ServoMotorJoint::leftArm));
+        }
+        if (jointAngles.at(ServoMotorJoint::rightArm) != controlData.jointAngles->at(ServoMotorJoint::rightArm)) {
+            INFO("setting rightArm absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::rightArm));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::rightArm, controlData.jointAngles->at(ServoMotorJoint::rightArm));
+        }
+        if (jointAngles.at(ServoMotorJoint::neck) != controlData.jointAngles->at(ServoMotorJoint::neck)) {
+            INFO("setting neck absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::neck));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::neck, controlData.jointAngles->at(ServoMotorJoint::neck));
+        }
+        if (jointAngles.at(ServoMotorJoint::headUpDown) != controlData.jointAngles->at(ServoMotorJoint::headUpDown)) {
+            INFO("setting headUpDown absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::headUpDown));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::headUpDown, controlData.jointAngles->at(ServoMotorJoint::headUpDown));
+        }
+        if (jointAngles.at(ServoMotorJoint::headLeftRight) != controlData.jointAngles->at(ServoMotorJoint::headLeftRight)) {
+            INFO("setting headLeftRight absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::headLeftRight));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::headLeftRight, controlData.jointAngles->at(ServoMotorJoint::headLeftRight));
+        }
+        if (jointAngles.at(ServoMotorJoint::eyeLeft) != controlData.jointAngles->at(ServoMotorJoint::eyeLeft)) {
+            INFO("setting eyeLeft absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::eyeLeft));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeLeft, controlData.jointAngles->at(ServoMotorJoint::eyeLeft));
+        }
+        if (jointAngles.at(ServoMotorJoint::eyeRight) != controlData.jointAngles->at(ServoMotorJoint::eyeRight)) {
+            INFO("setting eyeRight absolute servo angle: {}", controlData.jointAngles->at(ServoMotorJoint::eyeRight));
+            _servoController->set_absolute_servo_angle(ServoMotorJoint::eyeRight, controlData.jointAngles->at(ServoMotorJoint::eyeRight));
+        }
+
     }
 }
 
@@ -141,6 +165,8 @@ void RobotControllerService::control_head(int angle, int magnitude) {
 }
 
 void RobotControllerService::control_arm(ServoMotorJoint joint, int angle, bool scale) const {
+    INFO("control_arm : {} ", angle);
+
     if(_servoController){
         double mapped_angle;
         if(scale){
@@ -156,6 +182,7 @@ void RobotControllerService::control_arm(ServoMotorJoint joint, int angle, bool 
 
 
 void RobotControllerService::control_eye(ServoMotorJoint joint, bool state) {
+    INFO("control_eye : {}", state);
 
     if(_servoController){
         if (joint == ServoMotorJoint::eyeLeft) {
@@ -182,7 +209,6 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
         case MessageType::ControlData: {
             if (data) {
                 INFO("RobotControllerService::subcribed_data_receive-ControlData");
-
                 ControlData controlData = *static_cast<ControlData*>(data.get());
                 control_motion(controlData);
             }

@@ -5,6 +5,7 @@
 #include "controllers/controller_data_structures.h"
 #include <vector>
 
+
     enum class GestureJointState {
         fulldown,
         fullup,
@@ -46,6 +47,35 @@
         look,
         turnAround,
         standBack
+    };
+
+    struct MotionSequenceItem {
+        int time; // milliseconds from start
+        std::map<ServoMotorJoint, GestureJointState> joints;
+    };
+
+    struct EmotionalMotion {
+        std::string name;
+        std::string description;
+        int duration; // milliseconds
+        std::map<ServoMotorJoint, GestureJointState> joints;
+        std::vector<MotionSequenceItem> sequence;
+    };
+
+    struct ReactionalMotion {
+        std::string name;
+        std::string description;
+        int duration; // milliseconds
+        std::map<ServoMotorJoint, GestureJointState> joints;
+        std::vector<MotionSequenceItem> sequence;
+    };
+
+    struct DirectiveMotion {
+        std::string name;
+        std::string description;
+        int duration; // milliseconds
+        std::map<ServoMotorJoint, GestureJointState> joints;
+        std::vector<MotionSequenceItem> sequence;
     };
 
     struct EmotionalGesture{
