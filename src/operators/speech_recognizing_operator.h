@@ -16,7 +16,7 @@ class SpeechRecognizingOperator {
 public:
     ~SpeechRecognizingOperator();
 
-    void load_model(const std::string &modelPath = "/usr/ai.models/trRecognizeModel");
+    void load_model(const std::string &modelPath = "/usr/local/ai.models/trRecognizeModel");
     bool open();              // Initialize resources
     bool start_listen();       // Start the audio stream
     void stop_listen();        // Stop the audio stream

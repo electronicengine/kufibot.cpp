@@ -23,12 +23,13 @@ class Logger {
 public:
     static bool _useTui;
 
-    static void init(MainWindow *mainWindow, bool useTui = true, const std::string& logger_name = "kufiBot",
+    static void init(MainWindow *mainWindow, bool useTui = true, int logLevel = 1, const std::string& logger_name = "kufiBot",
                     const std::string& file_name = "/var/log/kufibot.log") {
         try {
             _mainWindow = mainWindow;
             _useTui = useTui;
             // Create rotating file sink - 5MB size, 3 rotated files
+
             auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
                 file_name, 1024 * 1024 * 5, 3);
 
@@ -44,7 +45,7 @@ public:
             // Set log pattern
             spdlog::set_pattern("[%H:%M:%S.%e] [%^%l%$] [%t] %v");
             // Set log level
-            spdlog::set_level(spdlog::level::trace);
+            spdlog::set_level((spdlog::level::level_enum) logLevel);
 
         } catch (const spdlog::spdlog_ex& ex) {
             std::cerr << "Logger initialization failed: " << ex.what() << std::endl;

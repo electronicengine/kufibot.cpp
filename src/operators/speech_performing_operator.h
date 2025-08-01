@@ -22,7 +22,7 @@ class SpeechPerformingOperator {
 public:
 
     static SpeechPerformingOperator* get_instance();
-    void loadModel(const std::string& modelPath = "/usr/ai.models/trSpeechModel/dfki.onnx");
+    void loadModel(const std::string& modelPath = "/usr/local/ai.models/trSpeechModel/dfki.onnx");
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();

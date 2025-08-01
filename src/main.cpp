@@ -19,6 +19,7 @@
 
 auto main(int argc, char *argv[]) -> int {
     bool useTui = true;
+    int logLevel = 1;
 
     GesturePerformingService* gesturePerformingService = GesturePerformingService::get_instance();
     GestureRecognizerService* gestureRecognizerService = GestureRecognizerService::get_instance();
@@ -34,6 +35,19 @@ auto main(int argc, char *argv[]) -> int {
             useTui = false;
             break;
         }
+        if (arg == "--log-level") {
+            if (argv[i+1] == "trace") {
+                logLevel = 0;
+            }else if (argv[i+1] == "debug") {
+                logLevel = 1;
+            }else if (argv[i+1] == "info") {
+                logLevel = 2;
+            }else if (argv[i+1] == "warn") {
+                logLevel = 3;
+            }else if (argv[i+1] == "error") {
+                logLevel = 4;
+            }
+        }
     }
 
     FApplication *app;
@@ -44,12 +58,12 @@ auto main(int argc, char *argv[]) -> int {
         main_window = new MainWindow{app};
         main_window->setText ("Log View");
         main_window->setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
-        Logger::init(main_window, useTui);
+        Logger::init(main_window, useTui, logLevel);
 
         TuiService *tui_service = TuiService::get_instance(main_window, app, useTui);
         tui_service->start();
     }else {
-        Logger::init(nullptr, useTui);
+        Logger::init(nullptr, useTui, logLevel);
 
         TuiService *tui_service = TuiService::get_instance(nullptr, nullptr, useTui);
         tui_service->start();
@@ -60,7 +74,7 @@ auto main(int argc, char *argv[]) -> int {
     remoteConnectionService->disable();
     robotControllerService->disable();
     webSocketService->disable();
-    interactiveChatService->start();
+    interactiveChatService->disable();
     videoStreamService->disable();
 
     while (1) {
