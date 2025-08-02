@@ -64,6 +64,7 @@ void Service::run()
 void Service::stop()
 {
     if (_running){
+        _condVar.notify_one();
         _running = false;
         unsubscribe_all_services();
         INFO("{} is stopping...", _name.c_str());

@@ -88,9 +88,10 @@ void GestureRecognizerService::video_frame(cv::Mat &frame) {
         }
 
         processFrame(frame);
+
         // displayFPS(frame, ptime);
         // cv::imshow("Integrated Gesture Recognizer", frame);
-        // cv::waitKey(1);  // Allows GUI events to be processed
+        // cv::waitKey(1); // Allows GUI events to be processed
 
     }
 
@@ -99,8 +100,10 @@ void GestureRecognizerService::video_frame(cv::Mat &frame) {
 void GestureRecognizerService::processFrame(cv::Mat& frame) {
     // --- YÜZ İŞLEME ---
 
-    std::string faceEmotion;
-    std::vector<int> faceLandmarks;
+    std::unique_ptr<MessageData> data = std::make_unique<RecognizedGestureData>();
+
+    std::string &faceEmotion = static_cast<RecognizedGestureData*>(data.get())->faceGesture;
+    std::vector<int> &faceLandmarks = static_cast<RecognizedGestureData*>(data.get())->faceLandmark;
     std::string faceInfoStr;
 
     if (_faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
@@ -160,8 +163,9 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
     }
 
     // --- EL İŞLEME ---
-    std::string handGesture;
-    std::vector<int> handLandmarks, handBbox;
+    std::string &handGesture = static_cast<RecognizedGestureData*>(data.get())->handGesture;
+    std::vector<int> &handLandmarks = static_cast<RecognizedGestureData*>(data.get())->handLandmark;
+    std::vector<int> handBbox;
 
     if (_handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox)) {
         if (showHandLandmarks) {
@@ -184,7 +188,7 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
         //             cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
     }
 
-
+    publish(MessageType::RecognizedGesture, data);
     // FPS hesaplama ve gösterme
     //double ctime = static_cast<double>(cv::getTickCount()) / cv::getTickFrequency();
 

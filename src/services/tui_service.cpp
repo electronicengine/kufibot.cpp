@@ -52,6 +52,7 @@ void TuiService::service_function() {
 
     subscribe_to_service(RobotControllerService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
+    subscribe_to_service(GestureRecognizerService::get_instance());
 
     while (1) {
         std::string input;
@@ -85,43 +86,49 @@ void TuiService::service_function() {
             GestureRecognizerService::get_instance()->start();
             MappingService::get_instance()->start();
         }else if (input.find("start") != std::string::npos) {
-            if (input.find("RobotController") != std::string::npos) {
+            if (input.find("RobotControllerService") != std::string::npos) {
                 RobotControllerService::get_instance()->start();
-            }else if (input.find("InteractiveChat") != std::string::npos) {
+            }else if (input.find("InteractiveChatService") != std::string::npos) {
                 InteractiveChatService::get_instance()->start();
-            }else if (input.find("RemoteConnection") != std::string::npos) {
+            }else if (input.find("RemoteConnectionService") != std::string::npos) {
                 RemoteConnectionService::get_instance()->start();
-            }else if (input.find("VideoStream") != std::string::npos) {
+            }else if (input.find("VideoStreamService") != std::string::npos) {
                 VideoStreamService::get_instance()->start();
-            }else if (input.find("Mapping") != std::string::npos) {
+            }else if (input.find("MappingService") != std::string::npos) {
                 MappingService::get_instance()->start();
-            }else if (input.find("GesturePerformer") != std::string::npos) {
+            }else if (input.find("GesturePerformerService") != std::string::npos) {
                 GesturePerformerService::get_instance()->start();
-            }else if (input.find("GestureRecognizer") != std::string::npos) {
+            }else if (input.find("GestureRecognizerService") != std::string::npos) {
                 GestureRecognizerService::get_instance()->start();
-            }else if (input.find("WebSocket") != std::string::npos) {
+            }else if (input.find("WebSocketService") != std::string::npos) {
                 WebSocketService::get_instance()->start();
             }
         }else if (input.find("stop") != std::string::npos) {
-            if (input.find("RobotController") != std::string::npos) {
+            if (input.find("RobotControllerService") != std::string::npos) {
                 RobotControllerService::get_instance()->stop();
-            }else if (input.find("InteractiveChat") != std::string::npos) {
+            }else if (input.find("InteractiveChatService") != std::string::npos) {
                 InteractiveChatService::get_instance()->stop();
-            }else if (input.find("RemoteConnection") != std::string::npos) {
+            }else if (input.find("RemoteConnectionService") != std::string::npos) {
                 RemoteConnectionService::get_instance()->stop();
-            }else if (input.find("VideoStream") != std::string::npos) {
+            }else if (input.find("VideoStreamService") != std::string::npos) {
                 VideoStreamService::get_instance()->stop();
-            }else if (input.find("Mapping") != std::string::npos) {
+            }else if (input.find("MappingService") != std::string::npos) {
                 MappingService::get_instance()->stop();
-            }else if (input.find("GesturePerformer") != std::string::npos) {
+            }else if (input.find("GesturePerformerService") != std::string::npos) {
                 GesturePerformerService::get_instance()->stop();
-            }else if (input.find("GestureRecognizer") != std::string::npos) {
+            }else if (input.find("GestureRecognizerService") != std::string::npos) {
                 GestureRecognizerService::get_instance()->stop();
-            }else if (input.find("WebSocket") != std::string::npos) {
+            }else if (input.find("WebSocketService") != std::string::npos) {
                 WebSocketService::get_instance()->stop();
             }
+        }else if (input.find("log" ) != std::string::npos) {
+            std::string className = input.substr(4, input.size() - 4);
+            Logger::print_cached_logs(className);
         }else if(input == "sensors") {
             INFO("{} ",_currentSensorData.to_json().dump().c_str());
+        }else if (input.find("gestures") != std::string::npos) {
+            int seconds = std::stoi(input.substr(9, input.size() - 9));
+            printGestureData(seconds);
         }else if (input.find("llm") != std::string::npos) {
             tui_llm_query_callback(std::string(input.begin() + 4, input.end()));
         }else if (input.find("set") != std::string::npos) {
@@ -154,6 +161,18 @@ void TuiService::service_function() {
             }
         }
     }
+}
+
+void TuiService::printGestureData(int seconds) {
+    INFO("Gesture Data: ");
+    seconds = seconds * 1000;
+    while (seconds > 0) {
+        std::cout << "Recognized Face Gesture: " << _recognizedGestureData.faceGesture << std::endl;
+        std::cout << "Recognized Hand Gesture: " << _recognizedGestureData.handGesture << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        seconds -= 100;
+    }
+
 }
 
 void TuiService::openTui() {
@@ -199,15 +218,17 @@ void TuiService::printHelp() {
     INFO("--> sensors  : get sensor values");
     INFO("--> set <joint> <value>: set servo angle");
     INFO("--> llm <query> : query llm");
+    INFO("--> log <className> : print logs of a service");
+    INFO("--> gestures <seconds>: prints recognized gesture info while seconds");
     INFO("--> start|stop <service> : start or stop a service");
     INFO("----> Available Services: ");
-    INFO("------> WebSocket");
-    INFO("------> VideoStream");
-    INFO("------> RobotController");
-    INFO("------> RemoteConnection");
-    INFO("------> InteractiveChat");
-    INFO("------> GestureRecognizer");
-    INFO("------> Mapping");
+    INFO("------> WebSocketService");
+    INFO("------> VideoStreamService");
+    INFO("------> RobotControllerService");
+    INFO("------> RemoteConnectionService");
+    INFO("------> InteractiveChatService");
+    INFO("------> GestureRecognizerService");
+    INFO("------> MappingService");
 }
 
 void TuiService::setJointAngle(ServoMotorJoint joint, int angle) {
@@ -242,10 +263,10 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
                 float emotionSimilarity = static_cast<LLMResponseData*>(data.get())->emotionSimilarity;
                 float reactionSimilarity = static_cast<LLMResponseData*>(data.get())->reactionSimilarity;
 
-                response += emotion.symbol;
+                response += " " + emotion.symbol;
                 response += " similarity: " + std::to_string(emotionSimilarity);
-                response += reaction.symbol;
-                response += " similarity: " + std::to_string(reactionSimilarity);
+                response +=  " " + reaction.symbol;
+                response += " similarity: " + std::to_string(reactionSimilarity) + " ";
 
                 _tuiLlmResponseCallBackFunction(response);
             }
@@ -270,6 +291,13 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
 
             }
             break;
+
+        case MessageType::RecognizedGesture : {
+            if (data) {
+                _recognizedGestureData = *static_cast<RecognizedGestureData*>(data.get());
+            }
+            break;
+        }
         default:
             WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;

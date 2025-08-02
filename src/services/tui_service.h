@@ -25,11 +25,14 @@ private:
     std::function<void(const int&)> _tuiCompasDirectionCallBackFunction;
     std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> _tuiMotorFeedBackInfoCallBackFunction;
     SensorData _currentSensorData;
+    RecognizedGestureData _recognizedGestureData;
+
     TuiService();
 
     void service_function();
 
     //subscribed sensor_data, llm_response
+    void printGestureData(int seconds);
     void openTui();
     void printHelp();
     void setJointAngle(ServoMotorJoint joint, int angle);

@@ -34,16 +34,6 @@ constexpr int DOWN_MAX  = -45;
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
-inline const std::map<ServoMotorJoint, std::string> Servo_Joint_Names{
-    {ServoMotorJoint::leftArm, "leftArm"},
-    {ServoMotorJoint::rightArm, "rightArm"},
-    {ServoMotorJoint::neck, "neck"},
-    {ServoMotorJoint::headUpDown, "headUpDown"},
-    {ServoMotorJoint::headLeftRight, "headLeftRight"},
-    {ServoMotorJoint::eyeLeft, "eyeLeft"},
-    {ServoMotorJoint::eyeRight, "eyeRight"}
-};
-
 enum class MessageType {
     VideoFrame,
     WebSocketReceive,

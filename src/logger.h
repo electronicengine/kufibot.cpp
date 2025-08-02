@@ -12,6 +12,13 @@
 #include <source_location>
 #include <regex>
 
+#define LOG_CACHE 1000
+
+struct CachedLog {
+    std::string log;
+    spdlog::level::level_enum level;
+    std::string class_name;
+};
 
 class Logger {
     Logger() = default;  // Prevent instantiation
@@ -19,12 +26,22 @@ class Logger {
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 
+    static std::list<CachedLog> _cachedLogs;
+
 public:
     static bool _useTui;
     static MainWindow* _mainWindow;
 
     static void init(MainWindow *mainWindow, bool useTui = true, int logLevel = 1, const std::string& logger_name = "kufiBot",
                     const std::string& file_name = "/var/log/kufibot.log") {
+
+        // Truncate the logfile before initializing the logger
+        std::ofstream ofs(file_name, std::ofstream::out | std::ofstream::trunc);
+        if (!ofs) {
+            std::cerr << "Failed to truncate log file: " << file_name << std::endl;
+        }
+        ofs.close();
+
         try {
             _mainWindow = mainWindow;
             _useTui = useTui;
@@ -52,6 +69,28 @@ public:
         }
     }
 
+    static void print_cached_logs(std::string className) {
+        for (auto it = _cachedLogs.begin(); it != _cachedLogs.end(); ) {
+            if (it->class_name == className) {
+                std::string full_message = fmt::format("<{}> {}", it->class_name, it->log);
+
+                switch (it->level) {
+                    case spdlog::level::trace: spdlog::trace(full_message); break;
+                    case spdlog::level::debug: spdlog::debug(full_message); break;
+                    case spdlog::level::info:  spdlog::info(full_message);  break;
+                    case spdlog::level::warn:  spdlog::warn(full_message);  break;
+                    case spdlog::level::err:   spdlog::error(full_message); break;
+                    default: break;
+                }
+
+                it = _cachedLogs.erase(it); // Erase and advance iterator
+            } else {
+                ++it; // Skip unmatched logs
+            }
+        }
+    }
+
+
     static inline std::string extract_class_name(const std::string& pretty_function) {
         std::regex class_regex(R"((\w+)::\w+\(.*\))");
         std::smatch match;
@@ -65,6 +104,13 @@ public:
     static void trace(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::trace, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::trace, class_name});
+        }
 
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}",
@@ -81,6 +127,13 @@ public:
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, std::forward<LogStrArgs>(logStrArgs)...);
 
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::info, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::info, class_name});
+        }
+
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}", class_name, formattedStr);
             spdlog::info(full_message);
@@ -93,6 +146,13 @@ public:
     static void debug(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::debug, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::debug, class_name});
+        }
 
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}",
@@ -109,6 +169,13 @@ public:
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::warn, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::warn, class_name});
+        }
+
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
@@ -124,6 +191,13 @@ public:
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::err, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::err, class_name});
+        }
+
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
@@ -138,6 +212,13 @@ public:
     static void critical(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
+
+        if (_cachedLogs.size() <= LOG_CACHE) {
+            _cachedLogs.push_back({formattedStr, spdlog::level::critical, class_name});
+        }else {
+            _cachedLogs.erase(_cachedLogs.begin());
+            _cachedLogs.push_back({formattedStr, spdlog::level::critical, class_name});
+        }
 
         if (!_useTui) {
             std::string full_message = fmt::format("<{}> {}",

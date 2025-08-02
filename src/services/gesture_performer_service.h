@@ -26,28 +26,20 @@ private:
     static GesturePerformerService *_instance;
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointGesturePositionList;
 
-    std::thread _workerThread;
     std::atomic<bool> _gestureWorking{false};
-    GesturePerformerService();
     // Motion data loaded from JSON
-    std::map<EmotionType, EmotionalMotion> emotionalMotions;
-    std::map<ReactionType, ReactionalMotion> reactionalMotions;
-    std::map<DirectiveType, DirectiveMotion> directiveMotions;
-    std::map<ServoMotorJoint, GestureJointState> idlePosition;
+    std::map<EmotionType, EmotionalMotion> _emotionalMotions;
+    std::map<ReactionType, ReactionalMotion> _reactionalMotions;
+    std::map<DirectiveType, DirectiveMotion> _directiveMotions;
+    std::map<ServoMotorJoint, GestureJointState> _idlePosition;
 
     // Joint angle mappings
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> jointGesturePositionList;
 
     // Motion control
-    std::atomic<bool> gestureWorking;
-    std::atomic<bool> currentMotionActive;
-    std::thread* motionThread;
-    std::mutex motionMutex;
-    std::mutex _dataMutex;
-    // LLM response analysis methods
-    EmotionType getBestEmotionType(const LLMResponseData &llm_response);
-    ReactionType getBestReactionType(const LLMResponseData &llm_response);
-    DirectiveType getBestDirectiveType(const LLMResponseData &llm_response);
+    std::queue<LLMResponseData> _llmResponseQueue;
+    std::mutex _llmResponseQueueMutex;
+    GesturePerformerService();
 
     // Private helper methods
     void control_motion(ServoMotorJoint joint, int angle);
@@ -66,8 +58,6 @@ private:
         int totalDuration
     );
 
-
-    bool hasDirectiveCommand(const LLMResponseData &llm_response);
 
     void service_function();
     void make_mimic(const LLMResponseData& llm_response);

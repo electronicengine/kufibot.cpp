@@ -29,6 +29,7 @@ protected:
     std::mutex _dataMutex;
     std::list<Service*> _subscribedServices;
     std::atomic<bool> _running{false};
+    std::condition_variable _condVar;
 
     void unsubscribe_all_services();
     void subscribe_to_service(Service *SubscribedService);

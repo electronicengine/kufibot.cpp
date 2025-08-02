@@ -6,3 +6,4 @@
 
 bool Logger::_useTui = true;
 MainWindow *Logger::_mainWindow = nullptr;
+std::list<CachedLog>  Logger::_cachedLogs;
