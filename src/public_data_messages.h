@@ -173,8 +173,11 @@ struct LLMResponseData : public MessageData {
     std::string sentence;
     EmotionalGesture emotionalGesture;
     ReactionalGesture reactionalGesture;
+    Directive directive;
+
     float emotionSimilarity;
     float reactionSimilarity;
+    float directiveSimilarity;
 };
 
 struct RecognizedGestureData : public MessageData  {

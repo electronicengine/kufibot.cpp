@@ -13,13 +13,28 @@
 #include "../controllers/servo_motor_controller.h"
 #include "../controllers/dc_motor_controller.h"
 
-enum State{
-    stop,
-    idle,
-    move
+// Robot states
+enum class RobotState {
+    STOP,
+    IDLE,
+    MOVE,
+    ERROR,
+    CALIBRATING,
+    TALKING,
+    TRACKING,
 };
 
-
+// Robot events
+enum class RobotEvent {
+    START,
+    STOP_COMMAND,
+    MOVE_COMMAND,
+    EMERGENCY_STOP,
+    ERROR_OCCURRED,
+    CALIBRATE,
+    TRACK,
+    TALK,
+};
 
 
 class RobotControllerService : public Service{
@@ -33,7 +48,6 @@ public:
 private:
 
     Json _sensor_values;
-    State _current_state{State::stop};
 
     CompassController *_compassController;
     DistanceController *_distanceController;

@@ -53,6 +53,7 @@ private:
     void calculate_embeddings();
     std::pair<EmotionalGesture, float> find_sentence_emotion(const std::string& sentence);
     std::pair<ReactionalGesture, float> find_sentence_reaction(const std::string& sentence);
+    std::pair<Directive, float> find_sentence_directive(const std::string &sentence);
 
     void service_function();
 
