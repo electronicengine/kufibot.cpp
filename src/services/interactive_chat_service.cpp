@@ -79,6 +79,11 @@ void InteractiveChatService::query_response_callback(const std::string &response
             std::pair<ReactionalGesture,float> reaction = find_sentence_reaction(trimmed_sentence);
             static_cast<LLMResponseData*>(data.get())->reactionalGesture = reaction.first;
             static_cast<LLMResponseData*>(data.get())->reactionSimilarity = reaction.second;
+
+            std::pair<Directive,float> directive = find_sentence_directive(trimmed_sentence);
+            static_cast<LLMResponseData*>(data.get())->directive = directive.first;
+            static_cast<LLMResponseData*>(data.get())->directiveSimilarity = directive.second;
+
             publish(MessageType::LLMResponse, data);
 
             // Kalan metni güncelle
@@ -165,6 +170,24 @@ std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reacti
         if (sim > max_similarity && sim > 0.5f ) {
             max_similarity = sim;
             best_match = reaction;
+        }
+    }
+
+    return std::make_pair(best_match, max_similarity);
+}
+
+std::pair<Directive, float> InteractiveChatService::find_sentence_directive(const std::string &sentence) {
+    float max_similarity = 0.0f;
+    Directive best_match;
+    std::vector<float> sentence_embeddings = _llamaEmbeddingOperator.calculateEmbeddings(sentence);
+
+    for (auto directive : _directiveList) {
+
+        float sim = _llamaEmbeddingOperator.getSimilarity(sentence_embeddings, directive.embedding);
+
+        if (sim > max_similarity && sim > 0.5f ) {
+            max_similarity = sim;
+            best_match = directive;
         }
     }
 
