@@ -13,14 +13,8 @@ set(TARGET services)
 file(GLOB_RECURSE SRCS ${SERVICES_SRC_DIR}/*.cpp ${SERVICES_SRC_DIR}/*.h)
 include_directories(${SERVICES_INC_DIR})
 
-add_library(${TARGET} SHARED ${SRCS}
-        gesture_recognizer_service.cpp
-        gesture_recognizer_service.h
-        tui_service.cpp
-        tui_service.h
-        landmark_tracking_service.cpp
-        landmark_tracking_service.h)
+add_library(${TARGET} SHARED ${SRCS})
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
-target_link_libraries(${TARGET} PRIVATE controllers operators)
+target_link_libraries(${TARGET} PRIVATE statemachines)
 install(TARGETS services DESTINATION /usr/local/lib)

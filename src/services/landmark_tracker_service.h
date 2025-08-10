@@ -3,21 +3,21 @@
 
 #include "service.h"
 
-class LandmarkTrackingService: public Service{
+class LandmarkTrackerService: public Service{
 
 
 public:
-    static LandmarkTrackingService *get_instance();
+    static LandmarkTrackerService *get_instance();
 
-    virtual ~LandmarkTrackingService();
+    virtual ~LandmarkTrackerService();
 
 private:
     LLMResponseData _llmResponseData;
     RecognizedGestureData _recognizedGestureData;
 
-    static LandmarkTrackingService *_instance;
+    static LandmarkTrackerService *_instance;
 
-    LandmarkTrackingService();
+    LandmarkTrackerService();
     void service_function();
     void searchTheFace();
     //subscribed recognized gesture data

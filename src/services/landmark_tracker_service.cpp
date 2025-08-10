@@ -1,23 +1,30 @@
 
-#include "landmark_tracking_service.h"
+#include "landmark_tracker_service.h"
 
 #include "gesture_recognizer_service.h"
 #include "robot_controller_service.h"
 #include "interactive_chat_service.h"
 #include "../logger.h"
 
-LandmarkTrackingService * LandmarkTrackingService::get_instance() {
+LandmarkTrackerService* LandmarkTrackerService::_instance = nullptr;
+
+LandmarkTrackerService * LandmarkTrackerService::get_instance() {
     if (_instance == nullptr) {
-        _instance = new LandmarkTrackingService();
+        _instance = new LandmarkTrackerService();
     }
     return _instance;
 }
 
-LandmarkTrackingService::LandmarkTrackingService() : Service("LandmarkTrackingService") {
+
+LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingService") {
 
 }
 
-void LandmarkTrackingService::service_function() {
+LandmarkTrackerService::~LandmarkTrackerService() {
+}
+
+
+void LandmarkTrackerService::service_function() {
 
     subscribe_to_service(GestureRecognizerService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
@@ -30,11 +37,11 @@ void LandmarkTrackingService::service_function() {
 
 }
 
-void LandmarkTrackingService::searchTheFace() {
+void LandmarkTrackerService::searchTheFace() {
 
 }
 
-void LandmarkTrackingService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
+void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {

@@ -22,7 +22,7 @@
 #include "final/final.h"
 #include "../tui/main_window.h"
 #include "../tui/widget_color_theme.h"
-
+#include "../statemachines/robot.h"
 
 using namespace finalcut;
 
@@ -159,6 +159,31 @@ void TuiService::service_function() {
             }else {
                 WARNING("Start robot controller service first!");
             }
+        }else if (input == "robot") {
+            Robot robot;
+            robot.start();
+
+            ControlData controlData;
+
+            spdlog::details::os::sleep_for_millis(1000);
+            robot.postEvent(ControlEvent(EventType::control_head, SourceService::tuiControlService));
+            spdlog::details::os::sleep_for_millis(1500);
+            robot.postEvent(ControlEvent(EventType::control_head, SourceService::tuiControlService));
+            spdlog::details::os::sleep_for_millis(500);
+            robot.postEvent(ControlEvent(EventType::control_head, SourceService::remoteControlService));
+            spdlog::details::os::sleep_for_millis(3700);
+            robot.postEvent(ControlEvent(EventType::control_head, SourceService::remoteControlService));
+
+            // robot.postEvent(ControlEvent(EventType::control_head, SourceService::tuiControlService));
+            // if (robot.isInState<TuiControlState>()) {
+            //     INFO("In TuiControlState");
+            // }else {
+            //     WARNING("Not in TuiControlState");
+            // }
+
+            spdlog::details::os::sleep_for_millis(10000);
+
+            robot.stop();
         }
     }
 }

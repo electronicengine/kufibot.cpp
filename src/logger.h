@@ -1,5 +1,6 @@
 // logger.hpp
-#pragma once
+#ifndef LOGGER_H
+#define LOGGER_H
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -238,3 +239,5 @@ public:
 #define WARNING(logStr, ...) Logger::warning(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
 #define ERROR(logStr, ...) Logger::error(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
 #define CRITICAL(logStr, ...) Logger::critical(__PRETTY_FUNCTION__, logStr, ##__VA_ARGS__)
+
+#endif // LOGGER_H
