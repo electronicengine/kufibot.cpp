@@ -17,7 +17,7 @@ The mechanical parts are 3D printed. see:  https://www.printables.com/model/4083
 * HMI Display x 1
 * 3S - 5600 mah Li-On Battery Pack x 1
 * INA219 i2c current sensor cirtuit Sensor x 1
-* QMC5883L i2c magnometer circuit x 1
+* 10dof i2c magnometer and accelorometer circuit x 1
 * TF-Luna uart Lidar circuit x 1
 * Waveshare Hat DC Motor Driver circuit x 1
 * WaveShare Hat Servo Motor Driver circuit x 1
@@ -43,19 +43,45 @@ docker buildx inspect mybuilder --bootstrap
 ### Compile and Run Arm64 Docker
 * Compile docker with Dockerfile and load image
 ```bash
-docker buildx build --platform linux/arm64 -t raspimage --load . 
+docker compose -f docker-compose.yml build 
 ```
 * run compiled docker image
 ```bash
-docker run --platform linux/arm64 --name test -it raspimage /bin/bash 
+docker compose -f docker-compose.yml up -d 
+docker exec -it kufibot_env bash 
+```
+### Compile and Run Amd64 Cross Compilation Docker
+* Compile docker with Dockerfile and load image
+```bash
+docker compose -f docker-compose.cross.yml build 
+```
+* run compiled docker image
+```bash
+docker compose -f docker-compose.cross.yml up -d 
+docker exec -it kufibot_cross_env bash 
 ```
 
-### Kufibot compilation
+### Kufibot Compilation
 ```bash
 mkdir build && cd build
 cmake ..
 make
 export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
 ```
-  
+
+## License
+
+This project is licensed under the GNU General Public License version 2 (GPLv2).
+
+You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+For the full license text, see the [LICENSE](./LICENSE) file.
+
+---
+
+### More about GPLv2
+
+The GPLv2 license ensures that all copies and derivatives of this project remain free and open source under the same license.
 
