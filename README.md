@@ -71,9 +71,9 @@ export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
 
 ## License
 
-This project is licensed under the GNU General Public License version 2 (GPLv2).
+This project is licensed under the GNU General Public License version 3 (GPLv3).
 
-You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -81,7 +81,7 @@ For the full license text, see the [LICENSE](./LICENSE) file.
 
 ---
 
-### More about GPLv2
+### More about GPLv3
 
-The GPLv2 license ensures that all copies and derivatives of this project remain free and open source under the same license.
+The GPLv3 license ensures that all copies and derivatives of this project remain free and open source under the same license.
 
