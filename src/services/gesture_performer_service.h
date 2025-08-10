@@ -31,7 +31,8 @@ private:
     std::map<EmotionType, EmotionalMotion> _emotionalMotions;
     std::map<ReactionType, ReactionalMotion> _reactionalMotions;
     std::map<DirectiveType, DirectiveMotion> _directiveMotions;
-    std::map<ServoMotorJoint, GestureJointState> _idlePosition;
+    std::map<ServoMotorJoint, GestureJointState> _idlePositions;
+    std::map<ServoMotorJoint, uint8_t> _currentPositions;
 
     // Joint angle mappings
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> jointGesturePositionList;
@@ -42,7 +43,6 @@ private:
     GesturePerformerService();
 
     // Private helper methods
-    void control_motion(ServoMotorJoint joint, int angle);
     int getAngleForJointState(ServoMotorJoint joint, GestureJointState state);
     void setIdlePosition();
     void executeJointPositions(const std::map<ServoMotorJoint, GestureJointState>& positions);

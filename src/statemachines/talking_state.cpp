@@ -16,3 +16,46 @@
  */
 
 #include "talking_state.h"
+#include "tui_control_state.h"
+#include "idle_state.h"
+#include "critical_error_state.h"
+#include "remote_control_state.h"
+#include "robot.h"
+#include "../logger.h"
+
+// MovingState
+TalkingState::TalkingState(std::string n, State* parent) : State(n, parent) {
+}
+
+std::optional<State*> TalkingState::onEnter(const ControlEvent& ev) {
+    INFO("onEnter TalkingState");
+    return std::optional<State*>();
+
+}
+
+std::optional<State*> TalkingState::onExit(const ControlEvent&) {
+    INFO("onExit TalkingState");
+    return std::optional<State*>();
+
+}
+
+std::optional<State*> TalkingState::onEvent(const ControlEvent& ev) {
+
+    if (ev.source != SourceService::gesturePerformerService) {
+        WARNING("The Service Source is not apropriate with state");
+        return std::optional<State*>();
+    }
+
+    INFO("onEvent TalkingState");
+    switch (ev.type) {
+        case EventType::control: {
+            INFO("talking");
+            _parentState->_lastEventTime = std::chrono::steady_clock::now();
+            static_cast<Robot*>(_machine)->control_motion(ev.controlData);
+            return this;
+        }
+        default:
+            INFO("doesn't find the event in TuiControlState");
+            return std::optional<State*>();
+    }
+}

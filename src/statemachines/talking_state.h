@@ -6,10 +6,16 @@
 #define TALKING_STATE_H
 
 
+#include "state.h"
 
-class talking_state {
 
+struct TalkingState : State {
+    TalkingState(std::string n, State* parent = nullptr);
+    std::optional<State*> onEnter(const ControlEvent& ev) override;
+    std::optional<State*> onExit(const ControlEvent& ev) override;
+    std::optional<State*> onEvent(const ControlEvent& ev) override;
 };
+
 
 
 

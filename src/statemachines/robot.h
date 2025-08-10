@@ -13,6 +13,7 @@
 #include "remote_control_state.h"
 #include "initialize_state.h"
 #include "critical_error_state.h"
+#include "talking_state.h"
 #include "../controllers/compass_controller.h"
 #include "../controllers/distance_controller.h"
 #include "../controllers/power_controller.h"
@@ -28,6 +29,7 @@ struct Robot : StateMachine {
     RemoteControlState* remoteControlState = nullptr;
     InitializeState* initializeState = nullptr;
     CriticalErrorState* criticalErrorState = nullptr;
+    TalkingState* talkingState = nullptr;
 
     CompassController *_compassController;
     DistanceController *_distanceController;

@@ -59,7 +59,7 @@ void GesturePerformerService::service_function()
         _emotionalMotions,
         _reactionalMotions,
         _directiveMotions,
-        _idlePosition
+        _idlePositions
     );
 
     INFO("Setting robot to idle position...");
@@ -117,16 +117,6 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
 }
 
 
-
-void GesturePerformerService::control_motion(ServoMotorJoint joint, int angle) {
-    // This is your existing motor control function
-    // Implementation depends on your hardware interface
-    DEBUG("Moving joint {} to angle {}", Servo_Motor_Joint_Names.at(joint).c_str(), angle);
-
-    // Example implementation - replace with your actual motor control code
-    // motor_controller->move_servo(joint, angle);
-}
-
 int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, GestureJointState state) {
     auto jointIt = jointGesturePositionList.find(joint);
     if (jointIt != jointGesturePositionList.end()) {
@@ -142,15 +132,21 @@ int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, Gestur
 
 void GesturePerformerService::setIdlePosition() {
     DEBUG("Setting robot to idle position");
-    for (const auto& [joint, state] : _idlePosition) {
-        int angle = getAngleForJointState(joint, state);
-        control_motion(joint, angle);
-    }
+    std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+    data->source = SourceService::gesturePerformerService;
+
+    static_cast<ControlData*>(data.get())->jointAngles.emplace();
+    static_cast<ControlData*>(data.get())->jointAngles.value() = Default_Joint_Angles;
+    _currentPositions = Default_Joint_Angles;
+
+    publish(MessageType::ControlData, data);
 }
 
 void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoint, GestureJointState>& positions) {
     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-    std::map<ServoMotorJoint, uint8_t> jointAngles;
+    data->source = SourceService::gesturePerformerService;
+
+    std::map<ServoMotorJoint, uint8_t> jointAngles = _currentPositions ;
     DEBUG("Executing Joint Positions: ");
     for (const auto& [joint, state] : positions) {
         jointAngles[joint] = getAngleForJointState(joint, state);
@@ -160,7 +156,8 @@ void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoi
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
     static_cast<ControlData*>(data.get())->jointAngles.value() = jointAngles;
 
-    //publish(MessageType::ControlData, data);
+    publish(MessageType::ControlData, data);
+    _currentPositions = jointAngles;
 }
 
 void GesturePerformerService::stopCurrentMotion() {

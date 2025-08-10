@@ -36,6 +36,8 @@ std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
             return static_cast<Robot*>(_machine)->transState<TuiControlState>();
         case SourceService::remoteConnectionService:
             return static_cast<Robot*>(_machine)->transState<RemoteControlState>();
+        case SourceService::gesturePerformerService:
+            return static_cast<Robot*>(_machine)->transState<TalkingState>();
         default:
             return std::optional<State*>();
     }

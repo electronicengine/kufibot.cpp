@@ -27,6 +27,7 @@ Robot::Robot() {
 
     tuiControlState = createState<TuiControlState>("TuiControlState", movingState);
     remoteControlState = createState<RemoteControlState>("RemoteControlState", movingState);
+    talkingState = createState<TalkingState>("TalkingState", movingState);
 
     movingState->setTimeout(2000);
     setInitialState(initializeState);

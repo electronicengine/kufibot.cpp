@@ -62,5 +62,10 @@ inline const std::map<ServoMotorJoint, std::string> Servo_Motor_Joint_Names = {{
                                                                     {ServoMotorJoint::eyeLeft, "Eye Left"}};
 
 
+inline const std::map<ServoMotorJoint, uint8_t> Default_Joint_Angles = {
+    {ServoMotorJoint::rightArm, 15}, {ServoMotorJoint::leftArm, 170}, {ServoMotorJoint::neck, 78},
+    {ServoMotorJoint::headUpDown, 15}, {ServoMotorJoint::headLeftRight, 90}, {ServoMotorJoint::eyeRight, 160},
+    {ServoMotorJoint::eyeLeft, 20}
+};
 
 #endif //CONTROLLER_DATA_STRUCTURES_H

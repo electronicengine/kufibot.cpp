@@ -40,15 +40,13 @@ RobotControllerService::RobotControllerService() : Service("RobotControllerServi
 
 void RobotControllerService::service_function() {
 
-
-
     subscribe_to_service(MappingService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     _robot.start();
 
     while (_running) {
-        std::this_thread::sleep_for(std::chrono::microseconds(200));
+        std::this_thread::sleep_for(std::chrono::microseconds(300));
         if(!_subscribers.empty()){
             std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
             *static_cast<SensorData*>(data.get()) = _robot.get_sensor_values();
