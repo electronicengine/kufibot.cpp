@@ -27,44 +27,7 @@ struct State {
 
 };
 
-struct TuiControlState : State {
-    TuiControlState(std::string n, State* parent = nullptr);
-    std::optional<State*> onEnter(const ControlEvent& ev) override;
-    std::optional<State*> onExit(const ControlEvent& ev) override;
-    std::optional<State*> onEvent(const ControlEvent& ev) override;
-};
 
-struct RemoteControlState : State {
-    RemoteControlState(std::string n, State* parent = nullptr);
-    std::optional<State*> onEnter(const ControlEvent& ev) override;
-    std::optional<State*> onExit(const ControlEvent& ev) override;
-    std::optional<State*> onEvent(const ControlEvent& ev) override;
-};
-
-struct IdleState : State {
-    IdleState(std::string n, State* parent = nullptr);
-    std::optional<State*> onEnter(const ControlEvent& ev) override;
-    std::optional<State*> onExit(const ControlEvent& ev) override;
-    std::optional<State*> onEvent(const ControlEvent& ev) override;
-};
-
-struct MovingState : State {
-    int timeout_ms = 3000;
-
-    MovingState(std::string n, State* parent = nullptr);
-    std::optional<State*> onEnter(const ControlEvent& ev) override;
-    std::optional<State*> onExit(const ControlEvent& ev) override;
-    std::optional<State*> onEvent(const ControlEvent& ev) override;
-};
-
-struct CriticalState : State {
-    int timeout_ms = 3000;
-
-    CriticalState(std::string n, State* parent = nullptr);
-    std::optional<State*> onEnter(const ControlEvent& ev) override;
-    std::optional<State*> onExit(const ControlEvent& ev) override;
-    std::optional<State*> onEvent(const ControlEvent& ev) override;
-};
 
 
 

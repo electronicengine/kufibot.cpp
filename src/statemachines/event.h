@@ -6,26 +6,6 @@
 #include "../public_data_messages.h"
 
 
-enum class SourceService {
-    none,
-    gesturePerformerService,
-    landmarkTrackerService,
-    mappingService,
-    tuiControlService,
-    remoteControlService,
-
-};
-
-enum EventType {
-    none = 0,
-    critical_error,
-    stop,
-    timeout,
-    control_head,
-    control_wheels,
-    control_joints
-};
-
 // --------------------------
 // Event types
 // --------------------------

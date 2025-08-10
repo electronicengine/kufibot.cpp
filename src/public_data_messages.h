@@ -34,6 +34,30 @@ constexpr int DOWN_MAX  = -45;
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
+
+enum class SourceService {
+    none,
+    gesturePerformerService,
+    gestureRecognizerService,
+    landmarkTrackerService,
+    mappingService,
+    tuiService,
+    remoteControllerService,
+    remoteConnectionService,
+    videoStreamService,
+    webSocketService,
+    interactiveChatService,
+};
+
+enum EventType {
+    none = 0,
+    critical_error,
+    stop,
+    timeout,
+    control
+};
+
+
 enum class MessageType {
     VideoFrame,
     WebSocketReceive,
@@ -49,7 +73,7 @@ typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
 struct MessageData {
-    std::optional<std::string> publisherName;
+    std::optional<SourceService> source;
 };
 
 // Message types as simple structs

@@ -13,6 +13,8 @@ StateMachine::~StateMachine() {
 void StateMachine::start() {
     _running = true;
     _worker = std::thread([this](){ loop(); });
+
+    transition(_initialState);
     INFO("State machine is started!");
 }
 
@@ -33,6 +35,10 @@ void StateMachine::postEvent(const ControlEvent& ev) {
         _eventQueue.push(ev);
     }
     _cv.notify_one();
+}
+
+void StateMachine::setInitialState(State *state) {
+    _initialState = state;
 }
 
 
@@ -59,7 +65,6 @@ void StateMachine::loop() {
                 postEvent(it->second);
                 it = _timers.erase(it);
             }
-
         }
 
         {
@@ -118,7 +123,8 @@ void StateMachine::dispatch(const ControlEvent& ev) {
 
 
 void StateMachine::transition(State* toState, const ControlEvent& cause) {
-    if (!toState) return;
+    if (!toState || !_running)
+        return;
 
     auto ancestors = [](State* s) {
         std::vector<State*> chain;

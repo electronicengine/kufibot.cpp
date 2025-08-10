@@ -29,7 +29,7 @@ struct StateMachine {
 
     std::mutex _timerMtx;
     std::multimap<std::chrono::steady_clock::time_point, ControlEvent> _timers;
-
+    State* _initialState = nullptr;
     State* _currentState = nullptr;
     std::vector<std::unique_ptr<State>> states;
 
@@ -67,8 +67,9 @@ struct StateMachine {
     void start();
     void stop();
     void postEvent(const ControlEvent& ev);
+    void setInitialState(State* state);
     void postDelayedEvent(const ControlEvent& ev, int delay_ms);
-    void transition(State* toState, const ControlEvent& cause);
+    void transition(State* toState, const ControlEvent& cause = ControlEvent());
 
 private:
     void loop();
