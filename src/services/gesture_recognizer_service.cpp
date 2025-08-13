@@ -71,6 +71,7 @@ void GestureRecognizerService::service_function() {
 
 }
 
+
 void GestureRecognizerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
     std::lock_guard<std::mutex> lock(_dataMutex);
 

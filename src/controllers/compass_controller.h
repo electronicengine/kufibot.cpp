@@ -9,7 +9,6 @@
 
 #define OFFSET_ANGLE 79
 
-
 class CompassController {
 private:
     static CompassController* _instance; // Singleton instance
@@ -18,6 +17,7 @@ private:
 
     // Private constructor to prevent instantiation
     CompassController(): _medianFilter(10) {}
+    CompassData get_all_data();
 
 public:
     // Delete copy constructor and assignment operator

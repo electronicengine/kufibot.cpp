@@ -66,7 +66,6 @@ void GesturePerformerService::service_function()
     setIdlePosition();
 
     SpeechPerformingOperator::get_instance()->loadModel();
-    SpeechRecognizingOperator::get_instance()->load_model();
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
@@ -81,6 +80,7 @@ void GesturePerformerService::service_function()
 
         while (!_llmResponseQueue.empty() && !_gestureWorking) {
             LLMResponseData response = _llmResponseQueue.front();
+
             make_mimic(response);
             _llmResponseQueue.pop();
         }
@@ -265,4 +265,10 @@ void GesturePerformerService::make_mimic(const LLMResponseData &llm_response) {
     _gestureWorking = false;
 
 }
+
+void GesturePerformerService::speak_text(const std::string &text) {
+    SpeechPerformingOperator::get_instance()->speakText(text);
+}
+
+
 

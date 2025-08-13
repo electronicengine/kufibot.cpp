@@ -23,6 +23,7 @@
 #include <regex>
 
 #include "../operators/json_parser_operator.h"
+#include "../operators/speech_recognizing_operator.h"
 
 
 InteractiveChatService* InteractiveChatService::_instance = nullptr;
@@ -238,6 +239,29 @@ void InteractiveChatService::service_function()
     subscribe_to_service(RemoteConnectionService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
 
+    INFO("Speech Recognizing Model is loading...");
+    auto* recognizer = SpeechRecognizingOperator::get_instance();
+    recognizer->load_model(TR_RECOGNIZE_MODEL_PATH);
+    recognizer->open();
+    recognizer->start_listen();
+
+    // The system will now wait for the wake word "kufi"
+    // Once detected, it will start full recognition
+    // After silence, it returns to wake word mode automatically
+
+    while (true) {
+        std::string message = recognizer->get_message(5000); // 5 second timeout
+        if (!message.empty()) {
+            // Process the recognized speech
+            std::cout << "Recognized: " << message << std::endl;
+        }
+
+        // Optional: Get partial results for real-time feedback
+        std::string partial = recognizer->get_partial_result();
+        if (!partial.empty()) {
+            std::cout << "Partial: " << partial << std::endl;
+        }
+    }
 }
 
 void InteractiveChatService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {

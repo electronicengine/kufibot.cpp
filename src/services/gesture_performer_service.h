@@ -61,6 +61,7 @@ private:
 
     void service_function();
     void make_mimic(const LLMResponseData& llm_response);
+    void speak_text(const std::string& text);
     //subscribed Data Functions
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
