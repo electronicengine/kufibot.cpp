@@ -30,13 +30,13 @@
 
 auto main(int argc, char *argv[]) -> int {
     bool useTui = false;
-    bool startAllServices = false;
+    bool stopAllServices = false;
     int logLevel = 1;
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
-        if (arg == "--start-all-services") {
-            startAllServices = true;
+        if (arg == "--stop-all-services") {
+            stopAllServices = true;
             break;
         }
         if (arg == "--log-level") {
@@ -56,15 +56,15 @@ auto main(int argc, char *argv[]) -> int {
 
     Logger::init(nullptr, useTui, logLevel);
 
-    if (startAllServices) {
-        WebSocketService::get_instance()->start();
-        VideoStreamService::get_instance()->start();
+    if (!stopAllServices) {
+        WebSocketService::get_instance()->disable();
+        VideoStreamService::get_instance()->disable();
         RobotControllerService::get_instance()->start();
-        RemoteConnectionService::get_instance()->start();
+        RemoteConnectionService::get_instance()->disable();
         InteractiveChatService::get_instance()->start();
         GesturePerformerService::get_instance()->start();
-        GestureRecognizerService::get_instance()->start();
-        MappingService::get_instance()->start();
+        GestureRecognizerService::get_instance()->disable();
+        MappingService::get_instance()->disable();
     }
 
     TuiService *tui_service = TuiService::get_instance();

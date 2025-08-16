@@ -41,12 +41,7 @@
     };
 
     enum class DirectiveType {
-        go,
-        come,
-        stop,
-        look,
-        turnAround,
-        standBack
+        followFinger,
     };
 
     struct MotionSequenceItem {

@@ -62,14 +62,9 @@ ReactionType JsonParserOperator::reactionTypeFromString(const std::string& str) 
 }
 
 DirectiveType JsonParserOperator::directiveTypeFromString(const std::string& str) {
-    if (str == "go") return DirectiveType::go;
-    if (str == "come") return DirectiveType::come;
-    if (str == "stop") return DirectiveType::stop;
-    if (str == "look") return DirectiveType::look;
-    if (str == "turnAround") return DirectiveType::turnAround;
-    if (str == "standBack") return DirectiveType::standBack;
+    if (str == "followFinger") return DirectiveType::followFinger;
     ERROR("Unknown DirectiveType: {}", str);
-    return DirectiveType::go; // default value
+    return DirectiveType::followFinger; // default value
 }
 
 ServoMotorJoint JsonParserOperator::servoJointFromString(const std::string& str) {
@@ -148,12 +143,8 @@ std::string JsonParserOperator::to_string(ReactionType reaction) {
 
 std::string JsonParserOperator::to_string(DirectiveType directive) {
     switch (directive) {
-        case DirectiveType::go: return "go";
-        case DirectiveType::come: return "come";
-        case DirectiveType::stop: return "stop";
-        case DirectiveType::look: return "look";
-        case DirectiveType::turnAround: return "turnAround";
-        case DirectiveType::standBack: return "standBack";
+        case DirectiveType::followFinger: return "followFinger";
+
         default: return "unknown";
     }
 }

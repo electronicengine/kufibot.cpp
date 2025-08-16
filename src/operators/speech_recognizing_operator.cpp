@@ -7,13 +7,15 @@
 #include <algorithm>
 #include <chrono>
 
+#include "speech_performing_operator.h"
+
 // Optimized constants
 #define SAMPLE_RATE 16000
-#define FRAMES_PER_BUFFER 4000  // Reduced for lower latency
+#define FRAMES_PER_BUFFER 2000  // Reduced for lower latency
 #define TR_RECOGNIZE_MODEL_PATH "/usr/local/ai.models/engRecognizeModel"
 #define WAKE_WORD "coffee"  // Your wake word
 #define SILENCE_THRESHOLD 500  // Silence detection threshold
-#define MAX_SILENCE_DURATION 2.0  // Seconds of silence before stopping
+#define MAX_SILENCE_DURATION 10  // Seconds of silence before stopping
 
 SpeechRecognizingOperator* SpeechRecognizingOperator::_instance = nullptr;
 
@@ -90,25 +92,14 @@ int SpeechRecognizingOperator::paCallback(const void *input, void *output,
                                           (const char *)input,
                                           frameCount * sizeof(short))) {
             std::string result = vosk_recognizer_result(controller->_wakeWordRecognizer);
-
             if (controller->contains_wake_word(result)) {
                 INFO("Wake word detected! Starting full recognition...");
                 controller->_isWakeWordMode = false;
                 controller->_isListening = true;
                 controller->_lastActivityTime = std::chrono::steady_clock::now();
+                controller->store_message("<start>");
 
                 // Reset main recognizer for fresh start
-                vosk_recognizer_reset(controller->_recognizer);
-            }
-        } else {
-            // Process partial results for faster wake word detection
-            std::string partial = vosk_recognizer_partial_result(controller->_wakeWordRecognizer);
-            if (controller->contains_wake_word(partial)) {
-                // Don't wait for final result if wake word is in partial
-                INFO("Wake word detected in partial result! Starting recognition...");
-                controller->_isWakeWordMode = false;
-                controller->_isListening = true;
-                controller->_lastActivityTime = std::chrono::steady_clock::now();
                 vosk_recognizer_reset(controller->_recognizer);
             }
         }
@@ -134,6 +125,7 @@ int SpeechRecognizingOperator::paCallback(const void *input, void *output,
                                               (const char *)input,
                                               frameCount * sizeof(short))) {
                 std::string result = vosk_recognizer_result(controller->_recognizer);
+                INFO("Result: {}", result);
                 controller->store_message(result);
             }
         }
@@ -197,8 +189,8 @@ bool SpeechRecognizingOperator::start_listen() {
         return false;
     }
 
-    _isWakeWordMode = true;
-    _isListening = false;
+    // _isWakeWordMode = true;
+    // _isListening = false;
     INFO("Wake word detection active. Say '{}' to start recognition...", WAKE_WORD);
 
     return true;
@@ -207,8 +199,8 @@ bool SpeechRecognizingOperator::start_listen() {
 // Stop listening
 void SpeechRecognizingOperator::stop_listen() {
     Pa_StopStream(_stream);
-    _isListening = false;
-    _isWakeWordMode = true;
+    // _isListening = false;
+    // _isWakeWordMode = true;
 }
 
 // Get message with timeout for better responsiveness

@@ -17,6 +17,7 @@
 #include "../public_data_messages.h"
 
 #define TR_SPEECH_MODEL_PATH "/usr/local/ai.models/trSpeechModel/dfki.onnx"
+#define ENG_SPEECH_MODEL_PATH "/usr/local/ai.models/engSpeechModel/en_GB-alan-low.onnx"
 
 enum OutputType { OUTPUT_FILE, OUTPUT_DIRECTORY, OUTPUT_STDOUT, OUTPUT_RAW };
 
@@ -24,7 +25,7 @@ class SpeechPerformingOperator {
 public:
 
     static SpeechPerformingOperator* get_instance();
-    void loadModel(const std::string& modelPath = TR_SPEECH_MODEL_PATH);
+    void loadModel(const std::string& modelPath = ENG_SPEECH_MODEL_PATH);
     void speakText(const std::string& text);
     void synthesizeText(const std::string& text);
     void playAudio();
@@ -46,8 +47,12 @@ private:
     static SpeechPerformingOperator* _instance;
     mpg123_handle* _mh;  // MPG123 handle for MP3 playback
     int _mpg123Err;
+    bool keepAliveRunning;
+    std::thread keepAliveThread;
 
-    
+    void stopKeepAlive();
+    void keepAliveLoop();
+    void startKeepAlive();
     SpeechPerformingOperator();
     void audioCallbackFunc();
 };

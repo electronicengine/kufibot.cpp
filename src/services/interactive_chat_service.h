@@ -35,6 +35,9 @@ public:
 private:
     static InteractiveChatService *_instance;
     std::atomic<bool> _queryRunning{false};
+    std::mutex _quryMutex;
+    std::condition_variable _queryCondition;
+
     LlamaOptions _llamaChatOptions;
     LlamaOptions _llamaEmbeddingOptions;
 

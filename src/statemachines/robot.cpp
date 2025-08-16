@@ -68,11 +68,11 @@ SensorData Robot::get_sensor_values()
         return sensorData;
     }
 
-    sensorData.compassData = _compassController->get_all();
-    sensorData.distanceData = _distanceController->get_distance();
-    sensorData.powerData = _powerController->get_consumption();
-    sensorData.currentJointAngles = _servoController->get_current_joint_angles();
-    sensorData.dcMotorState = _dcMotorController->get_current_state();
+    // sensorData.compassData = _compassController->get_all();
+    // sensorData.distanceData = _distanceController->get_distance();
+    // sensorData.powerData = _powerController->get_consumption();
+    // sensorData.currentJointAngles = _servoController->get_current_joint_angles();
+    // sensorData.dcMotorState = _dcMotorController->get_current_state();
 
     return sensorData;
 }

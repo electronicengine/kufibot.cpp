@@ -37,6 +37,55 @@ SpeechPerformingOperator::SpeechPerformingOperator() {
     }
 }
 
+void SpeechPerformingOperator::startKeepAlive() {
+    if (keepAliveRunning) return; // zaten çalışıyor
+    keepAliveRunning = true;
+    keepAliveThread = std::thread(&SpeechPerformingOperator::keepAliveLoop, this);
+}
+
+void SpeechPerformingOperator::stopKeepAlive() {
+    keepAliveRunning = false;
+    if (keepAliveThread.joinable())
+        keepAliveThread.join();
+}
+
+void SpeechPerformingOperator::keepAliveLoop() {
+    snd_pcm_t* pcmHandle;
+    snd_pcm_hw_params_t* params;
+    unsigned int sampleRate = 22050;
+    int err;
+
+    if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
+        ERROR("KeepAlive: Error opening PCM device: {}", std::to_string(err));
+        return;
+    }
+
+    snd_pcm_hw_params_alloca(&params);
+    snd_pcm_hw_params_any(pcmHandle, params);
+    snd_pcm_hw_params_set_access(pcmHandle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
+    snd_pcm_hw_params_set_format(pcmHandle, params, SND_PCM_FORMAT_S16_LE);
+    snd_pcm_hw_params_set_channels(pcmHandle, params, 1);
+    snd_pcm_hw_params_set_rate_near(pcmHandle, params, &sampleRate, 0);
+    snd_pcm_hw_params(pcmHandle, params);
+    snd_pcm_prepare(pcmHandle);
+
+    const double freq = 20.0; // 20 Hz çok düşük frekans
+    const double amplitude = 100; // 0–32767 arası çok düşük değer
+    const double twoPiF = 2.0 * M_PI * freq / sampleRate;
+    int16_t buffer[256];
+
+    while (keepAliveRunning) {
+        for (int i = 0; i < 256; ++i) {
+            buffer[i] = static_cast<int16_t>(amplitude * sin(twoPiF * i));
+        }
+        snd_pcm_writei(pcmHandle, buffer, 256);
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+
+    snd_pcm_drain(pcmHandle);
+    snd_pcm_close(pcmHandle);
+}
+
 void SpeechPerformingOperator::loadModel(const std::string& modelPath){
 
     _modelPath = modelPath;
@@ -65,6 +114,7 @@ void SpeechPerformingOperator::loadModel(const std::string& modelPath){
     // }
     // logFile.close();
     unlink("/tmp/so_logs.txt"); // Geçici dosyayı sil
+    startKeepAlive();
 }
 
 void SpeechPerformingOperator::speakText(const std::string &text)

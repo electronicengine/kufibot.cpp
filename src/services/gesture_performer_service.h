@@ -27,6 +27,7 @@ private:
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointGesturePositionList;
 
     std::atomic<bool> _gestureWorking{false};
+    std::atomic<bool> _speaking{false};
     // Motion data loaded from JSON
     std::map<EmotionType, EmotionalMotion> _emotionalMotions;
     std::map<ReactionType, ReactionalMotion> _reactionalMotions;
@@ -60,8 +61,8 @@ private:
 
 
     void service_function();
-    void make_mimic(const LLMResponseData& llm_response);
-    void speak_text(const std::string& text);
+    void makeMimic(const LLMResponseData& llm_response);
+    void speakText(const std::string& text);
     //subscribed Data Functions
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 

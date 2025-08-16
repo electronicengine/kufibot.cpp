@@ -68,6 +68,7 @@ void InteractiveChatService::query_response_callback(const std::string &response
 
     if (response == "<end>") {
         _queryRunning = false;
+        _queryCondition.notify_all();
         INFO("Llama Query finished!");
         accumulated_text.clear();
         return;
@@ -97,10 +98,6 @@ void InteractiveChatService::query_response_callback(const std::string &response
             std::pair<ReactionalGesture,float> reaction = find_sentence_reaction(trimmed_sentence);
             static_cast<LLMResponseData*>(data.get())->reactionalGesture = reaction.first;
             static_cast<LLMResponseData*>(data.get())->reactionSimilarity = reaction.second;
-
-            std::pair<Directive,float> directive = find_sentence_directive(trimmed_sentence);
-            static_cast<LLMResponseData*>(data.get())->directive = directive.first;
-            static_cast<LLMResponseData*>(data.get())->directiveSimilarity = directive.second;
 
             publish(MessageType::LLMResponse, data);
 
@@ -173,7 +170,8 @@ std::pair<EmotionalGesture,float> InteractiveChatService::find_sentence_emotion(
         }
     }
 
-    return std::make_pair(best_match, max_similarity);
+    return std::make_pair(best_match,
+        max_similarity);
 }
 
 std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reaction(const std::string &sentence) {
@@ -245,22 +243,52 @@ void InteractiveChatService::service_function()
     recognizer->open();
     recognizer->start_listen();
 
-    // The system will now wait for the wake word "kufi"
-    // Once detected, it will start full recognition
-    // After silence, it returns to wake word mode automatically
-
     while (true) {
         std::string message = recognizer->get_message(5000); // 5 second timeout
+
         if (!message.empty()) {
-            // Process the recognized speech
-            std::cout << "Recognized: " << message << std::endl;
+            if (message == "<start>") {
+                INFO("Stop Listen");
+                recognizer->stop_listen();
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                INFO("Yep!");
+                SpeechPerformingOperator::get_instance()->speakText("Yep!");
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                recognizer->start_listen();
+                INFO("Start Listen");
+            }else {
+                // Process the recognized speech
+                json j = json::parse(message);
+                std::string text = j["alternatives"][0]["text"];
+                INFO("Recognized: {}", text);
+                INFO("Stop Listen");
+                recognizer->stop_listen();
+                std::pair<Directive, float> sim = find_sentence_directive(text);
+                INFO("Directive Sim: {}", sim.second);
+                if (sim.second >= 0.8f) {
+                    std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
+                    static_cast<LLMResponseData*>(data.get())->sentence = "follow my finger";
+
+                    std::pair<Directive,float> directive = sim;
+                    static_cast<LLMResponseData*>(data.get())->directive = sim.first;
+                    static_cast<LLMResponseData*>(data.get())->directiveSimilarity = sim.second;
+
+                    publish(MessageType::LLMResponse, data);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                }else {
+                    llm_query(text);
+                    std::unique_lock<std::mutex> lock(_quryMutex);
+                    _queryCondition.wait(lock, [this]() { return !_queryRunning; });
+                }
+
+                INFO("Start Listen");
+                recognizer->start_listen();
+
+
+            }
+
         }
 
-        // Optional: Get partial results for real-time feedback
-        std::string partial = recognizer->get_partial_result();
-        if (!partial.empty()) {
-            std::cout << "Partial: " << partial << std::endl;
-        }
     }
 }
 

@@ -17,7 +17,9 @@
 
 #include "gesture_performer_service.h"
 
+#include "gesture_recognizer_service.h"
 #include "tui_service.h"
+#include "video_stream_service.h"
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
 #include "../controllers/controller_data_structures.h"
@@ -81,10 +83,23 @@ void GesturePerformerService::service_function()
         while (!_llmResponseQueue.empty() && !_gestureWorking) {
             LLMResponseData response = _llmResponseQueue.front();
 
-            make_mimic(response);
+            if (response.directiveSimilarity > 0.8 && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
+                std::thread speak = std::thread(&GesturePerformerService::speakText, this, "I am following your finger");
+                speak.detach();
+                INFO("Following the finger");
+                // VideoStreamService::get_instance()->start();
+                // GestureRecognizerService::get_instance()->start();
+            }else {
+                std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+                speak.detach();
+                makeMimic(response);
+            }
+
             _llmResponseQueue.pop();
+            while (_speaking); // Wait for the speech to finish
         }
     }
+
 }
 
 
@@ -248,7 +263,7 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
     }
 }
 
-void GesturePerformerService::make_mimic(const LLMResponseData &llm_response) {
+void GesturePerformerService::makeMimic(const LLMResponseData &llm_response) {
     if (_gestureWorking) {
         INFO("Gesture already in progress, skipping new gesture");
         return;
@@ -266,8 +281,10 @@ void GesturePerformerService::make_mimic(const LLMResponseData &llm_response) {
 
 }
 
-void GesturePerformerService::speak_text(const std::string &text) {
+void GesturePerformerService::speakText(const std::string &text) {
+    _speaking = true;
     SpeechPerformingOperator::get_instance()->speakText(text);
+    _speaking = false;
 }
 
 

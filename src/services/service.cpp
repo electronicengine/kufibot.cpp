@@ -43,6 +43,7 @@ void Service::subscribe_to_service(Service *subscribedService) {
     INFO("{} is subscribing to {}", _name.c_str(), subscribedService->get_service_name().c_str());
     subscribedService->subscribe(this);
     _subscribedServices.push_back(subscribedService);
+
 }
 
 void Service::unsubscribe_from_service(Service *SubscribedService) {

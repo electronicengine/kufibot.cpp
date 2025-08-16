@@ -19,11 +19,6 @@
     {"type": "agreeing", "reply": "accepting", "tag": "<agreeing>", "description": "Nodding or expressing alignment or approval with an idea or statement."}
   ],
   "directives": [
-    {"type": "go", "tag": "<go>", "description": "Move forward or away from the current position."},
-    {"type": "come", "tag": "<come>", "description": "Approach or move closer to the speaker."},
-    {"type": "stop", "tag": "<stop>", "description": "Cease movement or activity immediately."},
-    {"type": "look", "tag": "<look>", "description": "Direct your gaze or attention toward something."},
-    {"type": "turnAround", "tag": "<turnAround>", "description": "Rotate your body or direction in the opposite way."},
-    {"type": "standBack", "tag": "<standBack>", "description": "Move away or create distance from a person or object."}
+    {"type": "followFinger", "tag": "<followFinger>", "description": "follow my finger."}
   ]
 }
