@@ -18,6 +18,7 @@
 #include "gesture_performer_service.h"
 
 #include "gesture_recognizer_service.h"
+#include "landmark_tracker_service.h"
 #include "tui_service.h"
 #include "video_stream_service.h"
 #include "../logger.h"
@@ -87,8 +88,9 @@ void GesturePerformerService::service_function()
                 std::thread speak = std::thread(&GesturePerformerService::speakText, this, "I am following your finger");
                 speak.detach();
                 INFO("Following the finger");
-                // VideoStreamService::get_instance()->start();
-                // GestureRecognizerService::get_instance()->start();
+                VideoStreamService::get_instance()->start();
+                GestureRecognizerService::get_instance()->start();
+                LandmarkTrackerService::get_instance()->start();
             }else {
                 std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
                 speak.detach();

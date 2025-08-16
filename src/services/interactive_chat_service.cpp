@@ -275,7 +275,10 @@ void InteractiveChatService::service_function()
 
                     publish(MessageType::LLMResponse, data);
                     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    recognizer->setListeningMode(false);
+
                 }else {
+                    recognizer->setListeningMode(false);
                     llm_query(text);
                     std::unique_lock<std::mutex> lock(_quryMutex);
                     _queryCondition.wait(lock, [this]() { return !_queryRunning; });

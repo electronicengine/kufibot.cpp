@@ -70,6 +70,7 @@ public:
     bool start_listen();
     void stop_listen();
     void close();
+    void setListeningMode(bool isListening);
     
     // Message retrieval with optional timeout
     std::string get_message(int timeout_ms = 0);

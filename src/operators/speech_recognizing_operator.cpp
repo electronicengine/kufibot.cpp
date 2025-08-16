@@ -256,3 +256,15 @@ void SpeechRecognizingOperator::close() {
         vosk_model_free(_model);
     }
 }
+
+void SpeechRecognizingOperator::setListeningMode(bool isListening) {
+    if (!isListening) {
+        INFO("Silence detected. Switching back to wake word mode.");
+        _isWakeWordMode = true;
+        _isListening = false;
+    }else {
+        INFO("Wake word detected! Starting full recognition...");
+        _isWakeWordMode = false;
+        _isListening = true;
+    }
+}
