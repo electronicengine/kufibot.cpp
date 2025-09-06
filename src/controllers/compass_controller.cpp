@@ -17,6 +17,8 @@
 
 #include "compass_controller.h"
 
+#include "../logger.h"
+
 
 CompassController* CompassController::_instance = nullptr;
 
@@ -37,6 +39,11 @@ uint16_t CompassController::get_angle() {
 }
 
 std::vector<int16_t> CompassController::get_magnet() {
+    if (!_enable.load()) {
+        WARNING("CompassController is disabled");
+        return std::vector<int16_t>{0, 0};
+    }
+
     return sensor.get_magnet();
 }
 

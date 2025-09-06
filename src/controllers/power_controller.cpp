@@ -16,6 +16,8 @@
  */
 #include "power_controller.h"
 
+#include "../logger.h"
+
 PowerController* PowerController::_instance = nullptr;
 
 PowerController* PowerController::get_instance() {
@@ -30,6 +32,10 @@ PowerController::PowerController() : ina(SHUNT_OHMS, MAX_EXPECTED_AMPS) {
 } 
 
 PowerData PowerController::get_consumption() {
+    if (!_enable.load()) {
+        WARNING("Power Controller is disabled");
+        return PowerData{};
+    }
 
     PowerData data;
     data.busVoltage = ina.voltage();

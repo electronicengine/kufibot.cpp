@@ -42,6 +42,7 @@
 
     enum class DirectiveType {
         followFinger,
+        stopFollow,
     };
 
     struct MotionSequenceItem {

@@ -25,6 +25,9 @@ IdleState::IdleState(std::string n, State* parent): State(n, parent) {}
 
 std::optional<State*> IdleState::onEnter(const ControlEvent&) {
     INFO("onEnter IdleState");
+
+    static_cast<Robot*>(_machine)->setEnableSensorContinuousReadings(true);
+
     return std::optional<State*>();
 }
 

@@ -21,6 +21,7 @@
 #include "critical_error_state.h"
 #include "remote_control_state.h"
 #include "robot.h"
+#include "tracking_state.h"
 #include "../logger.h"
 
 // MovingState
@@ -30,6 +31,11 @@ MovingState::MovingState(std::string n, State* parent) : State(n, parent) {
 std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
     INFO("onEnter MovingState");
     INFO("started ms timeout {}", _timeoutMs);
+
+    static_cast<Robot*>(_machine)->setEnableSensorContinuousReadings(false);
+    //add here sleep
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
     static_cast<Robot*>(_machine)->postDelayedEvent(ControlEvent(EventType::timeout), _timeoutMs);
     switch (ev.source) {
         case SourceService::tuiService:
@@ -38,6 +44,8 @@ std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
             return static_cast<Robot*>(_machine)->transState<RemoteControlState>();
         case SourceService::gesturePerformerService:
             return static_cast<Robot*>(_machine)->transState<TalkingState>();
+        case SourceService::landmarkTrackerService:
+            return static_cast<Robot*>(_machine)->transState<TrackingState>();
         default:
             return std::optional<State*>();
     }

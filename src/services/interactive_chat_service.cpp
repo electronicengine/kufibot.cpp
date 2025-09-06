@@ -264,10 +264,10 @@ void InteractiveChatService::service_function()
                 INFO("Stop Listen");
                 recognizer->stop_listen();
                 std::pair<Directive, float> sim = find_sentence_directive(text);
-                INFO("Directive Sim: {}", sim.second);
+                INFO("Directive: {}, Sim: {}", sim.first.symbol, sim.second);
                 if (sim.second >= 0.8f) {
                     std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
-                    static_cast<LLMResponseData*>(data.get())->sentence = "follow my finger";
+                    static_cast<LLMResponseData*>(data.get())->sentence = sim.first.description;
 
                     std::pair<Directive,float> directive = sim;
                     static_cast<LLMResponseData*>(data.get())->directive = sim.first;

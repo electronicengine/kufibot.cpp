@@ -29,7 +29,7 @@ Robot::Robot() {
     remoteControlState = createState<RemoteControlState>("RemoteControlState", movingState);
     talkingState = createState<TalkingState>("TalkingState", movingState);
 
-    movingState->setTimeout(2000);
+    movingState->setTimeout(5000);
     setInitialState(initializeState);
 }
 
@@ -48,13 +48,31 @@ void Robot::dumpActivePath() {
 }
 
 bool Robot::initialize() {
+
     _compassController =  CompassController::get_instance();
     _distanceController = DistanceController::get_instance();
     _powerController = PowerController::get_instance();
     _servoController = ServoMotorController::get_instance();
     _dcMotorController = DCMotorController::get_instance();
 
+    _compassController->setEnable(false);
+    _distanceController->setEnable(false);
+    _powerController->setEnable(false);
+    _servoController->setEnable(false);
+    _dcMotorController->setEnable(false);
+
     return true;
+}
+
+void Robot::setEnableSensorContinuousReadings(bool enable) {
+
+    _compassController->setEnable(enable);
+    _distanceController->setEnable(enable);
+    _powerController->setEnable(enable);
+    _servoController->setEnable(!enable);
+    _dcMotorController->setEnable(!enable);
+
+    _enableSensorContinuousReadings = enable;
 }
 
 SensorData Robot::get_sensor_values()
@@ -63,18 +81,26 @@ SensorData Robot::get_sensor_values()
 
     SensorData sensorData;
 
-    if (isInState<CriticalErrorState>() || isInState<InitializeState>()) {
-        WARNING("Robot is not initialized yet, or in error state");
+    if (_enableSensorContinuousReadings) {
+        _compassController->setEnable(true);
+        _distanceController->setEnable(true);
+        _powerController->setEnable(true);
+
+        sensorData.compassData = _compassController->get_all();
+        sensorData.distanceData = _distanceController->get_distance();
+        sensorData.powerData = _powerController->get_consumption();
+        sensorData.currentJointAngles = _servoController->get_current_joint_angles();
+        sensorData.dcMotorState = _dcMotorController->get_current_state();
+
+        return sensorData;
+    }else {
+        _compassController->setEnable(false);
+        _distanceController->setEnable(false);
+        _powerController->setEnable(false);
+
         return sensorData;
     }
 
-    // sensorData.compassData = _compassController->get_all();
-    // sensorData.distanceData = _distanceController->get_distance();
-    // sensorData.powerData = _powerController->get_consumption();
-    // sensorData.currentJointAngles = _servoController->get_current_joint_angles();
-    // sensorData.dcMotorState = _dcMotorController->get_current_state();
-
-    return sensorData;
 }
 
 void Robot::control_motion(const ControlData& controlData)

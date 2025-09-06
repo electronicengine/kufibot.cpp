@@ -1,0 +1,8 @@
+{
+  "reactional_gestures": [
+    {"ai": "speechPrecessor", "modelPath": "/usr/local/ai.models/engSpeechModel/en_GB-alan-low.onnx"},
+    {"ai": "speechRecognizer", "modelPath": "/usr/local/ai.models/engRecognizeModel", "command": "Yep!"},
+    {"ai": "llmChat", "modelPath": "/usr/local/ai.models/trLlamaModel/dolphin3.gguf"},
+    {"ai": "llmEmbedding", "modelPath": "/usr/local/ai.models/trLlamaModel/mxbaiV1.gguf"}
+  ]
+}

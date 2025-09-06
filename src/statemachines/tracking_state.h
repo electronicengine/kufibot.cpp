@@ -1,16 +1,18 @@
-//
-// Created by ybulb on 8/10/2025.
-//
-
 #ifndef TRACKING_STATE_H
 #define TRACKING_STATE_H
 
 
+#include "state.h"
 
-class tracking_state {
 
+struct TrackingState : State {
+    TrackingState(std::string n, State* parent = nullptr);
+    std::optional<State*> onEnter(const ControlEvent& ev) override;
+    std::optional<State*> onExit(const ControlEvent& ev) override;
+    std::optional<State*> onEvent(const ControlEvent& ev) override;
 };
 
 
 
-#endif //TRACKING_STATE_H
+
+#endif //TALKING_STATE_H

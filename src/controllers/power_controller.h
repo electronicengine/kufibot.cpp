@@ -1,6 +1,7 @@
 #ifndef POWER_CONTROLLER_H
 #define POWER_CONTROLLER_H
 
+#include <atomic>
 #include "../drivers/ina219_driver.h"
 #include "controller_data_structures.h"
 
@@ -13,11 +14,12 @@ public:
     static PowerController* get_instance();
 
     PowerData get_consumption();
+    void setEnable(bool enable){ _enable.store(enable);}
 
 private:
     INA219Driver ina; 
     static PowerController* _instance;
-
+    std::atomic<bool> _enable = true;
     PowerController();
 };
 

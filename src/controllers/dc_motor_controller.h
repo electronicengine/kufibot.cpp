@@ -1,8 +1,8 @@
 #ifndef DC_MOTOR_CONTROLLER_H
 #define DC_MOTOR_CONTROLLER_H
 
+#include <atomic>
 #include "controller_data_structures.h"
-
 #include "../drivers/pca9685_driver.h"
 
 // Define motor pin mappings
@@ -28,6 +28,7 @@ public:
     void turn_right(int magnitude);
     void turn_left(int magnitude);
     void stop();
+    void setEnable(bool enable){ _enable.store(enable);}
 
 private:
     DCMotorController(int address);
@@ -39,7 +40,7 @@ private:
     static DCMotorController* _instance;
     PCA9685Driver _driver;
     DCMotorState _currentState;
-
+    std::atomic<bool> _enable = true;
 };
 
 #endif // MOTOR_DRIVER_H

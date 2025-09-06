@@ -31,6 +31,7 @@ struct Robot : StateMachine {
     CriticalErrorState* criticalErrorState = nullptr;
     TalkingState* talkingState = nullptr;
 
+
     CompassController *_compassController;
     DistanceController *_distanceController;
     PowerController *_powerController;
@@ -38,10 +39,12 @@ struct Robot : StateMachine {
     DCMotorController *_dcMotorController;
 
     std::mutex _controllerMutex;
+    std::atomic<bool> _enableSensorContinuousReadings = false;
 
     Robot();
     void dumpActivePath();
     bool initialize();
+    void setEnableSensorContinuousReadings(bool enable);
     SensorData get_sensor_values();
     void control_motion(const ControlData& controlData);
     void control_body(int angle, int magnitude);

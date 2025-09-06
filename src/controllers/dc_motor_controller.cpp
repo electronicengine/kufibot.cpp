@@ -39,6 +39,9 @@ DCMotorController::~DCMotorController() {
 
 
 void DCMotorController::run(DCMotor motor, DCMotorDirection direction, int speed) {
+    if (!_enable.load())
+        return;
+
     if (speed > 100) {
         WARNING("Speed must be between 0 and 100.");
     }
@@ -70,26 +73,41 @@ void DCMotorController::set_direction(int pin1, int pin2, DCMotorDirection direc
 }
 
 void DCMotorController::forward(int magnitude) {
+    if (!_enable.load())
+        return;
+
     run(DCMotor::right, DCMotorDirection::forward, magnitude);
     run(DCMotor::left,  DCMotorDirection::forward, magnitude);
 }
 
 void DCMotorController::backward(int magnitude) {
+    if (!_enable.load())
+        return;
+
     run(DCMotor::right,  DCMotorDirection::backward, magnitude);
     run(DCMotor::left,  DCMotorDirection::backward, magnitude);
 }
 
 void DCMotorController::turn_right(int magnitude) {
+    if (!_enable.load())
+        return;
+
     run(DCMotor::right,  DCMotorDirection::forward, magnitude);
     run(DCMotor::left, DCMotorDirection::backward, magnitude);
 }
 
 void DCMotorController::turn_left(int magnitude) {
+    if (!_enable.load())
+        return;
+
     run(DCMotor::right, DCMotorDirection::backward, magnitude);
     run(DCMotor::left, DCMotorDirection::forward, magnitude);
 }
 
 void DCMotorController::stop() {
+    if (!_enable.load())
+        return;
+    
     _driver.set_duty_cycle(PWMA, 0);
     _driver.set_duty_cycle(PWMB, 0);
 }

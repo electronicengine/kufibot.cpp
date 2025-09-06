@@ -73,6 +73,12 @@ void ServoMotorController::set_current_joint_angles(std::map<ServoMotorJoint, ui
 }
 
 void ServoMotorController::set_absolute_servo_angle(ServoMotorJoint joint, int targetAngle, int step, int delayMs) {
+    if (!_enable.load()) {
+        WARNING("Servo motor controller is disabled.");
+        return;
+    }
+
+
     int currentAngle = _currentJointAngles[joint];
     int direction = (targetAngle > currentAngle) ? 1 : -1;
 

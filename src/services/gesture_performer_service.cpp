@@ -84,13 +84,20 @@ void GesturePerformerService::service_function()
         while (!_llmResponseQueue.empty() && !_gestureWorking) {
             LLMResponseData response = _llmResponseQueue.front();
 
-            if (response.directiveSimilarity > 0.8 && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
-                std::thread speak = std::thread(&GesturePerformerService::speakText, this, "I am following your finger");
-                speak.detach();
-                INFO("Following the finger");
-                VideoStreamService::get_instance()->start();
-                GestureRecognizerService::get_instance()->start();
-                LandmarkTrackerService::get_instance()->start();
+            if (response.directiveSimilarity > 0.8 && response.directive.directive == DirectiveType::followFinger && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
+                if (response.directive.directive == DirectiveType::followFinger) {
+                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, "I am following your finger");
+                    speak.detach();
+                    INFO("Following the finger");
+                    // VideoStreamService::get_instance()->start();
+                    // GestureRecognizerService::get_instance()->start();
+                    // LandmarkTrackerService::get_instance()->start();
+                }else if (response.directiveSimilarity > 0.8 && response.directive.directive == DirectiveType::stopFollow && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
+                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, "stopped the following finger");
+                    speak.detach();
+                    INFO("stop the following finger");
+                }
+
             }else {
                 std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
                 speak.detach();

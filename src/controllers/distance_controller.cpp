@@ -60,6 +60,11 @@ void DistanceController::flush_input_buffer() {
 
 DistanceData DistanceController::get_distance() {
 
+    if (!_enable.load()) {
+        WARNING("DistanceController is disabled");
+        return DistanceData{};
+    }
+
     DistanceData data;
     std::vector<uint8_t> buffer(9);
     boost::system::error_code ec;

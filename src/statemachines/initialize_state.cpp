@@ -32,6 +32,7 @@ InitializeState::InitializeState(std::string n, State* parent) : State(n, parent
 
 std::optional<State*> InitializeState::onEnter(const ControlEvent& ev) {
     INFO("onEnter InitializeState");
+
     Robot* robot = static_cast<Robot*>(_machine);
     bool ret = robot->initialize();
     if (ret) {

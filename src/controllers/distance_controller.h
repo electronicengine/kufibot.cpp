@@ -20,13 +20,14 @@ private:
     double _distance; 
     DistanceController(); // Private constructor for singleton pattern
     void flush_input_buffer();
-    
+    std::atomic<bool> _enable = true;
 
 public:
     bool is_active();
     static DistanceController* get_instance();
     ~DistanceController(); // Destructor to close the serial port
     DistanceData get_distance();
+    void setEnable(bool enable){ _enable.store(enable);}
 
    
 };

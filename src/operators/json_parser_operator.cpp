@@ -63,6 +63,8 @@ ReactionType JsonParserOperator::reactionTypeFromString(const std::string& str) 
 
 DirectiveType JsonParserOperator::directiveTypeFromString(const std::string& str) {
     if (str == "followFinger") return DirectiveType::followFinger;
+    if (str == "stopFollow") return DirectiveType::followFinger;
+
     ERROR("Unknown DirectiveType: {}", str);
     return DirectiveType::followFinger; // default value
 }
@@ -144,6 +146,7 @@ std::string JsonParserOperator::to_string(ReactionType reaction) {
 std::string JsonParserOperator::to_string(DirectiveType directive) {
     switch (directive) {
         case DirectiveType::followFinger: return "followFinger";
+        case DirectiveType::stopFollow: return "stopFollow";
 
         default: return "unknown";
     }
