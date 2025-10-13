@@ -63,23 +63,33 @@ bool GestureRecognizerService::initialize() {
 
     return true;
 }
-
 void GestureRecognizerService::service_function() {
-
-
     subscribe_to_service(VideoStreamService::get_instance());
 
+    while (_running) {
+        std::unique_lock<std::mutex> lock(_dataMutex);
+
+        //pop from _frameQueue and process frame
+        if (!_frameQueue.empty()) {
+            cv::Mat frame = _frameQueue.front();
+            _frameQueue.pop();
+            lock.unlock();
+            video_frame(frame);
+        } else {
+            _condVar.wait(lock);
+        }
+    }
 }
 
 
-void GestureRecognizerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
-
+void GestureRecognizerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
     switch (type) {
         case MessageType::VideoFrame: {
             if (data) {
-                cv::Mat frame = static_cast<VideoFrameData*>(data.get())->frame;
-                video_frame(frame);
+                std::unique_lock<std::mutex> lock(_dataMutex);
+                cv::Mat frame = static_cast<VideoFrameData *>(data.get())->frame;
+                _frameQueue.push(frame);
+                _condVar.notify_one();
             }
             break;
         }
@@ -97,7 +107,6 @@ void GestureRecognizerService::video_frame(cv::Mat &frame) {
         }
         _initialized = true;
     }
-
 
     if (_running) {
         if (frame.empty()) {
@@ -123,87 +132,96 @@ void GestureRecognizerService::processFrame(cv::Mat& frame) {
     std::vector<int> &faceLandmarks = static_cast<RecognizedGestureData*>(data.get())->faceLandmark;
     std::string faceInfoStr;
 
-    if (_faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
+    _faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr);
+
+    // if (_faceGestureRecognizingOperator->processFrame(frame, faceEmotion, faceLandmarks, faceInfoStr)) {
         // Duygu bilgisini ekrana yaz
-        cv::putText(frame, "Emotion: " + faceEmotion, cv::Point(10, 30),
-                    cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
+        // cv::putText(frame, "Emotion: " + faceEmotion, cv::Point(10, 30),
+        //             cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
 
         // Detaylı yüz bilgilerini (showFaceInfo açıksa) ekrana yaz
-        if (showFaceInfo) {
-            std::map<std::string, float> faceInfo = parseFaceInfoString(faceInfoStr);
-            int y_offset = 70;
-            for (const auto& pair : faceInfo) {
-                cv::putText(frame, pair.first + ": " + std::to_string(pair.second),
-                            cv::Point(10, y_offset), cv::FONT_HERSHEY_SIMPLEX, 0.5,
-                            cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
-                y_offset += 25;
-            }
-        }
+        // if (showFaceInfo) {
+        //     std::map<std::string, float> faceInfo = parseFaceInfoString(faceInfoStr);
+        //     int y_offset = 70;
+        //     for (const auto& pair : faceInfo) {
+        //         cv::putText(frame, pair.first + ": " + std::to_string(pair.second),
+        //                     cv::Point(10, y_offset), cv::FONT_HERSHEY_SIMPLEX, 0.5,
+        //                     cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
+        //         y_offset += 25;
+        //     }
+        // }
 
         // Yüz Landmarklarını çiz
-        if (!faceLandmarks.empty() && showFaceMesh) {
-            // Önemli landmark noktalarını vurgula
-            for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
-                int id = faceLandmarks[i];
-                int cx = faceLandmarks[i+1];
-                int cy = faceLandmarks[i+2];
-
-                // Göz kenarları
-                if (id == 33 || id == 133 || id == 362 || id == 263) {
-                    cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 255, 0), cv::FILLED);
-                }
-                // Ağız köşeleri ve dudaklar
-                else if (id == 78 || id == 308 || id == 13 || id == 14) {
-                    cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 0, 255), cv::FILLED);
-                }
-                // Kaşlar
-                else if (id == 70 || id == 105 || id == 296 || id == 334) {
-                    cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(255, 0, 0), cv::FILLED);
-                }
-                else {
-                    // Diğer tüm landmarkları küçük nokta olarak çiz
-                    cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(200, 200, 200), cv::FILLED);
-                }
-            }
-        } else if (!faceLandmarks.empty() && !showFaceMesh) {
-             // Sadece tüm landmark'ları küçük sarı noktalar olarak çiz
-            for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
-                int cx = faceLandmarks[i+1];
-                int cy = faceLandmarks[i+2];
-                cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(0, 255, 255), cv::FILLED);
-            }
-        }
-    } else {
-        // Python tarafından bir hata oluştuysa
-        cv::putText(frame, "Face Detection Failed", cv::Point(10, 30),
-                    cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
-    }
+        // if (!faceLandmarks.empty() && showFaceMesh) {
+        //
+        //     // Önemli landmark noktalarını vurgula
+        //     for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
+        //         int id = faceLandmarks[i];
+        //         int cx = faceLandmarks[i+1];
+        //         int cy = faceLandmarks[i+2];
+        //
+        //         // Göz kenarları
+        //         if (id == 33 || id == 133 || id == 362 || id == 263) {
+        //             // cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 255, 0), cv::FILLED);
+        //             //INFO("EYE Points cx {} cy {} ", cx, cy);
+        //         }
+        //         // Ağız köşeleri ve dudaklar
+        //         else if (id == 78 || id == 308 || id == 13 || id == 14) {
+        //             cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(0, 0, 255), cv::FILLED);
+        //         }
+        //         // Kaşlar
+        //         else if (id == 70 || id == 105 || id == 296 || id == 334) {
+        //             cv::circle(frame, cv::Point(cx, cy), 2, cv::Scalar(255, 0, 0), cv::FILLED);
+        //         }
+        //         else {
+        //             // Diğer tüm landmarkları küçük nokta olarak çiz
+        //             cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(200, 200, 200), cv::FILLED);
+        //         }
+            // }
+        // } else if (!faceLandmarks.empty() && !showFaceMesh) {
+        //      // Sadece tüm landmark'ları küçük sarı noktalar olarak çiz
+        //     for (size_t i = 0; i < faceLandmarks.size(); i += 3) {
+        //         int cx = faceLandmarks[i+1];
+        //         int cy = faceLandmarks[i+2];
+        //         cv::circle(frame, cv::Point(cx, cy), 1, cv::Scalar(0, 255, 255), cv::FILLED);
+        //     }
+        // }
+    // } else {
+    //     // Python tarafından bir hata oluştuysa
+    //     // cv::putText(frame, "Face Detection Failed", cv::Point(10, 30),
+    //     //             cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
+    // }
 
     // --- EL İŞLEME ---
     std::string &handGesture = static_cast<RecognizedGestureData*>(data.get())->handGesture;
     std::vector<int> &handLandmarks = static_cast<RecognizedGestureData*>(data.get())->handLandmark;
-    std::vector<int> handBbox;
+    std::vector<int> &handBbox = static_cast<RecognizedGestureData*>(data.get())->handBbox;
 
-    if (_handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox)) {
-        if (showHandLandmarks) {
-            if (!handBbox.empty() && handBbox.size() == 4) {
-                cv::rectangle(frame, cv::Point(handBbox[0] - 20, handBbox[1] - 20), // Bbox'ı biraz büyüt
-                              cv::Point(handBbox[2] + 20, handBbox[3] + 20),
-                              cv::Scalar(255, 0, 255), 2); // Mor renk
-                cv::putText(frame, handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
-                            cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Mor renk
-            }
+    _handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox);
 
-            for (size_t i = 0; i + 2 < handLandmarks.size(); i += 3) {
-                int cx = handLandmarks[i+1], cy = handLandmarks[i+2];
-                cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Sarı renk
-            }
-        }
-    } else {
-        // El algılaması başarısız olursa bir şey çizme veya hata mesajı gösterme
-        // cv::putText(frame, "Hand Detection Failed", cv::Point(10, 60),
-        //             cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
-    }
+    // if (_handGestureRecognizingOperator->processFrame(frame, handGesture, handLandmarks, handBbox)) {
+    //     // if (showHandLandmarks) {
+    //         // if (!handBbox.empty() && handBbox.size() == 4) {
+    //             // int centerX = (handBbox[0] + handBbox[2]) / 2;
+    //             // int centerY = (handBbox[1] + handBbox[3]) / 2;
+    //             // INFO("Hand box center point x: {} y: {}", centerX, centerY);
+    //             // cv::rectangle(frame, cv::Point(handBbox[0] - 20, handBbox[1] - 20), // Bbox'ı biraz büyüt
+    //             //               cv::Point(handBbox[2] + 20, handBbox[3] + 20),
+    //             //               cv::Scalar(255, 0, 255), 2); // Mor renk
+    //             // cv::putText(frame, handGesture, cv::Point(handBbox[0], handBbox[1] - 30),
+    //             //             cv::FONT_HERSHEY_PLAIN, 2, cv::Scalar(255, 0, 255), 2); // Mor renk
+    //         // }
+    //
+    //         // for (size_t i = 0; i + 2 < handLandmarks.size(); i += 3) {
+    //         //     int cx = handLandmarks[i + 1], cy = handLandmarks[i+2];
+    //         //     cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 255, 0), cv::FILLED); // Sarı renk
+    //         // }
+    //     // }
+    // } else {
+    //     // El algılaması başarısız olursa bir şey çizme veya hata mesajı gösterme
+    //     // cv::putText(frame, "Hand Detection Failed", cv::Point(10, 60),
+    //     //             cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2, cv::LINE_AA);
+    // }
 
     publish(MessageType::RecognizedGesture, data);
     // FPS hesaplama ve gösterme

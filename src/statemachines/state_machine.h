@@ -69,6 +69,7 @@ struct StateMachine {
     void postEvent(const ControlEvent& ev);
     void setInitialState(State* state);
     void postDelayedEvent(const ControlEvent& ev, int delay_ms);
+    void clearDelayedEvents();
     void transition(State* toState, const ControlEvent& cause = ControlEvent());
 
 private:

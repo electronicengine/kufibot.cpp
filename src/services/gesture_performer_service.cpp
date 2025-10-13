@@ -26,7 +26,7 @@
 #include "../controllers/controller_data_structures.h"
 
 GesturePerformerService* GesturePerformerService::_instance = nullptr;
-
+std::map<ServoMotorJoint, uint8_t>  GesturePerformerService::idleJointPositions= Default_Joint_Angles;
 
 GesturePerformerService *GesturePerformerService::get_instance()
 {
@@ -66,7 +66,7 @@ void GesturePerformerService::service_function()
     );
 
     INFO("Setting robot to idle position...");
-    setIdlePosition();
+   // setIdlePosition();
 
     SpeechPerformingOperator::get_instance()->loadModel();
 
@@ -84,25 +84,9 @@ void GesturePerformerService::service_function()
         while (!_llmResponseQueue.empty() && !_gestureWorking) {
             LLMResponseData response = _llmResponseQueue.front();
 
-            if (response.directiveSimilarity > 0.8 && response.directive.directive == DirectiveType::followFinger && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
-                if (response.directive.directive == DirectiveType::followFinger) {
-                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, "I am following your finger");
-                    speak.detach();
-                    INFO("Following the finger");
-                    // VideoStreamService::get_instance()->start();
-                    // GestureRecognizerService::get_instance()->start();
-                    // LandmarkTrackerService::get_instance()->start();
-                }else if (response.directiveSimilarity > 0.8 && response.directive.directive == DirectiveType::stopFollow && response.directiveSimilarity > response.emotionSimilarity && response.directiveSimilarity > response.reactionSimilarity) {
-                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, "stopped the following finger");
-                    speak.detach();
-                    INFO("stop the following finger");
-                }
-
-            }else {
-                std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
-                speak.detach();
-                makeMimic(response);
-            }
+            std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+            speak.detach();
+            makeMimic(response);
 
             _llmResponseQueue.pop();
             while (_speaking); // Wait for the speech to finish
@@ -160,8 +144,8 @@ void GesturePerformerService::setIdlePosition() {
     data->source = SourceService::gesturePerformerService;
 
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
-    static_cast<ControlData*>(data.get())->jointAngles.value() = Default_Joint_Angles;
-    _currentPositions = Default_Joint_Angles;
+    static_cast<ControlData*>(data.get())->jointAngles.value() = idleJointPositions;
+    _currentPositions = idleJointPositions;
 
     publish(MessageType::ControlData, data);
 }

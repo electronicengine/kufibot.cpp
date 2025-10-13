@@ -17,6 +17,7 @@
 
 #include "robot_controller_service.h"
 #include "gesture_performer_service.h"
+#include "landmark_tracker_service.h"
 #include "mapping_service.h"
 #include "tui_service.h"
 
@@ -43,19 +44,44 @@ void RobotControllerService::service_function() {
     subscribe_to_service(MappingService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
     subscribe_to_service(TuiService::get_instance());
+    subscribe_to_service(InteractiveChatService::get_instance());
+    subscribe_to_service(LandmarkTrackerService::get_instance());
+
     _robot.start();
 
     while (_running) {
-        std::this_thread::sleep_for(std::chrono::microseconds(300));
-        if(!_subscribers.empty()){
-            std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
-            *static_cast<SensorData*>(data.get()) = _robot.get_sensor_values();
-            publish(MessageType::SensorData, data);
+        std::unique_lock<std::mutex> lock(_dataMutex);
+
+        if (_controlData.has_value()) {
+            SourceService source;
+
+            if (_controlData->source.has_value()) {
+                source = static_cast<MessageData*>(&_controlData.value())->source.value();
+            }
+            else {
+                source = SourceService::none;
+            }
+
+            _robot.postEvent(ControlEvent(EventType::control, source, _controlData.value()));
+            _controlData.reset();
+
+            std::this_thread::sleep_for(std::chrono::microseconds(5));
+            publishUpdatedMotorPositions();
+
+        }else {
+            _condVar.wait(lock);
         }
+        // std::this_thread::sleep_for(std::chrono::microseconds(300));
+        // if (!_subscribers.empty()) {
+        //     std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+        //     *static_cast<SensorData *>(data.get()) = _robot.get_sensor_values();
+        //     publish(MessageType::SensorData, data);
+        // }
     }
 
     _robot.stop();
 }
+
 
 RobotControllerService::~RobotControllerService()
 {
@@ -72,24 +98,21 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
         case MessageType::ControlData: {
             if (data) {
                 INFO("RobotControllerService::subcribed_data_receive-ControlData");
-                SourceService source;
-                ControlData controlData = *static_cast<ControlData*>(data.get());
-                if (data->source.has_value()) {
-                    source = data->source.value();
-                }
-                else {
-                    source = SourceService::none;
-                }
-
-                _robot.postEvent(ControlEvent(EventType::control, source, controlData));
+                _controlData = *static_cast<ControlData*>(data.get());
+                _condVar.notify_one();
 
             }
             break;
         }
+
         default:
             WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }
 
-
+void RobotControllerService::publishUpdatedMotorPositions() {
+    std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
+    *static_cast<SensorData *>(data.get()) = _robot.getCurrentMotorPositions();
+    publish(MessageType::SensorData, data);
+}

@@ -40,16 +40,27 @@ void Service::unsubscribe_all_services() {
 }
 
 void Service::subscribe_to_service(Service *subscribedService) {
-    INFO("{} is subscribing to {}", _name.c_str(), subscribedService->get_service_name().c_str());
-    subscribedService->subscribe(this);
-    _subscribedServices.push_back(subscribedService);
-
+    auto it = std::find(_subscribedServices.begin(), _subscribedServices.end(), subscribedService);
+    if (it == _subscribedServices.end()) {
+        INFO("{} is subscribing to {}", _name.c_str(), subscribedService->get_service_name().c_str());
+        subscribedService->subscribe(this);
+        _subscribedServices.push_back(subscribedService);
+    }
+    else {
+        WARNING("{} is already subscribed to {}", _name.c_str(), subscribedService->get_service_name().c_str());
+    }
 }
 
 void Service::unsubscribe_from_service(Service *SubscribedService) {
-    INFO("{} is unsubscribing from {}", _name.c_str(), SubscribedService->get_service_name().c_str());
-    SubscribedService->un_subscribe(this);
-    _subscribedServices.erase(std::remove(_subscribedServices.begin(), _subscribedServices.end(), SubscribedService), _subscribedServices.end());
+    auto it = std::find(_subscribedServices.begin(), _subscribedServices.end(), SubscribedService);
+    if (it != _subscribedServices.end()) {
+        INFO("{} is unsubscribing from {}", _name.c_str(), SubscribedService->get_service_name().c_str());
+        SubscribedService->un_subscribe(this);
+        _subscribedServices.erase(std::remove(_subscribedServices.begin(), _subscribedServices.end(), SubscribedService),
+                                  _subscribedServices.end());
+    }else {
+        WARNING("{} is no subscribed to {}", _name.c_str(), SubscribedService->get_service_name().c_str());
+    }
 }
 
 
@@ -58,8 +69,8 @@ void Service::start()
     if (!_disabled) {
         if (!_running) {
             _running = true;
-            INFO("{} is starting...", _name.c_str());
             _serviceThread = std::thread(&Service::service_function, this);
+            INFO("{} is started! ", _name.c_str());
         }
     }else {
         WARNING("{} is not starting... Because, it is disabled.", _name.c_str());

@@ -22,6 +22,8 @@
 #include "../logger.h"
 #include <regex>
 
+#include "gesture_recognizer_service.h"
+#include "landmark_tracker_service.h"
 #include "../operators/json_parser_operator.h"
 #include "../operators/speech_recognizing_operator.h"
 
@@ -70,7 +72,30 @@ void InteractiveChatService::query_response_callback(const std::string &response
         _queryRunning = false;
         _queryCondition.notify_all();
         INFO("Llama Query finished!");
+
+        // Process any remaining text before clearing
+        if (!accumulated_text.empty()) {
+            std::string trimmed_sentence = trim(accumulated_text);
+            if (trimmed_sentence.length() >= 4) {
+                std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
+                static_cast<LLMResponseData *>(data.get())->sentence = trimmed_sentence;
+
+                std::pair<EmotionalGesture, float> emotion = find_sentence_emotion(trimmed_sentence);
+                static_cast<LLMResponseData *>(data.get())->emotionalGesture = emotion.first;
+                static_cast<LLMResponseData *>(data.get())->emotionSimilarity = emotion.second;
+
+                std::pair<ReactionalGesture, float> reaction = find_sentence_reaction(trimmed_sentence);
+                static_cast<LLMResponseData *>(data.get())->reactionalGesture = reaction.first;
+                static_cast<LLMResponseData *>(data.get())->reactionSimilarity = reaction.second;
+
+                publish(MessageType::LLMResponse, data);
+            }
+        }
         accumulated_text.clear();
+
+        VideoStreamService::get_instance()->start();
+        LandmarkTrackerService::get_instance()->start();
+
         return;
     }
 
@@ -243,8 +268,10 @@ void InteractiveChatService::service_function()
     recognizer->open();
     recognizer->start_listen();
 
+    LandmarkTrackerService::get_instance()->start();
+
     while (true) {
-        std::string message = recognizer->get_message(5000); // 5 second timeout
+        std::string message = recognizer->get_message(3000); // 5 second timeout
 
         if (!message.empty()) {
             if (message == "<start>") {
@@ -256,6 +283,10 @@ void InteractiveChatService::service_function()
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 recognizer->start_listen();
                 INFO("Start Listen");
+
+                VideoStreamService::get_instance()->stop();
+                LandmarkTrackerService::get_instance()->stop();
+
             }else {
                 // Process the recognized speech
                 json j = json::parse(message);
@@ -265,6 +296,7 @@ void InteractiveChatService::service_function()
                 recognizer->stop_listen();
                 std::pair<Directive, float> sim = find_sentence_directive(text);
                 INFO("Directive: {}, Sim: {}", sim.first.symbol, sim.second);
+
                 if (sim.second >= 0.8f) {
                     std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
                     static_cast<LLMResponseData*>(data.get())->sentence = sim.first.description;
@@ -277,7 +309,7 @@ void InteractiveChatService::service_function()
                     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                     recognizer->setListeningMode(false);
 
-                }else {
+                } else {
                     recognizer->setListeningMode(false);
                     llm_query(text);
                     std::unique_lock<std::mutex> lock(_quryMutex);
@@ -286,7 +318,6 @@ void InteractiveChatService::service_function()
 
                 INFO("Start Listen");
                 recognizer->start_listen();
-
 
             }
 

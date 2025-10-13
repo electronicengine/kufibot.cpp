@@ -96,6 +96,9 @@ bool FaceGestureRecognizingOperator::initialize() {
 
 bool FaceGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::string& emotion,
                                         std::vector<int>& landmarks, std::string& faceInfo) {
+
+    PyGILState_STATE gstate = PyGILState_Ensure(); // 🔒 GIL al
+
     // OpenCV Mat'i Python'a göndermek için byte array'e dönüştür
     PyObject* pyFrame = PyBytes_FromStringAndSize(
         reinterpret_cast<const char*>(frame.data),
@@ -114,6 +117,8 @@ bool FaceGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::str
 
     if (!result) {
         PyErr_Print();
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         return false;
     }
 
@@ -137,9 +142,13 @@ bool FaceGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::str
         }
 
         Py_DECREF(result);
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         return true;
     } else {
         Py_DECREF(result);
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         std::cerr << "Unexpected return from Python function" << std::endl;
         return false;
     }

@@ -44,6 +44,7 @@ private:
 
     bool initialize();
     void service_function();
+    std::queue<cv::Mat> _frameQueue;
 
     //subscribed video_frame
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);

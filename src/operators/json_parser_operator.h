@@ -42,6 +42,9 @@ public:
         std::map<DirectiveType, DirectiveMotion>& directiveMotions,
         std::map<ServoMotorJoint, GestureJointState>& idlePosition
     );
+
+    static std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> getJointLimits(const std::string& filename);
+
 private:
 
     static JsonParserOperator* _instance;
@@ -55,11 +58,10 @@ private:
 
     // Motion parsing methods
     static MotionSequenceItem parseMotionSequenceItem(const nlohmann::json& sequenceJson);
-    static  std::map<ServoMotorJoint, GestureJointState> parseJointPositions(const nlohmann::json& jointsJson);
+    static std::map<ServoMotorJoint, GestureJointState> parseJointPositions(const nlohmann::json& jointsJson);
     static EmotionalMotion parseEmotionalMotion(const nlohmann::json& motionJson);
     static ReactionalMotion parseReactionalMotion(const nlohmann::json& motionJson);
     static DirectiveMotion parseDirectiveMotion(const nlohmann::json& motionJson);
-
 
 
     void writeMotionsToFile(

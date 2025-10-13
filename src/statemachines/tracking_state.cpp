@@ -36,13 +36,13 @@ std::optional<State*> TrackingState::onEnter(const ControlEvent& ev) {
  CompassController::get_instance()->setEnable(false);
  ServoMotorController::get_instance()->setEnable(true);
 
- return std::optional<State*>();
+ return stayOnThisState();
 
 }
 
 std::optional<State*> TrackingState::onExit(const ControlEvent&) {
  INFO("onExit TrackingState");
- return std::optional<State*>();
+ return stayOnThisState();
 
 }
 
@@ -50,20 +50,20 @@ std::optional<State*> TrackingState::onEvent(const ControlEvent& ev) {
 
  if (ev.source != SourceService::landmarkTrackerService) {
   WARNING("The Service Source is not apropriate with state");
-  return std::optional<State*>();
+  return stayOnThisState();
  }
 
  INFO("onEvent TrackingState");
  switch (ev.type) {
   case EventType::control: {
-   INFO("talking");
+   INFO("tracking");
    _parentState->_lastEventTime = std::chrono::steady_clock::now();
    static_cast<Robot*>(_machine)->control_motion(ev.controlData);
-   return this;
+   return stayOnThisState();
   }
   default:
    INFO("doesn't find the event in TuiControlState");
-   return std::optional<State*>();
+   return stayOnThisState();
  }
 }
 

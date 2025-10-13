@@ -20,7 +20,7 @@ public:
 
     virtual ~GesturePerformerService();
     static GesturePerformerService *get_instance();
-
+    static std::map<ServoMotorJoint, uint8_t> idleJointPositions;
 
 private:
     static GesturePerformerService *_instance;

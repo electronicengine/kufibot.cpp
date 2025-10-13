@@ -90,6 +90,8 @@ bool HandGestureRecognizingOperator::initialize() {
 
 bool HandGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::string& gesture,
                                          std::vector<int>& landmarks, std::vector<int>& bbox) {
+    PyGILState_STATE gstate = PyGILState_Ensure(); // 🔒 GIL al
+
     PyObject* pyFrame = PyBytes_FromStringAndSize(
         reinterpret_cast<const char*>(frame.data),
         frame.total() * frame.elemSize());
@@ -105,6 +107,8 @@ bool HandGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::str
 
     if (!result) {
         PyErr_Print();
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         return false;
     }
 
@@ -118,9 +122,13 @@ bool HandGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::str
         bbox = pyListToIntVector(pyBBox);
 
         Py_DECREF(result);
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         return true;
     } else {
         Py_DECREF(result);
+        PyGILState_Release(gstate); // 🔓 GIL bırak
+
         std::cerr << "Unexpected return from Python" << std::endl;
         return false;
     }

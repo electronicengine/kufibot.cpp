@@ -27,6 +27,8 @@
 #include "logger.h"
 #include <string>
 
+#include "services/landmark_tracker_service.h"
+
 
 auto main(int argc, char *argv[]) -> int {
     bool useTui = false;
@@ -57,13 +59,15 @@ auto main(int argc, char *argv[]) -> int {
     Logger::init(nullptr, useTui, logLevel);
 
     if (!stopAllServices) {
+
         WebSocketService::get_instance()->disable();
-        VideoStreamService::get_instance()->disable();
+        VideoStreamService::get_instance()->start();
         RobotControllerService::get_instance()->start();
         RemoteConnectionService::get_instance()->disable();
         InteractiveChatService::get_instance()->start();
         GesturePerformerService::get_instance()->start();
-        GestureRecognizerService::get_instance()->disable();
+        GestureRecognizerService::get_instance()->start();
+        LandmarkTrackerService::get_instance()->stop();
         MappingService::get_instance()->disable();
     }
 

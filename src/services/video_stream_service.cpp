@@ -34,10 +34,10 @@ VideoStreamService::VideoStreamService(int cameraIndex) : Service("VideoStreamSe
 }
 
 VideoStreamService::~VideoStreamService() {
+    INFO("VideoStreamService destruct...");
+
     stop();
-    if (_serviceThread.joinable()) {
-        _serviceThread.join(); 
-    }
+
 }
 
 void VideoStreamService::service_function(){
@@ -55,7 +55,6 @@ void VideoStreamService::service_function(){
     while (_running ) {
 
         cap >> frame;
-
         if (frame.empty()) {
             WARNING("Warning: Received empty frame!");
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -65,6 +64,10 @@ void VideoStreamService::service_function(){
         std::unique_ptr<MessageData> data = std::make_unique<VideoFrameData>();
         static_cast<VideoFrameData*>(data.get())->frame = frame;
         publish(MessageType::VideoFrame, data);
+
     }
+    INFO("cap releasing...");
     cap.release();
+    INFO("cap released");
+
 }

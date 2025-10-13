@@ -78,7 +78,6 @@ void ServoMotorController::set_absolute_servo_angle(ServoMotorJoint joint, int t
         return;
     }
 
-
     int currentAngle = _currentJointAngles[joint];
     int direction = (targetAngle > currentAngle) ? 1 : -1;
 

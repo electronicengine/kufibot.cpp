@@ -1,3 +1,6 @@
+
+#include "listening_state.h"
+
 /*
 * This file is part of Kufibot.
  *
@@ -24,60 +27,51 @@
 #include "tracking_state.h"
 #include "../logger.h"
 
-// MovingState
-MovingState::MovingState(std::string n, State* parent) : State(n, parent) {
+// ListeningState
+ListeningState::ListeningState(std::string n, State* parent) : State(n, parent) {
 }
 
-std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
-    INFO("onEnter MovingState");
+std::optional<State*> ListeningState::onEnter(const ControlEvent& ev) {
+    INFO("onEnter ListeningState");
     INFO("started ms timeout {}", _timeoutMs);
 
-    static_cast<Robot*>(_machine)->setEnableSensorContinuousReadings(false);
-    //add here sleep
-    std::this_thread::sleep_for(std::chrono::milliseconds(400));
+    addPostDelayedEvent(ControlEvent(EventType::timeout), 4000);
 
-    addPostDelayedEvent(ControlEvent(EventType::timeout), _timeoutMs);
-    switch (ev.source) {
-        case SourceService::tuiService:
-            return transTo<TuiControlState>();
-        case SourceService::remoteConnectionService:
-            return transTo<RemoteControlState>();
-        case SourceService::gesturePerformerService:
-            return transTo<TalkingState>();
-        case SourceService::landmarkTrackerService:
-            return transTo<TrackingState>();
-        default:
-            return stayOnThisState();
-    }
-
+    return stayOnThisState();
 }
 
-std::optional<State*> MovingState::onExit(const ControlEvent&) {
-    INFO("onExit MovingState");
+std::optional<State*> ListeningState::onExit(const ControlEvent&) {
+    INFO("onExit ListeningState");
     return stayOnThisState();
 
 }
 
-std::optional<State*> MovingState::onEvent(const ControlEvent& ev) {
+std::optional<State*> ListeningState::onEvent(const ControlEvent& ev) {
 
     switch (ev.type) {
         case EventType::critical_error:
-            INFO("onEvent MovingState critical_error");
+            INFO("onEvent ListeningState critical_error");
             return transTo<CriticalErrorState>();
 
+        case EventType::control:
+            INFO("onEvent ListeningState control");
+            clearDelayedEvents();
+            return transTo<MovingState>();
+
         case EventType::timeout: {
-            INFO("timeout of MovingState");
+            INFO("timeout of ListeningState");
             auto now = std::chrono::steady_clock::now();
             auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastEventTime);
             if (diff.count() <= _timeoutMs - 10) {
                 INFO("skip timeout last - now = {} ms", diff.count());
-                addPostDelayedEvent(ControlEvent(EventType::timeout), _timeoutMs);
+                addPostDelayedEvent(ControlEvent(EventType::timeout), 4000);
                 return stayOnThisState();
             }
             return transTo<IdleState>();
         }
         case EventType::stop: {
             INFO("onEvent MovingState stop");
+            clearDelayedEvents();
             return transTo<IdleState>();
         }
         default:

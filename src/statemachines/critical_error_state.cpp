@@ -21,16 +21,16 @@
 CriticalErrorState::CriticalErrorState(std::string n, State* parent) : State(n, parent) {}
 std::optional<State*> CriticalErrorState::onEnter(const ControlEvent& ev) {
     INFO("onEnter CriticalErrorState");
-    return std::optional<State*>();
 
+    return stayOnThisState();
 }
 std::optional<State*> CriticalErrorState::onExit(const ControlEvent&) {
     INFO("onExit CriticalErrorState");
-    return std::optional<State*>();
+    return stayOnThisState();
 
 }
 
 std::optional<State*> CriticalErrorState::onEvent(const ControlEvent& ev) {
     INFO("onEvent CriticalErrorState");
-    return std::optional<State*>();
+    return stayOnThisState();
 }

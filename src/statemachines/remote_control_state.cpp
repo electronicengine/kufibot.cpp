@@ -22,18 +22,18 @@
 RemoteControlState::RemoteControlState(std::string n, State* parent) : State(n, parent){}
 std::optional<State*> RemoteControlState::onEnter(const ControlEvent&) {
     INFO("onEnter RemoteControlState");
-    return std::optional<State*>();
+    return stayOnThisState();
 }
 
 std::optional<State*> RemoteControlState::onExit(const ControlEvent&) {
     INFO("onExit RemoteControlState");
-    return std::optional<State*>();
+    return stayOnThisState();
 }
 
 std::optional<State*> RemoteControlState::onEvent(const ControlEvent& ev) {
     if (ev.source != SourceService::remoteConnectionService) {
         WARNING("The Service Source is not apropriate with state");
-        return std::optional<State*>();
+        return stayOnThisState();
     }
 
     INFO("onEvent RemoteControlState");
@@ -41,11 +41,11 @@ std::optional<State*> RemoteControlState::onEvent(const ControlEvent& ev) {
         case EventType::control: {
             INFO("control remote");
             _parentState->_lastEventTime = std::chrono::steady_clock::now();
-            return this;
+            return stayOnThisState();
         }
         default:
             INFO("doesn't find the event in RemoteControlState");
-            return std::optional<State*>();
+            return stayOnThisState();
     }
 
 }

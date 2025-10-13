@@ -68,6 +68,10 @@ void StateMachine::postDelayedEvent(const ControlEvent& ev, int delay_ms) {
     _cv.notify_one();
 }
 
+void StateMachine::clearDelayedEvents() {
+    _timers.clear();
+}
+
 
 void StateMachine::loop() {
     while (_running) {

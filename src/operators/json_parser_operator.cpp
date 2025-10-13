@@ -63,7 +63,7 @@ ReactionType JsonParserOperator::reactionTypeFromString(const std::string& str) 
 
 DirectiveType JsonParserOperator::directiveTypeFromString(const std::string& str) {
     if (str == "followFinger") return DirectiveType::followFinger;
-    if (str == "stopFollow") return DirectiveType::followFinger;
+    if (str == "stopFollow") return DirectiveType::stopFollow;
 
     ERROR("Unknown DirectiveType: {}", str);
     return DirectiveType::followFinger; // default value
@@ -213,7 +213,7 @@ ReactionalMotion JsonParserOperator::parseReactionalMotion(const json& motionJso
     return motion;
 }
 
-DirectiveMotion JsonParserOperator::parseDirectiveMotion(const json& motionJson) {
+DirectiveMotion JsonParserOperator::parseDirectiveMotion(const json &motionJson) {
     DirectiveMotion motion;
     motion.name = motionJson["name"];
     motion.description = motionJson["description"];
@@ -222,12 +222,43 @@ DirectiveMotion JsonParserOperator::parseDirectiveMotion(const json& motionJson)
 
     // Parse sequence if it exists
     if (motionJson.contains("sequence")) {
-        for (const auto& seqItem : motionJson["sequence"]) {
+        for (const auto &seqItem: motionJson["sequence"]) {
             motion.sequence.push_back(parseMotionSequenceItem(seqItem));
         }
     }
 
     return motion;
+}
+
+std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>
+JsonParserOperator::getJointLimits(const std::string& filename) {
+
+    std::ifstream inFile(filename);
+
+    if (!inFile.is_open()) {
+        ERROR("Failed to open motion file: {}", filename);
+        return std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>();
+    }
+
+    json j = json::parse(inFile);
+
+    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> result;
+
+    for (auto &[jointName, states] : j.items()) {
+        ServoMotorJoint joint = servoJointFromString(jointName);
+
+        for (auto &[stateName, data] : states.items()) {
+            GestureJointState state = gestureStateFromString(stateName);
+            GestureJointAngle angleData{
+                data.value("angle", 0),
+                data.value("name", "")
+            };
+            result[joint][state] = angleData;
+        }
+    }
+
+    return result;
+
 }
 
 void JsonParserOperator::loadMotionsFromFile(

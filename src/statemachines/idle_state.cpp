@@ -28,12 +28,12 @@ std::optional<State*> IdleState::onEnter(const ControlEvent&) {
 
     static_cast<Robot*>(_machine)->setEnableSensorContinuousReadings(true);
 
-    return std::optional<State*>();
+    return stayOnThisState();
 }
 
 std::optional<State*> IdleState::onExit(const ControlEvent&) {
     INFO("onExit IdleState");
-    return std::optional<State*>();
+    return stayOnThisState();
 }
 
 std::optional<State*> IdleState::onEvent(const ControlEvent& ev) {
@@ -42,9 +42,9 @@ std::optional<State*> IdleState::onEvent(const ControlEvent& ev) {
     switch (ev.type) {
         case EventType::control:{
             INFO("Transitioning to Moving state from Idle State");
-            return static_cast<Robot*>(_machine)->transState<MovingState>();
+            return transTo<MovingState>();
         }
         default:
-            return std::optional<State*>();
+            return stayOnThisState();
     }
 }

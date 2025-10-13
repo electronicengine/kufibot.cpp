@@ -12,6 +12,7 @@ set(TARGET services)
 
 file(GLOB_RECURSE SRCS ${SERVICES_SRC_DIR}/*.cpp ${SERVICES_SRC_DIR}/*.h)
 include_directories(${SERVICES_INC_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src/controllers)
 
 add_library(${TARGET} SHARED ${SRCS})
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})

@@ -36,21 +36,21 @@ std::optional<State*> InitializeState::onEnter(const ControlEvent& ev) {
     Robot* robot = static_cast<Robot*>(_machine);
     bool ret = robot->initialize();
     if (ret) {
-        return _machine->transState<IdleState>();
+        return transTo<IdleState>();
     }
     else {
-        return _machine->transState<CriticalErrorState>();
+        return transTo<CriticalErrorState>();
     }
 
 }
 
 std::optional<State*> InitializeState::onExit(const ControlEvent&) {
     INFO("onExit InitializeState");
-    return std::optional<State*>();
+    return stayOnThisState();
 
 }
 
 std::optional<State*> InitializeState::onEvent(const ControlEvent& ev) {
     INFO("onEvent InitializeState");
-    return std::optional<State*>();
+    return stayOnThisState();
 }

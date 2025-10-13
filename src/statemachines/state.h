@@ -20,6 +20,23 @@ struct State {
     State(std::string n, State* parent = nullptr);
     virtual ~State();
 
+    void addPostDelayedEvent(const ControlEvent& ev, int delay_ms) {
+        _machine->postDelayedEvent(ControlEvent(EventType::timeout), _timeoutMs);
+    };
+
+    void clearDelayedEvents() {
+        _machine->clearDelayedEvents();
+    };
+
+    template<typename T>
+    T* transTo() {
+        return _machine->transState<T>();
+    }
+
+    std::optional<State*> stayOnThisState() {
+        return std::optional<State*>();
+    }
+
     void setTimeout(int timeoutMs){_timeoutMs = timeoutMs;}
     virtual std::optional<State*> onEnter(const ControlEvent& ev) = 0;
     virtual std::optional<State*> onEvent(const ControlEvent& ev) = 0;

@@ -54,7 +54,8 @@ enum EventType {
     critical_error,
     stop,
     timeout,
-    control
+    control,
+    listen_voice,
 };
 
 
@@ -66,7 +67,7 @@ enum class MessageType {
     ControlData,
     LLMQuery,
     LLMResponse,
-    RecognizedGesture
+    RecognizedGesture,
 };
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
@@ -209,6 +210,7 @@ struct RecognizedGestureData : public MessageData  {
     std::vector<int> faceLandmark;
     std::string handGesture;
     std::vector<int> handLandmark;
+    std::vector<int> handBbox;
 };
 
 

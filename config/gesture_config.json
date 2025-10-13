@@ -20,6 +20,6 @@
   ],
   "directives": [
     {"type": "followFinger", "tag": "<followFinger>", "description": "start to follow my finger."},
-    {"type": "stopFollow", "tag": "<stopFollow>", "description": "stop the follow my finger."}
+    {"type": "stopFollow", "tag": "<stopFollow>", "description": "stopping the follow."}
   ]
 }
