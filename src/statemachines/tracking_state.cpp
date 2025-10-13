@@ -48,22 +48,24 @@ std::optional<State*> TrackingState::onExit(const ControlEvent&) {
 
 std::optional<State*> TrackingState::onEvent(const ControlEvent& ev) {
 
- if (ev.source != SourceService::landmarkTrackerService) {
-  WARNING("The Service Source is not apropriate with state");
-  return stayOnThisState();
+ if (ev.source == SourceService::landmarkTrackerService || ev.source == SourceService::gesturePerformerService) {
+     INFO("onEvent TrackingState");
+     switch (ev.type) {
+         case EventType::control: {
+             INFO("tracking");
+             _parentState->_lastEventTime = std::chrono::steady_clock::now();
+             static_cast<Robot*>(_machine)->control_motion(ev.controlData);
+             return stayOnThisState();
+         }
+         default:
+             INFO("doesn't find the event in TuiControlState");
+             return stayOnThisState();
+     }
+
+ }else {
+     WARNING("The Service Source is not apropriate with state");
+     return stayOnThisState();
  }
 
- INFO("onEvent TrackingState");
- switch (ev.type) {
-  case EventType::control: {
-   INFO("tracking");
-   _parentState->_lastEventTime = std::chrono::steady_clock::now();
-   static_cast<Robot*>(_machine)->control_motion(ev.controlData);
-   return stayOnThisState();
-  }
-  default:
-   INFO("doesn't find the event in TuiControlState");
-   return stayOnThisState();
- }
 }
 

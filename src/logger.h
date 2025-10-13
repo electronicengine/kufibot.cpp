@@ -26,7 +26,7 @@ class Logger {
     ~Logger() = default;
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
-
+    static std::mutex logMutex;
     static std::list<CachedLog> _cachedLogs;
 
 public:
@@ -103,6 +103,8 @@ public:
 
     template <class... LogStrArgs>
     static void trace(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
@@ -125,6 +127,8 @@ public:
 
     template <class... LogStrArgs>
     static void info(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, std::forward<LogStrArgs>(logStrArgs)...);
 
@@ -145,6 +149,8 @@ public:
 
     template <class... LogStrArgs>
     static void debug(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
@@ -167,6 +173,8 @@ public:
 
     template <class... LogStrArgs>
     static void warning(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
@@ -189,6 +197,8 @@ public:
 
     template <class... LogStrArgs>
     static void error(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 
@@ -211,6 +221,8 @@ public:
 
     template <class... LogStrArgs>
     static void critical(const char* function, const std::string& logStr, LogStrArgs&&... logStrArgs) {
+        std::lock_guard<std::mutex> lock(logMutex);
+
         std::string class_name = extract_class_name(function);
         auto formattedStr = fmt::format(logStr, logStrArgs...);
 

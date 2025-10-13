@@ -220,7 +220,7 @@ void Robot::control_body(int angle, int magnitude) {
         _dcMotorController->turn_left(magnitude);
     } else if (angle == 0 || magnitude == 0) {
         _dcMotorController->stop();  // Optional: fallback safety
-    }else {
+    } else {
         WARNING("control_body: unknown angle: {} - magnitude: {}", std::to_string(angle), std::to_string(magnitude));
     }
 }
@@ -232,23 +232,26 @@ void Robot::control_head(int angle, int magnitude) {
         return;
     }
 
-auto upDown = sin(angle * M_PI / 180.0);
-    INFO("upDown: {}", upDown);
+    auto upDown = sin(angle * M_PI / 180.0);
+    int magUpDown = abs(upDown * magnitude);
+    INFO("upDown: {} - {}", upDown, magUpDown);
     if (upDown > 0.001) {
-        head_up();
+        head_up(magUpDown);
     } else if (upDown < -0.001) {
-        head_down();
+        head_down(magUpDown);
     }
 
     auto leftRight = cos(angle * M_PI / 180.0);
-    INFO("leftRight: {}", leftRight);
+    int magLeftRight = abs(leftRight * magnitude);
+    INFO("leftRight: {} - {}", leftRight, magLeftRight);
 
     if (leftRight > 0.001) {
-        head_right();
+        head_right(magLeftRight);
     } else if (leftRight < -0.001) {
-        head_left();
+        head_left(magLeftRight);
     }
 }
+
 
 void Robot::control_arm(ServoMotorJoint joint, int angle, bool scale) const {
     INFO("control_arm : {} ", angle);
@@ -289,18 +292,20 @@ void Robot::control_eye(ServoMotorJoint joint, bool state) {
 }
 
 
-void Robot::head_down() {
+void Robot::head_down(int speed) {
     INFO("Head Down");
+    if (speed < 1)
+        speed = 1;
 
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
-    int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] + 1;
+    int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] + 1 * speed;
     if (targetAngle >= _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle) {
         targetAngle = _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle;
     }
     _servoController->set_absolute_servo_angle(ServoMotorJoint::headUpDown, targetAngle);
     currentJointAngles[ServoMotorJoint::headUpDown] = targetAngle;
 
-    targetAngle = currentJointAngles[ServoMotorJoint::neck] - 2;
+    targetAngle = currentJointAngles[ServoMotorJoint::neck] - 1 * speed;
     if (targetAngle <= _jointLimits[ServoMotorJoint::neck][GestureJointState::fulldown].angle) {
         targetAngle = _jointLimits[ServoMotorJoint::neck][GestureJointState::fulldown].angle;
     }
@@ -308,18 +313,21 @@ void Robot::head_down() {
     currentJointAngles[ServoMotorJoint::neck] = targetAngle;
 }
 
-void Robot::head_up() {
+void Robot::head_up(int speed) {
     INFO("Head Up");
+    if (speed < 1)
+        speed = 1;
+
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
-    int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] - 1;
+    int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] - 1 * speed;
     if (targetAngle <= _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle) {
         targetAngle = _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle;
     }
     _servoController->set_absolute_servo_angle(ServoMotorJoint::headUpDown, targetAngle);
     currentJointAngles[ServoMotorJoint::headUpDown] = targetAngle;
 
-    targetAngle = currentJointAngles[ServoMotorJoint::neck] + 2;
+    targetAngle = currentJointAngles[ServoMotorJoint::neck] + 1 * speed;
     if (targetAngle >= _jointLimits[ServoMotorJoint::neck][GestureJointState::fullup].angle) {
         targetAngle = _jointLimits[ServoMotorJoint::neck][GestureJointState::fullup].angle;
     }
@@ -327,12 +335,14 @@ void Robot::head_up() {
     currentJointAngles[ServoMotorJoint::neck] = targetAngle;
 }
 
-void Robot::head_left() {
+void Robot::head_left(int speed) {
     INFO("Head Left");
+    if (speed < 1)
+        speed = 1;
 
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
-    int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] + 1;
+    int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] + 1 * speed;
     if (targetAngle >= 180) {
         targetAngle = 180;
     }
@@ -340,12 +350,14 @@ void Robot::head_left() {
     currentJointAngles[ServoMotorJoint::headLeftRight] = targetAngle;
 }
 
-void Robot::head_right() {
+void Robot::head_right(int speed) {
     INFO("Head Right");
+    if (speed < 1)
+        speed = 1;
 
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->get_current_joint_angles();
 
-    int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] - 1;
+    int targetAngle = currentJointAngles[ServoMotorJoint::headLeftRight] - 1 * speed;
     if (targetAngle <= 0) {
         targetAngle = 0;
     }

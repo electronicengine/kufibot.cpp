@@ -72,12 +72,19 @@ void GesturePerformerService::service_function()
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
+    subscribe_to_service(LandmarkTrackerService::get_instance());
 
     INFO("Entering the gesture performing loop...");
     while (_running) {
         std::unique_lock<std::mutex> lock(_llmResponseQueueMutex);
 
+
         _condVar.wait(lock, [this]() {
+            if (_llmResponseQueue.empty()) {
+                WARNING("Gesture Performance is finished!");
+                publish(MessageType::GesturePerformanceCompleted);
+            }
+
             return !_llmResponseQueue.empty() || !_running;
         });
 
@@ -110,15 +117,7 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
             }
             break;
         }
-        case MessageType::RecognizedGesture:{
-            if (data) {
-                std::string face_gesture = static_cast<RecognizedGestureData*>(data.get())->faceGesture;
-                std::vector<int> face_landmark = static_cast<RecognizedGestureData*>(data.get())->faceLandmark;
-                std::string hand_gesture = static_cast<RecognizedGestureData*>(data.get())->handGesture;
-                std::vector<int> hand_landmark = static_cast<RecognizedGestureData*>(data.get())->handLandmark;
-            }
-            break;
-        }
+       
         default:
             break;
     }

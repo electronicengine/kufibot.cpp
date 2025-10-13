@@ -56,10 +56,10 @@ struct Robot : StateMachine {
     void control_arm(ServoMotorJoint joint, int angle, bool scale = true) const;
     void control_eye(ServoMotorJoint joint, bool state);
 
-    void head_down();
-    void head_up();
-    void head_left();
-    void head_right();
+    void head_down(int speed);
+    void head_up(int speed);
+    void head_left(int speed);
+    void head_right(int speed);
     void eye_up();
     void eye_down();
 

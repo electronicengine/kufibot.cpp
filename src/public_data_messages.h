@@ -68,6 +68,7 @@ enum class MessageType {
     LLMQuery,
     LLMResponse,
     RecognizedGesture,
+    GesturePerformanceCompleted,
 };
 
 typedef websocketpp::server<websocketpp::config::asio> Server;

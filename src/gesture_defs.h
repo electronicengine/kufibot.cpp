@@ -21,7 +21,6 @@
     enum class EmotionType{
         happy,
         angry,
-
         funny,
         serious,
         curious,
