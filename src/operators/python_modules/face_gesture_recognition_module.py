@@ -3,6 +3,7 @@ import mediapipe as mp
 import time
 import math
 import numpy as np
+from collections import Counter
 
 class FaceEmotionDetector:
     def __init__(self, min_detection_confidence=0.5, min_tracking_confidence=0.5):
@@ -116,94 +117,90 @@ class FaceEmotionDetector:
         avg_eyebrow_height = (left_eyebrow_height + right_eyebrow_height) / 2
         return avg_eyebrow_height
 
+
     def detect_emotion(self):
-        """Yüz ifadesinden emotion tespit eder - Geliştirilmiş Versiyon"""
+        """Yüz ifadesinden emotion tespit eder - anlık frame bazlı"""
+
         if not self.landmarks:
             return "No Face"
 
+        import numpy as np
+        from collections import Counter
+
+        # --- METRİKLERİ HESAPLA ---
         left_ear = self.get_eye_aspect_ratio([33, 160, 158, 133, 153, 144])
         right_ear = self.get_eye_aspect_ratio([362, 385, 387, 263, 373, 380])
         avg_ear = (left_ear + right_ear) / 2
-
         mar = self.get_mouth_aspect_ratio()
-
-        # Kaş pozisyonu (göz merkezinie göre dikey mesafe)
-        # 159 ve 386 noktaları gözün üst kapağının merkezine yakın noktalar.
-        # Bu değerlerin her yüz tipine göre normalleştirilmesi gerekebilir.
-        left_eyebrow_to_eye_dist = self.calculate_distance(159, 10) # 10 burun köküne yakın bir göz merkezi
-        right_eyebrow_to_eye_dist = self.calculate_distance(386, 338) # 338 burun köküne yakın bir göz merkezi
+        left_eyebrow_to_eye_dist = self.calculate_distance(159, 10)
+        right_eyebrow_to_eye_dist = self.calculate_distance(386, 338)
         avg_eyebrow_height = (left_eyebrow_to_eye_dist + right_eyebrow_to_eye_dist) / 2
 
-        # Ağız köşeleri ve burun ucu referansı
         mouth_corner_left_y = self.landmarks[308][2] if len(self.landmarks) > 308 else 0
         mouth_corner_right_y = self.landmarks[78][2] if len(self.landmarks) > 78 else 0
         nose_tip_y = self.landmarks[1][2] if len(self.landmarks) > 1 else 0
-
-        # Ağız köşelerinin dikey eğimi (gülümseme için)
+        smile_intensity = 0
         if mouth_corner_left_y and mouth_corner_right_y:
             mouth_corner_avg_y = (mouth_corner_left_y + mouth_corner_right_y) / 2
-            smile_intensity = nose_tip_y - mouth_corner_avg_y # Pozitif değerler köşelerin yukarı olduğunu gösterir
-        else:
-            smile_intensity = 0
+            smile_intensity = nose_tip_y - mouth_corner_avg_y
 
-        # Kaşların yatay mesafesi (çatık kaşlar için)
-        # Sağ kaşın iç noktası (296) ve sol kaşın iç noktası (66)
         eyebrow_inner_distance = self.calculate_distance(296, 66)
-        # Normal yüz genişliğine göre normalize edilebilir, örneğin şakaklar arası mesafe.
-        # Bu sadece bir örnek, daha sağlam bir referans noktası bulmak gerekebilir.
-        face_width = self.calculate_distance(234, 454) # Şakaklar arası mesafe
-        if face_width > 0:
-            normalized_eyebrow_distance = eyebrow_inner_distance / face_width
-        else:
-            normalized_eyebrow_distance = 0
+        face_width = self.calculate_distance(234, 454)
+        normalized_eyebrow_distance = eyebrow_inner_distance / face_width if face_width > 0 else 0
 
+        # --- KALİBRASYON ---
+        if not hasattr(self, "baseline"):
+            if not hasattr(self, "calibration_data"):
+                self.calibration_data = []
+                self.calibration_frames = 0
+
+            if self.calibration_frames < 30:
+                self.calibration_data.append({
+                    "ear": avg_ear,
+                    "mar": mar,
+                    "eyebrow": avg_eyebrow_height,
+                    "smile": smile_intensity,
+                    "eyebrow_dist": normalized_eyebrow_distance
+                })
+                self.calibration_frames += 1
+                return f"Calibrating... ({self.calibration_frames}/30)"
+
+            if self.calibration_frames == 30:
+                avg_values = {k: np.mean([d[k] for d in self.calibration_data]) for k in self.calibration_data[0]}
+                self.baseline = avg_values
+                self.calibration_frames += 1
+                print("✅ Calibration complete:", self.baseline)
+
+        # --- NORMALİZE ---
+        ear_norm = avg_ear / self.baseline["ear"]
+        mar_norm = mar / self.baseline["mar"]
+        smile_norm = smile_intensity - self.baseline["smile"]
+        eyebrow_norm = avg_eyebrow_height / self.baseline["eyebrow"]
+        eyebrow_dist_norm = normalized_eyebrow_distance / self.baseline["eyebrow_dist"]
+
+        # --- DUYGU KURALLARI ---
         emotion = "Neutral"
-
-        # Duygu Karar Ağacı/Kuralları
-        # Not: Bu değerler hala deneme yanılma ile bulunmalıdır veya ML modelinden öğrenilmelidir.
-
-        # 1. Mutluluk
-        if smile_intensity > 15 and mar > 0.3: # Daha belirgin gülümseme ve açık ağız
+        if smile_norm > 6:
             emotion = "Happy"
-
-        # 2. Şaşkınlık
-        elif avg_ear > 0.4 and mar > 0.4 and avg_eyebrow_height > 50: # Geniş açık gözler, açık ağız, yüksek kaşlar
+        elif mar_norm > 120:
+            emotion = "Fear"
+        elif mar_norm > 20:
             emotion = "Surprised"
-
-        # 3. Üzüntü
-        elif smile_intensity < -10 and mar < 0.2 and avg_ear < 0.3: # Aşağı ağız köşeleri, dar ağız, hafif kısık gözler
+        elif smile_norm < -3:
             emotion = "Sad"
-
-        # 4. Öfke
-        # Çatık kaşlar (normalized_eyebrow_distance küçülür), kısık gözler
-        elif normalized_eyebrow_distance < 0.15 and avg_ear < 0.2:
+        elif ear_norm < 0.8:
+            emotion = "Sleepy/Wink"
+        elif eyebrow_dist_norm < 0.85 and ear_norm < 0.9:
             emotion = "Angry"
 
-        # 5. Korku
-        # Çok açık gözler, çok yüksek kaşlar ama ağız şaşkınlık kadar açık olmayabilir veya gergin.
-        elif avg_ear > 0.4 and avg_eyebrow_height > 60 and mar < 0.3:
-            emotion = "Fear"
-
-        # 6. Uyku/Göz Kırpma
-        elif avg_ear < 0.1:
-            emotion = "Sleepy/Wink"
-
-        # Duygu geçmişi ve yumuşatma
+        # --- EMOTION GEÇMİŞ YUMUŞATMA ---
         self.emotion_history.append(emotion)
         if len(self.emotion_history) > self.history_size:
             self.emotion_history.pop(0)
 
-        if len(self.emotion_history) >= 3: # En az 3 çerçeve aynı duygu için oy kullansın
-            # En sık tekrar eden duyguyu bul
-            from collections import Counter
-            emotion_counts = Counter(self.emotion_history)
-            current_emotion_smoothed = emotion_counts.most_common(1)[0][0]
-            # Eğer önceki duygu "Neutral" değilse ve yeni duygu "Neutral" ise,
-            # ancak baskınlık yoksa, önceki duyguyu koru. Bu bir çeşit yapışkanlık sağlar.
-            if self.previous_emotion != "Neutral" and current_emotion_smoothed == "Neutral" and emotion_counts["Neutral"] < len(self.emotion_history) / 2:
-                pass # Önceki duyguya sadık kal
-            else:
-                emotion = current_emotion_smoothed
+        if len(self.emotion_history) >= 3:
+            counts = Counter(self.emotion_history)
+            emotion = counts.most_common(1)[0][0]
 
         self.previous_emotion = emotion
         return emotion

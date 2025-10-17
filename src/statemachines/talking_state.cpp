@@ -47,15 +47,8 @@ std::optional<State*> TalkingState::onExit(const ControlEvent&) {
 
 std::optional<State*> TalkingState::onEvent(const ControlEvent& ev) {
 
-    if (ev.source != SourceService::gesturePerformerService) {
-        WARNING("The Service Source is not apropriate with state");
-        return stayOnThisState();
-    }
-
-    INFO("onEvent TalkingState");
     switch (ev.type) {
         case EventType::control: {
-            INFO("talking");
             _parentState->_lastEventTime = std::chrono::steady_clock::now();
             static_cast<Robot*>(_machine)->control_motion(ev.controlData);
             return stayOnThisState();

@@ -85,7 +85,7 @@ void GesturePerformerService::service_function()
                 publish(MessageType::GesturePerformanceCompleted);
             }
 
-            return !_llmResponseQueue.empty() || !_running;
+            return !_llmResponseQueue.empty();
         });
 
         while (!_llmResponseQueue.empty() && !_gestureWorking) {
@@ -111,13 +111,12 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
         case MessageType::LLMResponse: {
             if (data) {
                 LLMResponseData llmResponse = *static_cast<LLMResponseData*>(data.get());
-                INFO("LLM Response: {}", llmResponse.sentence);
                 _llmResponseQueue.push(llmResponse);
                 _condVar.notify_one(); // Notify the processing thread
             }
             break;
         }
-       
+
         default:
             break;
     }
@@ -138,7 +137,6 @@ int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, Gestur
 }
 
 void GesturePerformerService::setIdlePosition() {
-    DEBUG("Setting robot to idle position");
     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
     data->source = SourceService::gesturePerformerService;
 
@@ -154,10 +152,8 @@ void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoi
     data->source = SourceService::gesturePerformerService;
 
     std::map<ServoMotorJoint, uint8_t> jointAngles = _currentPositions ;
-    DEBUG("Executing Joint Positions: ");
     for (const auto& [joint, state] : positions) {
         jointAngles[joint] = getAngleForJointState(joint, state);
-        DEBUG("{}: {}", Servo_Motor_Joint_Names.at(joint), jointAngles[joint]);
     }
 
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
@@ -180,7 +176,6 @@ void GesturePerformerService::executeEmotionalMotion(EmotionType emotionType) {
     }
 
     const EmotionalMotion& motion = it->second;
-    WARNING("Executing emotional motion: {}", motion.name);
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 
 }
@@ -194,7 +189,6 @@ void GesturePerformerService::executeReactionalMotion(ReactionType reactionType)
     }
 
     const ReactionalMotion& motion = it->second;
-    WARNING("Executing reactional motion: {}", motion.name);
 
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 

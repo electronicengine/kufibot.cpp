@@ -8,9 +8,90 @@
 #define DOWN            270
 #define UP              90
 
-struct ErrorVector {
-    int angle;
-    int magnitude;
+
+enum class TrackState {
+    idle,
+    tracking,
+    engaging_reaction,
+};
+
+struct PolarVector {
+    int angle, magnitude;
+};
+
+struct Point2D {
+    int x, y;
+};
+
+struct TrackingData {
+    std::string faceGesture;
+    std::vector<int> faceLandmark;
+    std::string handGesture;
+    std::vector<int> handLandmark;
+    std::vector<int> handBbox;
+
+    std::map<ServoMotorJoint, uint8_t> currentJointAngles;
+
+    Point2D getFaceCenter() const {
+        Point2D faceCenter{0, 0};
+
+        int sumX = 0;
+        int sumY = 0;
+        int eyePointCount = 0;
+
+        for (size_t i = 0; i < faceLandmark.size(); i += 3) {
+            int id = faceLandmark[i];
+            int cx = faceLandmark[i + 1];
+            int cy = faceLandmark[i + 2];
+
+            // eye points
+            if (id == 33 || id == 133 || id == 362 || id == 263) {
+                sumX += cx;
+                sumY += cy;
+                eyePointCount++;
+            }
+        }
+
+        if (eyePointCount > 0) {
+            faceCenter.x = sumX / eyePointCount;
+            faceCenter.y = sumY / eyePointCount;
+        }
+
+        return faceCenter;
+    }
+
+    Point2D getHandCenter() const {
+        Point2D handCenter{0, 0};
+        handCenter.x = (handBbox[0] + handBbox[2]) / 2;
+        handCenter.y = (handBbox[1] + handBbox[3]) / 2;
+
+        return handCenter;
+    }
+
+};
+
+struct LastKnownTarget {
+    std::optional<Point2D> _target;
+    int followTimeOut;
+
+    void setValue(Point2D target) {
+        followTimeOut = 5;
+        _target = target;
+    }
+
+    Point2D getValue() {
+        if (_target.has_value()) {
+            if (--followTimeOut <= 0) {
+                _target.reset();
+                return Point2D{0, 0};
+            }else {
+                return _target.value();
+            }
+        } else {
+            return Point2D{0, 0};
+        }
+    }
+
 };
 
 class LandmarkTrackerService: public Service{
@@ -24,28 +105,31 @@ class LandmarkTrackerService: public Service{
         LLMResponseData _llmResponseData;
         RecognizedGestureData _recognizedGestureData;
         SensorData _sensorData;
-        std::atomic<bool> _handFound;
-        std::atomic<bool> _faceFound;
-        std::atomic<bool> _gesturePerformanceCompleted;
+
+        LastKnownTarget _lastKnownTarget;
 
         static LandmarkTrackerService *_instance;
         std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointLimits;
         int _errorTreshold;
-        int _talkingTimeCounter;
+        int _reactionEngageTimeout;
 
         LandmarkTrackerService();
 
         void initialize();
+
+        TrackingData collectTrackingData();
+        Point2D selectTheTarget(const TrackingData &trackData);
+        TrackState getTrackingState(const PolarVector& errorVector);
+        int calculateControlMagnitude(const PolarVector& errorVector);
+
         void service_function();
-        void searchTheFace();
-        //subscribed recognized gesture data
         void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
         void searchFace();
-        ErrorVector calculateErrorVector(int centerX, int centerY);
+        PolarVector calculateErrorVector(const Point2D &target);
 
         void controlHead(int angle, int magnitude);
-        void sayHello();
+        void engageReaction(TrackingData trackingData);
 
 };
 

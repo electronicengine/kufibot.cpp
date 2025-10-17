@@ -40,8 +40,6 @@ InteractiveChatService *InteractiveChatService::get_instance()
 
 
 InteractiveChatService::InteractiveChatService() : Service("InteractiveChatService") {
-
-
 }
 
 
@@ -93,9 +91,6 @@ void InteractiveChatService::query_response_callback(const std::string &response
         }
         accumulated_text.clear();
 
-        VideoStreamService::get_instance()->start();
-        LandmarkTrackerService::get_instance()->start();
-
         return;
     }
 
@@ -144,6 +139,7 @@ void InteractiveChatService::query_response_callback(const std::string &response
 bool InteractiveChatService::load_models()
 {
     _llamaChatOperator.setCallBackFunction( std::bind(&InteractiveChatService::query_response_callback, this, std::placeholders::_1));
+    _llamaChatOperator.setSystemMessage("Your name is coffee. Your are home made assistant robot. Give responses like pet robot.");
 
     INFO("Llama Chat Model is loading...");
     bool ret = _llamaChatOperator.loadChatModel();
@@ -195,8 +191,7 @@ std::pair<EmotionalGesture,float> InteractiveChatService::find_sentence_emotion(
         }
     }
 
-    return std::make_pair(best_match,
-        max_similarity);
+    return std::make_pair(best_match, max_similarity);
 }
 
 std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reaction(const std::string &sentence) {
@@ -205,7 +200,6 @@ std::pair<ReactionalGesture, float> InteractiveChatService::find_sentence_reacti
     std::vector<float> sentence_embeddings = _llamaEmbeddingOperator.calculateEmbeddings(sentence);
 
     for (auto reaction : _reactionalList) {
-
         float sim = _llamaEmbeddingOperator.getSimilarity(sentence_embeddings, reaction.embedding);
 
         if (sim > max_similarity && sim > 0.5f ) {
@@ -223,7 +217,6 @@ std::pair<Directive, float> InteractiveChatService::find_sentence_directive(cons
     std::vector<float> sentence_embeddings = _llamaEmbeddingOperator.calculateEmbeddings(sentence);
 
     for (auto directive : _directiveList) {
-
         float sim = _llamaEmbeddingOperator.getSimilarity(sentence_embeddings, directive.embedding);
 
         if (sim > max_similarity && sim > 0.5f ) {
@@ -261,6 +254,7 @@ void InteractiveChatService::service_function()
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(LandmarkTrackerService::get_instance());
 
     INFO("Speech Recognizing Model is loading...");
     auto* recognizer = SpeechRecognizingOperator::get_instance();
@@ -284,10 +278,8 @@ void InteractiveChatService::service_function()
                 recognizer->start_listen();
                 INFO("Start Listen");
 
-                VideoStreamService::get_instance()->stop();
-                LandmarkTrackerService::get_instance()->stop();
+            } else {
 
-            }else {
                 // Process the recognized speech
                 json j = json::parse(message);
                 std::string text = j["alternatives"][0]["text"];
@@ -308,7 +300,6 @@ void InteractiveChatService::service_function()
                     publish(MessageType::LLMResponse, data);
                     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                     recognizer->setListeningMode(false);
-
                 } else {
                     recognizer->setListeningMode(false);
                     llm_query(text);
@@ -318,11 +309,8 @@ void InteractiveChatService::service_function()
 
                 INFO("Start Listen");
                 recognizer->start_listen();
-
             }
-
         }
-
     }
 }
 
@@ -346,6 +334,9 @@ void InteractiveChatService::llm_query(const std::string &query) {
     if (_queryRunning) {
         WARNING("llama Query is already running!");
     }else {
+        INFO("Llm query: {}", query);
+        publish(MessageType::InteractiveChatStarted);
+
         _queryRunning = true;
         send_query(query);
     }

@@ -26,8 +26,8 @@
 
 constexpr int MAX_ERROR = 300;
 constexpr int MIN_MAGNITUDE = 1;
-constexpr int MAX_MAGNITUDE = 4;
-constexpr int TALKING_TRESH_COUNT = 500;
+constexpr int MAX_MAGNITUDE = 5;
+constexpr int REACTION_TRESHOLD_COUNT = 500;
 
 LandmarkTrackerService* LandmarkTrackerService::_instance = nullptr;
 
@@ -40,11 +40,88 @@ LandmarkTrackerService * LandmarkTrackerService::get_instance() {
 
 
 LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingService") {
-    _faceFound = false;
-    _handFound = false;
-    _gesturePerformanceCompleted = false;
     _errorTreshold = 50;
-    _talkingTimeCounter = 0;
+    _reactionEngageTimeout = 0;
+}
+void LandmarkTrackerService::initialize() {
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+    subscribe_to_service(GestureRecognizerService::get_instance());
+    subscribe_to_service(InteractiveChatService::get_instance());
+    subscribe_to_service(RobotControllerService::get_instance());
+    subscribe_to_service(GesturePerformerService::get_instance());
+
+    _jointLimits = JsonParserOperator::getJointLimits("/usr/local/etc/joint_angles.json");
+}
+
+
+TrackingData LandmarkTrackerService::collectTrackingData() {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+    TrackingData trackData;
+
+    trackData.handBbox = _recognizedGestureData.handBbox;
+    trackData.handGesture = _recognizedGestureData.handGesture;
+    trackData.handLandmark = _recognizedGestureData.handLandmark;
+
+    trackData.faceGesture = _recognizedGestureData.faceGesture;
+    trackData.faceLandmark = _recognizedGestureData.faceLandmark;
+
+    if (_sensorData.currentJointAngles.has_value()) {
+        trackData.currentJointAngles = _sensorData.currentJointAngles.value();
+        _sensorData.currentJointAngles.reset();
+    }
+
+    _recognizedGestureData.handBbox.clear();
+    _sensorData.currentJointAngles.reset();
+
+    return trackData;
+}
+
+
+Point2D LandmarkTrackerService::selectTheTarget(const TrackingData &trackData) {
+    // Priority: Face > Hand
+    if (!trackData.faceLandmark.empty() && trackData.faceLandmark.size() > 3) {
+        _lastKnownTarget.setValue(trackData.getFaceCenter());
+        return _lastKnownTarget.getValue();
+    } else if (!trackData.handBbox.empty() && trackData.handBbox.size() == 4) {
+       _lastKnownTarget.setValue(trackData.getHandCenter());
+        return _lastKnownTarget.getValue();
+    } else {
+        return _lastKnownTarget.getValue();
+    }
+
+}
+
+TrackState LandmarkTrackerService::getTrackingState(const PolarVector &errorVector) {
+
+    if (errorVector.magnitude > _errorTreshold) {
+        return TrackState::tracking;
+    } else if (errorVector.angle == 0 && errorVector.magnitude == 0) {
+        return TrackState::idle;
+    }else{
+        if (_reactionEngageTimeout >= REACTION_TRESHOLD_COUNT || _reactionEngageTimeout == 0) {
+            _reactionEngageTimeout = 1;
+            return TrackState::engaging_reaction;
+        } else {
+            ++_reactionEngageTimeout;
+            return TrackState::idle;
+        }
+    }
+}
+
+int LandmarkTrackerService::calculateControlMagnitude(const PolarVector &errorVector) {
+    //scale down it between  1 and 5
+    int magnitude = MIN_MAGNITUDE +
+        (errorVector.magnitude - _errorTreshold) * (MAX_MAGNITUDE - MIN_MAGNITUDE) / (MAX_ERROR - _errorTreshold);
+
+    // Clamp to [1, 5]
+    if (magnitude < MIN_MAGNITUDE) magnitude = MIN_MAGNITUDE;
+    if (magnitude > MAX_MAGNITUDE) magnitude = MAX_MAGNITUDE;
+
+    // INFO("error mag: {} - {}", magnitude, errorVector.magnitude);
+
+    return magnitude;
 }
 
 
@@ -53,119 +130,60 @@ LandmarkTrackerService::~LandmarkTrackerService() {
 
 
 void LandmarkTrackerService::service_function() {
-    //add thread sleep
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
-    subscribe_to_service(GestureRecognizerService::get_instance());
-    subscribe_to_service(InteractiveChatService::get_instance());
-    subscribe_to_service(RobotControllerService::get_instance());
-    subscribe_to_service(GesturePerformerService::get_instance());
-
-    _jointLimits = JsonParserOperator::getJointLimits("/usr/local/etc/joint_angles.json");
-    INFO("Test _jointLimits[ServoMotorJoint::leftArm][GestureJointState::fulldown].angle = {}", _jointLimits[ServoMotorJoint::leftArm][GestureJointState::fulldown].angle);
+    initialize();
 
     INFO("Entering the tracking loop...");
 
     while (_running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
-        _dataMutex.lock();
-            std::vector<int> handBbox = _recognizedGestureData.handBbox;
-            _recognizedGestureData.handBbox.clear();
-            std::map<ServoMotorJoint, uint8_t> currentJointAngles;
-            if (_sensorData.currentJointAngles.has_value()) {
-                currentJointAngles = _sensorData.currentJointAngles.value();
-                _sensorData.currentJointAngles.reset();
-            }
-            std::vector<int> faceLandMarks = _recognizedGestureData.faceLandmark;
-        _dataMutex.unlock();
+        TrackingData trackingData = collectTrackingData();
+        Point2D target = selectTheTarget(trackingData);
+        PolarVector errorVector = calculateErrorVector(target);
 
-        if (!faceLandMarks.empty()) {
-            int sumX = 0;
-            int sumY = 0;
-            int eyePointCount = 0;
+        TrackState trackState = getTrackingState(errorVector);
 
-            for (size_t i = 0; i < faceLandMarks.size(); i += 3) {
-                int id = faceLandMarks[i];
-                int cx = faceLandMarks[i + 1];
-                int cy = faceLandMarks[i + 2];
+        switch (trackState) {
+            case TrackState::tracking: {
 
-                // eye points
-                if (id == 33 || id == 133 || id == 362 || id == 263) {
-                    sumX += cx;
-                    sumY += cy;
-                    eyePointCount++;
-                }
-            }
-
-            if (eyePointCount > 0) {
-                int centerX = sumX / eyePointCount;
-                int centerY = sumY / eyePointCount;
-
-                ErrorVector errorVector = calculateErrorVector(centerX, centerY);
-                if (errorVector.magnitude > _errorTreshold) {
-                    if (_errorTreshold == 250) {
-                        _errorTreshold = 50;
-                    }
-
-                    //scale down it between  1 and 5
-                    int magnitude = MIN_MAGNITUDE +
-                        (errorVector.magnitude - _errorTreshold) * (MAX_MAGNITUDE - MIN_MAGNITUDE) / (MAX_ERROR - _errorTreshold);
-
-                    // Clamp to [1, 5]
-                    if (magnitude < MIN_MAGNITUDE) magnitude = MIN_MAGNITUDE;
-                    if (magnitude > MAX_MAGNITUDE) magnitude = MAX_MAGNITUDE;
-
-                    controlHead(errorVector.angle, magnitude);
-                    if (!currentJointAngles.empty()) {
-                        GesturePerformerService::idleJointPositions = currentJointAngles;
-                    }
-                } else {
-                    if (_talkingTimeCounter >= TALKING_TRESH_COUNT || _talkingTimeCounter == 0) {
-                        sayHello();
-                        _talkingTimeCounter = 1;
-                    }
-                    INFO("count: {} ", _talkingTimeCounter);
-                    ++_talkingTimeCounter;
-                }
-            }
-        } else if (!handBbox.empty() && handBbox.size() == 4) {
-
-            int centerX = (handBbox[0] + handBbox[2]) / 2;
-            int centerY = (handBbox[1] + handBbox[3]) / 2;
-
-            ErrorVector errorVector = calculateErrorVector(centerX, centerY);
-            if (errorVector.magnitude > _errorTreshold) {
-                //scale down it between  1 and 5
-                int magnitude = MIN_MAGNITUDE +
-                    (errorVector.magnitude - _errorTreshold) * (MAX_MAGNITUDE - MIN_MAGNITUDE) / (MAX_ERROR - _errorTreshold);
-
-                // Clamp to [1, 5]
-                if (magnitude < MIN_MAGNITUDE) magnitude = MIN_MAGNITUDE;
-                if (magnitude > MAX_MAGNITUDE) magnitude = MAX_MAGNITUDE;
-
+                int magnitude = calculateControlMagnitude(errorVector);
                 controlHead(errorVector.angle, magnitude);
-                if (!currentJointAngles.empty()) {
-                    GesturePerformerService::idleJointPositions = currentJointAngles;
+
+                if (!trackingData.currentJointAngles.empty()) {
+                    GesturePerformerService::idleJointPositions = trackingData.currentJointAngles;
                 }
+
+                break;
             }
 
-        } else {
-            //searchFace();
+            case TrackState::engaging_reaction: {
+                engageReaction(trackingData);
+                break;
+            }
+
+            case TrackState::idle: {
+
+                break;
+            }
+
+            default:
+                break;
         }
+
     }
 }
 
-ErrorVector LandmarkTrackerService::calculateErrorVector(int centerX, int centerY) {
-    ErrorVector errorVector;
+PolarVector LandmarkTrackerService::calculateErrorVector(const Point2D &target) {
+    PolarVector errorVector;
+    if (target.x == 0 && target.y == 0)
+        return PolarVector{0,0};
 
-    int errorX = centerX - 320; // Target X is 320
-    int errorY = centerY - 240; // Target Y is 240
+    int errorX = target.x - 320; // Target X is 320
+    int errorY = target.y - 240; // Target Y is 240
 
     // Calculate magnitude of error vector
     double magnitude = sqrt(errorX * errorX + errorY * errorY);
-    INFO("Error Magnitude: {}",magnitude);
-
 
     double angle = atan2(-errorY, errorX) * 180.0 / M_PI;
 
@@ -181,17 +199,20 @@ ErrorVector LandmarkTrackerService::calculateErrorVector(int centerX, int center
 }
 
 void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
-        switch (type) {
-            case MessageType::LLMResponse: {
+    switch (type) {
+        case MessageType::LLMResponse: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _llmResponseData = *static_cast<LLMResponseData*>(data.get());
             }
             break;
         }
         case MessageType::RecognizedGesture : {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _recognizedGestureData = *static_cast<RecognizedGestureData*>(data.get());
             }
             break;
@@ -199,14 +220,20 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
 
         case MessageType::SensorData: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _sensorData = *static_cast<SensorData*>(data.get());
             }
             break;
         }
 
         case MessageType::GesturePerformanceCompleted : {
-            _gesturePerformanceCompleted = true;
-            _condVar.notify_one();
+            start();
+            break;
+        }
+
+        case MessageType::InteractiveChatStarted : {
+            stop();
             break;
         }
 
@@ -229,26 +256,11 @@ void LandmarkTrackerService::controlHead(int angle, int magnitude) {
     publish(MessageType::ControlData, data);
 }
 
-void LandmarkTrackerService::sayHello() {
+void LandmarkTrackerService::engageReaction(TrackingData trackingData) {
+    INFO("engageReaction! - faceGesture{}", trackingData.faceGesture);
 
-    // if (_faceFound)
-    //     return;
-    //
-    // _faceFound = true;
-
-    std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
-    static_cast<LLMResponseData *>(data.get())->sentence = "Hey Buddy.";
-    static_cast<LLMResponseData *>(data.get())->reactionSimilarity = 0.9;
-    static_cast<LLMResponseData *>(data.get())->emotionSimilarity = 0;
-    static_cast<LLMResponseData *>(data.get())->reactionalGesture.reaction = ReactionType::greeting;
-
-    ERROR("Day Hello!!");
-    _errorTreshold = 250;
-    _gesturePerformanceCompleted = false;
-
-    publish(MessageType::LLMResponse, data);
-
-    std::unique_lock<std::mutex> lock(_dataMutex);
-    _condVar.wait(lock, [this] { return _gesturePerformanceCompleted.load(); });
+    std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
+    static_cast<LLMQueryData *>(data.get())->query = "You are looking a person. He/She seems " + trackingData.faceGesture + ". Say something to her/him.";
+    publish(MessageType::LLMQuery, data);
 
 }

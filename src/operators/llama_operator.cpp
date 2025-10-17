@@ -34,6 +34,7 @@ LlamaOperator::LlamaOperator()
     _smpl = nullptr;
     _vocab = nullptr;
     _modelLoaded = false;
+    _systemMessage = "";
 }
 
 LlamaOperator::~LlamaOperator() {
@@ -49,6 +50,10 @@ void LlamaOperator::setOptions(int ngl, int nThreads, int n_ctx, float minP, flo
     _topK      = topK;
     _topP      = topP;
     _nThreads = nThreads;
+}
+
+void LlamaOperator::setSystemMessage(const std::string& systemMsg) {
+    _systemMessage = systemMsg;
 }
 
 bool LlamaOperator::loadEmbedModel(const std::string & modelPath, const enum llama_pooling_type poolingType) {
@@ -154,61 +159,61 @@ bool LlamaOperator::loadChatModel(const std::string & modelPath) {
 }
 
 
-void LlamaOperator:: setCallBackFunction(std::function<void(const std::string &)> func) {
+void LlamaOperator::setCallBackFunction(std::function<void(const std::string &)> func) {
     _responseCallbackFunction = func;
 }
 
 
 std::string LlamaOperator::generateResponse(const std::string& prompt) {
-       std::string response;
+    std::string response;
 
-        const bool is_first = llama_get_kv_cache_used_cells(_ctx) == 0;
+    const bool is_first = llama_get_kv_cache_used_cells(_ctx) == 0;
 
-        // tokenize the prompt
-        const int n_prompt_tokens = -llama_tokenize(_vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
-        std::vector<llama_token> prompt_tokens(n_prompt_tokens);
-        if (llama_tokenize(_vocab, prompt.c_str(), prompt.size(), prompt_tokens.data(), prompt_tokens.size(), is_first, true) < 0) {
-            GGML_ABORT("failed to tokenize the prompt\n");
+    // tokenize the prompt
+    const int n_prompt_tokens = -llama_tokenize(_vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
+    std::vector<llama_token> prompt_tokens(n_prompt_tokens);
+    if (llama_tokenize(_vocab, prompt.c_str(), prompt.size(), prompt_tokens.data(), prompt_tokens.size(), is_first, true) < 0) {
+        GGML_ABORT("failed to tokenize the prompt\n");
+    }
+
+    // prepare a batch for the prompt
+    llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
+    llama_token new_token_id;
+    while (true) {
+        // check if we have enough space in the context to evaluate this batch
+        int n_ctx = llama_n_ctx(_ctx);
+        int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
+        if (n_ctx_used + batch.n_tokens > n_ctx) {
+            //printf("\033[0m\n");
+            fprintf(stderr, "context size exceeded\n");
+            exit(0);
         }
 
-        // prepare a batch for the prompt
-        llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
-        llama_token new_token_id;
-        while (true) {
-            // check if we have enough space in the context to evaluate this batch
-            int n_ctx = llama_n_ctx(_ctx);
-            int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
-            if (n_ctx_used + batch.n_tokens > n_ctx) {
-                //printf("\033[0m\n");
-                fprintf(stderr, "context size exceeded\n");
-                exit(0);
-            }
-
-            if (llama_decode(_ctx, batch)) {
-                GGML_ABORT("failed to decode\n");
-            }
-
-            // sample the next token
-            new_token_id = llama_sampler_sample(_smpl, _ctx, -1);
-
-            // is it an end of generation?
-            if (llama_vocab_is_eog(_vocab, new_token_id)) {
-                break;
-            }
-
-            // convert the token to a string, print it and add it to the response
-            char buf[256];
-            int n = llama_token_to_piece(_vocab, new_token_id, buf, sizeof(buf), 0, true);
-            if (n < 0) {
-                GGML_ABORT("failed to convert token to piece\n");
-            }
-            _responseCallbackFunction(std::string(buf, n));
-            batch = llama_batch_get_one(&new_token_id, 1);
+        if (llama_decode(_ctx, batch)) {
+            GGML_ABORT("failed to decode\n");
         }
 
-        _responseCallbackFunction("<end>");
+        // sample the next token
+        new_token_id = llama_sampler_sample(_smpl, _ctx, -1);
 
-        return response;
+        // is it an end of generation?
+        if (llama_vocab_is_eog(_vocab, new_token_id)) {
+            break;
+        }
+
+        // convert the token to a string, print it and add it to the response
+        char buf[256];
+        int n = llama_token_to_piece(_vocab, new_token_id, buf, sizeof(buf), 0, true);
+        if (n < 0) {
+            GGML_ABORT("failed to convert token to piece\n");
+        }
+        _responseCallbackFunction(std::string(buf, n));
+        batch = llama_batch_get_one(&new_token_id, 1);
+    }
+
+    _responseCallbackFunction("<end>");
+
+    return response;
 }
 
 
@@ -217,6 +222,12 @@ void LlamaOperator::chat(const std::string &userInput) {
     int prev_len = 0;
 
     if (userInput.empty()) return;
+
+    // İlk mesajsa ve system mesajı varsa, onu ekle
+    if (_messages.empty() && !_systemMessage.empty()) {
+        _messages.push_back({"system", strdup(_systemMessage.c_str())});
+    }
+
     _messages.push_back({"user", strdup(userInput.c_str())});
     const char* tmpl = llama_model_chat_template(_model, nullptr);
     int new_len = llama_chat_apply_template(tmpl, _messages.data(), _messages.size(), true, formatted.data(), formatted.size());

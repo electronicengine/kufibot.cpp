@@ -35,6 +35,7 @@ public:
     std::vector<float> calculateEmbeddings(const std::string& text);
     float getSimilarity(const std::vector<float>& Emb1, const std::vector<float>& Emb2){ return common_embd_similarity_cos(&Emb1[0], &Emb2[0], Emb1.size()); }
     void unloadEmbedModel();
+    void setSystemMessage(const std::string& systemMsg);
 
 private:
     int _nThreads;
@@ -50,6 +51,7 @@ private:
     llama_context* _ctx;
     llama_sampler* _smpl;
     llama_batch* _batch;
+    std::string _systemMessage;
 
     const llama_vocab* _vocab;
     std::vector<llama_chat_message> _messages;

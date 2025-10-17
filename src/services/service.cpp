@@ -85,7 +85,7 @@ void Service::run()
             INFO("{} is running...", _name.c_str());
             service_function();
         }
-    }else {
+    } else {
         WARNING("{} is not running... Because, it is disabled.", _name.c_str());
     }
 }
@@ -95,9 +95,11 @@ void Service::stop()
     if (_running){
         _condVar.notify_one();
         _running = false;
-        unsubscribe_all_services();
+        //unsubscribe_all_services();
         INFO("{} is stopping...", _name.c_str());
-        if (_serviceThread.joinable()) {
+        if(std::this_thread::get_id() == _serviceThread.get_id()) {
+            _serviceThread.detach();
+        }else if (_serviceThread.joinable()) {
             _serviceThread.join(); 
         }
         INFO("{} is stopped.", _name.c_str());

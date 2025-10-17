@@ -36,14 +36,14 @@ FaceGestureRecognizingOperator::FaceGestureRecognizingOperator(const std::string
     PyRun_SimpleString("import os; sys.path.insert(0, os.getcwd())");
 
     // Redirect Python stdout and stderr to a dummy class
-    int saved_stderr;
-    int dev_null;
+    // int saved_stderr;
+    // int dev_null;
 
     // Call this before running Python
 
-    saved_stderr = dup(STDERR_FILENO);
-    dev_null = open("/dev/null", O_WRONLY);
-    dup2(dev_null, STDERR_FILENO);  // Redirect stderr to /dev/null
+    // saved_stderr = dup(STDERR_FILENO);
+    // dev_null = open("/dev/null", O_WRONLY);
+    // dup2(dev_null, STDERR_FILENO);  // Redirect stderr to /dev/null
 
 }
 

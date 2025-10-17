@@ -50,7 +50,10 @@ void RobotControllerService::service_function() {
     _robot.start();
 
     while (_running) {
-        std::unique_lock<std::mutex> lock(_dataMutex);
+        {
+            std::unique_lock<std::mutex> lock(_dataMutex);
+            _condVar.wait(lock);
+        }
 
         if (_controlData.has_value()) {
             SourceService source;
@@ -68,15 +71,7 @@ void RobotControllerService::service_function() {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
             publishUpdatedMotorPositions();
 
-        }else {
-            _condVar.wait(lock);
         }
-        // std::this_thread::sleep_for(std::chrono::microseconds(300));
-        // if (!_subscribers.empty()) {
-        //     std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
-        //     *static_cast<SensorData *>(data.get()) = _robot.get_sensor_values();
-        //     publish(MessageType::SensorData, data);
-        // }
     }
 
     _robot.stop();
@@ -88,16 +83,11 @@ RobotControllerService::~RobotControllerService()
 }
 
 
-
-
-
 void RobotControllerService::subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::ControlData: {
             if (data) {
-                INFO("RobotControllerService::subcribed_data_receive-ControlData");
                 _controlData = *static_cast<ControlData*>(data.get());
                 _condVar.notify_one();
 

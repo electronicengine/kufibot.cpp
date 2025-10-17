@@ -43,8 +43,7 @@ void Publisher::publish(MessageType type, const std::unique_ptr<MessageData>& da
     // TRACE("publishing... publisher: {} subscriber count: {}", _publisherName , _subscribers.size());
     for (const auto& sub : _subscribers) {
         if (sub) {
-            if (static_cast<Service*>(sub)->is_running())
-                sub->subcribed_data_receive(type, data);
+            sub->subcribed_data_receive(type, data);
         }
     }
 }

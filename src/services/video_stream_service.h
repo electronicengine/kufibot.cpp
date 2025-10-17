@@ -18,11 +18,12 @@ private:
     static VideoStreamService* _instance;
 
     VideoStreamService(int cameraIndex = 0);
+    std::optional<cv::VideoCapture>  initialize();
     void streamLoop();
     void service_function();
 
     //subscribed to noting
-    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data){(void) type, (void) data; };
+    void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
 };
 
