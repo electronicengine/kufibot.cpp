@@ -201,6 +201,7 @@ struct LLMResponseData : public MessageData {
     EmotionalGesture emotionalGesture;
     ReactionalGesture reactionalGesture;
     Directive directive;
+    bool endMarker;
 
     float emotionSimilarity;
     float reactionSimilarity;

@@ -97,11 +97,12 @@ void RemoteConnectionService::web_socket_receive_message(websocketpp::connection
 }
 
 void RemoteConnectionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::WebSocketReceive: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 std::string msg = static_cast<WebSocketReceiveData*>(data.get())->msg;
                 websocketpp::connection_hdl hdl = static_cast<WebSocketReceiveData*>(data.get())->hdl;
                 web_socket_receive_message(hdl, msg);
@@ -111,6 +112,8 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
 
         case MessageType::VideoFrame: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 cv::Mat frame = static_cast<VideoFrameData*>(data.get())->frame;
                 video_frame(frame);
             }
@@ -120,6 +123,8 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
 
         case MessageType::SensorData: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _sensorData = *static_cast<SensorData*>(data.get());
             }
 

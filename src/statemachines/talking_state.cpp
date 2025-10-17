@@ -54,7 +54,7 @@ std::optional<State*> TalkingState::onEvent(const ControlEvent& ev) {
             return stayOnThisState();
         }
         default:
-            INFO("doesn't find the event in TuiControlState");
+            INFO("doesn't find the event in TalkingState");
             return stayOnThisState();
     }
 }

@@ -26,7 +26,6 @@ private:
     static GesturePerformerService *_instance;
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointGesturePositionList;
 
-    std::atomic<bool> _gestureWorking{false};
     std::atomic<bool> _speaking{false};
     // Motion data loaded from JSON
     std::map<EmotionType, EmotionalMotion> _emotionalMotions;
@@ -47,7 +46,6 @@ private:
     int getAngleForJointState(ServoMotorJoint joint, GestureJointState state);
     void setIdlePosition();
     void executeJointPositions(const std::map<ServoMotorJoint, GestureJointState>& positions);
-    void stopCurrentMotion();
 
     // Motion execution methods
     void executeEmotionalMotion(EmotionType emotionType);

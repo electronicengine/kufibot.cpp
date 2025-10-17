@@ -88,15 +88,16 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
     switch (type) {
         case MessageType::ControlData: {
             if (data) {
-                _controlData = *static_cast<ControlData*>(data.get());
+                {
+                    std::lock_guard<std::mutex> lock(_dataMutex);
+                    _controlData = *static_cast<ControlData*>(data.get());
+                }
                 _condVar.notify_one();
-
             }
             break;
         }
 
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

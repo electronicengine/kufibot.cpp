@@ -265,11 +265,12 @@ TuiService::~TuiService() {
 }
 
 void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::LLMResponse:
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 std::string response = static_cast<LLMResponseData*>(data.get())->sentence;
                 EmotionalGesture emotion = static_cast<LLMResponseData*>(data.get())->emotionalGesture;
                 ReactionalGesture reaction = static_cast<LLMResponseData*>(data.get())->reactionalGesture;
@@ -287,6 +288,8 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
 
         case MessageType::SensorData:
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _currentSensorData = *static_cast<SensorData*>(data.get());
                 if (_tuiSensorCallBackFunction) {
                     _tuiSensorCallBackFunction(_currentSensorData);
@@ -307,6 +310,8 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
 
         case MessageType::RecognizedGesture : {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 _recognizedGestureData = *static_cast<RecognizedGestureData*>(data.get());
             }
             break;

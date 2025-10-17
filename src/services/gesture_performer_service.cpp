@@ -16,8 +16,6 @@
  */
 
 #include "gesture_performer_service.h"
-
-#include "gesture_recognizer_service.h"
 #include "landmark_tracker_service.h"
 #include "tui_service.h"
 #include "video_stream_service.h"
@@ -38,7 +36,7 @@ GesturePerformerService *GesturePerformerService::get_instance()
 
 
 GesturePerformerService::GesturePerformerService() : Service("GesturePerformerService") {
-        _gestureWorking = false;
+    _speaking = false;
 }
 
 
@@ -76,27 +74,33 @@ void GesturePerformerService::service_function()
 
     INFO("Entering the gesture performing loop...");
     while (_running) {
-        std::unique_lock<std::mutex> lock(_llmResponseQueueMutex);
+        {
+            std::unique_lock<std::mutex> lock(_llmResponseQueueMutex);
+            _condVar.wait(lock);
+        }
 
+        while (!_llmResponseQueue.empty()) {
+            LLMResponseData response = _llmResponseQueue.front();
 
-        _condVar.wait(lock, [this]() {
-            if (_llmResponseQueue.empty()) {
-                WARNING("Gesture Performance is finished!");
+            INFO("Speak Text: {}", response.sentence);
+            if (!response.sentence.empty()) {
+                std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+                speak.detach();
+                makeMimic(response);
+
+                while (_speaking) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                };
+            }
+
+            INFO("End Marker {}", response.endMarker);
+            if (response.endMarker) {
+                INFO("Gesture Performance is complited.!");
                 publish(MessageType::GesturePerformanceCompleted);
             }
 
-            return !_llmResponseQueue.empty();
-        });
-
-        while (!_llmResponseQueue.empty() && !_gestureWorking) {
-            LLMResponseData response = _llmResponseQueue.front();
-
-            std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
-            speak.detach();
-            makeMimic(response);
-
             _llmResponseQueue.pop();
-            while (_speaking); // Wait for the speech to finish
+
         }
     }
 
@@ -105,11 +109,11 @@ void GesturePerformerService::service_function()
 
 void GesturePerformerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
 
-    std::lock_guard<std::mutex> lock(_dataMutex);
-
     switch (type) {
         case MessageType::LLMResponse: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 LLMResponseData llmResponse = *static_cast<LLMResponseData*>(data.get());
                 _llmResponseQueue.push(llmResponse);
                 _condVar.notify_one(); // Notify the processing thread
@@ -137,6 +141,7 @@ int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, Gestur
 }
 
 void GesturePerformerService::setIdlePosition() {
+    INFO("setIdlePosition");
     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
     data->source = SourceService::gesturePerformerService;
 
@@ -163,9 +168,6 @@ void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoi
     _currentPositions = jointAngles;
 }
 
-void GesturePerformerService::stopCurrentMotion() {
-    _gestureWorking = false;
-}
 
 void GesturePerformerService::executeEmotionalMotion(EmotionType emotionType) {
 
@@ -176,6 +178,7 @@ void GesturePerformerService::executeEmotionalMotion(EmotionType emotionType) {
     }
 
     const EmotionalMotion& motion = it->second;
+    INFO("executeEmotionalMotion {}", (int)emotionType);
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 
 }
@@ -189,7 +192,7 @@ void GesturePerformerService::executeReactionalMotion(ReactionType reactionType)
     }
 
     const ReactionalMotion& motion = it->second;
-
+    INFO("executeReactionalMotion {}",(int)reactionType);
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 
 }
@@ -204,6 +207,7 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
     auto startTime = std::chrono::steady_clock::now();
 
+    INFO("Executing base joint poisitions");
     executeJointPositions(baseJoints);
 
     // If no sequence, just hold the base position for the duration
@@ -216,7 +220,7 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
     // Execute sequence
     size_t currentSequenceIndex = 0;
 
-    while (currentSequenceIndex < sequence.size() && _gestureWorking) {
+    while (currentSequenceIndex < sequence.size()) {
         auto currentTime = std::chrono::steady_clock::now();
         int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             currentTime - startTime).count();
@@ -225,11 +229,9 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
         if (elapsedMs >= currentItem.time) {
             // Execute this sequence item
-            INFO("Executing sequence: {}", currentSequenceIndex);
+            INFO("time: {} - Executing sequence: {}", currentItem.time, currentSequenceIndex);
             executeJointPositions(currentItem.joints);
             currentSequenceIndex++;
-        } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     }
 
@@ -238,24 +240,18 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
     int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
         currentTime - startTime).count();
 
-    if (elapsedMs < totalDuration && _gestureWorking) {
+    if (elapsedMs < totalDuration) {
         INFO("Waiting for the remaining duration of gesture: {} ms", totalDuration - elapsedMs);
         std::this_thread::sleep_for(std::chrono::milliseconds(totalDuration - elapsedMs));
     }
 
     // Return to idle position after motion completes
-    if (_gestureWorking) {
-        setIdlePosition();
-    }
+    setIdlePosition();
+
 }
 
 void GesturePerformerService::makeMimic(const LLMResponseData &llm_response) {
-    if (_gestureWorking) {
-        INFO("Gesture already in progress, skipping new gesture");
-        return;
-    }
-
-    _gestureWorking = true;
+    INFO("makeMimic");
 
     if (llm_response.reactionSimilarity > llm_response.emotionSimilarity) {
         executeReactionalMotion(llm_response.reactionalGesture.reaction);
@@ -263,13 +259,12 @@ void GesturePerformerService::makeMimic(const LLMResponseData &llm_response) {
         executeEmotionalMotion(llm_response.emotionalGesture.emotion);
     }
 
-    _gestureWorking = false;
-
 }
 
 void GesturePerformerService::speakText(const std::string &text) {
     _speaking = true;
     SpeechPerformingOperator::get_instance()->speakText(text);
+    INFO("_speaking is finished!");
     _speaking = false;
 }
 

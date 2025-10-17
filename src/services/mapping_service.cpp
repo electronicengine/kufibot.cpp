@@ -158,7 +158,6 @@ void MappingService::updatePlot(double angle, int magnitude) {
 }
 
 void MappingService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::SensorData: {

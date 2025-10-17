@@ -45,7 +45,7 @@ std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
         case SourceService::gesturePerformerService:
             return transTo<TalkingState>();
         case SourceService::landmarkTrackerService:
-            return transTo<TrackingState>();
+            return transTo<TalkingState>();
         default:
             return stayOnThisState();
     }

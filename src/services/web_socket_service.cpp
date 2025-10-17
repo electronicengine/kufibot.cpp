@@ -107,11 +107,11 @@ void WebSocketService::on_message(websocketpp::connection_hdl hdl, Server::messa
 }
 
 void WebSocketService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::WebSocketTransfer: {
             if(data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
 
                 websocketpp::connection_hdl hdl = static_cast<WebSocketTransferData*>(data.get())->hdl;
                 std::string mg = static_cast<WebSocketTransferData*>(data.get())->msg;

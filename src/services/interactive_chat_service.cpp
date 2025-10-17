@@ -77,7 +77,7 @@ void InteractiveChatService::query_response_callback(const std::string &response
             if (trimmed_sentence.length() >= 4) {
                 std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
                 static_cast<LLMResponseData *>(data.get())->sentence = trimmed_sentence;
-
+                static_cast<LLMResponseData *>(data.get())->endMarker = true;
                 std::pair<EmotionalGesture, float> emotion = find_sentence_emotion(trimmed_sentence);
                 static_cast<LLMResponseData *>(data.get())->emotionalGesture = emotion.first;
                 static_cast<LLMResponseData *>(data.get())->emotionSimilarity = emotion.second;
@@ -88,6 +88,12 @@ void InteractiveChatService::query_response_callback(const std::string &response
 
                 publish(MessageType::LLMResponse, data);
             }
+        }else {
+            std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
+            static_cast<LLMResponseData *>(data.get())->sentence = "";
+            static_cast<LLMResponseData *>(data.get())->endMarker = true;
+
+            publish(MessageType::LLMResponse, data);
         }
         accumulated_text.clear();
 
@@ -110,6 +116,7 @@ void InteractiveChatService::query_response_callback(const std::string &response
         if (trimmed_sentence.length() >= 4) {
             std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
             static_cast<LLMResponseData*>(data.get())->sentence = trimmed_sentence;
+            static_cast<LLMResponseData *>(data.get())->endMarker = false;
 
             std::pair<EmotionalGesture,float> emotion = find_sentence_emotion(trimmed_sentence);
             static_cast<LLMResponseData*>(data.get())->emotionalGesture = emotion.first;
@@ -315,11 +322,12 @@ void InteractiveChatService::service_function()
 }
 
 void InteractiveChatService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
-    std::lock_guard<std::mutex> lock(_dataMutex);
 
     switch (type) {
         case MessageType::LLMQuery: {
             if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
                 std::string queryMsg = static_cast<LLMQueryData*>(data.get())->query;
                 llm_query(queryMsg);
             }
