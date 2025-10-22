@@ -26,7 +26,7 @@
 
 constexpr int MAX_ERROR = 300;
 constexpr int MIN_MAGNITUDE = 1;
-constexpr int MAX_MAGNITUDE = 5;
+constexpr int MAX_MAGNITUDE = 4;
 constexpr int REACTION_TRESHOLD_COUNT = 500;
 
 LandmarkTrackerService* LandmarkTrackerService::_instance = nullptr;
@@ -44,8 +44,6 @@ LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingServ
     _reactionEngageTimeout = 0;
 }
 void LandmarkTrackerService::initialize() {
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
     subscribe_to_service(GestureRecognizerService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
@@ -90,7 +88,6 @@ Point2D LandmarkTrackerService::selectTheTarget(const TrackingData &trackData) {
     } else {
         return _lastKnownTarget.getValue();
     }
-
 }
 
 TrackState LandmarkTrackerService::getTrackingState(const PolarVector &errorVector) {
@@ -170,9 +167,9 @@ void LandmarkTrackerService::service_function() {
             default:
                 break;
         }
-
     }
 }
+
 
 PolarVector LandmarkTrackerService::calculateErrorVector(const Point2D &target) {
     PolarVector errorVector;
@@ -258,6 +255,9 @@ void LandmarkTrackerService::controlHead(int angle, int magnitude) {
 
 void LandmarkTrackerService::engageReaction(TrackingData trackingData) {
     INFO("engageReaction! - faceGesture{}", trackingData.faceGesture);
+    if (trackingData.faceGesture == "No Face") {
+        return;
+    }
 
     std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
     static_cast<LLMQueryData *>(data.get())->query = "You are looking a person. He/She seems " + trackingData.faceGesture + ". Say something to her/him.";

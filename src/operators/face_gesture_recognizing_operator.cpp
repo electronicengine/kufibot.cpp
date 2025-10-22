@@ -17,10 +17,12 @@
 
 #include "face_gesture_recognizing_operator.h"
 
-#include <iostream>
 #include <cstdio>
-#include <unistd.h>
 #include <fcntl.h>
+#include <iostream>
+#include <unistd.h>
+
+#include "../logger.h"
 
 
 FaceGestureRecognizingOperator::FaceGestureRecognizingOperator(const std::string& venvPath)
@@ -149,7 +151,7 @@ bool FaceGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::str
         Py_DECREF(result);
         PyGILState_Release(gstate); // 🔓 GIL bırak
 
-        std::cerr << "Unexpected return from Python function" << std::endl;
+        ERROR("Unexpected return from Python function");
         return false;
     }
 }
