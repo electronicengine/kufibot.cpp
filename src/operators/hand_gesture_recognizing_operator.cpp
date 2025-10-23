@@ -21,128 +21,340 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+void HandGestureRecognizingOperator::clearResults()
+{
 
-
-HandGestureRecognizingOperator::HandGestureRecognizingOperator(const std::string& venvPath)
-    : pModule(nullptr), pFuncInit(nullptr), pFuncProcess(nullptr) {
-    Py_Initialize();
-
-    std::string sitePackages = venvPath + "/lib/python3.11/site-packages";
-    std::string cmdPath = "import sys; sys.path.insert(0, '" + sitePackages + "')";
-    PyRun_SimpleString(cmdPath.c_str());
-    PyRun_SimpleString("import os; sys.path.insert(0, os.getcwd())");
-
-    // Redirect Python stdout and stderr to a dummy class
-    int saved_stderr;
-    int dev_null;
-
-    // Call this before running Python
-
-    saved_stderr = dup(STDERR_FILENO);
-    dev_null = open("/dev/null", O_WRONLY);
-    dup2(dev_null, STDERR_FILENO);  // Redirect stderr to /dev/null
-
-
+    if (results) {
+        mp_destroy_multi_face_landmarks(results);
+        results = nullptr;
+    }
 }
 
-HandGestureRecognizingOperator::~HandGestureRecognizingOperator() {
-    Py_XDECREF(pFuncInit);
-    Py_XDECREF(pFuncProcess);
-    Py_XDECREF(pModule);
-    Py_Finalize();
+HandGestureRecognizingOperator::HandGestureRecognizingOperator(bool mode, int maxHands, float detectionCon, float trackCon)
+    : mode(mode), maxHands(maxHands), detectionCon(detectionCon),
+      trackCon(trackCon), instance(nullptr), landmarks_poller(nullptr),
+      handedness_poller(nullptr), results(nullptr), initialized(false)
+{
+
+    // Parmak ucu ID'leri
+    tipIds = {4, 8, 12, 16, 20};
+
+    // MediaPipe instance'ını oluştur
+    initialize();
 }
 
-bool HandGestureRecognizingOperator::initialize() {
-    PyObject* pName = PyUnicode_DecodeFSDefault("hand_gesture_recognition_module");
-    if (!pName) {
-        PyErr_Print();
+HandGestureRecognizingOperator::~HandGestureRecognizingOperator()
+{
+    cleanup();
+}
+
+bool HandGestureRecognizingOperator::initialize()
+{
+
+    if (initialized) return true;
+
+    // MediaPipe grafiğini yükle
+    std::string path = "mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb";
+    mp_instance_builder* builder = mp_create_instance_builder(path.c_str(), "image");
+
+    if (!builder) {
+        std::cerr << "Failed to create instance builder" << std::endl;
         return false;
     }
 
-    pModule = PyImport_Import(pName);
-    Py_DECREF(pName);
-    if (!pModule) {
-        PyErr_Print();
+    // Parametreleri ayarla
+    mp_add_option_float(builder, "palmdetectioncpu__TensorsToDetectionsCalculator",
+                        "min_score_thresh", detectionCon);
+    mp_add_option_double(builder, "handlandmarkcpu__ThresholdingCalculator",
+                        "threshold", trackCon);
+
+    // Side packet'ları ekle
+    mp_add_side_packet(builder, "num_hands", mp_create_packet_int(maxHands));
+    mp_add_side_packet(builder, "model_complexity", mp_create_packet_int(1));
+    mp_add_side_packet(builder, "use_prev_landmarks", mp_create_packet_bool(!mode));
+
+    // Instance'ı oluştur
+    instance = mp_create_instance(builder);
+    if (!instance) {
+        std::cerr << "Failed to create instance" << std::endl;
         return false;
     }
 
-    pFuncInit = PyObject_GetAttrString(pModule, "initialize_detector");
-    if (!pFuncInit || !PyCallable_Check(pFuncInit)) {
-        PyErr_Print();
+    // Poller'ları oluştur
+    landmarks_poller = mp_create_poller(instance, "multi_hand_landmarks");
+    if (!landmarks_poller) {
+        std::cerr << "Failed to create landmarks poller" << std::endl;
         return false;
     }
 
-    PyObject* result = PyObject_CallObject(pFuncInit, NULL);
-    if (!result) {
-        PyErr_Print();
-        return false;
-    }
-    Py_DECREF(result);
-
-    pFuncProcess = PyObject_GetAttrString(pModule, "process_frame");
-    if (!pFuncProcess || !PyCallable_Check(pFuncProcess)) {
-        PyErr_Print();
+    handedness_poller = mp_create_poller(instance, "multi_handedness");
+    if (!handedness_poller) {
+        std::cerr << "Failed to create handedness poller" << std::endl;
         return false;
     }
 
+    // Grafiği başlat
+    if (!mp_start(instance)) {
+        std::cerr << "Failed to start graph" << std::endl;
+        return false;
+    }
+
+    initialized = true;
     return true;
+
 }
 
-bool HandGestureRecognizingOperator::processFrame(const cv::Mat& frame, std::string& gesture,
-                                         std::vector<int>& landmarks, std::vector<int>& bbox) {
-    PyGILState_STATE gstate = PyGILState_Ensure(); // 🔒 GIL al
+void HandGestureRecognizingOperator::cleanup()
+{
 
-    PyObject* pyFrame = PyBytes_FromStringAndSize(
-        reinterpret_cast<const char*>(frame.data),
-        frame.total() * frame.elemSize());
+    clearResults();
 
-    PyObject* args = PyTuple_New(4);
-    PyTuple_SetItem(args, 0, pyFrame);
-    PyTuple_SetItem(args, 1, PyLong_FromLong(frame.rows));
-    PyTuple_SetItem(args, 2, PyLong_FromLong(frame.cols));
-    PyTuple_SetItem(args, 3, PyLong_FromLong(frame.channels()));
-
-    PyObject* result = PyObject_CallObject(pFuncProcess, args);
-    Py_DECREF(args);
-
-    if (!result) {
-        PyErr_Print();
-        PyGILState_Release(gstate); // 🔓 GIL bırak
-
-        return false;
+    if (handedness_poller) {
+        mp_destroy_poller(handedness_poller);
+        handedness_poller = nullptr;
     }
 
-    if (PyTuple_Check(result) && PyTuple_Size(result) == 3) {
-        PyObject* pyGesture = PyTuple_GetItem(result, 0);
-        PyObject* pyLms = PyTuple_GetItem(result, 1);
-        PyObject* pyBBox = PyTuple_GetItem(result, 2);
-
-        gesture = PyUnicode_AsUTF8(pyGesture);
-        landmarks = pyListToIntVector(pyLms);
-        bbox = pyListToIntVector(pyBBox);
-
-        Py_DECREF(result);
-        PyGILState_Release(gstate); // 🔓 GIL bırak
-
-        return true;
-    } else {
-        Py_DECREF(result);
-        PyGILState_Release(gstate); // 🔓 GIL bırak
-
-        std::cerr << "Unexpected return from Python" << std::endl;
-        return false;
+    if (landmarks_poller) {
+        mp_destroy_poller(landmarks_poller);
+        landmarks_poller = nullptr;
     }
+
+    if (instance) {
+        mp_destroy_instance(instance);
+        instance = nullptr;
+    }
+
+    initialized = false;
+
 }
 
-std::vector<int> HandGestureRecognizingOperator::pyListToIntVector(PyObject* list) {
-    std::vector<int> result;
-    if (PyList_Check(list)) {
-        for (Py_ssize_t i = 0; i < PyList_Size(list); ++i) {
-            PyObject* item = PyList_GetItem(list, i);
-            if (PyLong_Check(item)) {
-                result.push_back(PyLong_AsLong(item));
-            }
+cv::Mat HandGestureRecognizingOperator::findFingers(cv::Mat &frame, bool draw)
+{
+    if (!initialized) {
+        std::cerr << "Detector not initialized!" << std::endl;
+        return frame;
+    }
+
+    // Önceki sonuçları temizle
+    clearResults();
+    lmsList.clear();
+    bbox = BoundingBox();
+
+    // Görüntüyü RGB'ye çevir (MediaPipe RGB bekler)
+    cv::Mat imgRGB;
+    cv::cvtColor(frame, imgRGB, cv::COLOR_BGR2RGB);
+
+    // MediaPipe için image yapısı
+    mp_image image;
+    image.data = imgRGB.data;
+    image.width = imgRGB.cols;
+    image.height = imgRGB.rows;
+    image.format = mp_image_format_srgb;
+
+    // İşleme
+    if (!mp_process(instance, mp_create_packet_image(image))) {
+        std::cerr << "Failed to process frame" << std::endl;
+        return frame;
+    }
+
+    // İşlemin bitmesini bekle
+    if (!mp_wait_until_idle(instance)) {
+        std::cerr << "Failed to wait for processing" << std::endl;
+        return frame;
+    }
+
+    // Sonuçları al
+    if (mp_get_queue_size(landmarks_poller) > 0) {
+        mp_packet* landmarks_packet = mp_poll_packet(landmarks_poller);
+        results = mp_get_norm_multi_face_landmarks(landmarks_packet);
+        mp_destroy_packet(landmarks_packet);
+    }
+
+    return frame;
+}
+
+std::pair<std::vector<Landmark>, BoundingBox> HandGestureRecognizingOperator::findPosition(cv::Mat &frame, int handNo, bool draw)
+{
+
+    lmsList.clear();
+    bbox = BoundingBox();
+
+    if (!results || results->length == 0) {
+        return {lmsList, bbox};
+    }
+
+    if (handNo >= results->length) {
+        return {lmsList, bbox};
+    }
+
+    const mp_landmark_list& hand = results->elements[handNo];
+
+    std::vector<int> xList, yList;
+
+    for (int id = 0; id < hand.length; id++) {
+        const mp_landmark& lm = hand.elements[id];
+
+        int h = frame.rows;
+        int w = frame.cols;
+
+        int cx = static_cast<int>(lm.x * w);
+        int cy = static_cast<int>(lm.y * h);
+
+        xList.push_back(cx);
+        yList.push_back(cy);
+
+        lmsList.push_back({id, cx, cy});
+
+        // Opsiyonel: Landmark'ları çiz
+        if (draw) {
+            cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 0, 255), cv::FILLED);
         }
     }
+
+    // Bounding box hesapla
+    if (!xList.empty() && !yList.empty()) {
+        int xmin = *std::min_element(xList.begin(), xList.end());
+        int xmax = *std::max_element(xList.begin(), xList.end());
+        int ymin = *std::min_element(yList.begin(), yList.end());
+        int ymax = *std::max_element(yList.begin(), yList.end());
+
+        bbox = BoundingBox(xmin, ymin, xmax, ymax);
+
+        // Opsiyonel: Bounding box çiz
+        if (draw) {
+            cv::rectangle(frame, cv::Point(xmin - 20, ymin - 20),
+                        cv::Point(xmax + 20, ymax + 20),
+                        cv::Scalar(0, 255, 0), 2);
+        }
+    }
+
+    return {lmsList, bbox};
+
+}
+
+std::vector<int> HandGestureRecognizingOperator::findFingerUp()
+{
+
+    std::vector<int> fingers;
+
+    if (lmsList.empty()) {
+        return fingers;
+    }
+
+    // Başparmak (horizontal kontrol)
+    if (lmsList[tipIds[0]].cx > lmsList[tipIds[0] - 1].cx) {
+        fingers.push_back(1);
+    } else {
+        fingers.push_back(0);
+    }
+
+    // Diğer 4 parmak (vertical kontrol)
+    for (int id = 1; id < 5; id++) {
+        if (lmsList[tipIds[id]].cy < lmsList[tipIds[id] - 2].cy) {
+            fingers.push_back(1);
+        } else {
+            fingers.push_back(0);
+        }
+    }
+
+    return fingers;
+
+}
+
+DistanceResult HandGestureRecognizingOperator::findDistance(int p1, int p2, cv::Mat &frame, bool draw, int r, int t)
+{
+
+    DistanceResult result;
+    result.frame = frame;
+    result.length = 0;
+
+    if (lmsList.empty() || p1 >= lmsList.size() || p2 >= lmsList.size()) {
+        return result;
+    }
+
+    int x1 = lmsList[p1].cx;
+    int y1 = lmsList[p1].cy;
+    int x2 = lmsList[p2].cx;
+    int y2 = lmsList[p2].cy;
+    int cx = (x1 + x2) / 2;
+    int cy = (y1 + y2) / 2;
+
+    result.length = std::hypot(x2 - x1, y2 - y1);
+    result.info = {x1, y1, x2, y2, cx, cy};
+
+    if (draw) {
+        cv::line(frame, cv::Point(x1, y1), cv::Point(x2, y2),
+                cv::Scalar(255, 0, 255), t);
+        cv::circle(frame, cv::Point(x1, y1), r, cv::Scalar(255, 0, 255), cv::FILLED);
+        cv::circle(frame, cv::Point(x2, y2), r, cv::Scalar(255, 0, 255), cv::FILLED);
+        cv::circle(frame, cv::Point(cx, cy), r, cv::Scalar(0, 0, 255), cv::FILLED);
+    }
+
     return result;
+}
+
+std::string HandGestureRecognizingOperator::detectGesture()
+{
+
+    if (lmsList.empty()) {
+        return "No Hand";
+    }
+
+    std::vector<int> fingers = findFingerUp();
+
+    if (fingers.empty()) {
+        return "No Hand";
+    }
+
+    // Tüm parmaklar açık
+    bool allOpen = true;
+    for (int f : fingers) {
+        if (f == 0) {
+            allOpen = false;
+            break;
+        }
+    }
+    if (allOpen) return "Open Hand";
+
+    // Tüm parmaklar kapalı (Yumruk)
+    bool allClosed = true;
+    for (int f : fingers) {
+        if (f == 1) {
+            allClosed = false;
+            break;
+        }
+    }
+    if (allClosed) return "Fist";
+
+    // İşaret parmağı
+    if (fingers == std::vector<int>{0, 1, 0, 0, 0}) {
+        return "Pointer Finger";
+    }
+
+    // Barış işareti
+    if (fingers == std::vector<int>{0, 1, 1, 0, 0}) {
+        return "Peace Sign";
+    }
+
+    // Telefon eli
+    if (fingers == std::vector<int>{1, 0, 0, 0, 1}) {
+        return "Phone Hand";
+    }
+
+    // Serçe parmak
+    if (fingers == std::vector<int>{0, 0, 0, 0, 1}) {
+        return "Pinky Finger";
+    }
+
+    // OK işareti kontrolü
+    if (fingers[1] == 0 && fingers[2] == 0 && fingers[3] == 0 && fingers[4] == 0) {
+        cv::Mat dummy = cv::Mat::zeros(1, 1, CV_8UC3);
+        auto distResult = findDistance(4, 8, dummy, false);
+        if (distResult.length < 50) {
+            return "OK Sign";
+        }
+    }
+
+    return "Unknown Gesture";
+
 }
