@@ -12,10 +12,8 @@ set(OPERATORS_INC_DIR ${CMAKE_SOURCE_DIR}/include)
 set(PYTHON_INCLUDE_DIR /usr/include/python3.11)
 set(PYTHON_LIBRARY /usr/lib/aarch64-linux-gnu/libpython3.11.so)
 
-# OpenCV bul
 find_package(OpenCV REQUIRED)
 
-# Include directories
 include_directories(${PYTHON_INCLUDE_DIR})
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -26,20 +24,16 @@ add_library(${TARGET} SHARED ${SRCS}
         json_parser_operator.cpp
         json_parser_operator.h)
 
-# Linking
 target_link_libraries(${TARGET}
         ${PYTHON_LIBRARY}
         ${OpenCV_LIBS}
+        mediapipe
 )
 
-# Compiler flags
 target_compile_options(${TARGET} PRIVATE
         -Wall
         -Wextra
         -O2
 )
 
-
 install(TARGETS ${TARGET} DESTINATION /usr/local/lib)
-install(FILES python_modules/face_gesture_recognition_module.py DESTINATION /usr/local/bin)
-install(FILES python_modules/hand_gesture_recognition_module.py DESTINATION /usr/local/bin)

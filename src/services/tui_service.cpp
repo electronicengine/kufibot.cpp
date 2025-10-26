@@ -179,7 +179,7 @@ void TuiService::printGestureData(int seconds) {
     INFO("Gesture Data: ");
     seconds = seconds * 1000;
     while (seconds > 0) {
-        std::cout << "Recognized Face Gesture: " << _recognizedGestureData.faceGesture << std::endl;
+        std::cout << "Recognized Face Gesture: " << _recognizedGestureData.faceEmotion << std::endl;
         std::cout << "Recognized Hand Gesture: " << _recognizedGestureData.handGesture << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         seconds -= 100;

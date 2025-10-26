@@ -31,15 +31,23 @@
 
 
 auto main(int argc, char *argv[]) -> int {
+    bool showFrame = false;
     bool useTui = false;
     bool stopAllServices = false;
     int logLevel = 1;
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
+        if (arg == "--help") {
+            std::cout << "Usage: kufibot [--use-tui] [--stop-all-services] [--show-frame] [--log-level <level>]" << std::endl;
+            return 0;
+        }
         if (arg == "--stop-all-services") {
             stopAllServices = true;
             break;
+        }
+        if (arg == "--show-frame") {
+            showFrame = true;
         }
         if (arg == "--log-level") {
             if (argv[i+1] == "trace") {
@@ -59,14 +67,13 @@ auto main(int argc, char *argv[]) -> int {
     Logger::init(nullptr, useTui, logLevel);
 
     if (!stopAllServices) {
-
         WebSocketService::get_instance()->disable();
         VideoStreamService::get_instance()->start();
         RobotControllerService::get_instance()->start();
         RemoteConnectionService::get_instance()->disable();
         InteractiveChatService::get_instance()->start();
         GesturePerformerService::get_instance()->start();
-        GestureRecognizerService::get_instance()->start();
+        GestureRecognizerService::get_instance(showFrame)->start();
         LandmarkTrackerService::get_instance()->stop();
         MappingService::get_instance()->disable();
     }

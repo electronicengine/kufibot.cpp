@@ -14,30 +14,19 @@ class GestureRecognizerService : public Service{
 
 public:
     virtual ~GestureRecognizerService();
-    static GestureRecognizerService *get_instance();
+    static GestureRecognizerService *get_instance(bool showFrame = false, const std::string& name = "GestureRecognizerService");
 
 
 private:
-    // Kamera ve işleme nesneleri
     cv::VideoCapture cap;
-    FaceGestureRecognizingOperator *_faceGestureRecognizingOperator;
-    HandGestureRecognizingOperator *_handGestureRecognizingOperator;
-
-    // Görüntüleme ayarları
-    bool showFaceMesh;
-    bool showFaceInfo;
-    bool showHandLandmarks;
-    bool _initialized;
-
-    // Python ortam yolu
-    std::string venvPath;
+    FaceGestureRecognizingOperator _faceGestureRecognizingOperator;
+    HandGestureRecognizingOperator _handGestureRecognizingOperator;
+    bool _showFrame;
 
     static GestureRecognizerService *_instance;
 
-    GestureRecognizerService(const std::string& name = "GestureRecognizerService");
+    GestureRecognizerService(const std::string& name = "GestureRecognizerService",  bool showFrame = false);
 
-
-    // İşleme fonksiyonları
     void processFrame(cv::Mat& frame);
     std::map<std::string, float> parseFaceInfoString(const std::string& faceInfoStr);
     void displayFPS(cv::Mat& frame, double& ptime);
@@ -46,10 +35,7 @@ private:
     void service_function();
     std::queue<cv::Mat> _frameQueue;
 
-    //subscribed video_frame
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
-
-    void video_frame(cv::Mat& frame);
 
 };
 

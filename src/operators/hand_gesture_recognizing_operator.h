@@ -8,28 +8,11 @@
 #include <string>
 #include <cmath>
 #include <algorithm>
+#include "../public_data_messages.h"
 
-// Landmark yapısı
-struct Landmark {
-    int id;
-    int cx;
-    int cy;
-};
 
-// Bounding Box yapısı
-struct BoundingBox {
-    int xmin;
-    int ymin;
-    int xmax;
-    int ymax;
-    bool valid;
 
-    BoundingBox() : xmin(0), ymin(0), xmax(0), ymax(0), valid(false) {}
-    BoundingBox(int x1, int y1, int x2, int y2)
-        : xmin(x1), ymin(y1), xmax(x2), ymax(y2), valid(true) {}
-};
 
-// Python'daki findDistance fonksiyonu
 struct DistanceResult {
     double length;
     cv::Mat frame;
@@ -37,57 +20,57 @@ struct DistanceResult {
 };
 
 class HandGestureRecognizingOperator {
-private:
-    bool mode;
-    int maxHands;
-    float detectionCon;
-    float trackCon;
+    public:
+        HandGestureRecognizingOperator(bool mode = false, int maxHands = 2, float detectionCon = 0.5f, float trackCon = 0.5f);
 
-    mp_instance* instance;
-    mp_poller* landmarks_poller;
-    mp_poller* handedness_poller;
+        ~HandGestureRecognizingOperator();
 
-    mp_multi_face_landmark_list* results;
-    std::vector<Landmark> lmsList;
-    BoundingBox bbox;
+        bool initialize();
 
-    std::vector<int> tipIds;
+        void cleanup();
 
-    bool initialized;
+        cv::Mat findFingers(cv::Mat& frame, bool draw = false);
 
-    // Yardımcı fonksiyonlar
-    void clearResults();
+        std::pair<std::vector<Landmark>, BoundingBox> findPosition(cv::Mat& frame,  int handNo = 0, bool draw = false);
 
-public:
-    HandGestureRecognizingOperator(bool mode = false, int maxHands = 2, float detectionCon = 0.5f, float trackCon = 0.5f);
+        std::vector<int> findFingerUp();
 
-    ~HandGestureRecognizingOperator();
+        DistanceResult findDistance(int p1, int p2, cv::Mat& frame, bool draw = false, int r = 15, int t = 3);
 
-    bool initialize();
+        std::string detectGesture();
 
-    void cleanup();
+        const std::vector<Landmark>& getLandmarks() const {
+            return lmsList;
+        }
 
-    cv::Mat findFingers(cv::Mat& frame, bool draw = true);
+        const BoundingBox& getBoundingBox() const {
+            return bbox;
+        }
 
-    std::pair<std::vector<Landmark>, BoundingBox> findPosition(cv::Mat& frame,  int handNo = 0, bool draw = true);
+        int getHandCount() const {
+            return results ? results->length : 0;
+        }
 
-    std::vector<int> findFingerUp();
+    private:
+        bool mode;
+        int maxHands;
+        float detectionCon;
+        float trackCon;
 
-    DistanceResult findDistance(int p1, int p2, cv::Mat& frame, bool draw = true, int r = 15, int t = 3);
+        mp_instance* instance;
+        mp_poller* landmarks_poller;
+        mp_poller* handedness_poller;
 
-    std::string detectGesture();
+        mp_multi_face_landmark_list* results;
+        std::vector<Landmark> lmsList;
+        BoundingBox bbox;
 
-    const std::vector<Landmark>& getLandmarks() const {
-        return lmsList;
-    }
+        std::vector<int> tipIds;
 
-    const BoundingBox& getBoundingBox() const {
-        return bbox;
-    }
+        bool initialized;
 
-    int getHandCount() const {
-        return results ? results->length : 0;
-    }
+        // Yardımcı fonksiyonlar
+        void clearResults();
 };
 
 #endif // HAND_GESTURE_RECOGNIZING_OPERATOR_H

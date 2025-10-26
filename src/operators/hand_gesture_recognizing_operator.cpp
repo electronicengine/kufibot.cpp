@@ -20,6 +20,8 @@
 #include <cstdio>
 #include <unistd.h>
 #include <fcntl.h>
+#include "../logger.h"
+
 
 void HandGestureRecognizingOperator::clearResults()
 {
@@ -53,49 +55,44 @@ bool HandGestureRecognizingOperator::initialize()
 
     if (initialized) return true;
 
-    // MediaPipe grafiğini yükle
     std::string path = "mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb";
     mp_instance_builder* builder = mp_create_instance_builder(path.c_str(), "image");
 
     if (!builder) {
-        std::cerr << "Failed to create instance builder" << std::endl;
+        ERROR("Failed to create instance builder");
         return false;
     }
 
-    // Parametreleri ayarla
     mp_add_option_float(builder, "palmdetectioncpu__TensorsToDetectionsCalculator",
                         "min_score_thresh", detectionCon);
     mp_add_option_double(builder, "handlandmarkcpu__ThresholdingCalculator",
                         "threshold", trackCon);
 
-    // Side packet'ları ekle
     mp_add_side_packet(builder, "num_hands", mp_create_packet_int(maxHands));
     mp_add_side_packet(builder, "model_complexity", mp_create_packet_int(1));
     mp_add_side_packet(builder, "use_prev_landmarks", mp_create_packet_bool(!mode));
 
-    // Instance'ı oluştur
     instance = mp_create_instance(builder);
     if (!instance) {
-        std::cerr << "Failed to create instance" << std::endl;
+        ERROR( "Failed to create instance");
         return false;
     }
 
-    // Poller'ları oluştur
     landmarks_poller = mp_create_poller(instance, "multi_hand_landmarks");
     if (!landmarks_poller) {
-        std::cerr << "Failed to create landmarks poller" << std::endl;
+        ERROR( "Failed to create landmarks poller");
         return false;
     }
 
     handedness_poller = mp_create_poller(instance, "multi_handedness");
     if (!handedness_poller) {
-        std::cerr << "Failed to create handedness poller" << std::endl;
+        ERROR("Failed to create handedness poller");
         return false;
     }
 
     // Grafiği başlat
     if (!mp_start(instance)) {
-        std::cerr << "Failed to start graph" << std::endl;
+        ERROR("Failed to start graph");
         return false;
     }
 
@@ -131,39 +128,33 @@ void HandGestureRecognizingOperator::cleanup()
 cv::Mat HandGestureRecognizingOperator::findFingers(cv::Mat &frame, bool draw)
 {
     if (!initialized) {
-        std::cerr << "Detector not initialized!" << std::endl;
+        ERROR("Detector not initialized!");
         return frame;
     }
 
-    // Önceki sonuçları temizle
     clearResults();
     lmsList.clear();
     bbox = BoundingBox();
 
-    // Görüntüyü RGB'ye çevir (MediaPipe RGB bekler)
     cv::Mat imgRGB;
     cv::cvtColor(frame, imgRGB, cv::COLOR_BGR2RGB);
 
-    // MediaPipe için image yapısı
     mp_image image;
     image.data = imgRGB.data;
     image.width = imgRGB.cols;
     image.height = imgRGB.rows;
     image.format = mp_image_format_srgb;
 
-    // İşleme
     if (!mp_process(instance, mp_create_packet_image(image))) {
-        std::cerr << "Failed to process frame" << std::endl;
+        ERROR("Failed to process frame");
         return frame;
     }
 
-    // İşlemin bitmesini bekle
     if (!mp_wait_until_idle(instance)) {
-        std::cerr << "Failed to wait for processing" << std::endl;
+        ERROR("Failed to wait for processing");
         return frame;
     }
 
-    // Sonuçları al
     if (mp_get_queue_size(landmarks_poller) > 0) {
         mp_packet* landmarks_packet = mp_poll_packet(landmarks_poller);
         results = mp_get_norm_multi_face_landmarks(landmarks_packet);
@@ -205,13 +196,11 @@ std::pair<std::vector<Landmark>, BoundingBox> HandGestureRecognizingOperator::fi
 
         lmsList.push_back({id, cx, cy});
 
-        // Opsiyonel: Landmark'ları çiz
         if (draw) {
             cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(255, 0, 255), cv::FILLED);
         }
     }
 
-    // Bounding box hesapla
     if (!xList.empty() && !yList.empty()) {
         int xmin = *std::min_element(xList.begin(), xList.end());
         int xmax = *std::max_element(xList.begin(), xList.end());
@@ -220,7 +209,6 @@ std::pair<std::vector<Landmark>, BoundingBox> HandGestureRecognizingOperator::fi
 
         bbox = BoundingBox(xmin, ymin, xmax, ymax);
 
-        // Opsiyonel: Bounding box çiz
         if (draw) {
             cv::rectangle(frame, cv::Point(xmin - 20, ymin - 20),
                         cv::Point(xmax + 20, ymax + 20),
@@ -229,8 +217,8 @@ std::pair<std::vector<Landmark>, BoundingBox> HandGestureRecognizingOperator::fi
     }
 
     return {lmsList, bbox};
-
 }
+
 
 std::vector<int> HandGestureRecognizingOperator::findFingerUp()
 {
@@ -241,14 +229,12 @@ std::vector<int> HandGestureRecognizingOperator::findFingerUp()
         return fingers;
     }
 
-    // Başparmak (horizontal kontrol)
     if (lmsList[tipIds[0]].cx > lmsList[tipIds[0] - 1].cx) {
         fingers.push_back(1);
     } else {
         fingers.push_back(0);
     }
 
-    // Diğer 4 parmak (vertical kontrol)
     for (int id = 1; id < 5; id++) {
         if (lmsList[tipIds[id]].cy < lmsList[tipIds[id] - 2].cy) {
             fingers.push_back(1);
@@ -306,7 +292,6 @@ std::string HandGestureRecognizingOperator::detectGesture()
         return "No Hand";
     }
 
-    // Tüm parmaklar açık
     bool allOpen = true;
     for (int f : fingers) {
         if (f == 0) {
@@ -316,7 +301,6 @@ std::string HandGestureRecognizingOperator::detectGesture()
     }
     if (allOpen) return "Open Hand";
 
-    // Tüm parmaklar kapalı (Yumruk)
     bool allClosed = true;
     for (int f : fingers) {
         if (f == 1) {
@@ -326,27 +310,22 @@ std::string HandGestureRecognizingOperator::detectGesture()
     }
     if (allClosed) return "Fist";
 
-    // İşaret parmağı
     if (fingers == std::vector<int>{0, 1, 0, 0, 0}) {
         return "Pointer Finger";
     }
 
-    // Barış işareti
     if (fingers == std::vector<int>{0, 1, 1, 0, 0}) {
         return "Peace Sign";
     }
 
-    // Telefon eli
     if (fingers == std::vector<int>{1, 0, 0, 0, 1}) {
         return "Phone Hand";
     }
 
-    // Serçe parmak
     if (fingers == std::vector<int>{0, 0, 0, 0, 1}) {
         return "Pinky Finger";
     }
 
-    // OK işareti kontrolü
     if (fingers[1] == 0 && fingers[2] == 0 && fingers[3] == 0 && fingers[4] == 0) {
         cv::Mat dummy = cv::Mat::zeros(1, 1, CV_8UC3);
         auto distResult = findDistance(4, 8, dummy, false);

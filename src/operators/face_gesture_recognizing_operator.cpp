@@ -86,7 +86,7 @@ bool FaceGestureRecognizingOperator::initialize()
     mp_instance_builder* mesh_builder = mp_create_instance_builder(mesh_path.c_str(), "image");
 
     if (!mesh_builder) {
-        std::cerr << "Failed to create face mesh builder" << std::endl;
+        ERROR("Failed to create face mesh builder");
         return false;
     }
 
@@ -98,20 +98,20 @@ bool FaceGestureRecognizingOperator::initialize()
 
     face_mesh_instance = mp_create_instance(mesh_builder);
     if (!face_mesh_instance) {
-        std::cerr << "Failed to create face mesh instance" << std::endl;
+        ERROR("Failed to create face mesh instance");
         return false;
     }
 
     // Face Mesh poller
     face_mesh_poller = mp_create_poller(face_mesh_instance, "multi_face_landmarks");
     if (!face_mesh_poller) {
-        std::cerr << "Failed to create face mesh poller" << std::endl;
+        ERROR("Failed to create face mesh poller");
         return false;
     }
 
     // Grafiği başlat
     if (!mp_start(face_mesh_instance)) {
-        std::cerr << "Failed to start face mesh graph" << std::endl;
+        ERROR("Failed to start face mesh graph");
         return false;
     }
 
@@ -149,11 +149,11 @@ void FaceGestureRecognizingOperator::cleanup()
 
 }
 
-std::vector<FaceLandmark> FaceGestureRecognizingOperator::getFaceLandmarks(cv::Mat &frame)
+std::vector<Landmark> FaceGestureRecognizingOperator::getFaceLandmarks(cv::Mat &frame)
 {
 
     if (!initialized) {
-        std::cerr << "Detector not initialized!" << std::endl;
+        ERROR("Detector not initialized!");
         return {};
     }
 
@@ -174,13 +174,13 @@ std::vector<FaceLandmark> FaceGestureRecognizingOperator::getFaceLandmarks(cv::M
     // İşle
     if (!mp_process(face_mesh_instance, mp_create_packet_image(image))) {
         const char* err = mp_get_last_error();
-        std::cerr << "Failed to process frame: " << (err ? err : "Unknown error") << std::endl;
+        ERROR("Failed to process frame: {}", (err ? err : "Unknown error"));
         if (err) mp_free_error(err);  // Bellek sızıntısını önle
         return {};
     }
 
     if (!mp_wait_until_idle(face_mesh_instance)) {
-        std::cerr << "Failed to wait for processing" << std::endl;
+        ERROR("Failed to wait for processing");
         return {};
     }
 
@@ -295,11 +295,11 @@ std::string FaceGestureRecognizingOperator::detectEmotion()
 
             calibration_frames++;
 
-            std::cout << "✅ Calibration complete:" << std::endl;
-            std::cout << "  EAR: " << baseline.ear << std::endl;
-            std::cout << "  MAR: " << baseline.mar << std::endl;
-            std::cout << "  Eyebrow: " << baseline.eyebrow << std::endl;
-            std::cout << "  Smile: " << baseline.smile << std::endl;
+            INFO( "✅ Calibration complete:");
+            INFO( "  EAR: {}", baseline.ear);
+            INFO( "  MAR: {}", baseline.mar);
+            INFO( "  Eyebrow: {}", baseline.eyebrow);
+            INFO( "  Smile: {}", baseline.smile);
         }
     }
 
@@ -409,7 +409,7 @@ void FaceGestureRecognizingOperator::drawLandmarks(cv::Mat &frame, bool draw_all
             }
         }
 
-        // Kaşlar
+
         for (int idx : EYEBROW_LEFT) {
             if (idx < landmarks.size()) {
                 cv::circle(frame, cv::Point(landmarks[idx].cx, landmarks[idx].cy),

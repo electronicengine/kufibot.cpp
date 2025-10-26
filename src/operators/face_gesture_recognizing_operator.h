@@ -10,26 +10,10 @@
 #include <algorithm>
 #include <deque>
 #include <iostream>
+#include "../public_data_messages.h"
 
-// Landmark yapısı
-struct FaceLandmark {
-    int id;
-    int cx;
-    int cy;
-};
 
-// Yüz bilgisi metrikleri
-struct FaceInfo {
-    double left_ear;
-    double right_ear;
-    double avg_ear;
-    double mar;
-    double eyebrow_height;
 
-    FaceInfo() : left_ear(0), right_ear(0), avg_ear(0), mar(0), eyebrow_height(0) {}
-};
-
-// Kalibrasyon verisi
 struct CalibrationData {
     double ear;
     double mar;
@@ -38,7 +22,6 @@ struct CalibrationData {
     double eyebrow_dist;
 };
 
-// Baseline değerleri
 struct BaselineValues {
     double ear;
     double mar;
@@ -55,31 +38,25 @@ private:
     float min_detection_confidence;
     float min_tracking_confidence;
 
-    // MediaPipe instance'ları
     mp_instance* face_mesh_instance;
     mp_instance* face_detection_instance;
 
-    // Poller'lar
     mp_poller* face_mesh_poller;
     mp_poller* face_detection_poller;
 
-    // Sonuçlar
     mp_multi_face_landmark_list* mesh_results;
-    std::vector<FaceLandmark> landmarks;
+    std::vector<Landmark> landmarks;
 
-    // Yüz bölgesi indeksleri
     std::vector<int> LEFT_EYE;
     std::vector<int> RIGHT_EYE;
     std::vector<int> MOUTH;
     std::vector<int> EYEBROW_LEFT;
     std::vector<int> EYEBROW_RIGHT;
 
-    // Duygu geçmişi
     std::string previous_emotion;
     std::deque<std::string> emotion_history;
     int history_size;
 
-    // Kalibrasyon
     std::vector<CalibrationData> calibration_data;
     int calibration_frames;
     BaselineValues baseline;
@@ -99,7 +76,7 @@ public:
 
     void cleanup();
 
-    std::vector<FaceLandmark> getFaceLandmarks(cv::Mat& frame);
+    std::vector<Landmark> getFaceLandmarks(cv::Mat& frame);
     double calculateDistance(int point1_idx, int point2_idx) const;
     double getEyeAspectRatio(const std::vector<int>& eye_points) const;
     double getMouthAspectRatio() const ;
@@ -107,7 +84,7 @@ public:
     std::string detectEmotion();
     FaceInfo getFaceInfo() const;
     void drawLandmarks(cv::Mat& frame, bool draw_all = false) const;
-    const std::vector<FaceLandmark>& getLandmarks() const {
+    const std::vector<Landmark>& getLandmarks() const {
         return landmarks;
     }
 

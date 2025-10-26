@@ -27,6 +27,7 @@
 constexpr int MAX_ERROR = 300;
 constexpr int MIN_MAGNITUDE = 1;
 constexpr int MAX_MAGNITUDE = 4;
+constexpr int REACTION_TIME_START = 430;
 constexpr int REACTION_TRESHOLD_COUNT = 500;
 
 LandmarkTrackerService* LandmarkTrackerService::_instance = nullptr;
@@ -41,7 +42,7 @@ LandmarkTrackerService * LandmarkTrackerService::get_instance() {
 
 LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingService") {
     _errorTreshold = 50;
-    _reactionEngageTimeout = 0;
+    _reactionEngageTimeout = REACTION_TIME_START;
 }
 void LandmarkTrackerService::initialize() {
 
@@ -58,19 +59,13 @@ TrackingData LandmarkTrackerService::collectTrackingData() {
     std::lock_guard<std::mutex> lock(_dataMutex);
     TrackingData trackData;
 
-    trackData.handBbox = _recognizedGestureData.handBbox;
-    trackData.handGesture = _recognizedGestureData.handGesture;
-    trackData.handLandmark = _recognizedGestureData.handLandmark;
-
-    trackData.faceGesture = _recognizedGestureData.faceGesture;
-    trackData.faceLandmark = _recognizedGestureData.faceLandmark;
+    trackData.recognizedGestureData = _recognizedGestureData;
 
     if (_sensorData.currentJointAngles.has_value()) {
         trackData.currentJointAngles = _sensorData.currentJointAngles.value();
         _sensorData.currentJointAngles.reset();
     }
 
-    _recognizedGestureData.handBbox.clear();
     _sensorData.currentJointAngles.reset();
 
     return trackData;
@@ -79,10 +74,10 @@ TrackingData LandmarkTrackerService::collectTrackingData() {
 
 Point2D LandmarkTrackerService::selectTheTarget(const TrackingData &trackData) {
     // Priority: Face > Hand
-    if (!trackData.faceLandmark.empty() && trackData.faceLandmark.size() > 3) {
+    if (!trackData.recognizedGestureData.faceLandmarks.empty() && trackData.recognizedGestureData.faceLandmarks.size() > 3) {
         _lastKnownTarget.setValue(trackData.getFaceCenter());
         return _lastKnownTarget.getValue();
-    } else if (!trackData.handBbox.empty() && trackData.handBbox.size() == 4) {
+    } else if (trackData.recognizedGestureData.handBbox.valid) {
        _lastKnownTarget.setValue(trackData.getHandCenter());
         return _lastKnownTarget.getValue();
     } else {
@@ -96,8 +91,8 @@ TrackState LandmarkTrackerService::getTrackingState(const PolarVector &errorVect
         return TrackState::tracking;
     } else if (errorVector.angle == 0 && errorVector.magnitude == 0) {
         return TrackState::idle;
-    }else{
-        if (_reactionEngageTimeout >= REACTION_TRESHOLD_COUNT || _reactionEngageTimeout == 0) {
+    } else{
+        if (_reactionEngageTimeout >= REACTION_TRESHOLD_COUNT) {
             _reactionEngageTimeout = 1;
             return TrackState::engaging_reaction;
         } else {
@@ -206,6 +201,7 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
             }
             break;
         }
+
         case MessageType::RecognizedGesture : {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
@@ -254,13 +250,13 @@ void LandmarkTrackerService::controlHead(int angle, int magnitude) {
 }
 
 void LandmarkTrackerService::engageReaction(TrackingData trackingData) {
-    INFO("engageReaction! - faceGesture{}", trackingData.faceGesture);
-    if (trackingData.faceGesture == "No Face") {
+    INFO("engageReaction! - faceGesture{}", trackingData.recognizedGestureData.faceEmotion);
+    if (trackingData.recognizedGestureData.faceEmotion == "No Face") {
         return;
     }
 
     std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
-    static_cast<LLMQueryData *>(data.get())->query = "You are looking a person. He/She seems " + trackingData.faceGesture + ". Say something to her/him.";
+    static_cast<LLMQueryData *>(data.get())->query = "You are looking a person. He/She seems " + trackingData.recognizedGestureData.faceEmotion + ". Say something to her/him.";
     publish(MessageType::LLMQuery, data);
 
 }

@@ -24,12 +24,7 @@ struct Point2D {
 };
 
 struct TrackingData {
-    std::string faceGesture;
-    std::vector<int> faceLandmark;
-    std::string handGesture;
-    std::vector<int> handLandmark;
-    std::vector<int> handBbox;
-
+    RecognizedGestureData recognizedGestureData;
     std::map<ServoMotorJoint, uint8_t> currentJointAngles;
 
     Point2D getFaceCenter() const {
@@ -39,15 +34,11 @@ struct TrackingData {
         int sumY = 0;
         int eyePointCount = 0;
 
-        for (size_t i = 0; i < faceLandmark.size(); i += 3) {
-            int id = faceLandmark[i];
-            int cx = faceLandmark[i + 1];
-            int cy = faceLandmark[i + 2];
-
+        for (auto landmark : recognizedGestureData.faceLandmarks) {
             // eye points
-            if (id == 33 || id == 133 || id == 362 || id == 263) {
-                sumX += cx;
-                sumY += cy;
+            if (landmark.id == 33 || landmark.id == 133 || landmark.id == 362 || landmark.id == 263) {
+                sumX += landmark.cx;
+                sumY += landmark.cy;
                 eyePointCount++;
             }
         }
@@ -61,9 +52,10 @@ struct TrackingData {
     }
 
     Point2D getHandCenter() const {
+        auto &handBox = recognizedGestureData.handBbox;
         Point2D handCenter{0, 0};
-        handCenter.x = (handBbox[0] + handBbox[2]) / 2;
-        handCenter.y = (handBbox[1] + handBbox[3]) / 2;
+        handCenter.x = (handBox.xmin + handBox.xmax) / 2;
+        handCenter.y = (handBox.ymin + handBox.ymax) / 2;
 
         return handCenter;
     }

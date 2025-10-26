@@ -80,11 +80,11 @@ struct MessageData {
 };
 
 // Message types as simple structs
-struct VideoFrameData : public MessageData{
+struct VideoFrameData : public MessageData {
     cv::Mat frame;
 };
 
-struct WebSocketReceiveData : public MessageData{
+struct WebSocketReceiveData : public MessageData {
     websocketpp::connection_hdl hdl;
     std::string msg;
 };
@@ -143,8 +143,6 @@ struct SensorData  : public MessageData {
 
         return metadata;
     }
-
-
 };
 
 struct JoyStickData : public MessageData {
@@ -192,7 +190,7 @@ struct ControlData : public MessageData {
     }
 };
 
-struct LLMQueryData : public MessageData{
+struct LLMQueryData : public MessageData {
     std::string query;
 };
 
@@ -208,12 +206,43 @@ struct LLMResponseData : public MessageData {
     float directiveSimilarity;
 };
 
-struct RecognizedGestureData : public MessageData  {
-    std::string faceGesture;
-    std::vector<int> faceLandmark;
+struct BoundingBox {
+    int xmin;
+    int ymin;
+    int xmax;
+    int ymax;
+    bool valid;
+
+    BoundingBox() : xmin(0), ymin(0), xmax(0), ymax(0), valid(false) {}
+    BoundingBox(int x1, int y1, int x2, int y2)
+        : xmin(x1), ymin(y1), xmax(x2), ymax(y2), valid(true) {}
+};
+
+
+struct Landmark {
+    int id;
+    int cx;
+    int cy;
+};
+
+struct FaceInfo {
+    double left_ear;
+    double right_ear;
+    double avg_ear;
+    double mar;
+    double eyebrow_height;
+
+    FaceInfo() : left_ear(0), right_ear(0), avg_ear(0), mar(0), eyebrow_height(0) {}
+};
+
+
+struct RecognizedGestureData : public MessageData {
+    std::string faceEmotion;
+    FaceInfo faceInfo;
+    std::vector<Landmark> faceLandmarks;
     std::string handGesture;
-    std::vector<int> handLandmark;
-    std::vector<int> handBbox;
+    BoundingBox handBbox;
+    std::vector<Landmark> handLandmarks;
 };
 
 
