@@ -6,7 +6,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <cmath>
-
+#include "i2c_device.h"
 
 #define PCA9685_ADDRESS 0x5f  // Default address of the PCA9685 chip
 
@@ -24,23 +24,22 @@
 #define __ALLLED_OFF_L 0xFC
 #define __ALLLED_OFF_H 0xFD
 
-class PCA9685Driver {
+class PCA9685Driver : public I2CDevice {
 public:
-  PCA9685Driver() = default;
-  PCA9685Driver(int address, bool debug = false);
-  ~PCA9685Driver();
+    PCA9685Driver() = default;
+    virtual ~PCA9685Driver();
 
-  void write(uint8_t reg, uint8_t value);
-  uint8_t read(uint8_t reg);
-  void set_servo_pulse(int channel, int pulse);
-  void set_pwm_freq(int freq);
-  void set_pwm(int channel, int on, int off);
-  void set_duty_cycle(int channel, int duty);
-  void set_level(int channel, int level);
+    bool initPCA9685(int address);
+
+    void setDutyCyclePulse(int channel, int pulse);
+    void setPWMFrequency(int freq);
+    void setDutyCyclePercent(int channel, int duty);
+    void setChannelLevel(int channel, int level);
 
 private:
-  int i2c_fd;
-  bool debug;
+
+    void setDutyCycle(int channel, int on, int off);
+
 };
 
 #endif

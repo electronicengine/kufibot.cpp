@@ -151,6 +151,7 @@ struct JoyStickData : public MessageData {
 };
 
 struct ControlData : public MessageData {
+    std::optional<std::pair<ServoMotorJoint, uint8_t>> jointAngle;
     std::optional<std::map<ServoMotorJoint, uint8_t>> jointAngles;
     std::optional<DCMotorState> dcMotorState;
     std::optional<JoyStickData> headJoystick;

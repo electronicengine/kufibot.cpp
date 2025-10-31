@@ -92,7 +92,7 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
                     std::lock_guard<std::mutex> lock(_dataMutex);
                     _controlData = *static_cast<ControlData*>(data.get());
                 }
-                _condVar.notify_one();
+            _condVar.notify_one();
             }
             break;
         }

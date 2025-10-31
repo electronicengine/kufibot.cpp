@@ -14,12 +14,11 @@ class CompassController {
 private:
     static CompassController* _instance; // Singleton instance
     QMC5883LDriver sensor;            // Sensor object
-    MedianFilter _medianFilter; // Instance of the median filter
     std::atomic<bool> _enable = true;
+    std::atomic<bool> _initialized = false;
 
-    // Private constructor to prevent instantiation
-    CompassController(): _medianFilter(10) {}
-    CompassData get_all_data();
+    CompassController();
+
 public:
     // Delete copy constructor and assignment operator
     CompassController(const CompassController&) = delete;
@@ -27,9 +26,8 @@ public:
 
     // Get singleton instance
     static CompassController* get_instance();
-    uint16_t get_angle();
-    std::vector<int16_t> get_magnet();
-    CompassData get_all() ;
+    uint16_t getCompassAngle();
+
     void setEnable(bool enable){_enable.store(enable);}
 
 };

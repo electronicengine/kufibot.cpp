@@ -4,8 +4,10 @@
 
 #include "wiringPi.h"
 #include "wiringPiI2C.h"
+#include "driver_data.h"
 #include <vector>
 #include <array>
+#include "i2c_device.h"
 
 #define DFLT_BUS 1
 #define DFLT_ADDRESS 0x0D
@@ -39,38 +41,40 @@
 #define OSR_128 0b10000000
 #define OSR_64 0b11000000
 
-class QMC5883LDriver {
+class QMC5883LDriver : public I2CDevice {
 public:
-    QMC5883LDriver(int address = DFLT_ADDRESS,
-                   int output_data_rate = ODR_10HZ, int output_range = RNG_2G,
-                   int oversampling_rate = OSR_512);
+    QMC5883LDriver();
 
-    ~QMC5883LDriver();
+    virtual ~QMC5883LDriver();
 
-    void mode_continuous();
-    void mode_standby();
-    void write_byte(uint8_t registry, uint8_t value);
-    uint8_t read_byte(uint8_t registry);
-    int16_t read_word(uint8_t registry);
-    int16_t read_word_2c(uint8_t registry);
-    std::vector<int16_t> get_data();
-    double get_bearing();
-    std::vector<int16_t> get_magnet();
+
+    bool initQMC5883l();
+    Axis readQMC5883l();
+
+
 private:
     int _bus;
     int _address;
     int _mode_cont;
     int _mode_stby;
 
-    double _declination;                          
+
+    int _outputDataRate;
+    int _outputRange;
+    int _overSamplingRate;
+    double _declination;
+
     std::array<std::array<double, 3>, 3> _calibration; // Calibration matrix
    // Offsets and scales for calibration
     const std::vector<double> offsets = {3096.95455451, -7452.84550654, 840.2791695};
     const std::vector<double> scales = {16639.36998797, 18514.63340064, 16972.20317855};
 
     // Apply calibration to raw data
-    void apply_calibration(const std::vector<int16_t>& raw, double& x_cal, double& y_cal, double& z_cal);
-
+    void _applyCalibration(const std::vector<int16_t>& raw, double& x_cal, double& y_cal, double& z_cal);
+    void _modeContinuous();
+    void _modeStandby();
+    double _getBearing();
+    Axis _getMagnet();
 };
 
 #endif

@@ -19,6 +19,7 @@
 #include "../logger.h"
 #include <fstream>
 
+
 ServoMotorController* ServoMotorController::_instance = nullptr;
 
 ServoMotorController *ServoMotorController::get_instance(int address)
@@ -30,27 +31,33 @@ ServoMotorController *ServoMotorController::get_instance(int address)
 }
 
 ServoMotorController::ServoMotorController(int address) {
+    bool ret = _driver.initPCA9685(address);
+    if (ret) {
+        _driver.setPWMFrequency(50);
+        _currentJointAngles = {
+            {ServoMotorJoint::rightArm, 15}, {ServoMotorJoint::leftArm, 170}, {ServoMotorJoint::neck, 78},
+            {ServoMotorJoint::headUpDown, 15}, {ServoMotorJoint::headLeftRight, 90}, {ServoMotorJoint::eyeRight, 160},
+            {ServoMotorJoint::eyeLeft, 20}
+        };
+        _initialized = true;
 
-    _driver = PCA9685Driver(address, false);
-    _driver.set_pwm_freq(50);
+        INFO("Servo driver initialized");
+    }else {
+        _initialized = false;
 
-    _currentJointAngles = {
-        {ServoMotorJoint::rightArm, 15}, {ServoMotorJoint::leftArm, 170}, {ServoMotorJoint::neck, 78},
-        {ServoMotorJoint::headUpDown, 15}, {ServoMotorJoint::headLeftRight, 90}, {ServoMotorJoint::eyeRight, 160},
-        {ServoMotorJoint::eyeLeft, 20}
-    };
-
-    INFO("Servo driver initialized");
+        ERROR("Servo driver initialization failed");
+    }
 }
 
-void ServoMotorController::save_joint_angles()
+
+void ServoMotorController::saveJointAngles()
 {
     // std::ofstream outFile("joint_angles.json");
     // outFile << json::dump(jointAngles, outFile) << ;
     // outFile.close();
 }
 
-void ServoMotorController::load_joint_angles() {
+void ServoMotorController::loadJointAngles() {
     //  std::ifstream inFile("oint_angles.json");
     // if (inFile.is_open()) {
     //     Json data = Json::parse(inFile);
@@ -62,19 +69,18 @@ void ServoMotorController::load_joint_angles() {
     // inFile.close();
 }
 
-void ServoMotorController::set_current_joint_angles(std::map<ServoMotorJoint, uint8_t>& angles) {
+void ServoMotorController::setAllJointsAngle(std::map<ServoMotorJoint, uint8_t>& angles) {
     for (const auto& [joint, angle] : angles) {
         INFO("{} : {}", Servo_Motor_Joint_Names.at(joint) , std::to_string(angle));
 
-        set_absolute_servo_angle(joint, angle);
+        setJointAngle(joint, angle);
     }
 
-    save_joint_angles();
+    saveJointAngles();
 }
 
-void ServoMotorController::set_absolute_servo_angle(ServoMotorJoint joint, int targetAngle, int step, int delayMs) {
-    if (!_enable.load()) {
-        WARNING("Servo motor controller is disabled.");
+void ServoMotorController::setJointAngle(ServoMotorJoint joint, int targetAngle, int step, int delayMs) {
+    if (!_enable.load() || !_initialized) {
         return;
     }
 
@@ -89,14 +95,17 @@ void ServoMotorController::set_absolute_servo_angle(ServoMotorJoint joint, int t
             currentAngle = targetAngle;
         }
 
+        // controlling Servo 500–2500 μs pulse interval.
+        // 500 μs → 500 / 20000 * 100 = 2.5%
+        // 2500 μs → 2500 / 20000 * 100 = 12.5%
         int pulse = 500 + (currentAngle / 180.0) * 2000;
-        _driver.set_servo_pulse((int)joint, pulse);
+        _driver.setDutyCyclePulse((int)joint, pulse);
         usleep(delayMs * 1000);
     }
     _currentJointAngles[joint] = targetAngle;
 }
 
-std::map<ServoMotorJoint, uint8_t> ServoMotorController::get_current_joint_angles() {
+std::map<ServoMotorJoint, uint8_t> ServoMotorController::getAllJointsAngle() {
     return _currentJointAngles;
 }
 

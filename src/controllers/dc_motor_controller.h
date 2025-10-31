@@ -21,12 +21,12 @@ public:
     DCMotorController(const DCMotorController&) = delete;
     DCMotorController& operator=(const DCMotorController&) = delete;
 
-    DCMotorState get_current_state(){return _currentState;};
+    DCMotorState getCurrentState(){return _currentState;};
 
     void forward(int magnitude);
     void backward(int magnitude);
-    void turn_right(int magnitude);
-    void turn_left(int magnitude);
+    void turnRight(int magnitude);
+    void turnLeft(int magnitude);
     void stop();
     void setEnable(bool enable){ _enable.store(enable);}
 
@@ -35,12 +35,13 @@ private:
     ~DCMotorController();
 
     void run(DCMotor motor, DCMotorDirection direction, int speed);
-    void set_direction(int pin1, int pin2, DCMotorDirection direction);
+    void setDirection(int pin1, int pin2, DCMotorDirection direction);
 
     static DCMotorController* _instance;
     PCA9685Driver _driver;
     DCMotorState _currentState;
     std::atomic<bool> _enable = true;
+    std::atomic<bool> _initialized = false;
 };
 
 #endif // MOTOR_DRIVER_H

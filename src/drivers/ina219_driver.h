@@ -2,6 +2,9 @@
 #ifndef INA219_DRIVER_H
 #define INA219_DRIVER_H
 
+#include <stdint.h>
+#include "i2c_device.h"
+#include "driver_data.h"
 
 #define RANGE_16V                           0 // Range 0-16 volts
 #define RANGE_32V                           1 // Range 0-32 volts
@@ -59,159 +62,47 @@
 #define __CALIBRATION_FACTOR                0.04096
 #define __MAX_CALIBRATION_VALUE             0xFFFE  // Max value supported (65534 decimal)
 
-// In the spec (p17) the current LSB factor for the minimum LSB is
-// documented as 32767, but a larger value (100.1% of 32767) is used
-// to guarantee that current overflow can always be detected.
+
 #define __CURRENT_LSB_FACTOR                32770
 
 
-#include <stdint.h>
+#define SHUNT_OHMS 0.1
+#define MAX_EXPECTED_AMPS 3.0
 
-/**
- * \defgroup ina219 INA219 Current Sensor
- * This section documents the API of the INA219 sensor library.
- */
 
-/**
- * \ingroup ina219
- * 
- * \brief INA219 class to read/write to the INA219 current sensor.
- * 
- * An INA219 object will read and write from/to a file descriptor.
- * This file descriptor is associated to a Linux I2C device,
- * representing the INA219 sensor.
- * 
- */
-class INA219Driver
+class INA219Driver : public I2CDevice
 {
-    public:
-        /**
-         * @brief If the current draw from the system is known, it will
-         *        give better resolution in the measurements.
-         * 
-         * @param shunt_resistance Shunt resistance in Ohms.
-         * @param max_expected_amps Maximum expected current in Amps.
-         */
-        INA219Driver(float shunt_resistance, float max_expected_amps);
-        /**
-         * @brief If the current draw from the system is known, it will
-         *        give better resolution in the measurements.
-         *        Use custom I2C address.
-         * 
-         * @param shunt_resistance Shunt resistance in Ohms.
-         * @param max_expected_amps Maximum expected current in Amps.
-         * @param address Custom I2C address.
-         */
-        INA219Driver(float shunt_resistance, float max_expected_amps, uint8_t address); // Custom device address and amps
 
-        ~INA219Driver();
-    
-    
-    // Private functions
-    private:
-        void        init_i2c(uint8_t address);
-        uint16_t    read_register(uint8_t register_value);
-        void        write_register(uint8_t register_address, uint16_t register_value);
-        float       determine_current_lsb(float max_expected_amps, float max_possible_amps);
-        void        calibrate(float shunt_volts_max, float max_expected_amps);
-    
+public:
 
-    // Private viarables
-    private:
-        int     _file_descriptor;
-        float   _shunt_ohms;
-        float   _max_expected_amps;
-        float   _min_device_current_lsb;
-        int     _voltage_range;
-        int     _gain;
-        float   _current_lsb;
-        float   _power_lsb;
+    INA219Driver();
+    virtual ~INA219Driver();
 
-    // Public functions
-    public:
-        /**
-         * @brief Configures and calibrates how the INA219 will take measurements.
-         * 
-         * @param voltage_range The full scale voltage range, this is either 16V
-                                or 32V represented by one of the following constants;
-                                RANGE_16V, RANGE_32V (default).
-        * @param gain The gain which controls the maximum range of the shunt
-                    voltage represented by one of the following constants;
-                    GAIN_1_40MV, GAIN_2_80MV, GAIN_4_160MV,
-                    GAIN_8_320MV, GAIN_AUTO (default).
-        * @param bus_adc The bus ADC resolution (9, 10, 11, or 12-bit) or
-                        set the number of samples used when averaging results
-                        represent by one of the following constants; ADC_9BIT,
-                        ADC_10BIT, ADC_11BIT, ADC_12BIT (default),
-                        ADC_2SAMP, ADC_4SAMP, ADC_8SAMP, ADC_16SAMP,
-                        ADC_32SAMP, ADC_64SAMP, ADC_128SAMP.
-        * @param shunt_adc The shunt ADC resolution (9, 10, 11, or 12-bit) or
-                            set the number of samples used when averaging results
-                            represent by one of the following constants; ADC_9BIT,
-                            ADC_10BIT, ADC_11BIT, ADC_12BIT (default),
-                            ADC_2SAMP, ADC_4SAMP, ADC_8SAMP, ADC_16SAMP,
-                            ADC_32SAMP, ADC_64SAMP, ADC_128SAMP.
-        */
-        void configure(int voltage_range, int gain, int bus_adc, int shunt_adc);
+    bool initINA219();
+    INA219Data readINA219();
 
-        /**
-         * @brief Put the INA219 into power down mode.
-         * 
-         */
-        void sleep();
+private:
+    float   _shunt_ohms;
+    float   _max_expected_amps;
+    float   _min_device_current_lsb;
+    int     _voltage_range;
+    int     _gain;
+    float   _current_lsb;
+    float   _power_lsb;
 
-        /**
-         * @brief Wake the INA219 from power down mode.
-         * 
-         */
-        void wake();
+    float _determineCurrentLSB(float max_expected_amps, float max_possible_amps);
+    void _calibrate(float shunt_volts_max, float max_expected_amps);
+    void _configure(int voltage_range, int gain, int bus_adc, int shunt_adc);
+    void _sleep();
+    void _wake();
+    void _reset();
+    float _voltage();
+    float _shuntVoltage();
+    float _current();
+    float _power();
 
-        /**
-         * @brief Reset the INA219 to its default configuration.
-         * 
-         */
-        void reset();
-
-        /**
-         * @brief Reads the bus voltage register from the sensor and converts to Volts.
-         * 
-         * @return float Bus voltage in volts (V).
-         */
-        float voltage();
-
-        /**
-         * @brief Reads the shunt voltage register from the sensor and converts to millivolts.
-         * 
-         * @return float Shunt voltage in millivolts (mV). "Inf" or "NaN" when overflow is detected.
-         */
-        float shunt_voltage();
-
-        /**
-         * @brief This is the sum of the bus voltage and shunt voltage. 
-         * 
-         * @return float Supply voltage in volts (V). "Inf" or "NaN" when overflow is detected.
-         */
-        float supply_voltage();
-
-        /**
-         * @brief Reads the current register from the sensor and converts to milliamps.
-         * 
-         * @return float Current in milliamps (mA) going through the sensor. "Inf" or "NaN" when overflow is detected.
-         */
-        float current();
-
-        /**
-         * @brief Reads the bus power register from the sensor and converts to milliwatts.
-         * 
-         * @return float Bus power consumption in milliwatts (mW).  "Inf" or "NaN" when overflow is detected.
-         */
-        float power();
-    
-
-    // Public variables, because cant #define arrays
-    public:
-        float __GAIN_VOLTS[4]   = {0.04, 0.08, 0.16, 0.32};
-        int   __BUS_RANGE[2]    = {16, 32};
+    float __GAIN_VOLTS[4]   = {0.04, 0.08, 0.16, 0.32};
+    int   __BUS_RANGE[2]    = {16, 32};
 };
 
 #endif

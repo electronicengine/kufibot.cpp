@@ -245,19 +245,13 @@ void TuiService::printHelp() {
 
 void TuiService::setJointAngle(ServoMotorJoint joint, int angle) {
 
-    if (_currentSensorData.currentJointAngles.has_value()) {
-        std::map<ServoMotorJoint, uint8_t> jointAngles = _currentSensorData.currentJointAngles.value();
-        jointAngles.at(joint) = angle;
+    std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+    data->source = SourceService::tuiService;
+    static_cast<ControlData*>(data.get())->jointAngle.emplace();
+    static_cast<ControlData*>(data.get())->jointAngle = std::make_pair(joint, angle);
 
-        std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-        data->source = SourceService::tuiService;
-        static_cast<ControlData*>(data.get())->jointAngles.emplace();
-        static_cast<ControlData*>(data.get())->jointAngles = jointAngles;
+    publish(MessageType::ControlData, data);
 
-        publish(MessageType::ControlData, data);
-    }else {
-        ERROR("The current Servo Values couldn't get");
-    }
 }
 
 TuiService::~TuiService() {

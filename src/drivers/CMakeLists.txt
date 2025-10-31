@@ -16,7 +16,10 @@ file(GLOB_RECURSE SRCS ${DRIVERS_SRC_DIR}/*.cpp ${DRIVERS_SRC_DIR}/*.h)
 include_directories(${DRIVERS_INC_DIR})
 
 add_library(${TARGET} SHARED ${SRCS}
-        ../controllers/controller_data_structures.h)
+        ../controllers/controller_data_structures.h
+        driver_data.h
+        i2c_device.cpp
+        i2c_device.h)
 target_include_directories(${TARGET} PRIVATE ${DRIVERS_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${DRIVERS_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE wiringPi)

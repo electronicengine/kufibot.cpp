@@ -152,7 +152,6 @@ std::string JsonParserOperator::to_string(DirectiveType directive) {
     }
 }
 
-// ======================= MOTION JSON PARSERS =======================
 
 MotionSequenceItem JsonParserOperator::parseMotionSequenceItem(const json& sequenceJson) {
     MotionSequenceItem item;
@@ -283,7 +282,6 @@ void JsonParserOperator::loadMotionsFromFile(
             for (const auto& [emotionKey, motionData] : j["motions"]["emotional_gestures"].items()) {
                 EmotionType emotionType = emotionTypeFromString(emotionKey);
                 emotionalMotions[emotionType] = parseEmotionalMotion(motionData);
-                INFO("Loaded emotional motion: {}", emotionKey);
             }
         }
 
@@ -292,7 +290,6 @@ void JsonParserOperator::loadMotionsFromFile(
             for (const auto& [reactionKey, motionData] : j["motions"]["reactional_gestures"].items()) {
                 ReactionType reactionType = reactionTypeFromString(reactionKey);
                 reactionalMotions[reactionType] = parseReactionalMotion(motionData);
-                INFO("Loaded reactional motion: {}", reactionKey);
             }
         }
 
@@ -301,14 +298,12 @@ void JsonParserOperator::loadMotionsFromFile(
             for (const auto& [directiveKey, motionData] : j["motions"]["directives"].items()) {
                 DirectiveType directiveType = directiveTypeFromString(directiveKey);
                 directiveMotions[directiveType] = parseDirectiveMotion(motionData);
-                INFO("Loaded directive motion: {}", directiveKey);
             }
         }
 
         // Load default idle position
         if (j.contains("default_idle") && j["default_idle"].contains("joints")) {
             idlePosition = parseJointPositions(j["default_idle"]["joints"]);
-            INFO("Loaded idle position");
         }
 
         INFO("Successfully loaded motion definitions from: {}", filename);

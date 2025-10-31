@@ -1,4 +1,4 @@
-/*
+ /*
 * This file is part of Kufibot.
  *
  * Kufibot is free software: you can redistribute it and/or modify
@@ -20,9 +20,20 @@
 #include "../logger.h"
 
 
-CompassController* CompassController::_instance = nullptr;
+CompassController *CompassController::_instance = nullptr;
 
-CompassController* CompassController::get_instance() {
+ CompassController::CompassController() {
+    bool ret = sensor.initQMC5883l();
+     if (ret) {
+         _initialized = true;
+         INFO("Compass Controller initialized");
+     }else {
+         _initialized = false;
+         ERROR("Compass Controller initialization failed");
+     }
+ }
+
+ CompassController * CompassController::get_instance() {
     if (_instance == nullptr) {
         _instance = new CompassController();
     }
@@ -30,24 +41,18 @@ CompassController* CompassController::get_instance() {
 }
 
 
-uint16_t CompassController::get_angle() {
-    int angle = sensor.get_bearing();
-    angle = _medianFilter.apply(angle);
-    angle += OFFSET_ANGLE;
-    angle = angle % 360; 
-    return angle;
-}
+uint16_t CompassController::getCompassAngle() {
 
-std::vector<int16_t> CompassController::get_magnet() {
-    if (!_enable.load()) {
-        WARNING("CompassController is disabled");
-        return std::vector<int16_t>{0, 0};
-    }
+     if (!_enable || !_initialized) {
+         return 0;
+     }
 
-    return sensor.get_magnet();
-}
+    Axis compasVector = sensor.readQMC5883l();
+    // Compute angle in radians
+    double angle_rad = std::atan2(compasVector.x, compasVector.y);
 
-CompassData CompassController::get_all() {
-    std::vector<int16_t> magnet = get_magnet();
-    return CompassData{get_angle(), magnet[0], magnet[1] };
+    // Convert to degrees
+    double angle_deg = angle_rad * 180.0 / M_PI;
+
+    return angle_deg;
 }

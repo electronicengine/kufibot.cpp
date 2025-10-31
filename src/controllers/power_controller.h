@@ -5,19 +5,16 @@
 #include "../drivers/ina219_driver.h"
 #include "controller_data_structures.h"
 
-#define SHUNT_OHMS 0.1
-#define MAX_EXPECTED_AMPS 3.0
-
-
 class PowerController {
 public:
     static PowerController* get_instance();
 
-    PowerData get_consumption();
+    PowerData getConsumption();
     void setEnable(bool enable){ _enable.store(enable);}
 
 private:
-    INA219Driver ina; 
+    INA219Driver _ina;
+    std::atomic<bool> _initialized = false;
     static PowerController* _instance;
     std::atomic<bool> _enable = true;
     PowerController();

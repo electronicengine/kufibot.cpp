@@ -27,22 +27,31 @@ PowerController* PowerController::get_instance() {
     return _instance;
 }
 
-PowerController::PowerController() : ina(SHUNT_OHMS, MAX_EXPECTED_AMPS) {
-    ina.configure(RANGE_16V, GAIN_8_320MV, ADC_12BIT, ADC_12BIT); 
-} 
+PowerController::PowerController() {
+    bool ret = _ina.initINA219();
+    if (ret) {
+        _initialized = true;
+        INFO("Power Controller initialized");
+    }
+    else{
+        _initialized = false;
+        ERROR("Power Controller initialization failed");
+    }
+}
 
-PowerData PowerController::get_consumption() {
-    if (!_enable.load()) {
-        WARNING("Power Controller is disabled");
+PowerData PowerController::getConsumption() {
+    if (!_enable.load() || !_initialized) {
         return PowerData{};
     }
+    INA219Data data = _ina.readINA219();
 
-    PowerData data;
-    data.busVoltage = ina.voltage();
-    data.shuntVoltage = ina.shunt_voltage();
-    data.current = ina.current();
-    data.power = ina.power();
-    return data;
+    PowerData powerData;
+    powerData.busVoltage = data.voltage;
+    powerData.shuntVoltage = data.shunt_voltage;
+    powerData.current = data.current;
+    powerData.power = data.power;
+
+    return powerData;
 }
 
 
