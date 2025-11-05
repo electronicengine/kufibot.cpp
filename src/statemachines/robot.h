@@ -42,14 +42,13 @@ struct Robot : StateMachine {
 
     std::mutex _controllerMutex;
     std::atomic<bool> _enableSensorContinuousReadings = false;
-    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointLimits;
+    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointPositionList;
 
     Robot();
     void dumpActivePath();
     bool initialize();
     void setEnableSensorContinuousReadings(bool enable);
-    SensorData getCurrentMotorPositions();
-    SensorData get_sensor_values();
+    SensorData getSensorValues();
     void control_motion(const ControlData& controlData);
     void control_body(int angle, int magnitude);
     void control_head(int angle, int magnitude);

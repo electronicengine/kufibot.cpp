@@ -44,7 +44,7 @@ int I2CDevice::readByte(uint8_t reg) {
 
 bool I2CDevice::writeWord(uint8_t reg, uint16_t value) {
     std::lock_guard<std::mutex> lockGuard(_mutex);
-    return wiringPiI2CReadReg8(_i2cFd, reg);
+    return wiringPiI2CWriteReg16(_i2cFd, reg, value);
 }
 
 int I2CDevice::readWord(uint8_t reg) {

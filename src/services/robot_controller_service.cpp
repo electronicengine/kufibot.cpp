@@ -18,6 +18,7 @@
 #include "robot_controller_service.h"
 #include "gesture_performer_service.h"
 #include "landmark_tracker_service.h"
+#include "remote_connection_service.h"
 #include "mapping_service.h"
 #include "tui_service.h"
 
@@ -41,11 +42,13 @@ RobotControllerService::RobotControllerService() : Service("RobotControllerServi
 
 void RobotControllerService::service_function() {
 
+
     subscribe_to_service(MappingService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
+    subscribe_to_service(RemoteConnectionService::get_instance());
 
     _robot.start();
 
@@ -69,7 +72,7 @@ void RobotControllerService::service_function() {
             _controlData.reset();
 
             std::this_thread::sleep_for(std::chrono::microseconds(5));
-            publishUpdatedMotorPositions();
+            publishSensorValues();
 
         }
     }
@@ -97,13 +100,17 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
             break;
         }
 
+        case MessageType::SensorReadRequest: {
+            _sensorReadRequest = true;
+        }
+
         default:
             break;
     }
 }
 
-void RobotControllerService::publishUpdatedMotorPositions() {
+void RobotControllerService::publishSensorValues() {
     std::unique_ptr<MessageData> data = std::make_unique<SensorData>();
-    *static_cast<SensorData *>(data.get()) = _robot.getCurrentMotorPositions();
+    *static_cast<SensorData *>(data.get()) = _robot.getSensorValues();
     publish(MessageType::SensorData, data);
 }

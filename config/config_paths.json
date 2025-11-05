@@ -1,0 +1,6 @@
+{
+  "ai_config" : "/usr/local/etc/ai_config.json",
+  "gesture_config" : "/usr/local/etc/gesture_config.json",
+  "joint_angles" : "/usr/local/etc/joint_angles.json",
+  "motion_definitions" : "/usr/local/etc/motion_definitions.json"
+}

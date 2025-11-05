@@ -1,8 +1,31 @@
 {
-  "reactional_gestures": [
-    {"ai": "speechPrecessor", "modelPath": "/usr/local/ai.models/engSpeechModel/en_GB-alan-low.onnx"},
-    {"ai": "speechRecognizer", "modelPath": "/usr/local/ai.models/engRecognizeModel", "command": "Yep!"},
-    {"ai": "llmChat", "modelPath": "/usr/local/ai.models/trLlamaModel/dolphin3.gguf"},
-    {"ai": "llmEmbedding", "modelPath": "/usr/local/ai.models/trLlamaModel/mxbaiV1.gguf"}
-  ]
+  "speechPrecessor": {
+    "modelPath": "/usr/local/ai.models/engSpeechModel/en_GB-alan-low.onnx"
+  },
+  "speechRecognizer": {
+    "modelPath": "/usr/local/ai.models/engRecognizeModel",
+    "command": "Yep!",
+    "timeout": 4000
+  },
+  "llmChat": {
+    "modelPath" : "/usr/local/ai.models/llamaModel/dolphin3.gguf",
+    "systemMessage" :  "Your name is coffee. Your are home made assistant robot. Give responses like pet robot.",
+    "settings" : {
+      "ngl": "99",
+      "nThreads": 4,
+      "n_ctx": 2048,
+      "minP" : 0.05,
+      "temp" : 0.8,
+      "topK" : 50,
+      "topP" : 0.9,
+      "chatTemplate" : "llama"
+    }
+  },
+  "llmEmbedding": {
+    "modelPath" : "/usr/local/ai.models/llamaModel/mxbaiV1.gguf",
+    "poolingType" : 1
+  },
+  "mediapipe": {
+    "modelPath": "/home/kufi/mediapipe"
+  }
 }

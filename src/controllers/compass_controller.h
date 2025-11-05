@@ -26,7 +26,7 @@ public:
 
     // Get singleton instance
     static CompassController* get_instance();
-    uint16_t getCompassAngle();
+    CompassData getCompassData();
 
     void setEnable(bool enable){_enable.store(enable);}
 

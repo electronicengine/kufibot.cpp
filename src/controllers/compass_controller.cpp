@@ -41,10 +41,11 @@ CompassController *CompassController::_instance = nullptr;
 }
 
 
-uint16_t CompassController::getCompassAngle() {
+CompassData CompassController::getCompassData() {
+    CompassData data;
 
      if (!_enable || !_initialized) {
-         return 0;
+         return data;
      }
 
     Axis compasVector = sensor.readQMC5883l();
@@ -54,5 +55,9 @@ uint16_t CompassController::getCompassAngle() {
     // Convert to degrees
     double angle_deg = angle_rad * 180.0 / M_PI;
 
-    return angle_deg;
+     data.angle = angle_deg;
+     data.magnetX = compasVector.x;
+     data.magnetY = compasVector.y;
+
+    return data;
 }

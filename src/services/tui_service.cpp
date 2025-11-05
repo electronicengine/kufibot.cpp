@@ -137,7 +137,7 @@ void TuiService::service_function() {
             std::string className = input.substr(4, input.size() - 4);
             Logger::print_cached_logs(className);
         }else if(input == "sensors") {
-            INFO("{} ",_currentSensorData.to_json().dump().c_str());
+            INFO("{} ",_currentSensorData.to_json());
         }else if (input.find("gestures") != std::string::npos) {
             int seconds = std::stoi(input.substr(9, input.size() - 9));
             printGestureData(seconds);

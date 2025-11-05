@@ -22,6 +22,7 @@
 #include "gesture_performer_service.h"
 #include "gesture_recognizer_service.h"
 #include "interactive_chat_service.h"
+#include "remote_connection_service.h"
 #include "robot_controller_service.h"
 
 constexpr int MAX_ERROR = 300;
@@ -50,8 +51,17 @@ void LandmarkTrackerService::initialize() {
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(RobotControllerService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(RemoteConnectionService::get_instance());
 
-    _jointLimits = JsonParserOperator::getJointLimits("/usr/local/etc/joint_angles.json");
+    //
+    // auto parser = JsonParserOperator::get_instance();
+    // auto jointPoisitionList = parser->getJointAngles();
+    //
+    // if (jointPoisitionList.has_value()) {
+    //     _jointPositionList = jointPoisitionList.value();
+    // }else {
+    //     ERROR("Joint Position List couldn't be loaded!");
+    // }
 }
 
 
@@ -226,6 +236,17 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
         }
 
         case MessageType::InteractiveChatStarted : {
+            stop();
+            break;
+        }
+
+
+        case MessageType::AIModeOnCall : {
+            start();
+            break;
+        }
+
+        case MessageType::AIModeOffCall : {
             stop();
             break;
         }

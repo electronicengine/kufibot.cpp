@@ -29,7 +29,7 @@ MovingState::MovingState(std::string n, State* parent) : State(n, parent) {
 }
 
 std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
-    INFO("onEnter MovingState");
+    INFO("onEnter MovingState source: {}", (int)ev.source);
     INFO("started ms timeout {}", _timeoutMs);
 
     static_cast<Robot*>(_machine)->setEnableSensorContinuousReadings(false);

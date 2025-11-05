@@ -16,7 +16,12 @@
  */
 
 #include "remote_connection_service.h"
+
 #include "../logger.h"
+#include "gesture_performer_service.h"
+#include "interactive_chat_service.h"
+#include "landmark_tracker_service.h"
+#include "web_socket_service.h"
 
 RemoteConnectionService* RemoteConnectionService::_instance = nullptr;
 
@@ -29,71 +34,98 @@ RemoteConnectionService *RemoteConnectionService::get_instance()
     return _instance;
 }
 
-RemoteConnectionService::RemoteConnectionService(int port) : Service("RemoteConnectionService")
-{
-    _port = port;
+RemoteConnectionService::RemoteConnectionService() : Service("RemoteConnectionService") {
+
+}
+
+bool RemoteConnectionService::initialize() {
+    subscribe_to_service(WebSocketService::get_instance());
+    return true;
 }
 
 void RemoteConnectionService::service_function() {
 
-    _webSocketService = WebSocketService::get_instance();
-    _videoStreamService = VideoStreamService::get_instance();
-    _robotControllerService = RobotControllerService::get_instance();
+    initialize();
 
-    subscribe_to_service(_webSocketService);
+    while (_running) {
+        {
+            std::unique_lock<std::mutex> lock(_dataMutex);
+            _condVar.wait(lock);
+        }
+
+        if (_frame.has_value() && _hdl.has_value()) {
+            std::vector<uchar> buffer;
+            cv::imencode(".jpg", _frame.value(), buffer);
+
+            std::unique_ptr<MessageData> data= std::make_unique<WebSocketTransferData>();
+            static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl.value();
+            static_cast<WebSocketTransferData*>(data.get())->msg = std::string(buffer.begin(), buffer.end());
+            static_cast<WebSocketTransferData*>(data.get())->type = 2;
+            publish(MessageType::WebSocketTransfer, data);
+            _frame.reset();
+
+            std::string sensor_json = "";
+            if (_sensorData.has_value()) {
+                sensor_json = _sensorData.value().to_json();
+            }
+
+            static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl.value();
+            static_cast<WebSocketTransferData*>(data.get())->msg = sensor_json;
+            static_cast<WebSocketTransferData*>(data.get())->type = 1;
+            publish(MessageType::WebSocketTransfer, data);
+            _sensorData.reset();
+        }
+
+        if (_socketMessage.has_value() && _hdl.has_value()) {
+            if(_socketMessage.value() == "on_open"){
+                INFO("on_open");
+                INFO("Publishing AIModeOffCall");
+                publish(MessageType::AIModeOffCall);
+                subscribe_to_service(VideoStreamService::get_instance());
+                subscribe_to_service(RobotControllerService::get_instance());
+            }
+            else if(_socketMessage.value() == "on_close"){
+                INFO("on_close");
+                INFO("Publishing AIModeOffCall");
+                publish(MessageType::AIModeOnCall);
+                unsubscribe_from_service(VideoStreamService::get_instance());
+                unsubscribe_from_service(RobotControllerService::get_instance());
+            }
+            else{
+                Json message = Json::parse(_socketMessage.value());
+                if (message.contains("talkie")) {
+                    std::string talkieValue = message["talkie"];
+                    INFO("Talkie Message: {} ",talkieValue);
+
+                    if (talkieValue.find("switch ai mode on") != std::string::npos) {
+                        INFO("Publishing AIModeOnCall");
+                        publish(MessageType::AIModeOnCall);
+                    }else if (talkieValue.find("switch ai mode off") != std::string::npos) {
+                        INFO("Publishing AIModeOffCall");
+                        publish(MessageType::AIModeOffCall);
+                    }else {
+                        std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
+                        static_cast<LLMQueryData *>(data.get())->query = talkieValue;
+                        publish(MessageType::LLMQuery, data);
+                    }
+
+                }else{
+                    std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+                    *static_cast<ControlData*>(data.get()) = ControlData(message);
+                    data->source = SourceService::remoteConnectionService;
+
+                    publish(MessageType::ControlData, data);
+                }
+            }
+
+            _socketMessage.reset();
+        }
+    }
 }
 
 RemoteConnectionService::~RemoteConnectionService()
 {
     stop(); // Ensure everything is stopped in the destructor
-}
-
-
-void RemoteConnectionService::video_frame(const cv::Mat& frame) {
-
-    std::vector<uchar> buffer;
-    cv::imencode(".jpg", frame, buffer);
-
-    try {
-        std::unique_ptr<MessageData> data= std::make_unique<WebSocketTransferData>();
-        static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl;
-        static_cast<WebSocketTransferData*>(data.get())->msg = std::string(buffer.begin(), buffer.end());
-        static_cast<WebSocketTransferData*>(data.get())->type = 2;
-        publish(MessageType::WebSocketTransfer, data);
-
-        static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl;
-        static_cast<WebSocketTransferData*>(data.get())->msg = _sensorData.to_json().dump();
-        static_cast<WebSocketTransferData*>(data.get())->type = 1;
-        publish(MessageType::WebSocketTransfer, data);
-
-    } catch (const std::exception& e) {
-        ERROR("WebSocket Error: {} " + std::string(e.what()));
-    }
-
-}
-
-void RemoteConnectionService::web_socket_receive_message(websocketpp::connection_hdl hdl,  const std::string& msg)
-{
-    if(msg == "on_open"){
-        TRACE("new web socket connection extablished");
-        _hdl = hdl;
-        subscribe_to_service(_videoStreamService);
-        subscribe_to_service(_robotControllerService);
-    }
-    else if(msg == "on_close"){
-        unsubscribe_from_service(_videoStreamService);
-        unsubscribe_from_service(_robotControllerService);
-    }
-    else{
-        Json message = Json::parse(msg);
-        if (message.contains("talkie")) {
-            return;
-        }else{
-            std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-            *static_cast<ControlData*>(data.get()) = ControlData(message);
-            publish(MessageType::ControlData, data);
-        }
-    }
 }
 
 void RemoteConnectionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
@@ -102,10 +134,9 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
         case MessageType::WebSocketReceive: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
-
-                std::string msg = static_cast<WebSocketReceiveData*>(data.get())->msg;
-                websocketpp::connection_hdl hdl = static_cast<WebSocketReceiveData*>(data.get())->hdl;
-                web_socket_receive_message(hdl, msg);
+                _socketMessage = static_cast<WebSocketReceiveData*>(data.get())->msg;
+                _hdl = static_cast<WebSocketReceiveData*>(data.get())->hdl;
+                _condVar.notify_one();
             }
             break;
         }
@@ -113,9 +144,8 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
         case MessageType::VideoFrame: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
-
-                cv::Mat frame = static_cast<VideoFrameData*>(data.get())->frame;
-                video_frame(frame);
+                _frame = static_cast<VideoFrameData*>(data.get())->frame;
+                _condVar.notify_one();
             }
 
             break;
@@ -124,14 +154,12 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
         case MessageType::SensorData: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
-
                 _sensorData = *static_cast<SensorData*>(data.get());
             }
 
             break;
         }
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
 
 

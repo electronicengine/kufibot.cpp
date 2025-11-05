@@ -67,15 +67,16 @@ auto main(int argc, char *argv[]) -> int {
     Logger::init(nullptr, useTui, logLevel);
 
     if (!stopAllServices) {
-        WebSocketService::get_instance()->disable();
+        WebSocketService::get_instance()->start();
         VideoStreamService::get_instance()->start();
         RobotControllerService::get_instance()->start();
-        RemoteConnectionService::get_instance()->disable();
+        RemoteConnectionService::get_instance()->start();
+
         InteractiveChatService::get_instance()->start();
         GesturePerformerService::get_instance()->start();
         GestureRecognizerService::get_instance(showFrame)->start();
-        LandmarkTrackerService::get_instance()->stop();
-        MappingService::get_instance()->disable();
+        LandmarkTrackerService::get_instance()->start();
+        MappingService::get_instance()->stop();
     }
 
     TuiService *tui_service = TuiService::get_instance();

@@ -16,12 +16,13 @@
  */
 
 #include "gesture_performer_service.h"
-#include "landmark_tracker_service.h"
-#include "tui_service.h"
-#include "video_stream_service.h"
+#include "../controllers/controller_data_structures.h"
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
-#include "../controllers/controller_data_structures.h"
+#include "landmark_tracker_service.h"
+#include "remote_connection_service.h"
+#include "tui_service.h"
+#include "video_stream_service.h"
 
 GesturePerformerService* GesturePerformerService::_instance = nullptr;
 std::map<ServoMotorJoint, uint8_t>  GesturePerformerService::idleJointPositions= Default_Joint_Angles;
@@ -48,29 +49,58 @@ GesturePerformerService::~GesturePerformerService()
 
 void GesturePerformerService::service_function()
 {
-    INFO("loading GestureJointAngles From json...");
-    JsonParserOperator::get_instance()->loadGestureJointAnglesFromJson(
-        "/usr/local/etc/joint_angles.json",
-        jointGesturePositionList
-    );
+    auto parser = JsonParserOperator::get_instance();
 
-    INFO("Loading motion definitions from json...");
-    JsonParserOperator::get_instance()->loadMotionsFromFile(
-        "/usr/local/etc/motion_definitions.json",
-        _emotionalMotions,
-        _reactionalMotions,
-        _directiveMotions,
-        _idlePositions
-    );
+    auto jointAngles = parser->getJointAngles();
+    if (jointAngles.has_value()) {
+        _jointPositionList = jointAngles.value();
+    }else {
+        ERROR("Joint Position List couldn't load from config!");
+    }
+
+    auto emotionalMotions = parser->getEmotionalMotions();
+    if (emotionalMotions.has_value()) {
+        _emotionalMotions = emotionalMotions.value();
+    }else {
+        ERROR("Emotional Motions couldn't load from config!");
+    }
+
+    auto reactionalMotions = parser->getReactionalMotions();
+    if (reactionalMotions.has_value()) {
+        _reactionalMotions = reactionalMotions.value();
+    }else {
+        ERROR("Reactional Motions couldn't load from config!");
+    }
+
+    auto directiveMotions = parser->getDirectiveMotions();
+    if (directiveMotions.has_value()) {
+        _directiveMotions = directiveMotions.value();
+    }else {
+        ERROR("Directive Motions couldn't load from config!");
+    }
+
+    auto idlePositions = parser->getIdlePosition();
+    if (idlePositions.has_value()) {
+        _idlePositions = idlePositions.value();
+    }else {
+        ERROR("Idle Positions couldn't load from config!");
+    }
 
     INFO("Setting robot to idle position...");
    // setIdlePosition();
 
-    SpeechPerformingOperator::get_instance()->loadModel();
+    auto aiConfig = parser->getAiConfig();
+    if (aiConfig.has_value()) {
+        SpeechPerformingOperator::get_instance()->loadModel(aiConfig->speechProcessorConfig.modelPath);
+    }else {
+        ERROR("Speech Processor model couldn't load");
+    }
+
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
+    subscribe_to_service(RemoteConnectionService::get_instance());
 
     INFO("Entering the gesture performing loop...");
     while (_running) {
@@ -121,6 +151,16 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
             break;
         }
 
+        case MessageType::AIModeOnCall : {
+            start();
+            break;
+        }
+
+        case MessageType::AIModeOffCall : {
+            stop();
+            break;
+        }
+
         default:
             break;
     }
@@ -128,8 +168,8 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
 
 
 int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, GestureJointState state) {
-    auto jointIt = jointGesturePositionList.find(joint);
-    if (jointIt != jointGesturePositionList.end()) {
+    auto jointIt = _jointPositionList.find(joint);
+    if (jointIt != _jointPositionList.end()) {
         auto stateIt = jointIt->second.find(state);
         if (stateIt != jointIt->second.end()) {
             return stateIt->second.angle;

@@ -145,18 +145,26 @@ void InteractiveChatService::query_response_callback(const std::string &response
 
 bool InteractiveChatService::load_models()
 {
+    auto parser = JsonParserOperator::get_instance();
+    auto aiConfig = parser->getAiConfig();
+    if (!aiConfig.has_value()) {
+        ERROR("AI Config is not found!");
+        return false;
+    }
+
     _llamaChatOperator.setCallBackFunction( std::bind(&InteractiveChatService::query_response_callback, this, std::placeholders::_1));
-    _llamaChatOperator.setSystemMessage("Your name is coffee. Your are home made assistant robot. Give responses like pet robot.");
+    _llamaChatOperator.setSystemMessage(aiConfig->llmChatConfig.systemMessage);
+
 
     INFO("Llama Chat Model is loading...");
-    bool ret = _llamaChatOperator.loadChatModel();
+    bool ret = _llamaChatOperator.loadChatModel(aiConfig->llmChatConfig.modelPath);
     if (!ret) {
         ERROR("Llama Chat Model loading failed!");
     }
     DEBUG("Llama Chat Model is loaded");
 
     INFO("Llama Embedding Model is loading...");
-    ret = _llamaEmbeddingOperator.loadEmbedModel();
+    ret = _llamaEmbeddingOperator.loadEmbedModel(aiConfig->llmEmbeddingConfig.modelPath, (enum llama_pooling_type) aiConfig->llmEmbeddingConfig.poolingType);
     if (!ret) {
         ERROR("Llama Embedding Model loading failed!");
     }
@@ -237,22 +245,23 @@ std::pair<Directive, float> InteractiveChatService::find_sentence_directive(cons
 
 void InteractiveChatService::service_function()
 {
-    INFO("gesture list is parsing from json...");
-    JsonParserOperator::get_instance()->loadGesturesFromFile("/usr/local/etc/gesture_config.json", _emotionalList, _reactionalList, _directiveList);
-
-    TRACE("Emotional List:");
-    for (auto &emotion : _emotionalList) {
-        TRACE("{}: {} ",emotion.symbol, emotion.description);
+    auto parser = JsonParserOperator::get_instance();
+    if (parser->getEmotionalList().has_value()) {
+        _emotionalList = parser->getEmotionalList().value();
+    }else {
+        ERROR("Emotional List is not found!");
     }
 
-    TRACE("Reactional List:");
-    for (auto &reaction : _reactionalList) {
-        TRACE("{}: {} ",reaction.symbol, reaction.description);
+    if (parser->getReactionalList().has_value()) {
+        _reactionalList = parser->getReactionalList().value();
+    }else {
+        ERROR("Reactional List is not found!");
     }
 
-    TRACE("Directive List:");
-    for (auto &directive : _directiveList) {
-        TRACE("{}: {} ",directive.symbol, directive.description);
+    if (parser->getDirectiveList().has_value()) {
+        _directiveList = parser->getDirectiveList().value();
+    }else {
+        ERROR("Directive List is not found!");
     }
 
     load_models();
@@ -265,13 +274,11 @@ void InteractiveChatService::service_function()
 
     INFO("Speech Recognizing Model is loading...");
     auto* recognizer = SpeechRecognizingOperator::get_instance();
-    recognizer->load_model(TR_RECOGNIZE_MODEL_PATH);
+    recognizer->load_model(parser->getAiConfig()->speechRecognizerConfig.modelPath);
     recognizer->open();
     recognizer->start_listen();
 
-    LandmarkTrackerService::get_instance()->start();
-
-    while (true) {
+    while (_running) {
         std::string message = recognizer->get_message(3000); // 5 second timeout
 
         if (!message.empty()) {
@@ -284,7 +291,6 @@ void InteractiveChatService::service_function()
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 recognizer->start_listen();
                 INFO("Start Listen");
-
             } else {
 
                 // Process the recognized speech
@@ -333,6 +339,17 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
             }
             break;
         }
+
+        case MessageType::AIModeOnCall : {
+            start();
+            break;
+        }
+
+        case MessageType::AIModeOffCall : {
+            stop();
+            break;
+        }
+
         default:
             break;
     }

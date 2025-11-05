@@ -6,103 +6,107 @@
 #include "i2c_device.h"
 #include "driver_data.h"
 
-#define RANGE_16V                           0 // Range 0-16 volts
-#define RANGE_32V                           1 // Range 0-32 volts
+#include "i2c_device.h"
+#include <cstdint>
 
-#define GAIN_1_40MV                         0 // Maximum shunt voltage 40mV
-#define GAIN_2_80MV                         1 // Maximum shunt voltage 80mV
-#define GAIN_4_160MV                        2 // Maximum shunt voltage 160mV
-#define GAIN_8_320MV                        3 // Maximum shunt voltage 320mV
-// #define GAIN_AUTO                          -1 // Determine gain automatically
-
-#define ADC_9BIT                            0  // 9-bit conversion time  84us.
-#define ADC_10BIT                           1  // 10-bit conversion time 148us.
-#define ADC_11BIT                           2  // 11-bit conversion time 2766us.
-#define ADC_12BIT                           3  // 12-bit conversion time 532us.
-#define ADC_2SAMP                           9  // 2 samples at 12-bit, conversion time 1.06ms.
-#define ADC_4SAMP                           10 // 4 samples at 12-bit, conversion time 2.13ms.
-#define ADC_8SAMP                           11 // 8 samples at 12-bit, conversion time 4.26ms.
-#define ADC_16SAMP                          12 // 16 samples at 12-bit,conversion time 8.51ms
-#define ADC_32SAMP                          13 // 32 samples at 12-bit, conversion time 17.02ms.
-#define ADC_64SAMP                          14 // 64 samples at 12-bit, conversion time 34.05ms.
-#define ADC_128SAMP                         15 // 128 samples at 12-bit, conversion time 68.10ms.
-
-#define __ADDRESS                           0x44
-
-#define __REG_CONFIG                        0x00
-#define __REG_SHUNTVOLTAGE                  0x01
-#define __REG_BUSVOLTAGE                    0x02
-#define __REG_POWER                         0x03
-#define __REG_CURRENT                       0x04
-#define __REG_CALIBRATION                   0x05
-
-#define __RST                               15
-#define __BRNG                              13
-#define __PG1                               12
-#define __PG0                               11
-#define __BADC4                             10
-#define __BADC3                             9
-#define __BADC2                             8
-#define __BADC1                             7
-#define __SADC4                             6
-#define __SADC3                             5
-#define __SADC2                             4
-#define __SADC1                             3
-#define __MODE3                             2
-#define __MODE2                             1
-#define ___MODE1                            0
-
-#define __OVF                               1
-#define __CNVR                              2
-
-#define __CONT_SH_BUS                       7
-
-#define __SHUNT_MILLIVOLTS_LSB              0.01    // 10uV
-#define __BUS_MILLIVOLTS_LSB                4       // 4mV
-#define __CALIBRATION_FACTOR                0.04096
-#define __MAX_CALIBRATION_VALUE             0xFFFE  // Max value supported (65534 decimal)
-
-
-#define __CURRENT_LSB_FACTOR                32770
-
-
-#define SHUNT_OHMS 0.1
-#define MAX_EXPECTED_AMPS 3.0
-
-
-class INA219Driver : public I2CDevice
-{
-
+class INA219Driver : public I2CDevice {
 public:
+    // I2C Addresses
+    static constexpr uint8_t INA219_I2C_ADDRESS1 = 0x40;
+    static constexpr uint8_t INA219_I2C_ADDRESS2 = 0x41;
+    static constexpr uint8_t INA219_I2C_ADDRESS3 = 0x44;
+    static constexpr uint8_t INA219_I2C_ADDRESS4 = 0x45;
+
+    // Bus Voltage Range
+    enum BusVoltageRange {
+        BUS_VOL_RANGE_16V = 0,
+        BUS_VOL_RANGE_32V = 1
+    };
+
+    // PGA Gain
+    enum PGABits {
+        PGA_BITS_1 = 0,
+        PGA_BITS_2 = 1,
+        PGA_BITS_4 = 2,
+        PGA_BITS_8 = 3
+    };
+
+    // ADC Resolution
+    enum ADCBits {
+        ADC_BITS_9  = 0,
+        ADC_BITS_10 = 1,
+        ADC_BITS_11 = 2,
+        ADC_BITS_12 = 3
+    };
+
+    // ADC Samples
+    enum ADCSample {
+        ADC_SAMPLE_1   = 0,
+        ADC_SAMPLE_2   = 1,
+        ADC_SAMPLE_4   = 2,
+        ADC_SAMPLE_8   = 3,
+        ADC_SAMPLE_16  = 4,
+        ADC_SAMPLE_32  = 5,
+        ADC_SAMPLE_64  = 6,
+        ADC_SAMPLE_128 = 7
+    };
+
+    // Operating Mode
+    enum Mode {
+        POWER_DOWN                = 0,
+        SHUNT_VOL_TRIG           = 1,
+        BUS_VOL_TRIG             = 2,
+        SHUNT_AND_BUS_VOL_TRIG   = 3,
+        ADC_OFF                   = 4,
+        SHUNT_VOL_CON            = 5,
+        BUS_VOL_CON              = 6,
+        SHUNT_AND_BUS_VOL_CON    = 7
+    };
 
     INA219Driver();
-    virtual ~INA219Driver();
+    ~INA219Driver();
 
-    bool initINA219();
+    // Initialize the sensor
+    bool initINA219(int address = INA219_I2C_ADDRESS3);
     INA219Data readINA219();
 
+    // Reset the device
+    void reset();
+
+    // Read measurements
+    float getBusVoltageV();
+    float getShuntVoltageMV();
+    float getCurrentMA();
+    float getPowerMW();
+
+    // Configuration
+    void setBusRange(BusVoltageRange range);
+    void setPGA(PGABits bits);
+    void setBusADC(ADCBits bits, ADCSample sample);
+    void setShuntADC(ADCBits bits, ADCSample sample);
+    void setMode(Mode mode);
+    void setCalibration(float shuntResistor_ohms, float maxCurrent_A);
+
 private:
-    float   _shunt_ohms;
-    float   _max_expected_amps;
-    float   _min_device_current_lsb;
-    int     _voltage_range;
-    int     _gain;
-    float   _current_lsb;
-    float   _power_lsb;
+    float _currentLSB;
+    // Register addresses
+    static constexpr uint8_t REG_CONFIG       = 0x00;
+    static constexpr uint8_t REG_SHUNTVOLTAGE = 0x01;
+    static constexpr uint8_t REG_BUSVOLTAGE   = 0x02;
+    static constexpr uint8_t REG_POWER        = 0x03;
+    static constexpr uint8_t REG_CURRENT      = 0x04;
+    static constexpr uint8_t REG_CALIBRATION  = 0x05;
 
-    float _determineCurrentLSB(float max_expected_amps, float max_possible_amps);
-    void _calibrate(float shunt_volts_max, float max_expected_amps);
-    void _configure(int voltage_range, int gain, int bus_adc, int shunt_adc);
-    void _sleep();
-    void _wake();
-    void _reset();
-    float _voltage();
-    float _shuntVoltage();
-    float _current();
-    float _power();
+    // Configuration values
+    static constexpr uint16_t CONFIG_RESET = 0x8000;
 
-    float __GAIN_VOLTS[4]   = {0.04, 0.08, 0.16, 0.32};
-    int   __BUS_RANGE[2]    = {16, 32};
+    // Member variables
+    uint16_t _calValue;
+
+    // Helper functions
+    void writeRegister(uint8_t reg, uint16_t value);
+    int16_t readRegister(uint8_t reg);
+    bool scan();
 };
 
 #endif

@@ -24,17 +24,143 @@ using json = nlohmann::json;
 
 JsonParserOperator* JsonParserOperator::_instance = nullptr;
 
-JsonParserOperator* JsonParserOperator::get_instance() {
+JsonParserOperator *JsonParserOperator::get_instance() {
     if (_instance == nullptr) {
         _instance = new JsonParserOperator();
     }
     return _instance;
 }
 
+
 // ======================= STRING ↔ ENUM =======================
 
 JsonParserOperator::JsonParserOperator() {
+
+    loadConfigPaths(CONFIG_PATHS_FILE, _configPaths.emplace());
+    if (_configPaths->ai_config.empty()) {
+        _configPaths.reset();
+        ERROR("_configPaths.ai_config is empty. Please check the config paths file: {}", CONFIG_PATHS_FILE);
+    }else {
+        loadMotionsFromFile(_configPaths->motion_definitions, _emotionalMotions.emplace(), _reactionalMotions.emplace(), _directiveMotions.emplace(), _idlePosition.emplace());
+
+        if (_emotionalMotions->empty()) {
+            ERROR("No emotional motions found in the motion definitions file: {}", _configPaths->motion_definitions);
+            _emotionalMotions.reset();
+            _reactionalMotions.reset();
+            _directiveMotions.reset();
+            _idlePosition.reset();
+        }
+
+        loadGesturesFromFile(_configPaths->gesture_config, _emotionalList.emplace(), _reactionalList.emplace(), _directiveList.emplace());
+        if (_emotionalMotions->empty()) {
+            ERROR("No emotional gestures found in the gesture definitions file: {}", _configPaths->gesture_config);
+            _emotionalList.reset();
+            _reactionalList.reset();
+            _directiveList.reset();
+        }
+
+        loadJointAnglesFromJson(_configPaths->joint_angles, _jointAngles.emplace());
+        if (_jointAngles->empty()) {
+            ERROR("No Joint found in the joint angle file: {}", _configPaths->joint_angles);
+            _jointAngles.reset();
+        }
+
+        loadAiConfig(_configPaths->ai_config, _aiConfig.emplace());
+        if (_aiConfig->speechProcessorConfig.modelPath.empty()) {
+            _aiConfig.reset();
+            ERROR("No speech processor model path found in the AI config file: {}", _configPaths->ai_config);
+        }
+    }
+
 }
+
+
+void JsonParserOperator::loadConfigPaths(const std::string& filename, ConfigPaths& paths) {
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            ERROR("Failed to open config file: {}", filename);
+        }
+
+        json j;
+        inFile >> j;
+
+        paths.ai_config = j.value("ai_config", "");
+        paths.gesture_config = j.value("gesture_config", "");
+        paths.joint_angles = j.value("joint_angles", "");
+        paths.motion_definitions = j.value("motion_definitions", "");
+
+    } catch (const std::exception& e) {
+        ERROR("Error parsing config paths file {} : {} " , filename ,e.what());
+    }
+}
+
+void JsonParserOperator::loadAiConfig(const std::string& filename, AiConfig& config) {
+
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            ERROR("Failed to open AI config file: {}", filename);
+        }
+
+        json j;
+        inFile >> j;
+
+        // speechProcessor
+        if (j.contains("speechPrecessor")) { // note: key in JSON is 'speechPrecessor' (typo kept intentionally if file uses that)
+            const auto& sp = j["speechPrecessor"];
+            config.speechProcessorConfig.modelPath = sp.value("modelPath", "");
+        }
+
+        // speechRecognizer
+        if (j.contains("speechRecognizer")) {
+            const auto& sr = j["speechRecognizer"];
+            config.speechRecognizerConfig.modelPath = sr.value("modelPath", "");
+            config.speechRecognizerConfig.command = sr.value("command", "");
+            config.speechRecognizerConfig.timeOut = sr.value("timeOut", 0);
+        }
+
+        // llmChat
+        if (j.contains("llmChat")) {
+            const auto& lc = j["llmChat"];
+            config.llmChatConfig.modelPath = lc.value("modelPath", "");
+            config.llmChatConfig.systemMessage = lc.value("systemMessage", "");
+
+            if (lc.contains("settings")) {
+                const auto& s = lc["settings"];
+                config.llmChatConfig.llmSettings.ngl = s.value("ngl", "");
+                config.llmChatConfig.llmSettings.nThreads = s.value("nThreads", 0);
+                config.llmChatConfig.llmSettings.n_ctx = s.value("n_ctx", 0);
+                config.llmChatConfig.llmSettings.minP = s.value("minP", 0.0);
+                config.llmChatConfig.llmSettings.temp = s.value("temp", 0.0);
+                config.llmChatConfig.llmSettings.topK = s.value("topK", 0);
+                config.llmChatConfig.llmSettings.topP = s.value("topP", 0.0);
+                config.llmChatConfig.llmSettings.templateName = s.value("template", "");
+            }
+        }
+
+        // llmEmbedding
+        if (j.contains("llmEmbedding")) {
+            const auto& le = j["llmEmbedding"];
+            config.llmEmbeddingConfig.modelPath = le.value("modelPath", "");
+            config.llmEmbeddingConfig.poolingType = le.value("poolingType", 0);
+        }
+
+        // mediapipe
+        if (j.contains("mediapipe")) {
+            const auto& mp = j["mediapipe"];
+            config.mediapipeConfig.modelPath = mp.value("modelPath", "");
+        }
+
+        INFO("AI configuration loaded successfully from: {}", filename);
+    }
+    catch (const std::exception& e) {
+        ERROR("Error parsing AI config file {}: {}", filename, e.what());
+    }
+
+}
+
+
 
 EmotionType JsonParserOperator::emotionTypeFromString(const std::string& str) {
     if (str == "happy") return EmotionType::happy;
@@ -471,7 +597,7 @@ void JsonParserOperator::loadGesturesFromFile(
     }
 }
 
-void JsonParserOperator::loadGestureJointAnglesFromJson(
+void JsonParserOperator::loadJointAnglesFromJson(
     const std::string& filename,
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>& data) {
 
@@ -489,23 +615,4 @@ void JsonParserOperator::loadGestureJointAnglesFromJson(
             data[joint][state] = angle;
         }
     }
-}
-
-void JsonParserOperator::writeGestureJointAnglesToJson(
-    const std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>& data,
-    const std::string& filename) {
-
-    json j;
-
-    for (const auto& [joint, states] : data) {
-        std::string jointStr = to_string(joint);
-        for (const auto& [state, angleInfo] : states) {
-            std::string stateStr = to_string(state);
-            j[jointStr][stateStr]["angle"] = angleInfo.angle;
-            j[jointStr][stateStr]["name"] = angleInfo.symbol;
-        }
-    }
-
-    std::ofstream file(filename);
-    file << j.dump(4);
 }

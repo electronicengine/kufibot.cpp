@@ -101,7 +101,7 @@ class LandmarkTrackerService: public Service{
         LastKnownTarget _lastKnownTarget;
 
         static LandmarkTrackerService *_instance;
-        std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointLimits;
+        std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointPositionList;
         int _errorTreshold;
         int _reactionEngageTimeout;
 

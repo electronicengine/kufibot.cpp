@@ -12,30 +12,62 @@
 #include "../public_data_messages.h"
 
 
+#define CONFIG_PATHS_FILE "/usr/local/etc/config_paths.json"
 
 
 class JsonParserOperator {
 
-
-
 public:
     static JsonParserOperator* get_instance();
 
-    static void loadGesturesFromFile(
+    std::optional<std::map<EmotionType, EmotionalMotion>> getEmotionalMotions(){return _emotionalMotions;}
+    std::optional<std::map<ReactionType, ReactionalMotion>> getReactionalMotions(){return _reactionalMotions;}
+    std::optional<std::map<DirectiveType, DirectiveMotion>> getDirectiveMotions(){return  _directiveMotions;}
+    std::optional<std::map<ServoMotorJoint, GestureJointState>> getIdlePosition(){return _idlePosition;}
+
+    std::optional<std::list<EmotionalGesture>> getEmotionalList(){return _emotionalList;}
+    std::optional<std::list<ReactionalGesture>> getReactionalList(){return _reactionalList;}
+    std::optional<std::list<Directive>> getDirectiveList(){return _directiveList;}
+
+    std::optional<std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>> getJointAngles(){return _jointAngles; }
+    std::optional<ConfigPaths> getConfigPaths(){return _configPaths;}
+    std::optional<AiConfig> getAiConfig(){return _aiConfig;}
+
+private:
+
+    static JsonParserOperator* _instance;
+
+    JsonParserOperator();
+    std::optional<std::map<EmotionType, EmotionalMotion>> _emotionalMotions;
+    std::optional<std::map<ReactionType, ReactionalMotion>> _reactionalMotions;
+    std::optional<std::map<DirectiveType, DirectiveMotion>> _directiveMotions;
+    std::optional<std::map<ServoMotorJoint, GestureJointState>> _idlePosition;
+
+    std::optional<std::list<EmotionalGesture>> _emotionalList;
+    std::optional<std::list<ReactionalGesture>> _reactionalList;
+    std::optional<std::list<Directive>> _directiveList;
+
+    std::optional<std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>> _jointAngles;
+
+    std::optional<ConfigPaths> _configPaths;
+    std::optional<AiConfig> _aiConfig;
+
+
+    void loadConfigPaths(const std::string& filename, ConfigPaths& paths);
+    void loadAiConfig(const std::string& filename, AiConfig& config);
+
+    void loadGesturesFromFile(
         const std::string& filename,
         std::list<EmotionalGesture>& emotionalList,
         std::list<ReactionalGesture>& reactionalList,
         std::list<Directive>& directiveList);
 
-    static void loadGestureJointAnglesFromJson(
+    void loadJointAnglesFromJson(
         const std::string& filename,
         std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>& data);
 
-    static void writeGestureJointAnglesToJson(
-        const std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>& data,
-        const std::string& filename);
     // Main motion loading/saving methods
-    static void loadMotionsFromFile(
+    void loadMotionsFromFile(
         const std::string& filename,
         std::map<EmotionType, EmotionalMotion>& emotionalMotions,
         std::map<ReactionType, ReactionalMotion>& reactionalMotions,
@@ -43,13 +75,7 @@ public:
         std::map<ServoMotorJoint, GestureJointState>& idlePosition
     );
 
-    static std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> getJointLimits(const std::string& filename);
-
-private:
-
-    static JsonParserOperator* _instance;
-
-    JsonParserOperator();
+    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> getJointLimits(const std::string& filename);
 
     // String conversion methods for enum types
     std::string to_string(EmotionType emotion);

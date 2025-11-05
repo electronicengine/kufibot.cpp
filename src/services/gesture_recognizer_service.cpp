@@ -16,10 +16,12 @@
  */
 
 #include "gesture_recognizer_service.h"
-#include "video_stream_service.h"
 #include <algorithm>
+#include "video_stream_service.h"
+
 #include "../logger.h"
 #include "../subscriber.h"
+#include "remote_connection_service.h"
 
 GestureRecognizerService* GestureRecognizerService::_instance = nullptr;
 
@@ -46,6 +48,7 @@ GestureRecognizerService::~GestureRecognizerService() {
 bool GestureRecognizerService::initialize() {
 
     subscribe_to_service(VideoStreamService::get_instance());
+    subscribe_to_service(RemoteConnectionService::get_instance());
 
     if (!_faceGestureRecognizingOperator.initialize()) {
         ERROR("Face gesture recognition module failed to initialize!");
@@ -98,8 +101,16 @@ void GestureRecognizerService::subcribed_data_receive(MessageType type, const st
             }
             break;
         }
+        case MessageType::AIModeOnCall : {
+            start();
+            break;
+        }
+
+        case MessageType::AIModeOffCall : {
+            stop();
+            break;
+        }
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

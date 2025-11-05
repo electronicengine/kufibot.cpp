@@ -63,7 +63,13 @@ bool Robot::initialize() {
     _servoController->setEnable(false);
     _dcMotorController->setEnable(false);
 
-    _jointLimits = JsonParserOperator::getJointLimits("/usr/local/etc/joint_angles.json");
+    auto parser = JsonParserOperator::get_instance();
+    auto jointPositionList = parser->getJointAngles();
+    if (jointPositionList.has_value()) {
+        _jointPositionList = jointPositionList.value();
+    }else {
+        ERROR("Joint Possions couldn't load!");
+    }
 
     return true;
 }
@@ -81,34 +87,17 @@ void Robot::setEnableSensorContinuousReadings(bool enable) {
     _enableSensorContinuousReadings = enable;
 }
 
-SensorData Robot::getCurrentMotorPositions() {
+SensorData Robot::getSensorValues() {
     std::lock_guard<std::mutex> lock(_controllerMutex);
     SensorData sensorData;
 
+    sensorData.compassData = _compassController->getCompassData();
+    sensorData.distanceData = _distanceController->get_distance();
+    sensorData.powerData = _powerController->getConsumption();
     sensorData.dcMotorState = _dcMotorController->getCurrentState();
     sensorData.currentJointAngles = _servoController->getAllJointsAngle();
 
     return sensorData;
-}
-
-SensorData Robot::get_sensor_values()
-{
-    std::lock_guard<std::mutex> lock(_controllerMutex);
-
-    SensorData sensorData;
-
-    if (_enableSensorContinuousReadings) {
-        // sensorData.compassData = _compassController->get_all();
-        // sensorData.distanceData = _distanceController->get_distance();
-        // sensorData.powerData = _powerController->get_consumption();
-        sensorData.currentJointAngles = _servoController->getAllJointsAngle();
-        sensorData.dcMotorState = _dcMotorController->getCurrentState();
-
-        return sensorData;
-    }else {
-        return sensorData;
-    }
-
 }
 
 void Robot::control_motion(const ControlData& controlData)
@@ -126,7 +115,7 @@ void Robot::control_motion(const ControlData& controlData)
     }else if (controlData.leftEye.has_value()) {
         control_eye(ServoMotorJoint::eyeLeft, controlData.leftEye.value());
     }else if (controlData.rightEye.has_value()) {
-        control_eye(ServoMotorJoint::rightArm, controlData.rightEye.value());
+        control_eye(ServoMotorJoint::eyeRight, controlData.rightEye.value());
     }else if (controlData.jointAngle.has_value()) {
         _servoController->setJointAngle(controlData.jointAngle->first, controlData.jointAngle->second);
     }else if (controlData.jointAngles.has_value()) {
@@ -189,7 +178,7 @@ void Robot::control_body(int angle, int magnitude) {
         return;
     }
 
-    if (magnitude == 100) {
+    if (magnitude >= 100) {
         magnitude = 95;
     }
 
@@ -221,6 +210,9 @@ void Robot::control_head(int angle, int magnitude) {
         return;
     }
 
+    if (magnitude > 5) {
+        magnitude = 5;
+    }
 
     auto upDown = sin(angle * M_PI / 180.0);
     int magUpDown = abs(upDown * magnitude);
@@ -258,22 +250,22 @@ void Robot::control_arm(ServoMotorJoint joint, int angle, bool scale) const {
 
 void Robot::control_eye(ServoMotorJoint joint, bool state) {
 
+    INFO("Control Eye: {} - {}", (int)joint, state);
     if(_servoController){
         if (joint == ServoMotorJoint::eyeLeft) {
             if (state)
-                _servoController->setJointAngle(ServoMotorJoint::eyeLeft, 20);
+                _servoController->setJointAngle(ServoMotorJoint::eyeLeft, _jointPositionList[ServoMotorJoint::eyeLeft][GestureJointState::fullup].angle);
             else
-                _servoController->setJointAngle(ServoMotorJoint::eyeLeft, 50);
+                _servoController->setJointAngle(ServoMotorJoint::eyeLeft, _jointPositionList[ServoMotorJoint::eyeLeft][GestureJointState::fulldown].angle);
 
             //eyes Up
         } else if (joint == ServoMotorJoint::eyeRight) {
             if (state)
-                _servoController->setJointAngle(ServoMotorJoint::eyeRight, 170);
+                _servoController->setJointAngle(ServoMotorJoint::eyeRight, _jointPositionList[ServoMotorJoint::eyeRight][GestureJointState::fullup].angle);
             else
-                _servoController->setJointAngle(ServoMotorJoint::eyeRight, 130);
+                _servoController->setJointAngle(ServoMotorJoint::eyeRight, _jointPositionList[ServoMotorJoint::eyeRight][GestureJointState::fulldown].angle);
         }
     }
-
 }
 
 
@@ -283,15 +275,15 @@ void Robot::head_down(int speed) {
 
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->getAllJointsAngle();
     int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] + 1 * speed;
-    if (targetAngle >= _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle) {
-        targetAngle = _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle;
+    if (targetAngle >= _jointPositionList[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle) {
+        targetAngle = _jointPositionList[ServoMotorJoint::headUpDown][GestureJointState::fulldown].angle;
     }
     _servoController->setJointAngle(ServoMotorJoint::headUpDown, targetAngle);
     currentJointAngles[ServoMotorJoint::headUpDown] = targetAngle;
 
     targetAngle = currentJointAngles[ServoMotorJoint::neck] - 1 * speed;
-    if (targetAngle <= _jointLimits[ServoMotorJoint::neck][GestureJointState::fulldown].angle) {
-        targetAngle = _jointLimits[ServoMotorJoint::neck][GestureJointState::fulldown].angle;
+    if (targetAngle <= _jointPositionList[ServoMotorJoint::neck][GestureJointState::fulldown].angle) {
+        targetAngle = _jointPositionList[ServoMotorJoint::neck][GestureJointState::fulldown].angle;
     }
     _servoController->setJointAngle(ServoMotorJoint::neck, targetAngle);
     currentJointAngles[ServoMotorJoint::neck] = targetAngle;
@@ -304,15 +296,15 @@ void Robot::head_up(int speed) {
     std::map<ServoMotorJoint, uint8_t> currentJointAngles = _servoController->getAllJointsAngle();
 
     int targetAngle = currentJointAngles[ServoMotorJoint::headUpDown] - 1 * speed;
-    if (targetAngle <= _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle) {
-        targetAngle = _jointLimits[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle;
+    if (targetAngle <= _jointPositionList[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle) {
+        targetAngle = _jointPositionList[ServoMotorJoint::headUpDown][GestureJointState::fullup].angle;
     }
     _servoController->setJointAngle(ServoMotorJoint::headUpDown, targetAngle);
     currentJointAngles[ServoMotorJoint::headUpDown] = targetAngle;
 
     targetAngle = currentJointAngles[ServoMotorJoint::neck] + 1 * speed;
-    if (targetAngle >= _jointLimits[ServoMotorJoint::neck][GestureJointState::fullup].angle) {
-        targetAngle = _jointLimits[ServoMotorJoint::neck][GestureJointState::fullup].angle;
+    if (targetAngle >= _jointPositionList[ServoMotorJoint::neck][GestureJointState::fullup].angle) {
+        targetAngle = _jointPositionList[ServoMotorJoint::neck][GestureJointState::fullup].angle;
     }
     _servoController->setJointAngle(ServoMotorJoint::neck, targetAngle);
     currentJointAngles[ServoMotorJoint::neck] = targetAngle;

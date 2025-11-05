@@ -26,11 +26,12 @@ private:
     static RobotControllerService* _instance;
     Robot _robot;
     std::optional<ControlData> _controlData;
+    std::atomic<bool> _sensorReadRequest = false;
 
     RobotControllerService();
 
     void service_function();
-    void publishUpdatedMotorPositions();
+    void publishSensorValues();
 
     //subscibed control_data
     virtual void subcribed_data_receive(MessageType type,  const std::unique_ptr<MessageData>& data);

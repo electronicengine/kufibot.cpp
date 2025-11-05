@@ -95,12 +95,12 @@ void VideoStreamService::subcribed_data_receive(MessageType type, const std::uni
 
     switch (type) {
         case MessageType::InteractiveChatStarted: {
-            stop();
+            //stop();
             break;
         }
 
         case MessageType::GesturePerformanceCompleted: {
-            start();
+            //start();
             break;
         }
 

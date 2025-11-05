@@ -14,7 +14,6 @@
 
 #include "gesture_defs.h"
 
-
 #define KUFI_HOME "/usr/local/"
 
 // Define directional angle thresholds
@@ -34,6 +33,57 @@ constexpr int DOWN_MAX  = -45;
 typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
+
+struct ConfigPaths {
+    std::string ai_config;
+    std::string gesture_config;
+    std::string joint_angles;
+    std::string motion_definitions;
+};
+
+struct LlmSettings {
+    std::string ngl;
+    int nThreads;
+    int n_ctx;
+    double minP;
+    double temp;
+    int topK;
+    double topP;
+    std::string templateName;
+};
+
+struct SpeechProcessorConfig {
+    std::string modelPath;
+};
+
+struct SpeechRecognizerConfig {
+    std::string modelPath;
+    std::string command;
+    int timeOut;
+};
+
+struct LlmChatConfig {
+    std::string modelPath;
+    std::string systemMessage;
+    LlmSettings llmSettings;
+};
+
+struct LlmEmbeddingConfig {
+    std::string modelPath;
+    int poolingType;
+};
+
+struct MediapipeConfig {
+    std::string modelPath;
+};
+
+struct AiConfig {
+    SpeechProcessorConfig speechProcessorConfig;
+    SpeechRecognizerConfig speechRecognizerConfig;
+    LlmChatConfig llmChatConfig;
+    LlmEmbeddingConfig llmEmbeddingConfig;
+    MediapipeConfig mediapipeConfig;
+};
 
 enum class SourceService {
     none,
@@ -70,6 +120,10 @@ enum class MessageType {
     RecognizedGesture,
     GesturePerformanceCompleted,
     InteractiveChatStarted,
+    SensorReadRequest,
+    SpeakRequest,
+    AIModeOnCall,
+    AIModeOffCall,
 };
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
@@ -102,7 +156,12 @@ struct SensorData  : public MessageData {
     std::optional<std::map<ServoMotorJoint, uint8_t>> currentJointAngles;
     std::optional<DCMotorState> dcMotorState;
 
-    Json to_json() const {
+    std::string to_json() const {
+
+        if (!compassData.has_value() || !distanceData.has_value() || !powerData.has_value() ) {
+            return "";
+        }
+
         Json joint_angles = {
             {"right_arm", currentJointAngles->at(ServoMotorJoint::rightArm)},
             {"left_arm", currentJointAngles->at(ServoMotorJoint::leftArm)},
@@ -141,7 +200,7 @@ struct SensorData  : public MessageData {
             {"power", power}
         };
 
-        return metadata;
+        return metadata.dump();
     }
 };
 
@@ -193,6 +252,11 @@ struct ControlData : public MessageData {
 
 struct LLMQueryData : public MessageData {
     std::string query;
+};
+
+
+struct SpeakRequestData : public MessageData {
+    std::string text;
 };
 
 struct LLMResponseData : public MessageData {

@@ -18,9 +18,13 @@
 #include "web_socket_service.h"
 #include <memory>
 #include <variant>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <thread>
 
 #include "remote_connection_service.h"
-#include "../logger.h"
 
 WebSocketService* WebSocketService::_instance = nullptr;
 
@@ -39,6 +43,8 @@ WebSocketService::~WebSocketService() {
 
 WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.init_asio();
+    _broadcastResponder = std::make_unique<BroadcastResponder>();
+
     _server.clear_access_channels(websocketpp::log::alevel::all);
     _server.set_open_handler(bind(&WebSocketService::on_open, this, std::placeholders::_1));
     _server.set_close_handler(bind(&WebSocketService::on_close, this, std::placeholders::_1)); 
@@ -46,10 +52,12 @@ WebSocketService::WebSocketService() : Service("WebSocketService") {
 }
 
 void WebSocketService::service_function() {
-    std::string address = "192.168.1.44";
+    std::string address = "0.0.0.0";
     uint16_t port = 8080;
 
     INFO("WebSocketService is starting...");
+    _broadcastResponder->start();
+
     RemoteConnectionService* _remoteConnectionService = RemoteConnectionService::get_instance();
     subscribe_to_service(_remoteConnectionService);
 
@@ -127,7 +135,6 @@ void WebSocketService::subcribed_data_receive(MessageType type, const std::uniqu
             break;
         }
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }

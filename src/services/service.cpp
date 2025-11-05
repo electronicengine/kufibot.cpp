@@ -93,8 +93,8 @@ void Service::run()
 void Service::stop()
 {
     if (_running){
-        _condVar.notify_one();
         _running = false;
+        _condVar.notify_one();
         //unsubscribe_all_services();
         INFO("{} is stopping...", _name.c_str());
         if(std::this_thread::get_id() == _serviceThread.get_id()) {

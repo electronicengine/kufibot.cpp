@@ -30,10 +30,10 @@ TrackingState::TrackingState(std::string n, State* parent) : State(n, parent) {
 
 std::optional<State*> TrackingState::onEnter(const ControlEvent& ev) {
  INFO("onEnter TrackingState");
- CompassController::get_instance()->setEnable(false);
- DistanceController::get_instance()->setEnable(false);
- PowerController::get_instance()->setEnable(false);
- CompassController::get_instance()->setEnable(false);
+ CompassController::get_instance()->setEnable(true);
+ DistanceController::get_instance()->setEnable(true);
+ PowerController::get_instance()->setEnable(true);
+ CompassController::get_instance()->setEnable(true);
  ServoMotorController::get_instance()->setEnable(true);
 
  return stayOnThisState();

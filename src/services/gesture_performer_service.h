@@ -24,7 +24,7 @@ public:
 
 private:
     static GesturePerformerService *_instance;
-    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointGesturePositionList;
+    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointPositionList;
 
     std::atomic<bool> _speaking{false};
     // Motion data loaded from JSON
@@ -33,9 +33,6 @@ private:
     std::map<DirectiveType, DirectiveMotion> _directiveMotions;
     std::map<ServoMotorJoint, GestureJointState> _idlePositions;
     std::map<ServoMotorJoint, uint8_t> _currentPositions;
-
-    // Joint angle mappings
-    std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> jointGesturePositionList;
 
     // Motion control
     std::queue<LLMResponseData> _llmResponseQueue;

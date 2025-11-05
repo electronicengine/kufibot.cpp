@@ -17,11 +17,17 @@
 
 #include "remote_control_state.h"
 #include "../logger.h"
+#include "robot.h"
 
 // AutonomousState
 RemoteControlState::RemoteControlState(std::string n, State* parent) : State(n, parent){}
 std::optional<State*> RemoteControlState::onEnter(const ControlEvent&) {
     INFO("onEnter RemoteControlState");
+    CompassController::get_instance()->setEnable(true);
+    DistanceController::get_instance()->setEnable(true);
+    PowerController::get_instance()->setEnable(true);
+    CompassController::get_instance()->setEnable(true);
+    ServoMotorController::get_instance()->setEnable(true);
     return stayOnThisState();
 }
 
@@ -31,21 +37,15 @@ std::optional<State*> RemoteControlState::onExit(const ControlEvent&) {
 }
 
 std::optional<State*> RemoteControlState::onEvent(const ControlEvent& ev) {
-    if (ev.source != SourceService::remoteConnectionService) {
-        WARNING("The Service Source is not apropriate with state");
-        return stayOnThisState();
-    }
 
-    INFO("onEvent RemoteControlState");
     switch (ev.type) {
         case EventType::control: {
-            INFO("control remote");
             _parentState->_lastEventTime = std::chrono::steady_clock::now();
+            static_cast<Robot*>(_machine)->control_motion(ev.controlData);
             return stayOnThisState();
         }
         default:
             INFO("doesn't find the event in RemoteControlState");
             return stayOnThisState();
     }
-
 }
