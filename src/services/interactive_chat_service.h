@@ -58,6 +58,7 @@ private:
     std::pair<ReactionalGesture, float> find_sentence_reaction(const std::string& sentence);
     std::pair<Directive, float> find_sentence_directive(const std::string &sentence);
 
+    bool initialize();
     void service_function();
 
     //subscribed data functions

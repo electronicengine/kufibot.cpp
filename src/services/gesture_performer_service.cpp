@@ -46,9 +46,7 @@ GesturePerformerService::~GesturePerformerService()
 
 }
 
-
-void GesturePerformerService::service_function()
-{
+bool GesturePerformerService::initialize() {
     auto parser = JsonParserOperator::get_instance();
 
     auto jointAngles = parser->getJointAngles();
@@ -56,6 +54,7 @@ void GesturePerformerService::service_function()
         _jointPositionList = jointAngles.value();
     }else {
         ERROR("Joint Position List couldn't load from config!");
+        return false;
     }
 
     auto emotionalMotions = parser->getEmotionalMotions();
@@ -63,6 +62,7 @@ void GesturePerformerService::service_function()
         _emotionalMotions = emotionalMotions.value();
     }else {
         ERROR("Emotional Motions couldn't load from config!");
+        return false;
     }
 
     auto reactionalMotions = parser->getReactionalMotions();
@@ -70,6 +70,7 @@ void GesturePerformerService::service_function()
         _reactionalMotions = reactionalMotions.value();
     }else {
         ERROR("Reactional Motions couldn't load from config!");
+        return false;
     }
 
     auto directiveMotions = parser->getDirectiveMotions();
@@ -77,6 +78,7 @@ void GesturePerformerService::service_function()
         _directiveMotions = directiveMotions.value();
     }else {
         ERROR("Directive Motions couldn't load from config!");
+        return false;
     }
 
     auto idlePositions = parser->getIdlePosition();
@@ -84,23 +86,31 @@ void GesturePerformerService::service_function()
         _idlePositions = idlePositions.value();
     }else {
         ERROR("Idle Positions couldn't load from config!");
+        return false;
     }
 
     INFO("Setting robot to idle position...");
-   // setIdlePosition();
+    // setIdlePosition();
 
     auto aiConfig = parser->getAiConfig();
     if (aiConfig.has_value()) {
         SpeechPerformingOperator::get_instance()->loadModel(aiConfig->speechProcessorConfig.modelPath);
-    }else {
+    } else {
         ERROR("Speech Processor model couldn't load");
+        return false;
     }
-
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
+
+    return true;
+}
+
+
+void GesturePerformerService::service_function()
+{
 
     INFO("Entering the gesture performing loop...");
     while (_running) {
@@ -241,9 +251,9 @@ void GesturePerformerService::executeDirectiveMotion(DirectiveType directiveType
     //toDO
 }
 
-void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoint, GestureJointState>& baseJoints,
-                                                    const std::vector<MotionSequenceItem>& sequence, int totalDuration)
-{
+void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoint, GestureJointState> &baseJoints,
+                                                    const std::vector<MotionSequenceItem> &sequence,
+                                                    int totalDuration) {
 
     auto startTime = std::chrono::steady_clock::now();
 
@@ -262,10 +272,9 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
     while (currentSequenceIndex < sequence.size()) {
         auto currentTime = std::chrono::steady_clock::now();
-        int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            currentTime - startTime).count();
+        int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 
-        const MotionSequenceItem& currentItem = sequence[currentSequenceIndex];
+        const MotionSequenceItem &currentItem = sequence[currentSequenceIndex];
 
         if (elapsedMs >= currentItem.time) {
             // Execute this sequence item
@@ -277,8 +286,7 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
     // Wait for the remaining duration
     auto currentTime = std::chrono::steady_clock::now();
-    int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-        currentTime - startTime).count();
+    int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 
     if (elapsedMs < totalDuration) {
         INFO("Waiting for the remaining duration of gesture: {} ms", totalDuration - elapsedMs);
@@ -287,8 +295,9 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
     // Return to idle position after motion completes
     setIdlePosition();
-
 }
+
+
 
 void GesturePerformerService::makeMimic(const LLMResponseData &llm_response) {
     INFO("makeMimic");

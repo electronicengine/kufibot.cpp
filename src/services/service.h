@@ -17,9 +17,10 @@ public:
 
     std::string get_service_name();
     virtual void service_function() = 0;
+    virtual bool initialize() = 0;
     void run();
-    void start();
-    void stop();
+    bool start();
+    bool stop();
     void disable();
     void enable();
     bool is_running();
@@ -29,6 +30,7 @@ protected:
     std::mutex _dataMutex;
     std::list<Service*> _subscribedServices;
     std::atomic<bool> _running{false};
+    bool _initialized = false;
     std::condition_variable _condVar;
 
     void unsubscribe_all_services();

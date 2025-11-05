@@ -30,6 +30,7 @@ private:
 
     RobotControllerService();
 
+    bool initialize();
     void service_function();
     void publishSensorValues();
 

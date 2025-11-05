@@ -27,7 +27,7 @@ private:
     cv::Point polarToCartesian(double angle, int magnitude) const;
     void updatePlot(double angle, int magnitude);
 
-    //subscribed sensor_data
+    bool initialize();
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);;
 
     void sensor_data(Json values);

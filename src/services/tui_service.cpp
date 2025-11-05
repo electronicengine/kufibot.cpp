@@ -51,13 +51,9 @@ TuiService *TuiService::get_instance()
     return _instance;
 }
 
-TuiService::TuiService() : Service("TuiService"){
+TuiService::TuiService() : Service("TuiService") {}
 
-}
-
-
-void TuiService::service_function() {
-
+bool TuiService::initialize() {
     _tuiLlmResponseCallBackFunction = [this](const std::string& response) {
         INFO("{}", response);
     };
@@ -66,7 +62,13 @@ void TuiService::service_function() {
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(GestureRecognizerService::get_instance());
 
-    while (1) {
+    return true;
+}
+
+
+void TuiService::service_function() {
+
+    while (_running) {
         std::string input;
         std::cout << std::endl << "> ";
         std::getline(std::cin, input);

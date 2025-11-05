@@ -160,6 +160,7 @@ bool InteractiveChatService::load_models()
     bool ret = _llamaChatOperator.loadChatModel(aiConfig->llmChatConfig.modelPath);
     if (!ret) {
         ERROR("Llama Chat Model loading failed!");
+        return false;
     }
     DEBUG("Llama Chat Model is loaded");
 
@@ -167,6 +168,7 @@ bool InteractiveChatService::load_models()
     ret = _llamaEmbeddingOperator.loadEmbedModel(aiConfig->llmEmbeddingConfig.modelPath, (enum llama_pooling_type) aiConfig->llmEmbeddingConfig.poolingType);
     if (!ret) {
         ERROR("Llama Embedding Model loading failed!");
+        return false;
     }
     DEBUG("Llama Embedding Model is loaded");
 
@@ -243,28 +245,34 @@ std::pair<Directive, float> InteractiveChatService::find_sentence_directive(cons
     return std::make_pair(best_match, max_similarity);
 }
 
-void InteractiveChatService::service_function()
-{
+bool InteractiveChatService::initialize() {
     auto parser = JsonParserOperator::get_instance();
     if (parser->getEmotionalList().has_value()) {
         _emotionalList = parser->getEmotionalList().value();
     }else {
         ERROR("Emotional List is not found!");
+        return false;
     }
 
     if (parser->getReactionalList().has_value()) {
         _reactionalList = parser->getReactionalList().value();
     }else {
         ERROR("Reactional List is not found!");
+        return false;
     }
 
     if (parser->getDirectiveList().has_value()) {
         _directiveList = parser->getDirectiveList().value();
     }else {
         ERROR("Directive List is not found!");
+        return false;
     }
 
-    load_models();
+    auto ret = load_models();
+    if (!ret) {
+        return false;
+    }
+
     calculate_embeddings();
 
     subscribe_to_service(TuiService::get_instance());
@@ -276,6 +284,13 @@ void InteractiveChatService::service_function()
     auto* recognizer = SpeechRecognizingOperator::get_instance();
     recognizer->load_model(parser->getAiConfig()->speechRecognizerConfig.modelPath);
     recognizer->open();
+
+    return true;
+}
+
+void InteractiveChatService::service_function()
+{
+    auto* recognizer = SpeechRecognizingOperator::get_instance();
     recognizer->start_listen();
 
     while (_running) {
@@ -325,6 +340,8 @@ void InteractiveChatService::service_function()
             }
         }
     }
+    recognizer->stop_listen();
+
 }
 
 void InteractiveChatService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
@@ -358,6 +375,8 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
 void InteractiveChatService::llm_query(const std::string &query) {
     if (_queryRunning) {
         WARNING("llama Query is already running!");
+    }else if (!_running) {
+        WARNING("Interactive Chat Service is not running!");
     }else {
         INFO("Llm query: {}", query);
         publish(MessageType::InteractiveChatStarted);

@@ -114,7 +114,7 @@ private:
     void on_close(websocketpp::connection_hdl hdl);
     void on_message(websocketpp::connection_hdl hdl, Server::message_ptr msg);
 
-    //subscribed WebSocketTransfer
+    bool initialize();
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data);
 };
 

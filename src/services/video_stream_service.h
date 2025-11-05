@@ -16,13 +16,13 @@ public:
 private:
     int _cameraIndex;
     static VideoStreamService* _instance;
-
+    std::unique_ptr<cv::VideoCapture> _cap;
+    
     VideoStreamService(int cameraIndex = 0);
-    std::optional<cv::VideoCapture>  initialize();
     void streamLoop();
     void service_function();
 
-    //subscribed to noting
+    bool initialize();
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 
 };

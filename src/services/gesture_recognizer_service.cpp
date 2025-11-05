@@ -67,8 +67,6 @@ bool GestureRecognizerService::initialize() {
 
 void GestureRecognizerService::service_function() {
 
-    initialize();
-
     while (_running) {
         std::unique_lock<std::mutex> lock(_dataMutex);
 

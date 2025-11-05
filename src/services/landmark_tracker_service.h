@@ -107,13 +107,13 @@ class LandmarkTrackerService: public Service{
 
         LandmarkTrackerService();
 
-        void initialize();
 
         TrackingData collectTrackingData();
         Point2D selectTheTarget(const TrackingData &trackData);
         TrackState getTrackingState(const PolarVector& errorVector);
         int calculateControlMagnitude(const PolarVector& errorVector);
 
+        bool initialize();
         void service_function();
         void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
 

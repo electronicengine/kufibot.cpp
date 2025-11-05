@@ -153,8 +153,11 @@ cv::Point MappingService::polarToCartesian(double angle, int magnitude) const {
 
 // Updates the polar plot with a new point
 void MappingService::updatePlot(double angle, int magnitude) {
-    (void)angle;
-    (void)magnitude;
+    (void) angle;
+    (void) magnitude;
+}
+bool MappingService::initialize() {
+    return true;
 }
 
 void MappingService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {

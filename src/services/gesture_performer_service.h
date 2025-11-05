@@ -54,7 +54,7 @@ private:
         int totalDuration
     );
 
-
+    bool initialize();
     void service_function();
     void makeMimic(const LLMResponseData& llm_response);
     void speakText(const std::string& text);

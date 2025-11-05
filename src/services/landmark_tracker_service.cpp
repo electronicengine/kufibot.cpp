@@ -45,7 +45,8 @@ LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingServ
     _errorTreshold = 50;
     _reactionEngageTimeout = REACTION_TIME_START;
 }
-void LandmarkTrackerService::initialize() {
+
+bool LandmarkTrackerService::initialize() {
 
     subscribe_to_service(GestureRecognizerService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
@@ -62,6 +63,8 @@ void LandmarkTrackerService::initialize() {
     // }else {
     //     ERROR("Joint Position List couldn't be loaded!");
     // }
+
+    return true;
 }
 
 
@@ -133,10 +136,7 @@ LandmarkTrackerService::~LandmarkTrackerService() {
 
 void LandmarkTrackerService::service_function() {
 
-    initialize();
-
     INFO("Entering the tracking loop...");
-
     while (_running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 

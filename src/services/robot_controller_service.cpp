@@ -35,13 +35,10 @@ RobotControllerService *RobotControllerService::get_instance()
 }
 
 
-RobotControllerService::RobotControllerService() : Service("RobotControllerService")
-{
+RobotControllerService::RobotControllerService() : Service("RobotControllerService") {}
 
-}
 
-void RobotControllerService::service_function() {
-
+bool RobotControllerService::initialize() {
 
     subscribe_to_service(MappingService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
@@ -51,6 +48,14 @@ void RobotControllerService::service_function() {
     subscribe_to_service(RemoteConnectionService::get_instance());
 
     _robot.start();
+
+    return true;
+
+}
+
+void RobotControllerService::service_function() {
+
+
 
     while (_running) {
         {

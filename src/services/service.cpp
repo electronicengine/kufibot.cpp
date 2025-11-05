@@ -64,16 +64,31 @@ void Service::unsubscribe_from_service(Service *SubscribedService) {
 }
 
 
-void Service::start()
+bool Service::start()
 {
     if (!_disabled) {
         if (!_running) {
+            if (!_initialized) {
+                bool ret = initialize();
+                if (!ret) {
+                    ERROR("{} couldn't initialized!", _name.c_str());
+                    _initialized = false;
+                    return false;
+                }else {
+                    INFO("{} is initialized!", _name.c_str());
+                    _initialized = true;
+                }
+            }
             _running = true;
             _serviceThread = std::thread(&Service::service_function, this);
             INFO("{} is started! ", _name.c_str());
+            return true;
+        }else {
+            return false;
         }
     }else {
         WARNING("{} is not starting... Because, it is disabled.", _name.c_str());
+        return false;
     }
 }
 
@@ -90,7 +105,7 @@ void Service::run()
     }
 }
 
-void Service::stop()
+bool Service::stop()
 {
     if (_running){
         _running = false;
@@ -103,6 +118,9 @@ void Service::stop()
             _serviceThread.join(); 
         }
         INFO("{} is stopped.", _name.c_str());
+        return true;
+    }else {
+        return false;
     }
 }
 

@@ -29,6 +29,7 @@ private:
 
     TuiService();
 
+    bool initialize();
     void service_function();
 
     //subscribed sensor_data, llm_response

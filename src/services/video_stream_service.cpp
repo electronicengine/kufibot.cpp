@@ -39,21 +39,21 @@ VideoStreamService::VideoStreamService(int cameraIndex) : Service("VideoStreamSe
 }
 
 
-std::optional<cv::VideoCapture> VideoStreamService::initialize() {
-    cv::VideoCapture cap(_cameraIndex, cv::CAP_V4L2);
-    if (!cap.isOpened()) {
+bool VideoStreamService::initialize() {
+    _cap = std::make_unique<cv::VideoCapture>(_cameraIndex, cv::CAP_V4L2);
+    if (!_cap->isOpened()) {
         ERROR("Error: Could not open the camera.");
-        return std::optional<cv::VideoCapture>();
+        return false;
     }
 
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+    _cap->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    _cap->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
 
-    return cap;
+    return true;
 }
 
 VideoStreamService::~VideoStreamService() {
@@ -66,15 +66,10 @@ VideoStreamService::~VideoStreamService() {
 void VideoStreamService::service_function() {
 
     cv::Mat frame;
-    auto cap = initialize();
-    if (!cap.has_value()) {
-        ERROR("Error: VideoStreamService couldn't initialized!");
-        return;
-    }
 
     while (_running) {
 
-        cap.value() >> frame;
+        *_cap >> frame;
         if (frame.empty()) {
             WARNING("Warning: Received empty frame!");
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -86,7 +81,7 @@ void VideoStreamService::service_function() {
         publish(MessageType::VideoFrame, data);
     }
     INFO("cap releasing...");
-    cap.value().release();
+    _cap->release();
     INFO("cap released");
 }
 

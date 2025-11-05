@@ -47,19 +47,24 @@ WebSocketService::WebSocketService() : Service("WebSocketService") {
 
     _server.clear_access_channels(websocketpp::log::alevel::all);
     _server.set_open_handler(bind(&WebSocketService::on_open, this, std::placeholders::_1));
-    _server.set_close_handler(bind(&WebSocketService::on_close, this, std::placeholders::_1)); 
-    _server.set_message_handler(bind(&WebSocketService::on_message, this, std::placeholders::_1, std::placeholders::_2));
+    _server.set_close_handler(bind(&WebSocketService::on_close, this, std::placeholders::_1));
+    _server.set_message_handler(
+            bind(&WebSocketService::on_message, this, std::placeholders::_1, std::placeholders::_2));
+}
+bool WebSocketService::initialize() {
+
+    INFO("WebSocketService is initializing...");
+    _broadcastResponder->start();
+
+    RemoteConnectionService* _remoteConnectionService = RemoteConnectionService::get_instance();
+    subscribe_to_service(_remoteConnectionService);
+    return true;
 }
 
 void WebSocketService::service_function() {
     std::string address = "0.0.0.0";
     uint16_t port = 8080;
-
     INFO("WebSocketService is starting...");
-    _broadcastResponder->start();
-
-    RemoteConnectionService* _remoteConnectionService = RemoteConnectionService::get_instance();
-    subscribe_to_service(_remoteConnectionService);
 
     run_web_server(address, port);
 }
