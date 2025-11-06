@@ -82,7 +82,7 @@ bool FaceGestureRecognizingOperator::initialize()
     if (initialized) return true;
 
     // Face Mesh instance'ını oluştur
-    std::string mesh_path = "mediapipe/modules/face_landmark/face_landmark_front_cpu.binarypb";
+    std::string mesh_path = "/usr/local/bin/mediapipe/modules/face_landmark/face_landmark_front_cpu.binarypb";
     mp_instance_builder* mesh_builder = mp_create_instance_builder(mesh_path.c_str(), "image");
 
     if (!mesh_builder) {

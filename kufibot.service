@@ -1,0 +1,44 @@
+[Unit]
+Description=KufiBot Main Control Service
+# Sistemin ağ, dosya sistemi ve temel altyapısı yüklendikten hemen sonra başlasın
+After=network-online.target
+Wants=network-online.target
+# Diğer servislerden önce çalışsın
+Before=multi-user.target
+
+# Bu servis çok önemli, systemd onun kapanmasını engellemesin
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=kufi
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/local/bin/kufibot-wrapper.sh
+Restart=no
+TimeoutStopSec=10
+#RestartSec=2
+# Servis çökerse anında yeniden başlasın (kritik sistem mantığı)
+TimeoutStopSec=5
+KillMode=control-group
+
+# En yüksek CPU önceliği
+CPUSchedulingPolicy=rr
+CPUSchedulingPriority=99
+
+# CPU nice değeri: negatif -> yüksek öncelik
+Nice=-20
+
+# OOM killer'dan koru (bellek düşükken bile öldürülmesin)
+OOMScoreAdjust=-1000
+
+# Bellek ve CPU sınırlamaları yok (tam performans)
+MemoryMax=infinity
+CPUQuota=100%
+
+# Ortam değişkenleri
+Environment="LD_LIBRARY_PATH=/usr/local/lib"
+StandardOutput=append:/var/log/kufibot/stdout.log
+StandardError=append:/var/log/kufibot/stderr.log
+
+[Install]
+WantedBy=multi-user.target

@@ -113,6 +113,9 @@ set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 include(CPack)
 
 install(TARGETS kufibot DESTINATION /usr/local/bin)
+install(TARGETS kufibot-wrapper DESTINATION /usr/local/bin)
+install(TARGETS kufibot.service DESTINATION /etc/systemd/system)
+
 install(DIRECTORY config/
         DESTINATION /usr/local/etc/
         FILES_MATCHING PATTERN "*.json")

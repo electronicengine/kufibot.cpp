@@ -80,10 +80,6 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
-        ret = VideoStreamService::get_instance()->start();
-        if (!ret) {
-            return 1;
-        }
         ret = RobotControllerService::get_instance()->start();
         if (!ret) {
             return 1;
@@ -92,6 +88,11 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
+        ret = VideoStreamService::get_instance()->start();
+        if (!ret) {
+            return 1;
+        }
+
         ret = InteractiveChatService::get_instance()->start();
         if (!ret) {
             return 1;

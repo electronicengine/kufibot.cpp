@@ -55,7 +55,7 @@ bool HandGestureRecognizingOperator::initialize()
 
     if (initialized) return true;
 
-    std::string path = "mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb";
+    std::string path = "/usr/local/bin/mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb";
     mp_instance_builder* builder = mp_create_instance_builder(path.c_str(), "image");
 
     if (!builder) {

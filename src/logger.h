@@ -33,29 +33,17 @@ public:
     static bool _useTui;
     static MainWindow* _mainWindow;
 
-    static void init(MainWindow *mainWindow, bool useTui = true, int logLevel = 1, const std::string& logger_name = "kufiBot",
-                    const std::string& file_name = "/var/log/kufibot.log") {
-
-        // Truncate the logfile before initializing the logger
-        std::ofstream ofs(file_name, std::ofstream::out | std::ofstream::trunc);
-        if (!ofs) {
-            std::cerr << "Failed to truncate log file: " << file_name << std::endl;
-        }
-        ofs.close();
+    static void init(MainWindow *mainWindow, bool useTui = true, int logLevel = 1, const std::string& logger_name = "kufiBot") {
 
         try {
             _mainWindow = mainWindow;
             _useTui = useTui;
-            // Create rotating file sink - 5MB size, 3 rotated files
 
-            auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                file_name, 1024 * 1024 * 5, 3);
-
-            // Create console sink
+            // Sadece console sink kullan
             auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
-            // Create logger with multiple sinks
-            std::vector<spdlog::sink_ptr> sinks {console_sink, file_sink};
+            // Create logger with only console sink
+            std::vector<spdlog::sink_ptr> sinks {console_sink};
             auto logger = std::make_shared<spdlog::logger>(logger_name, sinks.begin(), sinks.end());
 
             // Set as default logger
