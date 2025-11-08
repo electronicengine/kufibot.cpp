@@ -47,13 +47,6 @@ InteractiveChatService::~InteractiveChatService()
 {
 }
 
-bool InteractiveChatService::send_query(const std::string& message){
-    INFO("Llama Query is started!");
-    _llamaChatOperator.chat(message);
-
-    return true;
-
-}
 
 std::string trim(const std::string& str) {
     size_t first = str.find_first_not_of(" \t\n\r");
@@ -288,9 +281,9 @@ bool InteractiveChatService::initialize() {
     return true;
 }
 
-void InteractiveChatService::service_function()
-{
-    auto* recognizer = SpeechRecognizingOperator::get_instance();
+void InteractiveChatService::service_function() {
+
+    auto *recognizer = SpeechRecognizingOperator::get_instance();
     recognizer->start_listen();
 
     while (_running) {
@@ -319,11 +312,11 @@ void InteractiveChatService::service_function()
 
                 if (sim.second >= 0.8f) {
                     std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
-                    static_cast<LLMResponseData*>(data.get())->sentence = sim.first.description;
+                    static_cast<LLMResponseData *>(data.get())->sentence = sim.first.description;
 
-                    std::pair<Directive,float> directive = sim;
-                    static_cast<LLMResponseData*>(data.get())->directive = sim.first;
-                    static_cast<LLMResponseData*>(data.get())->directiveSimilarity = sim.second;
+                    std::pair<Directive, float> directive = sim;
+                    static_cast<LLMResponseData *>(data.get())->directive = sim.first;
+                    static_cast<LLMResponseData *>(data.get())->directiveSimilarity = sim.second;
 
                     publish(MessageType::LLMResponse, data);
                     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -331,8 +324,10 @@ void InteractiveChatService::service_function()
                 } else {
                     recognizer->setListeningMode(false);
                     llm_query(text);
-                    std::unique_lock<std::mutex> lock(_quryMutex);
-                    _queryCondition.wait(lock, [this]() { return !_queryRunning; });
+                    {
+                        std::unique_lock<std::mutex> lock(_quryMutex);
+                        _queryCondition.wait(lock);
+                    }
                 }
 
                 INFO("Start Listen");
@@ -343,6 +338,7 @@ void InteractiveChatService::service_function()
     recognizer->stop_listen();
 
 }
+
 
 void InteractiveChatService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
 
@@ -363,6 +359,7 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
         }
 
         case MessageType::AIModeOffCall : {
+            _llamaChatOperator.stopGenerateResponse();
             stop();
             break;
         }
@@ -382,7 +379,11 @@ void InteractiveChatService::llm_query(const std::string &query) {
         publish(MessageType::InteractiveChatStarted);
 
         _queryRunning = true;
-        send_query(query);
+        std::thread llmQuery = std::thread([query, this] () {
+            _llamaChatOperator.chat(query);
+        });
+        llmQuery.detach();
+
     }
 
 }

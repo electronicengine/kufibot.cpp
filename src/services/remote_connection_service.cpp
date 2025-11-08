@@ -84,7 +84,7 @@ void RemoteConnectionService::service_function() {
             }
             else if(_socketMessage.value() == "on_close"){
                 INFO("on_close");
-                INFO("Publishing AIModeOffCall");
+                INFO("Publishing AIModeOnCall");
                 publish(MessageType::AIModeOnCall);
                 unsubscribe_from_service(VideoStreamService::get_instance());
                 unsubscribe_from_service(RobotControllerService::get_instance());
@@ -98,15 +98,15 @@ void RemoteConnectionService::service_function() {
                     if (talkieValue.find("switch ai mode on") != std::string::npos) {
                         INFO("Publishing AIModeOnCall");
                         publish(MessageType::AIModeOnCall);
-                    }else if (talkieValue.find("switch ai mode off") != std::string::npos) {
+                    }else if (talkieValue.find("switch ai mode off") != std::string::npos){
                         INFO("Publishing AIModeOffCall");
                         publish(MessageType::AIModeOffCall);
                     }else {
                         std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
                         static_cast<LLMQueryData *>(data.get())->query = talkieValue;
+
                         publish(MessageType::LLMQuery, data);
                     }
-
                 }else{
                     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
                     *static_cast<ControlData*>(data.get()) = ControlData(message);

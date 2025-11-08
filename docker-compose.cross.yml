@@ -11,8 +11,7 @@ services:
       - ./CMakeLists.txt:/app/kufibot.cpp/CMakeLists.txt
       - ./arm64Build.cmake:/app/kufibot.cpp/arm64Build.cmake
       - ./README.md:/app/kufibot.cpp/README.md
-      - ./runKufi.sh:/app/kufibot.cpp/runKufi.sh
-      - ./kufiDev.sh:/app/kufibot.cpp/kufiDev.sh
+      - ./ctlkufibot:/app/kufibot.cpp/ctlkufibot
       - ~/.ssh:/root/.ssh   # <-- SSH anahtarlarını konteynıra geçir
     tty: true
     stdin_open: true

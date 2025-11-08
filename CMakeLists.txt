@@ -113,8 +113,7 @@ set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 include(CPack)
 
 install(TARGETS kufibot DESTINATION /usr/local/bin)
-install(TARGETS kufibot-wrapper DESTINATION /usr/local/bin)
-install(TARGETS kufibot.service DESTINATION /etc/systemd/system)
+install(PROGRAMS   ${CMAKE_SOURCE_DIR}/ctlkufibot DESTINATION /usr/local/bin)
 
 install(DIRECTORY config/
         DESTINATION /usr/local/etc/

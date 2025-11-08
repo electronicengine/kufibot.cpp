@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <atomic>
 
 class LlamaOperator {
 public:
@@ -25,6 +26,7 @@ public:
     bool loadChatModel(const std::string& modelPath);
     void unloadModel();
 
+    void stopGenerateResponse();
     void setCallBackFunction(std::function<void(const std::string&)> func);
     std::string generateResponse(const std::string& prompt);
     void chat(const std::string &userInput);
@@ -48,6 +50,7 @@ private:
     llama_sampler* _smpl;
     llama_batch* _batch;
     std::string _systemMessage;
+    std::atomic<bool> _running;
 
     const llama_vocab* _vocab;
     std::vector<llama_chat_message> _messages;

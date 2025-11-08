@@ -179,7 +179,7 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
     // prepare a batch for the prompt
     llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
     llama_token new_token_id;
-    while (true) {
+    while (_running) {
         // check if we have enough space in the context to evaluate this batch
         int n_ctx = llama_n_ctx(_ctx);
         int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
@@ -220,7 +220,7 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
 void LlamaOperator::chat(const std::string &userInput) {
     std::vector<char> formatted(llama_n_ctx(_ctx));
     int prev_len = 0;
-
+    _running.store(true);
     if (userInput.empty()) return;
 
     // İlk mesajsa ve system mesajı varsa, onu ekle
@@ -364,10 +364,14 @@ std::vector<float> LlamaOperator::calculateEmbeddings(const std::string& text) {
 }
 
 void LlamaOperator::unloadModel() {
-    for (auto& msg : _messages) {
-        free(const_cast<char*>(msg.content));
+    for (auto &msg: _messages) {
+        free(const_cast<char *>(msg.content));
     }
     llama_sampler_free(_smpl);
     llama_free(_ctx);
     llama_model_free(_model);
+}
+
+void LlamaOperator::stopGenerateResponse() {
+    _running.store(false);
 }

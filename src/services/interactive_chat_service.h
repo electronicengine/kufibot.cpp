@@ -50,7 +50,6 @@ private:
 
     InteractiveChatService();
 
-    bool send_query(const std::string& message);
     void query_response_callback(const std::string& response);
     bool load_models();
     void calculate_embeddings();
@@ -60,6 +59,7 @@ private:
 
     bool initialize();
     void service_function();
+    void recognize_voice();
 
     //subscribed data functions
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);

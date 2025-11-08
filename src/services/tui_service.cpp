@@ -85,7 +85,6 @@ void TuiService::service_function() {
             MappingService::get_instance()->stop();
 
             std::exit(0);
-
         }else if (input =="openTui") {
             openTui();
         }else if (input == "help") {

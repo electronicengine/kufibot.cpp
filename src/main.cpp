@@ -33,13 +33,14 @@
 auto main(int argc, char *argv[]) -> int {
     bool showFrame = false;
     bool useTui = false;
+    bool asService = false;
     bool stopAllServices = false;
     int logLevel = 1;
 
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
         if (arg == "--help") {
-            std::cout << "Usage: kufibot [--use-tui] [--stop-all-services] [--show-frame] [--log-level <level>]" << std::endl;
+            std::cout << "Usage: kufibot [--as-service] [--use-tui] [--stop-all-services] [--show-frame] [--log-level <level>]" << std::endl;
             return 0;
         }
         if (arg == "--stop-all-services") {
@@ -61,6 +62,9 @@ auto main(int argc, char *argv[]) -> int {
             }else if (argv[i+1] == "error") {
                 logLevel = 4;
             }
+        }
+        if (arg == "--as-service") {
+            asService = true;
         }
     }
 
@@ -92,7 +96,6 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
-
         ret = InteractiveChatService::get_instance()->start();
         if (!ret) {
             return 1;
@@ -101,12 +104,19 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
-        ret = MappingService::get_instance()->stop();
-
+        
+        // ret = MappingService::get_instance()->stop();
+        // if (!ret) {
+        //     return 1;
+        // }
     }
 
-    TuiService *tui_service = TuiService::get_instance();
-    tui_service->start();
+    if (!asService) {
+        bool ret = TuiService::get_instance()->start();
+        if (!ret) {
+            return 1;
+        }
+    }
 
     while (1) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

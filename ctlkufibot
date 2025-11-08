@@ -1,0 +1,94 @@
+#!/bin/bash
+
+APP="kufibot"
+LOGDIR="/var/log/kufibot"
+DATE=$(date '+%Y-%m-%d_%H-%M-%S')
+
+RUN_AS_USER="kufi"  # veya kendi kullanıcı adınız
+
+mkdir -p "$LOGDIR"
+
+LOG_STDOUT="$LOGDIR/kufibot_stdout_$DATE.log"
+LOG_STDERR="$LOGDIR/kufibot_stderr_$DATE.log"
+PIDFILE="/tmp/kufibot.pid"
+
+export LD_LIBRARY_PATH=/usr/local/lib
+
+# Log klasörünü kontrol et
+if [ ! -d "$LOGDIR" ]; then
+    mkdir -p "$LOGDIR"
+fi
+
+get_last_log() {
+    LAST_LOG=$(ls -1t "$LOGDIR"/kufibot_*.log 2>/dev/null | head -n 1)
+    if [ -z "$LAST_LOG" ]; then
+        echo "No log files found in $LOGDIR"
+        return 1
+    fi
+    echo "$LAST_LOG"
+}
+
+PID=$(pgrep -x kufibot)
+
+case "$1" in
+  start)
+    if [ -z "$PID" ]; then
+        # Kullanıcı olarak çalıştır
+        cd /usr/local/bin/
+
+        # XDG_RUNTIME_DIR'i ayarla (ses erişimi için kritik)
+        USER_ID=$(id -u "$RUN_AS_USER")
+        export XDG_RUNTIME_DIR="/run/user/$USER_ID"
+
+        # DBUS session bus adresini ayarla (PulseAudio/PipeWire için gerekli)
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$USER_ID/bus"
+
+        # Kullanıcı olarak programı başlat
+        su - "$RUN_AS_USER" -c "
+            export LD_LIBRARY_PATH=/usr/local/lib
+            export XDG_RUNTIME_DIR=/run/user/$USER_ID
+            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus
+            cd /usr/local/bin/
+            nice -n -20 ionice -c2 -n0 $APP --as-service >>$LOG_STDOUT 2>>$LOG_STDERR &
+            echo \$! > $PIDFILE
+        "
+
+        echo "KufiBot started as user $RUN_AS_USER (PID: $(cat $PIDFILE 2>/dev/null))"
+    else
+        echo "KufiBot already running (PID: $PID)"
+    fi
+    ;;
+  stop)
+    if [ -f "$PIDFILE" ]; then
+        kill "$(cat "$PIDFILE")" 2>/dev/null && echo "KufiBot stopped."
+        rm -f "$PIDFILE"
+    else
+        echo "KufiBot is not running."
+    fi
+    ;;
+  restart)
+    $0 stop
+
+    sleep 1
+    $0 start
+    ;;
+  status)
+
+    if [ -z "$PID" ]; then
+        echo "Kufibot is not running."
+    else
+        echo "KufiBot running (PID: $PID)"
+    fi
+    ;;
+  log)
+    LAST_LOG=$(get_last_log)
+    if [ $? -eq 0 ]; then
+        echo "📄 Tailing last log file: $LAST_LOG"
+        echo "---------------------------------------"
+        tail -n +1 -f "$LAST_LOG"
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status|log}"
+    ;;
+esac
