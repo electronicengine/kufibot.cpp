@@ -116,6 +116,7 @@ class LandmarkTrackerService: public Service{
         bool initialize();
         void service_function();
         void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);
+        void speak(std::string text);
 
         void searchFace();
         PolarVector calculateErrorVector(const Point2D &target);

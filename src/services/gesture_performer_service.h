@@ -4,7 +4,7 @@
 
 #include <thread>
 #include <atomic>
-
+#include <variant>
 #include <string>
 #include "service.h"
 #include "robot_controller_service.h"
@@ -35,7 +35,8 @@ private:
     std::map<ServoMotorJoint, uint8_t> _currentPositions;
 
     // Motion control
-    std::queue<LLMResponseData> _llmResponseQueue;
+    std::queue<std::variant<LLMResponseData, std::string>> _speakingQueue;
+
     std::mutex _llmResponseQueueMutex;
     GesturePerformerService();
 

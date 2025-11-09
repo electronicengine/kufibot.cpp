@@ -111,6 +111,9 @@ auto main(int argc, char *argv[]) -> int {
         // }
     }
 
+    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
+    static_cast<SpeakRequestData *>(data.get())->text = "Initializing Complited. I am ready to talk";
+    LandmarkTrackerService::get_instance()->publish(MessageType::SpeakRequest, data);
     if (!asService) {
         bool ret = TuiService::get_instance()->start();
         if (!ret) {

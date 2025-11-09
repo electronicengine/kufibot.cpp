@@ -55,10 +55,10 @@ void RemoteConnectionService::service_function() {
             std::vector<uchar> buffer;
             cv::imencode(".jpg", _frame.value(), buffer);
 
-            std::unique_ptr<MessageData> data= std::make_unique<WebSocketTransferData>();
-            static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl.value();
-            static_cast<WebSocketTransferData*>(data.get())->msg = std::string(buffer.begin(), buffer.end());
-            static_cast<WebSocketTransferData*>(data.get())->type = 2;
+            std::unique_ptr<MessageData> data = std::make_unique<WebSocketTransferData>();
+            static_cast<WebSocketTransferData *>(data.get())->hdl = _hdl.value();
+            static_cast<WebSocketTransferData *>(data.get())->msg = std::string(buffer.begin(), buffer.end());
+            static_cast<WebSocketTransferData *>(data.get())->type = 2;
             publish(MessageType::WebSocketTransfer, data);
             _frame.reset();
 
@@ -67,49 +67,64 @@ void RemoteConnectionService::service_function() {
                 sensor_json = _sensorData.value().to_json();
             }
 
-            static_cast<WebSocketTransferData*>(data.get())->hdl = _hdl.value();
-            static_cast<WebSocketTransferData*>(data.get())->msg = sensor_json;
-            static_cast<WebSocketTransferData*>(data.get())->type = 1;
+            static_cast<WebSocketTransferData *>(data.get())->hdl = _hdl.value();
+            static_cast<WebSocketTransferData *>(data.get())->msg = sensor_json;
+            static_cast<WebSocketTransferData *>(data.get())->type = 1;
             publish(MessageType::WebSocketTransfer, data);
             _sensorData.reset();
         }
 
         if (_socketMessage.has_value() && _hdl.has_value()) {
-            if(_socketMessage.value() == "on_open"){
+            if (_socketMessage.value() == "on_open") {
                 INFO("on_open");
+
+                speak("Remote Control Mode is activated!");
+                std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
                 INFO("Publishing AIModeOffCall");
                 publish(MessageType::AIModeOffCall);
                 subscribe_to_service(VideoStreamService::get_instance());
                 subscribe_to_service(RobotControllerService::get_instance());
-            }
-            else if(_socketMessage.value() == "on_close"){
+            } else if (_socketMessage.value() == "on_close") {
                 INFO("on_close");
                 INFO("Publishing AIModeOnCall");
                 publish(MessageType::AIModeOnCall);
                 unsubscribe_from_service(VideoStreamService::get_instance());
                 unsubscribe_from_service(RobotControllerService::get_instance());
-            }
-            else{
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+                speak("AI Mode is activated!");
+
+            } else {
                 Json message = Json::parse(_socketMessage.value());
                 if (message.contains("talkie")) {
                     std::string talkieValue = message["talkie"];
-                    INFO("Talkie Message: {} ",talkieValue);
+                    INFO("Talkie Message: {} ", talkieValue);
 
                     if (talkieValue.find("switch ai mode on") != std::string::npos) {
+
                         INFO("Publishing AIModeOnCall");
                         publish(MessageType::AIModeOnCall);
-                    }else if (talkieValue.find("switch ai mode off") != std::string::npos){
+
+                        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                        speak("AI Mode is activated!");
+
+                    } else if (talkieValue.find("switch ai mode off") != std::string::npos) {
                         INFO("Publishing AIModeOffCall");
+
+                        speak("Remote Control Mode is activated!");
+                        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
                         publish(MessageType::AIModeOffCall);
-                    }else {
+                    } else {
                         std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
                         static_cast<LLMQueryData *>(data.get())->query = talkieValue;
 
                         publish(MessageType::LLMQuery, data);
                     }
-                }else{
+                } else {
                     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-                    *static_cast<ControlData*>(data.get()) = ControlData(message);
+                    *static_cast<ControlData *>(data.get()) = ControlData(message);
                     data->source = SourceService::remoteConnectionService;
 
                     publish(MessageType::ControlData, data);
@@ -119,6 +134,13 @@ void RemoteConnectionService::service_function() {
             _socketMessage.reset();
         }
     }
+}
+
+void RemoteConnectionService::speak(std::string text) {
+    INFO("Speaking: {}", text);
+    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
+    static_cast<SpeakRequestData *>(data.get())->text = text;
+    publish(MessageType::SpeakRequest, data);
 }
 
 RemoteConnectionService::~RemoteConnectionService()

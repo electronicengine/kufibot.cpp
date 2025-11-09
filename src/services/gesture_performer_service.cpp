@@ -100,6 +100,9 @@ bool GesturePerformerService::initialize() {
         return false;
     }
 
+    std::thread speak = std::thread(&GesturePerformerService::speakText, this,"Initializing... Please Wait!");
+    speak.detach();
+
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
@@ -119,27 +122,36 @@ void GesturePerformerService::service_function()
             _condVar.wait(lock);
         }
 
-        while (!_llmResponseQueue.empty()) {
-            LLMResponseData response = _llmResponseQueue.front();
+        while (!_speakingQueue.empty()) {
+            if (std::holds_alternative<LLMResponseData>(_speakingQueue.front())) {
+                LLMResponseData response = std::get<LLMResponseData>(_speakingQueue.front());
+                INFO("Speak Text: {}", response.sentence);
+                if (!response.sentence.empty()) {
+                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+                    speak.detach();
+                    makeMimic(response);
 
-            INFO("Speak Text: {}", response.sentence);
-            if (!response.sentence.empty()) {
-                std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+                }
+
+                INFO("End Marker {}", response.endMarker);
+                if (response.endMarker) {
+                    INFO("Gesture Performance is complited.!");
+                    publish(MessageType::GesturePerformanceCompleted);
+                }
+            }else if (std::holds_alternative<std::string>(_speakingQueue.front())) {
+                std::string speakText = std::get<std::string>(_speakingQueue.front());
+                INFO("Speak Text: {}", speakText);
+                std::thread speak = std::thread(&GesturePerformerService::speakText, this, speakText);
                 speak.detach();
-                makeMimic(response);
 
-                while (_speaking) {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                };
             }
 
-            INFO("End Marker {}", response.endMarker);
-            if (response.endMarker) {
-                INFO("Gesture Performance is complited.!");
-                publish(MessageType::GesturePerformanceCompleted);
-            }
 
-            _llmResponseQueue.pop();
+            while (_speaking) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            };
+
+            _speakingQueue.pop();
 
         }
     }
@@ -155,7 +167,18 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
                 LLMResponseData llmResponse = *static_cast<LLMResponseData*>(data.get());
-                _llmResponseQueue.push(llmResponse);
+                _speakingQueue.push(llmResponse);
+                _condVar.notify_one(); // Notify the processing thread
+            }
+            break;
+        }
+
+        case MessageType::SpeakRequest : {
+            if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
+                std::string speakText = static_cast<SpeakRequestData*>(data.get())->text;
+                _speakingQueue.push(speakText);
                 _condVar.notify_one(); // Notify the processing thread
             }
             break;

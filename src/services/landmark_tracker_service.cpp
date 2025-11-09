@@ -207,16 +207,16 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                _llmResponseData = *static_cast<LLMResponseData*>(data.get());
+                _llmResponseData = *static_cast<LLMResponseData *>(data.get());
             }
             break;
         }
 
-        case MessageType::RecognizedGesture : {
+        case MessageType::RecognizedGesture: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                _recognizedGestureData = *static_cast<RecognizedGestureData*>(data.get());
+                _recognizedGestureData = *static_cast<RecognizedGestureData *>(data.get());
             }
             break;
         }
@@ -225,28 +225,28 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                _sensorData = *static_cast<SensorData*>(data.get());
+                _sensorData = *static_cast<SensorData *>(data.get());
             }
             break;
         }
 
-        case MessageType::GesturePerformanceCompleted : {
+        case MessageType::GesturePerformanceCompleted: {
             start();
             break;
         }
 
-        case MessageType::InteractiveChatStarted : {
+        case MessageType::InteractiveChatStarted: {
             stop();
             break;
         }
 
 
-        case MessageType::AIModeOnCall : {
+        case MessageType::AIModeOnCall: {
             start();
             break;
         }
 
-        case MessageType::AIModeOffCall : {
+        case MessageType::AIModeOffCall: {
             stop();
             break;
         }
@@ -254,7 +254,13 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
         default:
             break;
     }
+}
 
+void LandmarkTrackerService::speak(std::string text) {
+    INFO("Speaking: {}", text);
+    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
+    static_cast<SpeakRequestData *>(data.get())->text = text;
+    publish(MessageType::SpeakRequest, data);
 }
 
 

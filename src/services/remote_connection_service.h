@@ -38,6 +38,7 @@ private:
 
     bool initialize();
     void service_function();
+    void speak(std::string text);
 
     //subscribed video_frame, web_socket_receive_message,sensor_data
     virtual void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);

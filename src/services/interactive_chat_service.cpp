@@ -283,6 +283,7 @@ bool InteractiveChatService::initialize() {
 
 void InteractiveChatService::service_function() {
 
+    auto aiConfig = JsonParserOperator::get_instance()->getAiConfig();
     auto *recognizer = SpeechRecognizingOperator::get_instance();
     recognizer->start_listen();
 
@@ -291,12 +292,9 @@ void InteractiveChatService::service_function() {
 
         if (!message.empty()) {
             if (message == "<start>") {
-                INFO("Stop Listen");
                 recognizer->stop_listen();
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                INFO("Yep!");
-                SpeechPerformingOperator::get_instance()->speakText("Yep!");
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                speak(aiConfig->speechRecognizerConfig.command);
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                 recognizer->start_listen();
                 INFO("Start Listen");
             } else {
@@ -336,7 +334,14 @@ void InteractiveChatService::service_function() {
         }
     }
     recognizer->stop_listen();
+}
 
+
+void InteractiveChatService::speak(std::string text) {
+    INFO("Speaking: {}", text);
+    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
+    static_cast<SpeakRequestData *>(data.get())->text = text;
+    publish(MessageType::SpeakRequest, data);
 }
 
 
