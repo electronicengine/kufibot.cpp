@@ -152,6 +152,7 @@ void TuiService::service_function() {
                 int angle;
                 iss >> command >> joint >> angle;
                 if (joint == "rightArm") {
+                    INFO("Joint: {} Angle: {}", joint, angle);
                     setJointAngle(ServoMotorJoint::rightArm, angle);
                 }else if (joint == "leftArm") {
                     setJointAngle(ServoMotorJoint::leftArm, angle);

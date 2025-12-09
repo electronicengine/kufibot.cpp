@@ -1,0 +1,25 @@
+{
+  "emotional_gestures": [
+    {"type": "happy", "tag": "<happy>", "description": "Neşeli, mutlu ve memnun hissetme."},
+    {"type": "angry", "tag": "<angry>", "description": "Sinirli, öfkeli veya rahatsız hissedilmesi."},
+    {"type": "funny", "tag": "<funny>", "description": "Eğlenceli, mizahi veya komik bir ifade."},
+    {"type": "serious", "tag": "<serious>", "description": "Odaklanmış, düşünceli veya ciddi bir hâl."},
+    {"type": "curious", "tag": "<curious>", "description": "Meraklı, öğrenmeye istekli veya araştırıcı olma."},
+    {"type": "worried", "tag": "<worried>", "description": "Endişeli, huzursuz veya kaygı dolu hissetme."},
+    {"type": "surprised", "tag": "<surprised>", "description": "Şaşırmış, hayrete düşmüş veya hazırlıksız yakalanmış hissetme."},
+    {"type": "confident", "tag": "<confident>", "description": "Kendinden emin, kararlı ve güvenli davranma."}
+  ],
+  "reactional_gestures": [
+    {"type": "greeting", "reply": "greeting", "tag": "<greeting>", "description": "Birine el sallamak veya samimi bir şekilde selam vermek."},
+    {"type": "listening", "reply": "talking", "tag": "<listening>", "description": "Dikkatle dinlemek ve konuşmadan ilgi göstermek."},
+    {"type": "talking", "reply": "listening", "tag": "<talking>", "description": "Konuşmak veya düşüncelerini sözlü olarak ifade etmek."},
+    {"type": "accepting", "reply": "agreeing", "tag": "<accepting>", "description": "Bir fikri veya teklifi kabul ettiğini göstermek."},
+    {"type": "rejecting", "reply": "thinking", "tag": "<rejecting>", "description": "Bir fikre veya teklife karşı çıkmak veya reddetmek."},
+    {"type": "thinking", "reply": "thinking", "tag": "<thinking>", "description": "Duraksayıp düşünmek, analiz etmek veya bir şeyi derinlemesine değerlendirmek."},
+    {"type": "agreeing", "reply": "accepting", "tag": "<agreeing>", "description": "Bir fikre baş sallayarak veya sözlü olarak onay verdiğini göstermek."}
+  ],
+  "directives": [
+    {"type": "followFinger", "tag": "<followFinger>", "description": "Parmağımı takip etmeye başla."},
+    {"type": "stopFollow", "tag": "<stopFollow>", "description": "Takip etmeyi durdur."}
+  ]
+}

@@ -37,7 +37,9 @@ RUN apt-get install -y --no-install-recommends \
     qemu-user-static \
     pkg-config \
     libc6-dev:arm64 \
-    libc6:arm64
+    libc6:arm64 \
+    sqlite3:arm64 \
+    libsqlite3-dev:arm64
 
 # 3. Install ARM64 libraries for Raspberry Pi (install them individually to handle dependencies better)
 RUN apt-get install -y --no-install-recommends \

@@ -103,7 +103,6 @@ SensorData Robot::getSensorValues() {
 void Robot::control_motion(const ControlData& controlData)
 {
     std::lock_guard<std::mutex> lock(_controllerMutex);
-
     if (controlData.bodyJoystick.has_value()) {
         control_body(controlData.bodyJoystick->angle, controlData.bodyJoystick->strength);
     }else if (controlData.headJoystick.has_value()) {
@@ -170,6 +169,7 @@ void Robot::control_motion(const ControlData& controlData)
             }
         }
     }
+
 }
 
 void Robot::control_body(int angle, int magnitude) {

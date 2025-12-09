@@ -1,7 +1,3 @@
-//
-// Created by ulak on 25.06.2025.
-//
-
 #ifndef LLAMA_OPERATOR_H
 #define LLAMA_OPERATOR_H
 
