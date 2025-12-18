@@ -85,6 +85,7 @@ TrackingData LandmarkTrackerService::collectTrackingData() {
 }
 
 
+
 Point2D LandmarkTrackerService::selectTheTarget(const TrackingData &trackData) {
     // Priority: Face > Hand
     if (!trackData.recognizedGestureData.faceLandmarks.empty() && trackData.recognizedGestureData.faceLandmarks.size() > 3) {
@@ -276,14 +277,29 @@ void LandmarkTrackerService::controlHead(int angle, int magnitude) {
     publish(MessageType::ControlData, data);
 }
 
+
 void LandmarkTrackerService::engageReaction(TrackingData trackingData) {
+    auto reactionList = JsonParserOperator::get_instance()->getFaceReactions();
+    std::string selectedReaction;
+
     INFO("engageReaction! - faceGesture{}", trackingData.recognizedGestureData.faceEmotion);
     if (trackingData.recognizedGestureData.faceEmotion == "No Face") {
         return;
     }
 
-    std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
-    static_cast<LLMQueryData *>(data.get())->query = "You are looking a person. He/She seems " + trackingData.recognizedGestureData.faceEmotion + ". Say something to her/him.";
-    publish(MessageType::LLMQuery, data);
+    std::vector<std::string> matchingReactions;
+    for (const auto &reaction: *reactionList) {
+        if (reaction.emotion == trackingData.recognizedGestureData.faceEmotion) {
+            matchingReactions.push_back(reaction.reaction);
+        }
+    }
 
+    if (!matchingReactions.empty()) {
+        int randomIndex = rand() % matchingReactions.size();
+        selectedReaction = matchingReactions[randomIndex];
+    }
+
+    std::unique_ptr<MessageData> data = std::make_unique<EngageReactionData>();
+    static_cast<EngageReactionData *>(data.get())->reaction = selectedReaction;
+    publish(MessageType::EngageReaction, data);
 }

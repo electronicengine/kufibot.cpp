@@ -23,7 +23,8 @@
 CompassController *CompassController::_instance = nullptr;
 
  CompassController::CompassController() {
-    bool ret = sensor.initQMC5883l();
+     // bool ret = sensor.initQMC5883l();
+     bool ret = sensor.initHMC5883l();
      if (ret) {
          _initialized = true;
          INFO("Compass Controller initialized");
@@ -48,16 +49,22 @@ CompassData CompassController::getCompassData() {
          return data;
      }
 
-    Axis compasVector = sensor.readQMC5883l();
-    // Compute angle in radians
-    double angle_rad = std::atan2(compasVector.x, compasVector.y);
+    // Axis compasVector = sensor.readQMC5883l();
+     Axis compasVector = sensor.readHMC5883l();
 
-    // Convert to degrees
-    double angle_deg = angle_rad * 180.0 / M_PI;
+    // // Compute angle in radians
+    // double angle_rad = std::atan2(compasVector.x, compasVector.y);
+    //
+    // // Convert to degrees
+    // double angle_deg = angle_rad * 180.0 / M_PI;
+    //
+    //  data.angle = angle_deg;
+    //  data.magnetX = compasVector.x;
+    //  data.magnetY = compasVector.y;
 
-     data.angle = angle_deg;
-     data.magnetX = compasVector.x;
-     data.magnetY = compasVector.y;
+    data.angle = compasVector.t;
+    data.magnetX = compasVector.x;
+    data.magnetY = compasVector.y;
 
     return data;
 }

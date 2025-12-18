@@ -41,6 +41,10 @@ JsonParserOperator::JsonParserOperator() {
         _configPaths.reset();
         ERROR("_configPaths.ai_config is empty. Please check the config paths file: {}", CONFIG_PATHS_FILE);
     }else {
+
+        loadRagDataset(_configPaths->rag_dataset, _ragDataset.emplace());
+        loadFaceReactions(_configPaths->reaction_set, _faceReactionList.emplace());
+
         loadMotionsFromFile(_configPaths->motion_definitions, _emotionalMotions.emplace(), _reactionalMotions.emplace(), _directiveMotions.emplace(), _idlePosition.emplace());
 
         if (_emotionalMotions->empty()) {
@@ -89,13 +93,15 @@ void JsonParserOperator::loadConfigPaths(const std::string& filename, ConfigPath
         paths.gesture_config = j.value("gesture_config", "");
         paths.joint_angles = j.value("joint_angles", "");
         paths.motion_definitions = j.value("motion_definitions", "");
+        paths.rag_dataset = j.value("rag_dataset", "");
+        paths.reaction_set = j.value("reaction_set", "");
 
     } catch (const std::exception& e) {
         ERROR("Error parsing config paths file {} : {} " , filename ,e.what());
     }
 }
 
-void JsonParserOperator::loadAiConfig(const std::string& filename, AiConfig& config) {
+void JsonParserOperator::loadAiConfig(const std::string &filename, AiConfig &config) {
 
     try {
         std::ifstream inFile(filename);
@@ -107,27 +113,35 @@ void JsonParserOperator::loadAiConfig(const std::string& filename, AiConfig& con
         inFile >> j;
 
         // speechProcessor
-        if (j.contains("speechPrecessor")) { // note: key in JSON is 'speechPrecessor' (typo kept intentionally if file uses that)
-            const auto& sp = j["speechPrecessor"];
+        if (j.contains("speechPrecessor")) { // note: key in JSON is 'speechPrecessor' (typo kept intentionally if file
+                                             // uses that)
+            const auto &sp = j["speechPrecessor"];
             config.speechProcessorConfig.modelPath = sp.value("modelPath", "");
         }
 
         // speechRecognizer
         if (j.contains("speechRecognizer")) {
-            const auto& sr = j["speechRecognizer"];
+            const auto &sr = j["speechRecognizer"];
             config.speechRecognizerConfig.modelPath = sr.value("modelPath", "");
             config.speechRecognizerConfig.command = sr.value("command", "");
+            config.speechRecognizerConfig.voice = sr.value("voice", "");
             config.speechRecognizerConfig.timeOut = sr.value("timeOut", 0);
+            config.speechRecognizerConfig.silenceThreshold = sr.value("silenceThreshold", 0);
+            config.speechRecognizerConfig.sampleRate = sr.value("sampleRate", 0);
+            config.speechRecognizerConfig.framesPerBuffer = sr.value("framesPerBuffer", 0);
+            config.speechRecognizerConfig.maxSilenceDurationSec = sr.value("maxSilenceDurationSec", 0);
+            config.speechRecognizerConfig.listenTimeoutMs = sr.value("listenTimeoutMs", 0);
+
         }
 
         // llmChat
         if (j.contains("llmChat")) {
-            const auto& lc = j["llmChat"];
+            const auto &lc = j["llmChat"];
             config.llmChatConfig.modelPath = lc.value("modelPath", "");
             config.llmChatConfig.systemMessage = lc.value("systemMessage", "");
 
             if (lc.contains("settings")) {
-                const auto& s = lc["settings"];
+                const auto &s = lc["settings"];
                 config.llmChatConfig.llmSettings.ngl = s.value("ngl", "");
                 config.llmChatConfig.llmSettings.nThreads = s.value("nThreads", 0);
                 config.llmChatConfig.llmSettings.n_ctx = s.value("n_ctx", 0);
@@ -141,25 +155,77 @@ void JsonParserOperator::loadAiConfig(const std::string& filename, AiConfig& con
 
         // llmEmbedding
         if (j.contains("llmEmbedding")) {
-            const auto& le = j["llmEmbedding"];
+            const auto &le = j["llmEmbedding"];
             config.llmEmbeddingConfig.modelPath = le.value("modelPath", "");
             config.llmEmbeddingConfig.poolingType = le.value("poolingType", 0);
         }
 
         // mediapipe
         if (j.contains("mediapipe")) {
-            const auto& mp = j["mediapipe"];
+            const auto &mp = j["mediapipe"];
             config.mediapipeConfig.modelPath = mp.value("modelPath", "");
         }
 
         INFO("AI configuration loaded successfully from: {}", filename);
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         ERROR("Error parsing AI config file {}: {}", filename, e.what());
     }
-
 }
 
+
+void JsonParserOperator::loadRagDataset(const std::string &filename, RagDataset &dataset) {
+
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            ERROR("Failed to open RAG dataset file: {}", filename);
+            return;
+        }
+
+        std::string line;
+        while (std::getline(inFile, line)) {
+            try {
+                json lineJson = json::parse(line);
+                std::string input = lineJson.value("input", "");
+                std::string output = lineJson.value("output", "");
+                dataset.rows.push_back(DatasetRow{input, output, {}});
+
+            } catch (const json::parse_error &e) {
+                ERROR("Error parsing JSON line in RAG dataset: {}", e.what());
+                continue;
+            }
+        }
+        INFO("Successfully loaded {} items from RAG dataset", dataset.rows.size());
+    } catch (const std::exception &e) {
+        ERROR("Error reading RAG dataset file {}: {}", filename, e.what());
+    }
+}
+
+void JsonParserOperator::loadFaceReactions(const std::string &filename, std::list<FaceReaction> &faceReactionList) {
+    try {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            ERROR("Failed to open RAG dataset file: {}", filename);
+            return;
+        }
+        std::string line;
+        while (std::getline(inFile, line)) {
+            try {
+                json lineJson = json::parse(line);
+                std::string gesture = lineJson.value("gesture", "");
+                std::string reaction = lineJson.value("reaction", "");
+                faceReactionList.push_back(FaceReaction{gesture, reaction});
+
+            } catch (const json::parse_error &e) {
+                ERROR("Error parsing JSON line in reaction set: {}", e.what());
+                continue;
+            }
+        }
+        INFO("Successfully loaded {} items from  reaction set", faceReactionList.size());
+    } catch (const std::exception &e) {
+        ERROR("Error reading reaction set file {}: {}", filename, e.what());
+    }
+}
 
 
 EmotionType JsonParserOperator::emotionTypeFromString(const std::string& str) {

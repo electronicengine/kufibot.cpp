@@ -122,7 +122,17 @@ void RemoteConnectionService::service_function() {
 
                         publish(MessageType::LLMQuery, data);
                     }
-                } else {
+                }else if (message.contains("wifi_config")) {
+                        std::string ssid = message["wifi_config"]["SSID"];
+                        std::string password = message["wifi_config"]["Password"];
+                        INFO("Connecting Wifi: SSID: {} PASSWORD: {} ", ssid, password);
+
+                        std::string cmd = "sudo nmcli device wifi connect " +  ssid + " password " + password + " ifname wlan0";
+
+                        system("sudo nmcli connection down Hotspot");
+                        system(cmd.c_str());
+
+                }else {
                     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
                     *static_cast<ControlData *>(data.get()) = ControlData(message);
                     data->source = SourceService::remoteConnectionService;

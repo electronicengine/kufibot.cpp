@@ -32,12 +32,15 @@ public:
     std::optional<std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>> getJointAngles(){return _jointAngles; }
     std::optional<ConfigPaths> getConfigPaths(){return _configPaths;}
     std::optional<AiConfig> getAiConfig(){return _aiConfig;}
+    std::optional<RagDataset> &getRagDataset(){return _ragDataset;}
+    std::optional<std::list<FaceReaction>> &getFaceReactions(){return _faceReactionList;}
 
 private:
 
     static JsonParserOperator* _instance;
 
     JsonParserOperator();
+    std::optional<RagDataset> _ragDataset;
     std::optional<std::map<EmotionType, EmotionalMotion>> _emotionalMotions;
     std::optional<std::map<ReactionType, ReactionalMotion>> _reactionalMotions;
     std::optional<std::map<DirectiveType, DirectiveMotion>> _directiveMotions;
@@ -46,6 +49,7 @@ private:
     std::optional<std::list<EmotionalGesture>> _emotionalList;
     std::optional<std::list<ReactionalGesture>> _reactionalList;
     std::optional<std::list<Directive>> _directiveList;
+    std::optional<std::list<FaceReaction>> _faceReactionList;
 
     std::optional<std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>>> _jointAngles;
 
@@ -55,6 +59,8 @@ private:
 
     void loadConfigPaths(const std::string& filename, ConfigPaths& paths);
     void loadAiConfig(const std::string& filename, AiConfig& config);
+    void loadRagDataset(const std::string& filename, RagDataset& dataset);
+    void loadFaceReactions(const std::string& filename,std::list<FaceReaction>& faceReactionList);
 
     void loadGesturesFromFile(
         const std::string& filename,

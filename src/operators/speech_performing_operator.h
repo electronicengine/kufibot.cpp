@@ -27,6 +27,7 @@ public:
     void synthesizeText(const std::string& text);
     void playAudio();
     void playMusic(const std::string& mp3_file);
+    void playAudioBuffer(std::vector<int16_t> buffer);
 
     ~SpeechPerformingOperator();
 
@@ -52,6 +53,7 @@ private:
     void startKeepAlive();
     SpeechPerformingOperator();
     void audioCallbackFunc();
+
 };
 
 #endif // SPEECH_PERFORMING_OPERATOR_H

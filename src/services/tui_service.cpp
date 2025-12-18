@@ -30,11 +30,12 @@
 
 #include <oneapi/tbb/detail/_range_common.h>
 
-#include "gesture_recognizer_service.h"
 #include "../logger.h"
-#include "final/final.h"
 #include "../tui/main_window.h"
 #include "../tui/widget_color_theme.h"
+#include "final/final.h"
+#include "gesture_recognizer_service.h"
+#include "rag_service.h"
 
 using namespace finalcut;
 
@@ -115,6 +116,8 @@ void TuiService::service_function() {
                 GestureRecognizerService::get_instance()->start();
             }else if (input.find("WebSocketService") != std::string::npos) {
                 WebSocketService::get_instance()->start();
+            }else if (input.find("RagService") != std::string::npos) {
+                RagService::get_instance()->start();
             }
         }else if (input.find("stop") != std::string::npos) {
             if (input.find("RobotControllerService") != std::string::npos) {
@@ -133,6 +136,8 @@ void TuiService::service_function() {
                 GestureRecognizerService::get_instance()->stop();
             }else if (input.find("WebSocketService") != std::string::npos) {
                 WebSocketService::get_instance()->stop();
+            }else if (input.find("RagService") != std::string::npos) {
+                RagService::get_instance()->stop();
             }
         }else if (input.find("log" ) != std::string::npos) {
             std::string className = input.substr(4, input.size() - 4);
@@ -173,6 +178,12 @@ void TuiService::service_function() {
             }else {
                 WARNING("Start robot controller service first!");
             }
+        }else if (input.find("rag update") != std::string::npos) {
+        publish(MessageType::UpdateRAGDatabaseRequest);
+        }else if (input.find("rag clear") != std::string::npos) {
+            publish(MessageType::ClearRAGDatabaseRequest);
+        }else if (input.find("rag show") != std::string::npos) {
+            publish(MessageType::ShowRAGDatabaseRequest);
         }
     }
 }

@@ -68,7 +68,7 @@ bool LlamaOperator::loadEmbedModel(const std::string & modelPath, const enum lla
     // Set up logging
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            ERROR("Error: {}", text);
+            //ERROR("Error: {}", text);
         }
     }, nullptr);
 
@@ -124,7 +124,7 @@ bool LlamaOperator::loadChatModel(const std::string & modelPath) {
 
     llama_log_set([](enum ggml_log_level level, const char * text, void * /* user_data */) {
         if (level >= GGML_LOG_LEVEL_ERROR) {
-            ERROR("Error: {}", text);
+           // ERROR("Error: {}", text);
         }
     }, nullptr);
 
@@ -167,7 +167,7 @@ void LlamaOperator::setCallBackFunction(std::function<void(const std::string &)>
 std::string LlamaOperator::generateResponse(const std::string& prompt) {
     std::string response;
 
-    const bool is_first = llama_get_kv_cache_used_cells(_ctx) == 0;
+    const bool is_first = llama_memory_seq_pos_max(llama_get_memory(_ctx), 0) == -1;
 
     // tokenize the prompt
     const int n_prompt_tokens = -llama_tokenize(_vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
@@ -176,13 +176,14 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
         GGML_ABORT("failed to tokenize the prompt\n");
     }
 
+
     // prepare a batch for the prompt
     llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
     llama_token new_token_id;
     while (_running) {
         // check if we have enough space in the context to evaluate this batch
         int n_ctx = llama_n_ctx(_ctx);
-        int n_ctx_used = llama_get_kv_cache_used_cells(_ctx);
+        int n_ctx_used = llama_memory_seq_pos_max(llama_get_memory(_ctx), 0) + 1;
         if (n_ctx_used + batch.n_tokens > n_ctx) {
             //printf("\033[0m\n");
             fprintf(stderr, "context size exceeded\n");
@@ -329,14 +330,14 @@ std::vector<float> LlamaOperator::calculateEmbeddings(const std::string& text) {
 
     // Check if the last token is SEP (optional warning)
     if (!tokens.empty() && tokens.back() != llama_vocab_sep(_vocab)) {
-        WARNING("Last token in the prompt is not SEP");
+        // WARNING("Last token in the prompt is not SEP");
     }
 
     // Initialize batch
     llama_batch batch = llama_batch_init(batch_size, 0, 1);
 
     // Clear any previous KV cache
-    llama_kv_cache_clear(_ctx);
+    llama_memory_clear(llama_get_memory(_ctx), true);
 
     // Add tokens to batch
     batch_add_seq(batch, tokens, 0);

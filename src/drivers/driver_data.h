@@ -6,7 +6,7 @@
 #define DRIVER_DATA_H
 
 struct Axis{
-    float x,y,z;
+    float x,y,z, t;
 
     Axis (const Axis & other) {
         x = other.x;

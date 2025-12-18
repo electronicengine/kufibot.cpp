@@ -16,7 +16,9 @@
  */
 
 #include "speech_performing_operator.h"
+
 #include "../logger.h"
+#include "speech_recognizing_operator.h"
 
 
 SpeechPerformingOperator* SpeechPerformingOperator::_instance = nullptr;
@@ -119,8 +121,11 @@ void SpeechPerformingOperator::loadModel(const std::string& modelPath){
 
 void SpeechPerformingOperator::speakText(const std::string &text)
 {
+    SpeechRecognizingOperator::_isSpeaking.store(true);
     synthesizeText(text);
     playAudio();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    SpeechRecognizingOperator::_isSpeaking.store(false);
 }
 
 void SpeechPerformingOperator::synthesizeText(const std::string& text) {
@@ -173,6 +178,38 @@ void SpeechPerformingOperator::playAudio() {
     snd_pcm_close(pcmHandle);
 }
 
+void SpeechPerformingOperator::playAudioBuffer(std::vector<int16_t> buffer) {
+    snd_pcm_t* pcmHandle;
+    snd_pcm_hw_params_t* params;
+    int err;
+
+    if ((err = snd_pcm_open(&pcmHandle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
+        ERROR("Error opening PCM device: {} ", mpg123_plain_strerror(err));
+
+        return;
+    }
+
+    snd_pcm_hw_params_alloca(&params);
+    snd_pcm_hw_params_any(pcmHandle, params);
+    snd_pcm_hw_params_set_access(pcmHandle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
+    snd_pcm_hw_params_set_format(pcmHandle, params, SND_PCM_FORMAT_S16_LE);
+    snd_pcm_hw_params_set_channels(pcmHandle, params, 1);
+    unsigned int sampleRate = 16000;
+    snd_pcm_hw_params_set_rate_near(pcmHandle, params, &sampleRate, 0);
+    if ((err = snd_pcm_hw_params(pcmHandle, params)) < 0) {
+        ERROR("Error setting PCM parameters: {} ", mpg123_plain_strerror(err));
+        snd_pcm_close(pcmHandle);
+        return;
+    }
+
+    if ((err = snd_pcm_writei(pcmHandle, buffer.data(), buffer.size())) < 0) {
+        snd_pcm_prepare(pcmHandle);
+        ERROR("Error Audio underrun: {}",  std::string(mpg123_plain_strerror(err)));
+    }
+
+    snd_pcm_drain(pcmHandle);
+    snd_pcm_close(pcmHandle);
+}
 
 void SpeechPerformingOperator::playMusic(const std::string& mp3_file) {
     if (mpg123_open(_mh, mp3_file.c_str()) != MPG123_OK) {

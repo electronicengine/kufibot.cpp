@@ -20,9 +20,11 @@
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
 #include "landmark_tracker_service.h"
+#include "rag_service.h"
 #include "remote_connection_service.h"
 #include "tui_service.h"
 #include "video_stream_service.h"
+#include "rag_service.h"
 
 GesturePerformerService* GesturePerformerService::_instance = nullptr;
 std::map<ServoMotorJoint, uint8_t>  GesturePerformerService::idleJointPositions= Default_Joint_Angles;
@@ -100,10 +102,11 @@ bool GesturePerformerService::initialize() {
         return false;
     }
 
-    std::thread speak = std::thread(&GesturePerformerService::speakText, this,"Initializing... Please Wait!");
+    std::thread speak = std::thread(&GesturePerformerService::speakText, this,"Sistem Yapılandırılıyor...");
     speak.detach();
 
     subscribe_to_service(InteractiveChatService::get_instance());
+    subscribe_to_service(RagService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());

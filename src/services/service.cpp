@@ -120,7 +120,7 @@ bool Service::stop()
         INFO("{} is stopped.", _name.c_str());
         return true;
     }else {
-        return false;
+        return true;
     }
 }
 

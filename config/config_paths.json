@@ -1,6 +1,8 @@
 {
   "ai_config" : "/usr/local/etc/ai_config.json",
-  "gesture_config" : "/usr/local/etc/gesture_config.json",
+  "gesture_config" : "/usr/local/etc/gesture_config_tr.json",
   "joint_angles" : "/usr/local/etc/joint_angles.json",
-  "motion_definitions" : "/usr/local/etc/motion_definitions.json"
+  "motion_definitions" : "/usr/local/etc/motion_definitions.json",
+  "rag_dataset" : "/usr/local/etc/rag_dataset_tr.json",
+  "reaction_set" : "/usr/local/etc/reaction_set_tr.json"
 }

@@ -7,13 +7,15 @@
 #include "controller_data_structures.h"
 #include "../drivers/median_filter.h"
 #include "../drivers/qmc5883l_driver.h"
+#include "../drivers/hmc5883l_driver.h"
 
 #define OFFSET_ANGLE 79
 
 class CompassController {
 private:
     static CompassController* _instance; // Singleton instance
-    QMC5883LDriver sensor;            // Sensor object
+    // QMC5883LDriver sensor;            // Sensor object
+    HMC5883LDriver sensor;
     std::atomic<bool> _enable = true;
     std::atomic<bool> _initialized = false;
 

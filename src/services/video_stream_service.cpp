@@ -21,6 +21,7 @@
 #include "gesture_performer_service.h"
 #include "interactive_chat_service.h"
 #include "landmark_tracker_service.h"
+#include "rag_service.h"
 
 VideoStreamService * VideoStreamService::_instance = nullptr;
 
@@ -52,6 +53,7 @@ bool VideoStreamService::initialize() {
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(RagService::get_instance());
 
     return true;
 }
@@ -66,6 +68,11 @@ VideoStreamService::~VideoStreamService() {
 void VideoStreamService::service_function() {
 
     cv::Mat frame;
+    if (!_cap->isOpened()) {
+        _cap = std::make_unique<cv::VideoCapture>(_cameraIndex, cv::CAP_V4L2);
+        _cap->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+        _cap->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+    }
 
     while (_running) {
 
@@ -90,12 +97,22 @@ void VideoStreamService::subcribed_data_receive(MessageType type, const std::uni
 
     switch (type) {
         case MessageType::InteractiveChatStarted: {
-            //stop();
+            stop();
             break;
         }
 
         case MessageType::GesturePerformanceCompleted: {
-            //start();
+            start();
+            break;
+        }
+
+        case MessageType::StopVideoStreamRequest: {
+            stop();
+            break;
+        }
+
+        case MessageType::StartVideoStreamRequest: {
+            start();
             break;
         }
 

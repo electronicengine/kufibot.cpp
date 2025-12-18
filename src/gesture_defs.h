@@ -97,6 +97,11 @@
         std::vector<float> embedding;
     };
 
+    struct FaceReaction {
+        std::string emotion;
+        std::string reaction;
+    };
+
 
 
 #endif //GESTURE_DEFS_H

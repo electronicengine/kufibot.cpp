@@ -28,7 +28,7 @@
 #include <string>
 
 #include "services/landmark_tracker_service.h"
-
+#include "services/rag_service.h"
 
 auto main(int argc, char *argv[]) -> int {
     bool showFrame = false;
@@ -92,11 +92,18 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
+
         ret = VideoStreamService::get_instance()->start();
         if (!ret) {
             return 1;
         }
-        ret = InteractiveChatService::get_instance()->start();
+        // VideoStreamService::get_instance()->disable();
+
+        // ret = InteractiveChatService::get_instance()->stop();
+        // if (!ret) {
+        //     return 1;
+        // }
+        ret = RagService::get_instance()->start();
         if (!ret) {
             return 1;
         }
@@ -112,7 +119,7 @@ auto main(int argc, char *argv[]) -> int {
     }
 
     std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
-    static_cast<SpeakRequestData *>(data.get())->text = "Initializing Complited. I am ready to talk";
+    static_cast<SpeakRequestData *>(data.get())->text = "Sistem yapılandırıldı. Hadi Konuşalım.";
     LandmarkTrackerService::get_instance()->publish(MessageType::SpeakRequest, data);
     if (!asService) {
         bool ret = TuiService::get_instance()->start();

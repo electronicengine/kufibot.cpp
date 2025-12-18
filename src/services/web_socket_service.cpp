@@ -41,6 +41,7 @@ WebSocketService::~WebSocketService() {
 
 }
 
+
 WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.init_asio();
     _broadcastResponder = std::make_unique<BroadcastResponder>();
@@ -51,6 +52,8 @@ WebSocketService::WebSocketService() : Service("WebSocketService") {
     _server.set_message_handler(
             bind(&WebSocketService::on_message, this, std::placeholders::_1, std::placeholders::_2));
 }
+
+
 bool WebSocketService::initialize() {
 
     INFO("WebSocketService is initializing...");

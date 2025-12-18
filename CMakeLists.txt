@@ -13,7 +13,7 @@ set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
 # Deployment configuration
 set(DEPLOY_USER kufi)
-set(DEPLOY_HOST 192.168.1.44)
+set(DEPLOY_HOST 192.168.1.48)
 set(DEPLOY_PATH /home/kufi/workspace/)
 
 set(PYTHON_INCLUDE_DIR /usr/include/python3.11)
@@ -72,6 +72,7 @@ target_link_libraries(kufibot ${OpenCV_LIBS}
         ${PORTAUDIO_LIBRARIES}
         ${CURL_LIBRARIES}
         ${PYTHON_LIBRARY}
+        sqlite3
         fmt
         spdlog
         espeak-ng

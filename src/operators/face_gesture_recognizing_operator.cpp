@@ -311,20 +311,20 @@ std::string FaceGestureRecognizingOperator::detectEmotion()
     double eyebrow_dist_norm = baseline.eyebrow_dist > 0 ? normalized_eyebrow_distance / baseline.eyebrow_dist : 1.0;
 
     // DUYGU KURALLARI
-    std::string emotion = "Neutral";
+    std::string emotion = "normal";
 
     if (smile_norm > 6) {
-        emotion = "Happy";
+        emotion = "mutlu";
     } else if (mar_norm > 120) {
-        emotion = "Fear";
+        emotion = "korkmuş";
     } else if (mar_norm > 20) {
-        emotion = "Surprised";
+        emotion = "şaşkın";
     } else if (smile_norm < -3) {
-        emotion = "Sad";
+        emotion = "üzgün";
     } else if (ear_norm < 0.8) {
-        emotion = "Sleepy/Wink";
+        emotion = "uykulu";
     } else if (eyebrow_dist_norm < 0.85 && ear_norm < 0.9) {
-        emotion = "Angry";
+        emotion = "sinirli";
     }
 
     // Emotion geçmişi ile yumuşatma

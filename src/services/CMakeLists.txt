@@ -9,13 +9,18 @@ set(SERVICES_LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 set(SERVICES_INC_DIR ${CMAKE_SOURCE_DIR}/include)
 
 set(TARGET services)
+set(BUILD_SHARED_LIBS ON)
+
 
 file(GLOB_RECURSE SRCS ${SERVICES_SRC_DIR}/*.cpp ${SERVICES_SRC_DIR}/*.h)
 include_directories(${SERVICES_INC_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/src/controllers)
+include_directories(/usr/include)
 
-add_library(${TARGET} SHARED ${SRCS})
+add_library(${TARGET} SHARED ${SRCS}
+        rag_service.cpp
+        rag_service.h)
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
-target_link_libraries(${TARGET} PRIVATE statemachines)
+target_link_libraries(${TARGET} PRIVATE statemachines /usr/local/lib/libsqlite3.so)
 install(TARGETS services DESTINATION /usr/local/lib)

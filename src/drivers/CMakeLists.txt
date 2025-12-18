@@ -19,7 +19,9 @@ add_library(${TARGET} SHARED ${SRCS}
         ../controllers/controller_data_structures.h
         driver_data.h
         i2c_device.cpp
-        i2c_device.h)
+        i2c_device.h
+        hmc5883l_driver.cpp
+        hmc5883l_driver.h)
 target_include_directories(${TARGET} PRIVATE ${DRIVERS_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${DRIVERS_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE wiringPi)

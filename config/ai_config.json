@@ -1,11 +1,16 @@
 {
   "speechPrecessor": {
-    "modelPath": "/usr/local/ai.models/engSpeechModel/en_GB-alan-low.onnx"
+    "modelPath": "/usr/local/ai.models/trSpeechModel/dfki.onnx"
   },
   "speechRecognizer": {
-    "modelPath": "/usr/local/ai.models/engRecognizeModel",
-    "command": "Yep!",
-    "timeout": 4000
+    "modelPath": "/usr/local/ai.models/trRecognizeModel",
+    "command": "kofi",
+    "voice": "Evet!",
+    "listenTimeoutMs": 1000,
+    "silenceThreshold" :  500,
+    "sampleRate" : 16000,
+    "framesPerBuffer" : 4000,
+    "maxSilenceDurationSec" : 10
   },
   "llmChat": {
     "modelPath" : "/usr/local/ai.models/llamaModel/dolphin3.gguf",

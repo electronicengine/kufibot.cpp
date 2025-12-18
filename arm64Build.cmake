@@ -45,6 +45,11 @@ set(BOOST_LIBRARYDIR /usr/lib/aarch64-linux-gnu)
 # OpenCV configuration
 set(OpenCV_DIR /usr/lib/aarch64-linux-gnu/cmake/opencv4) # Bu yol doğru görünüyorsa sorun yok.
 
+
+# ALSA configuration
+set(SQLITE_INCLUDE_DIR /usr/include/aarch64-linux-gnu)
+set(ALSA_LIBRARY /usr/lib/aarch64-linux-gnu/libasound.so)
+
 # ALSA configuration
 set(ALSA_INCLUDE_DIR /usr/include/aarch64-linux-gnu)
 set(ALSA_LIBRARY /usr/lib/aarch64-linux-gnu/libasound.so)

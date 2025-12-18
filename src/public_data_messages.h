@@ -39,6 +39,8 @@ struct ConfigPaths {
     std::string gesture_config;
     std::string joint_angles;
     std::string motion_definitions;
+    std::string rag_dataset;
+    std::string reaction_set;
 };
 
 struct LlmSettings {
@@ -56,10 +58,18 @@ struct SpeechProcessorConfig {
     std::string modelPath;
 };
 
+
 struct SpeechRecognizerConfig {
     std::string modelPath;
     std::string command;
+    std::string voice;
     int timeOut;
+    uint32_t silenceThreshold;
+    uint32_t sampleRate;
+    uint32_t framesPerBuffer;
+    uint32_t maxSilenceDurationSec;
+    uint32_t listenTimeoutMs;
+
 };
 
 struct LlmChatConfig {
@@ -83,6 +93,17 @@ struct AiConfig {
     LlmChatConfig llmChatConfig;
     LlmEmbeddingConfig llmEmbeddingConfig;
     MediapipeConfig mediapipeConfig;
+};
+
+
+struct DatasetRow {
+    std::string input;
+    std::string output;
+    std::vector<float> inputEmbedding;
+};
+
+struct RagDataset {
+    std::vector<DatasetRow> rows;
 };
 
 enum class SourceService {
@@ -117,13 +138,19 @@ enum class MessageType {
     ControlData,
     LLMQuery,
     LLMResponse,
+    EngageReaction,
     RecognizedGesture,
     GesturePerformanceCompleted,
     InteractiveChatStarted,
     SensorReadRequest,
     SpeakRequest,
+    UpdateRAGDatabaseRequest,
+    ClearRAGDatabaseRequest,
+    ShowRAGDatabaseRequest,
     AIModeOnCall,
     AIModeOffCall,
+    StopVideoStreamRequest,
+    StartVideoStreamRequest
 };
 
 typedef websocketpp::server<websocketpp::config::asio> Server;
@@ -254,6 +281,9 @@ struct LLMQueryData : public MessageData {
     std::string query;
 };
 
+struct EngageReactionData : public MessageData {
+    std::string reaction;
+};
 
 struct SpeakRequestData : public MessageData {
     std::string text;
