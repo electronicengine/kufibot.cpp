@@ -22,15 +22,9 @@
 
 CompassController *CompassController::_instance = nullptr;
 
- CompassController::CompassController() {
-     // bool ret = sensor.initQMC5883l();
-     bool ret = sensor.initHMC5883l();
-     if (ret) {
-         _initialized = true;
-         INFO("Compass Controller initialized");
-     }else {
-         _initialized = false;
-         ERROR("Compass Controller initialization failed");
+ CompassController::CompassController() : Controller("CompassController") {
+     if (!CompassController::initialize()) {
+         WARNING("{} failed to initialize", getName());
      }
  }
 
@@ -41,11 +35,34 @@ CompassController *CompassController::_instance = nullptr;
     return _instance;
 }
 
+bool CompassController::initialize() {
+     // bool ret = sensor.initQMC5883l();
+     bool ret = sensor.initialize();
+     if (ret) {
+         _initialized.store(true);
+         INFO("Compass Controller initialized");
+     }else {
+         _initialized.store(false);
+         ERROR("Compass Controller initialization failed");
+     }
+
+     return ret;
+}
+
+void CompassController::shutdown() {
+     sensor.shutdown();
+     _initialized.store(false);
+}
+
+bool CompassController::isReady() const noexcept {
+     return _initialized.load();
+}
+
 
 CompassData CompassController::getCompassData() {
-    CompassData data;
+    CompassData data{0, 0, 0};
 
-     if (!_enable || !_initialized) {
+     if (!isEnabled() || !isReady()) {
          return data;
      }
 

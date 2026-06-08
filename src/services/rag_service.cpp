@@ -23,8 +23,7 @@
 #include <random>
 #include "landmark_tracker_service.h"
 #include "remote_connection_service.h"
-#include "gesture_performer_service.h"
-#include "../operators/speech_recognizing_operator.h"
+#include "expression_service.h"
 
 RagService* RagService::_instance = nullptr;
 
@@ -79,16 +78,9 @@ bool RagService::initialize() {
 
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
-    subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(ExpressionService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
 
-    INFO("Speech Recognizing Model is loading...");
-    auto speechConfig = parser->getAiConfig()->speechRecognizerConfig;
-    auto* recognizer = SpeechRecognizingOperator::get_instance(speechConfig.silenceThreshold, speechConfig.sampleRate, speechConfig.framesPerBuffer,
-                                                              speechConfig.maxSilenceDurationSec, speechConfig.listenTimeoutMs, speechConfig.command);
-
-    recognizer->load_model(parser->getAiConfig()->speechRecognizerConfig.modelPath);
-    recognizer->open();
     return true;
 }
 
@@ -101,30 +93,98 @@ void RagService::speak(std::string text) {
 
 
 void RagService::service_function() {
-
-    auto aiConfig = JsonParserOperator::get_instance()->getAiConfig();
-    auto *recognizer = SpeechRecognizingOperator::get_instance();
-    recognizer->start_listen();
-
     while (_running) {
-        std::vector<int16_t> buffer = recognizer->get_buffer();
-
-        if (!buffer.empty()) {
-            publish(MessageType::StopVideoStreamRequest);
-            std::string message = recognizer->get_text(buffer);
-            INFO("Recognized Message: {}", message);
-            if (!message.empty()) {
-                std::string response = getRAGResponse(message);
-                INFO("Response: {}", response);
-                divideAndPublish(response);
-            }
-
-            publish(MessageType::StartVideoStreamRequest);
-        }
-
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    recognizer->stop_listen();
+}
+
+
+void RagService::insertToDatabase(const std::string &input, const std::string &output) {
+    INFO("insertToDatabase");
+
+    if (input.empty() || output.empty()) {
+        ERROR("Input or output is empty, aborting insert.");
+        return;
+    }
+
+    // SQLite bağlantısı
+    sqlite3 *db = nullptr;
+    int rc = sqlite3_open_v2(
+        "/home/kufi/rag_dataset.db",
+        &db,
+        SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
+        nullptr
+    );
+
+    if (rc != SQLITE_OK) {
+        ERROR("Cannot open SQLite database: {}", sqlite3_errmsg(db));
+        return;
+    }
+
+    // Tabloyu garanti altına al
+    const char *createTableSQL = R"(
+        CREATE TABLE IF NOT EXISTS rag_dataset (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            input TEXT,
+            output TEXT,
+            inputEmbedding BLOB
+        );
+    )";
+
+    rc = sqlite3_exec(db, createTableSQL, nullptr, nullptr, nullptr);
+    if (rc != SQLITE_OK) {
+        ERROR("Failed to create table: {}", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    // Embedding hesapla
+    std::vector<float> embedding =
+        _embeddingOperator.calculateEmbeddings(input);
+
+    // Insert statement
+    const char *insertSQL =
+        "INSERT INTO rag_dataset (input, output, inputEmbedding) VALUES (?, ?, ?);";
+
+    sqlite3_stmt *stmt = nullptr;
+    rc = sqlite3_prepare_v2(db, insertSQL, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        ERROR("Failed to prepare insert statement: {}", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    // Bind input
+    sqlite3_bind_text(stmt, 1, input.c_str(), -1, SQLITE_TRANSIENT);
+
+    // Bind output
+    sqlite3_bind_text(stmt, 2, output.c_str(), -1, SQLITE_TRANSIENT);
+
+    // Bind embedding blob
+    if (!embedding.empty()) {
+        sqlite3_bind_blob(
+            stmt,
+            3,
+            embedding.data(),
+            static_cast<int>(embedding.size() * sizeof(float)),
+            SQLITE_TRANSIENT
+        );
+    } else {
+        sqlite3_bind_null(stmt, 3);
+    }
+
+    // Execute
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        ERROR("Failed to insert row: {}", sqlite3_errmsg(db));
+    } else {
+        INFO("Row inserted successfully.");
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    loadDatabase();
 
 }
 
@@ -560,6 +620,30 @@ void RagService::subcribed_data_receive(MessageType type, const std::unique_ptr<
                 std::string queryMsg = static_cast<LLMQueryData *>(data.get())->query;
                 std::string response = getRAGResponse(queryMsg);
                 divideAndPublish(response);
+
+            }
+            break;
+        }
+
+        case MessageType::RecognizedSpeech: {
+            if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
+                std::string queryMsg = static_cast<RecognizedSpeechData *>(data.get())->text;
+                std::string response = getRAGResponse(queryMsg);
+                divideAndPublish(response);
+
+            }
+            break;
+        }
+
+        case MessageType::DatabaseInsertData : {
+            if (data) {
+
+                std::string input = static_cast<DatabaseInsertData *>(data.get())->input;
+                std::string output = static_cast<DatabaseInsertData *>(data.get())->output;
+
+                insertToDatabase(input, output);
 
             }
             break;

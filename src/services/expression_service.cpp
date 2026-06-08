@@ -15,7 +15,7 @@
  * along with Kufibot. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "gesture_performer_service.h"
+#include "expression_service.h"
 #include "../controllers/controller_data_structures.h"
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
@@ -23,32 +23,31 @@
 #include "rag_service.h"
 #include "remote_connection_service.h"
 #include "tui_service.h"
-#include "video_stream_service.h"
-#include "rag_service.h"
+#include "voice_agent_service.h"
 
-GesturePerformerService* GesturePerformerService::_instance = nullptr;
-std::map<ServoMotorJoint, uint8_t>  GesturePerformerService::idleJointPositions= Default_Joint_Angles;
+ExpressionService * ExpressionService::_instance = nullptr;
+std::map<ServoMotorJoint, uint8_t>  ExpressionService::idleJointPositions= Default_Joint_Angles;
 
-GesturePerformerService *GesturePerformerService::get_instance()
+ExpressionService *ExpressionService::get_instance()
 {
     if (_instance == nullptr) {
-        _instance = new GesturePerformerService();
+        _instance = new ExpressionService();
     }
     return _instance;
 }
 
 
-GesturePerformerService::GesturePerformerService() : Service("GesturePerformerService") {
+ExpressionService::ExpressionService() : Service("ExpressionService") {
     _speaking = false;
 }
 
 
-GesturePerformerService::~GesturePerformerService()
+ExpressionService::~ExpressionService()
 {
 
 }
 
-bool GesturePerformerService::initialize() {
+bool ExpressionService::initialize() {
     auto parser = JsonParserOperator::get_instance();
 
     auto jointAngles = parser->getJointAngles();
@@ -102,7 +101,7 @@ bool GesturePerformerService::initialize() {
         return false;
     }
 
-    std::thread speak = std::thread(&GesturePerformerService::speakText, this,"Sistem Yapılandırılıyor...");
+    std::thread speak = std::thread(&ExpressionService::speakText, this,"Sistem Yapılandırılıyor...");
     speak.detach();
 
     subscribe_to_service(InteractiveChatService::get_instance());
@@ -110,12 +109,13 @@ bool GesturePerformerService::initialize() {
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
+    subscribe_to_service(VoiceAgentService::get_instance());
 
     return true;
 }
 
 
-void GesturePerformerService::service_function()
+void ExpressionService::service_function()
 {
 
     INFO("Entering the gesture performing loop...");
@@ -130,7 +130,7 @@ void GesturePerformerService::service_function()
                 LLMResponseData response = std::get<LLMResponseData>(_speakingQueue.front());
                 INFO("Speak Text: {}", response.sentence);
                 if (!response.sentence.empty()) {
-                    std::thread speak = std::thread(&GesturePerformerService::speakText, this, response.sentence);
+                    std::thread speak = std::thread(&ExpressionService::speakText, this, response.sentence);
                     speak.detach();
                     makeMimic(response);
 
@@ -144,7 +144,7 @@ void GesturePerformerService::service_function()
             }else if (std::holds_alternative<std::string>(_speakingQueue.front())) {
                 std::string speakText = std::get<std::string>(_speakingQueue.front());
                 INFO("Speak Text: {}", speakText);
-                std::thread speak = std::thread(&GesturePerformerService::speakText, this, speakText);
+                std::thread speak = std::thread(&ExpressionService::speakText, this, speakText);
                 speak.detach();
 
             }
@@ -162,7 +162,7 @@ void GesturePerformerService::service_function()
 }
 
 
-void GesturePerformerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
+void ExpressionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
 
     switch (type) {
         case MessageType::LLMResponse: {
@@ -203,7 +203,7 @@ void GesturePerformerService::subcribed_data_receive(MessageType type, const std
 }
 
 
-int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, GestureJointState state) {
+int ExpressionService::getAngleForJointState(ServoMotorJoint joint, GestureJointState state) {
     auto jointIt = _jointPositionList.find(joint);
     if (jointIt != _jointPositionList.end()) {
         auto stateIt = jointIt->second.find(state);
@@ -216,10 +216,10 @@ int GesturePerformerService::getAngleForJointState(ServoMotorJoint joint, Gestur
     return 90; // Default safe angle
 }
 
-void GesturePerformerService::setIdlePosition() {
+void ExpressionService::setIdlePosition() {
     INFO("setIdlePosition");
     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-    data->source = SourceService::gesturePerformerService;
+    data->source = SourceService::expressionService;
 
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
     static_cast<ControlData*>(data.get())->jointAngles.value() = idleJointPositions;
@@ -228,9 +228,9 @@ void GesturePerformerService::setIdlePosition() {
     publish(MessageType::ControlData, data);
 }
 
-void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoint, GestureJointState>& positions) {
+void ExpressionService::executeJointPositions(const std::map<ServoMotorJoint, GestureJointState>& positions) {
     std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-    data->source = SourceService::gesturePerformerService;
+    data->source = SourceService::expressionService;
 
     std::map<ServoMotorJoint, uint8_t> jointAngles = _currentPositions ;
     for (const auto& [joint, state] : positions) {
@@ -245,7 +245,7 @@ void GesturePerformerService::executeJointPositions(const std::map<ServoMotorJoi
 }
 
 
-void GesturePerformerService::executeEmotionalMotion(EmotionType emotionType) {
+void ExpressionService::executeEmotionalMotion(EmotionType emotionType) {
 
     auto it = _emotionalMotions.find(emotionType);
     if (it == _emotionalMotions.end()) {
@@ -259,7 +259,7 @@ void GesturePerformerService::executeEmotionalMotion(EmotionType emotionType) {
 
 }
 
-void GesturePerformerService::executeReactionalMotion(ReactionType reactionType) {
+void ExpressionService::executeReactionalMotion(ReactionType reactionType) {
 
     auto it = _reactionalMotions.find(reactionType);
     if (it == _reactionalMotions.end()) {
@@ -273,13 +273,13 @@ void GesturePerformerService::executeReactionalMotion(ReactionType reactionType)
 
 }
 
-void GesturePerformerService::executeDirectiveMotion(DirectiveType directiveType) {
+void ExpressionService::executeDirectiveMotion(DirectiveType directiveType) {
     //toDO
 }
 
-void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoint, GestureJointState> &baseJoints,
-                                                    const std::vector<MotionSequenceItem> &sequence,
-                                                    int totalDuration) {
+void ExpressionService::executeMotionSequence(const std::map<ServoMotorJoint, GestureJointState> &baseJoints,
+                                              const std::vector<MotionSequenceItem> &sequence,
+                                              int totalDuration) {
 
     auto startTime = std::chrono::steady_clock::now();
 
@@ -325,23 +325,20 @@ void GesturePerformerService::executeMotionSequence(const std::map<ServoMotorJoi
 
 
 
-void GesturePerformerService::makeMimic(const LLMResponseData &llm_response) {
+void ExpressionService::makeMimic(const LLMResponseData &llm_response) {
     INFO("makeMimic");
 
     if (llm_response.reactionSimilarity > llm_response.emotionSimilarity) {
         executeReactionalMotion(llm_response.reactionalGesture.reaction);
-    } else {
+    }
+    else {
         executeEmotionalMotion(llm_response.emotionalGesture.emotion);
     }
-
 }
 
-void GesturePerformerService::speakText(const std::string &text) {
-    _speaking = true;
-    SpeechPerformingOperator::get_instance()->speakText(text);
-    INFO("_speaking is finished!");
-    _speaking = false;
+void ExpressionService::speakText(const std::string &text) {
+    // _speaking = true;
+    // SpeechPerformingOperator::get_instance()->speakText(text);
+    // INFO("_speaking is finished!");
+    // _speaking = false;
 }
-
-
-

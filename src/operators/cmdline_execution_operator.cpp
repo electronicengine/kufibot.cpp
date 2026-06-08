@@ -33,7 +33,22 @@ CmdLineExecutionOperator* CmdLineExecutionOperator::get_instance() {
     return _instance;
 }
 
-CmdLineExecutionOperator::CmdLineExecutionOperator(){}
+CmdLineExecutionOperator::CmdLineExecutionOperator() : Operator("CmdLineExecutionOperator") {
+    if (!CmdLineExecutionOperator::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
+}
+
+bool CmdLineExecutionOperator::initialize() {
+    return true;
+}
+
+void CmdLineExecutionOperator::shutdown() {
+}
+
+bool CmdLineExecutionOperator::isReady() const noexcept {
+    return true;
+}
 
 std::string CmdLineExecutionOperator::execute(ExecutionType Type, const std::string& prompt) {
 
@@ -55,7 +70,7 @@ std::string CmdLineExecutionOperator::run(const std::string path, const std::str
     std::string command = "bash -c 'python3 " + path + " \"" + prompt + "\" 2>&1'";
     TRACE("Executing: {}", command);
 
-    std::array<char, 256> buffer;
+    char buffer[256]{};
     std::string result;
     std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
 
@@ -64,8 +79,8 @@ std::string CmdLineExecutionOperator::run(const std::string path, const std::str
         return "Error";
     }
 
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-        result += buffer.data();
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
+        result += buffer;
     }
 
     return result;

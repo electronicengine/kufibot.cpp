@@ -32,12 +32,13 @@ class CompassRtGraphWindow : public GraphWindow
         return std::bind(&CompassRtGraphWindow::update_compas_direction_callback, this, std::placeholders::_1);
     }
 
+    void update_compas_direction_callback(const int& angle);
+
 
 private:
 
     void draw_compas_direction(int angle);
 
-    void update_compas_direction_callback(const int& angle);
 
 };
 

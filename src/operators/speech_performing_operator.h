@@ -1,7 +1,6 @@
 #ifndef SPEECH_PERFORMING_OPERATOR_H
 #define SPEECH_PERFORMING_OPERATOR_H
 
-#include <iostream>
 #include <alsa/asoundlib.h>
 #include <condition_variable>
 #include <filesystem>
@@ -11,15 +10,19 @@
 #include <thread>
 #include <vector>
 #include <mpg123.h>
-#include <alsa/asoundlib.h>
 
+#include "operator.h"
 #include "piper.hpp"
 #include "../public_data_messages.h"
 
 enum OutputType { OUTPUT_FILE, OUTPUT_DIRECTORY, OUTPUT_STDOUT, OUTPUT_RAW };
 
-class SpeechPerformingOperator {
+class SpeechPerformingOperator : public Operator {
 public:
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     static SpeechPerformingOperator* get_instance();
     void loadModel(const std::string& modelPath);
@@ -41,10 +44,11 @@ private:
     std::mutex _mutAudio;
     std::condition_variable _cvAudio;
     bool audioReady = false;
-    bool audioFinished = false;
     static SpeechPerformingOperator* _instance;
     mpg123_handle* _mh;  // MPG123 handle for MP3 playback
     int _mpg123Err;
+    bool _mpg123Initialized;
+    bool _voiceLoaded;
     bool keepAliveRunning;
     std::thread keepAliveThread;
 

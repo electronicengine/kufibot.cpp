@@ -15,20 +15,15 @@
  * along with Kufibot. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "services/remote_connection_service.h"
-#include "services/video_stream_service.h"
-#include "services/robot_controller_service.h"
-#include "services/web_socket_service.h"
-#include "services/interactive_chat_service.h"
 #include "services/tui_service.h"
-#include "services/gesture_recognizer_service.h"
-#include "services/gesture_performer_service.h"
-#include "services/mapping_service.h"
-#include "logger.h"
-#include <string>
-
+#include "services/perception_service.h"
 #include "services/landmark_tracker_service.h"
+#include "services/robot_controller_service.h"
 #include "services/rag_service.h"
+#include "services/expression_service.h"
+#include "logger.h"
+#include <future>
+#include <string>
 
 auto main(int argc, char *argv[]) -> int {
     bool showFrame = false;
@@ -72,15 +67,11 @@ auto main(int argc, char *argv[]) -> int {
 
     if (!stopAllServices) {
         bool ret;
-        ret = GesturePerformerService::get_instance()->start();
+        ret = ExpressionService::get_instance()->start();
         if (!ret) {
             return 1;
         }
-        ret = GestureRecognizerService::get_instance(showFrame)->start();
-        if (!ret) {
-            return 1;
-        }
-        ret = WebSocketService::get_instance()->start();
+        ret = PerceptionService::get_instance(showFrame)->start();
         if (!ret) {
             return 1;
         }
@@ -88,25 +79,17 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
-        ret = RemoteConnectionService::get_instance()->start();
-        if (!ret) {
-            return 1;
-        }
+        // ret = RemoteConnectionService::
 
-        ret = VideoStreamService::get_instance()->start();
-        if (!ret) {
-            return 1;
-        }
-        // VideoStreamService::get_instance()->disable();
 
         // ret = InteractiveChatService::get_instance()->stop();
         // if (!ret) {
         //     return 1;
         // }
-        ret = RagService::get_instance()->start();
-        if (!ret) {
-            return 1;
-        }
+        // ret = RagService::get_instance()->start();
+        // if (!ret) {
+        //     return 1;
+        // }
         ret = LandmarkTrackerService::get_instance()->start();
         if (!ret) {
             return 1;
@@ -118,9 +101,9 @@ auto main(int argc, char *argv[]) -> int {
         // }
     }
 
-    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
-    static_cast<SpeakRequestData *>(data.get())->text = "Sistem yapılandırıldı. Hadi Konuşalım.";
-    LandmarkTrackerService::get_instance()->publish(MessageType::SpeakRequest, data);
+    // std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
+    // static_cast<SpeakRequestData *>(data.get())->text = "Sistem yapılandırıldı. Hadi Konuşalım.";
+    // LandmarkTrackerService::get_instance()->publish(MessageType::SpeakRequest, data);
     if (!asService) {
         bool ret = TuiService::get_instance()->start();
         if (!ret) {
@@ -128,8 +111,6 @@ auto main(int argc, char *argv[]) -> int {
         }
     }
 
-    while (1) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    }
+    std::promise<void>().get_future().wait();
 
 }

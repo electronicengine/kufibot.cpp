@@ -45,7 +45,10 @@ class QMC5883LDriver : public I2CDevice {
 public:
     QMC5883LDriver();
 
-    virtual ~QMC5883LDriver();
+    ~QMC5883LDriver() override;
+
+    bool initialize() override;
+    void shutdown() override;
 
 
     bool initQMC5883l();

@@ -4,15 +4,20 @@
 
 #include "llama.h"
 #include "common.h"
+#include "operator.h"
 #include <string>
 #include <vector>
 #include <functional>
 #include <atomic>
 
-class LlamaOperator {
+class LlamaOperator : public Operator {
 public:
     LlamaOperator();
     ~LlamaOperator();
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     void batch_add_seq(llama_batch & batch, const std::vector<int32_t> & tokens, llama_seq_id seq_id);
     void batch_decode(llama_context * ctx, llama_batch & batch, float * output, int n_seq, int n_embd, int embd_norm);

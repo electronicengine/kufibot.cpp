@@ -27,20 +27,41 @@ PowerController* PowerController::get_instance() {
     return _instance;
 }
 
-PowerController::PowerController() {
-    bool ret = _ina.initINA219();
-    if (ret) {
-        _initialized = true;
-        INFO("Power Controller initialized");
-    }
-    else{
-        _initialized = false;
-        ERROR("Power Controller initialization failed");
+PowerController::PowerController() : Controller("PowerController") {
+    if (!PowerController::initialize()) {
+        WARNING("{} failed to initialize", getName());
     }
 }
 
+PowerController::~PowerController() {
+    PowerController::shutdown();
+}
+
+bool PowerController::initialize() {
+    bool ret = _ina.initialize();
+    if (ret) {
+        _initialized.store(true);
+        INFO("Power Controller initialized");
+    }
+    else{
+        _initialized.store(false);
+        ERROR("Power Controller initialization failed");
+    }
+
+    return ret;
+}
+
+void PowerController::shutdown() {
+    _ina.shutdown();
+    _initialized.store(false);
+}
+
+bool PowerController::isReady() const noexcept {
+    return _initialized.load();
+}
+
 PowerData PowerController::getConsumption() {
-    if (!_enable.load() || !_initialized) {
+    if (!isEnabled() || !isReady()) {
         return PowerData{};
     }
     INA219Data data = _ina.readINA219();

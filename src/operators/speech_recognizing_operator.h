@@ -13,9 +13,10 @@
 #include <queue>
 #include <string>
 #include <vector>
+#include "operator.h"
 #include <vosk_api.h>
 
-class SpeechRecognizingOperator {
+class SpeechRecognizingOperator : public Operator {
 private:
     static SpeechRecognizingOperator* _instance;
     
@@ -71,7 +72,11 @@ public:
                                  uint32_t maxSilenceDurationSec = 10,
                                  uint32_t listenTimeoutMs = 1000,
                                  const std::string &wakeCommand = "Kofi");
-    
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
+
     ~SpeechRecognizingOperator();
     
     void load_model(const std::string &modelPath);
@@ -84,6 +89,9 @@ public:
 
 
     static std::atomic<bool> _isSpeaking;
+
+private:
+    void updateReadyState();
 
 };
 

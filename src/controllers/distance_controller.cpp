@@ -26,7 +26,7 @@ DistanceController* DistanceController::_instance = nullptr;
 
 bool DistanceController::is_active()
 {
-    return uart_fd >= 0;
+    return isReady();
 }
 
 DistanceController *DistanceController::get_instance()
@@ -38,11 +38,24 @@ DistanceController *DistanceController::get_instance()
 }
 
 DistanceController::DistanceController()
+    : Controller("DistanceController") {
+    if (!DistanceController::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
+}
+
+bool DistanceController::initialize()
 {
+    if (uart_fd >= 0) {
+        _initialized.store(true);
+        return true;
+    }
+
     uart_fd = open("/dev/ttyAMA0", O_RDWR | O_NOCTTY | O_SYNC);
     if (uart_fd < 0) {
         ERROR("Failed to open UART device");
-        return;
+        _initialized.store(false);
+        return false;
     }
 
     struct termios tty;
@@ -51,7 +64,8 @@ DistanceController::DistanceController()
         ERROR("Error from tcgetattr");
         close(uart_fd);
         uart_fd = -1;
-        return;
+        _initialized.store(false);
+        return false;
     }
 
 
@@ -76,15 +90,28 @@ DistanceController::DistanceController()
         ERROR("Error from tcsetattr");
         close(uart_fd);
         uart_fd = -1;
-        return;
+        _initialized.store(false);
+        return false;
     }
+
+    _initialized.store(true);
+    return true;
 }
 
 DistanceController::~DistanceController(){
+    DistanceController::shutdown();
+}
+
+void DistanceController::shutdown() {
     if (uart_fd >= 0) {
         close(uart_fd);
         uart_fd = -1;
     }
+    _initialized.store(false);
+}
+
+bool DistanceController::isReady() const noexcept {
+    return _initialized.load() && uart_fd >= 0;
 }
 
 void DistanceController::flush_input_buffer() {
@@ -94,19 +121,18 @@ void DistanceController::flush_input_buffer() {
 
 DistanceData DistanceController::get_distance() {
 
-    if (!_enable.load()) {
+    if (!isEnabled()) {
         WARNING("DistanceController is disabled");
         return DistanceData{};
     }
 
-    if (uart_fd < 0) {
+    if (!isReady()) {
         ERROR("UART device couldnt opened!");
         return DistanceData{};
     }
 
-    DistanceData data;
-    uint8_t buffer[9];
-struct timeval timeout;
+    uint8_t buffer[9]{};
+    struct timeval timeout;
     timeout.tv_sec = 1; // 1 second timeout
     timeout.tv_usec = 0;
     fd_set readfds;
@@ -114,10 +140,15 @@ struct timeval timeout;
     FD_SET(uart_fd, &readfds);
 
     if (select(uart_fd + 1, &readfds, NULL, NULL, &timeout) > 0) {
-        ssize_t bytes_read = read(uart_fd, buffer, sizeof(buffer));
+        const ssize_t bytes_read = read(uart_fd, buffer, sizeof(buffer));
+        if (bytes_read < static_cast<ssize_t>(sizeof(buffer))) {
+            ERROR("Incomplete UART frame read: {} bytes", bytes_read);
+            flush_input_buffer();
+            return DistanceData{};
+        }
     } else {
         ERROR("Read timeout");
-        return data; // Return empty data on timeout
+        return DistanceData{}; // Return empty data on timeout
     }
 
 
@@ -127,19 +158,19 @@ struct timeval timeout;
         int stL = static_cast<int>(buffer[4]);
         int stH = static_cast<int>(buffer[5]);
 
-        data.distance = distL + (distH << 8);
-        data.strength = stL + (stH << 8);
-
         int tempL = static_cast<int>(buffer[6]);
         int tempH = static_cast<int>(buffer[7]);
-        data.temperature = (tempL + (tempH << 8)) / 8 - 256;
 
         flush_input_buffer();
         //data.distance =_medianFilter.apply(data.distance);
 
-        return data;
+        return DistanceData{
+            distL + (distH << 8),
+            stL + (stH << 8),
+            (tempL + (tempH << 8)) / 8 - 256
+        };
     }
 
     flush_input_buffer();
-    return data;  // Invalid data
+    return DistanceData{};  // Invalid data
 }

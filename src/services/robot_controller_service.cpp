@@ -16,7 +16,7 @@
  */
 
 #include "robot_controller_service.h"
-#include "gesture_performer_service.h"
+#include "expression_service.h"
 #include "landmark_tracker_service.h"
 #include "remote_connection_service.h"
 #include "mapping_service.h"
@@ -41,7 +41,7 @@ RobotControllerService::RobotControllerService() : Service("RobotControllerServi
 bool RobotControllerService::initialize() {
 
     subscribe_to_service(MappingService::get_instance());
-    subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(ExpressionService::get_instance());
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
@@ -106,7 +106,8 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
         }
 
         case MessageType::SensorReadRequest: {
-            _sensorReadRequest = true;
+            publishSensorValues();
+            break;
         }
 
         default:

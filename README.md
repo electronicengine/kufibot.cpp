@@ -69,6 +69,18 @@ make
 export LD_LIBRARY_PATH=../lib:$LD_LIBRARY_PATH
 ```
 
+### Fast Build (Only One Shared Library)
+To reduce build time, configure CMake with `KUFIBOT_BUILD_TARGET` and build only the related shared target.
+
+```bash
+mkdir -p build && cd build
+cmake .. -DKUFIBOT_BUILD_TARGET=drivers
+cmake --build . --target drivers -j
+```
+
+Available values for `KUFIBOT_BUILD_TARGET`:
+`all`, `kufibot`, `tui`, `drivers`, `controllers`, `operators`, `statemachines`, `services`
+
 ## License
 
 This project is licensed under the GNU General Public License version 3 (GPLv3).

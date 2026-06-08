@@ -8,8 +8,6 @@
 #include "controllers/controller_data_structures.h"
 #include <optional>
 #include <opencv2/opencv.hpp>
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
 #include <nlohmann/json.hpp>
 
 #include "gesture_defs.h"
@@ -30,7 +28,6 @@ constexpr int DOWN_MIN  = -135;
 constexpr int DOWN      = -90;
 constexpr int DOWN_MAX  = -45;
 
-typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
 
@@ -108,15 +105,13 @@ struct RagDataset {
 
 enum class SourceService {
     none,
-    gesturePerformerService,
-    gestureRecognizerService,
+    expressionService,
+    perceptionService,
     landmarkTrackerService,
     mappingService,
     tuiService,
     remoteControllerService,
     remoteConnectionService,
-    videoStreamService,
-    webSocketService,
     interactiveChatService,
 };
 
@@ -132,11 +127,11 @@ enum EventType {
 
 enum class MessageType {
     VideoFrame,
-    WebSocketReceive,
-    WebSocketTransfer,
     SensorData,
     ControlData,
+    DatabaseInsertData,
     LLMQuery,
+    RecognizedSpeech,
     LLMResponse,
     EngageReaction,
     RecognizedGesture,
@@ -153,10 +148,10 @@ enum class MessageType {
     StartVideoStreamRequest
 };
 
-typedef websocketpp::server<websocketpp::config::asio> Server;
 using Json = nlohmann::json;
 
 struct MessageData {
+    virtual ~MessageData() = default;
     std::optional<SourceService> source;
 };
 
@@ -165,16 +160,6 @@ struct VideoFrameData : public MessageData {
     cv::Mat frame;
 };
 
-struct WebSocketReceiveData : public MessageData {
-    websocketpp::connection_hdl hdl;
-    std::string msg;
-};
-
-struct WebSocketTransferData : public MessageData {
-    websocketpp::connection_hdl hdl;
-    std::string msg;
-    uint8_t type;
-};
 
 struct SensorData  : public MessageData {
     std::optional<CompassData> compassData;
@@ -183,7 +168,7 @@ struct SensorData  : public MessageData {
     std::optional<std::map<ServoMotorJoint, uint8_t>> currentJointAngles;
     std::optional<DCMotorState> dcMotorState;
 
-    std::string to_json() const {
+    [[nodiscard]] std::string to_json() const {
 
         if (!compassData.has_value() || !distanceData.has_value() || !powerData.has_value() ) {
             return "";
@@ -232,8 +217,13 @@ struct SensorData  : public MessageData {
 };
 
 struct JoyStickData : public MessageData {
-    int angle;
-    int strength;
+    int angle = 0;
+    int strength = 0;
+};
+
+struct DatabaseInsertData : public MessageData {
+    std::string input;
+    std::string output;
 };
 
 struct ControlData : public MessageData {
@@ -249,11 +239,11 @@ struct ControlData : public MessageData {
 
     ControlData() = default;
 
-    ControlData(Json data) {
+    explicit ControlData(Json data) {
         if (!data.is_null() && data.is_object()) {
             if (!data.empty()) {
                 std::string object_name = data.begin().key();
-                std::string control_id = object_name;
+                const std::string& control_id = object_name;
 
                 if (control_id == "body_joystick") {
                     bodyJoystick.emplace();
@@ -281,6 +271,10 @@ struct LLMQueryData : public MessageData {
     std::string query;
 };
 
+struct RecognizedSpeechData : public MessageData {
+    std::string text;
+};
+
 struct EngageReactionData : public MessageData {
     std::string reaction;
 };
@@ -299,6 +293,47 @@ struct LLMResponseData : public MessageData {
     float emotionSimilarity;
     float reactionSimilarity;
     float directiveSimilarity;
+
+
+    LLMResponseData() = default;
+
+    LLMResponseData(const std::string& jsonStr) {
+
+        Json j = Json::parse(jsonStr);
+
+        if (!j.is_object()) {
+            return;
+        }
+
+        // Zorunlu alanlar (to_json tarafında yazılanlar)
+        sentence = j.value("sentence", std::string{});
+
+        emotionalGesture.symbol = j.value("emotional_gesture",std::string{});
+        reactionalGesture.symbol = j.value("reactional_gesture", std::string{});
+        directive.symbol = j.value("directive", std::string{});
+
+        endMarker = j.value("end_marker", false);
+
+        // Similarity değerleri yoksa 0.0f default
+        emotionSimilarity = j.value("emotion_similarity", 0.0f);
+        reactionSimilarity = j.value("reaction_similarity", 0.0f);
+        directiveSimilarity = j.value("directive_similarity", 0.0f);
+
+    }
+
+
+    [[nodiscard]] std::string to_json() const {
+        Json j;
+        j["sentence"] = sentence;
+        j["emotional_gesture"] = emotionalGesture.symbol;
+        j["reactional_gesture"] = reactionalGesture.symbol;
+        j["directive"] = directive.symbol;
+        j["end_marker"] = endMarker;
+        j["emotion_similarity"] = emotionSimilarity;
+        j["reaction_similarity"] = reactionSimilarity;
+        j["directive_similarity"] = directiveSimilarity;
+        return j.dump();
+    }
 };
 
 struct BoundingBox {

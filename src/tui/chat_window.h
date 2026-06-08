@@ -26,6 +26,8 @@ public:
         return std::bind(&ChatWindow::llm_response_callback, this, std::placeholders::_1);
     }
 
+    void llm_response_callback(const std::string& response);
+
     void set_llm_query_function_callback(std::function<void(const std::string&)> llmQueryFunctionCallBack) {
         _llmQueryFunctionCallBack = llmQueryFunctionCallBack;
     }
@@ -70,7 +72,6 @@ private:
     void send_promt();
     void load_model();
     void onKeyPress (finalcut::FKeyEvent* ev);
-    void llm_response_callback(const std::string& response);
 
 };
 

@@ -1,6 +1,7 @@
 #ifndef FACE_GESTURE_RECOGNIZING_OPERATOR_H
 #define FACE_GESTURE_RECOGNIZING_OPERATOR_H
 
+#include "operator.h"
 #include "mediapipe.h"
 #include <opencv2/opencv.hpp>
 #include <vector>
@@ -33,7 +34,7 @@ struct BaselineValues {
     BaselineValues() : ear(0), mar(0), eyebrow(0), smile(0), eyebrow_dist(0), initialized(false) {}
 };
 
-class FaceGestureRecognizingOperator {
+class FaceGestureRecognizingOperator : public Operator {
 private:
     float min_detection_confidence;
     float min_tracking_confidence;
@@ -72,7 +73,11 @@ public:
 
     ~FaceGestureRecognizingOperator();
 
-    bool initialize();
+    bool initialize() override;
+
+    void shutdown() override;
+
+    bool isReady() const noexcept override;
 
     void cleanup();
 

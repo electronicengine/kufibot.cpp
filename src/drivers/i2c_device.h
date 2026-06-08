@@ -10,17 +10,19 @@
 #include <cstdint>
 #include <string>
 #include <mutex>
+#include "driver.h"
 
 
 
-class I2CDevice {
+class I2CDevice : public Driver {
 
 
 public:
-    I2CDevice();
-    virtual ~I2CDevice();
+    explicit I2CDevice(const std::string& name);
+    ~I2CDevice() override;
 
-    bool isReady() const;
+    void shutdown() override;
+    bool isReady() const noexcept override;
     bool openDevice(int address);
     bool writeByte(uint8_t reg, uint8_t value);
     int  readByte(uint8_t reg);
@@ -31,6 +33,9 @@ private:
     static std::mutex _mutex;
     int _i2cFd;
     int _address;
+
+protected:
+    void closeDevice();
 
 };
 

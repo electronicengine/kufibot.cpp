@@ -53,6 +53,7 @@ void FaceGestureRecognizingOperator::initializeLandmarkIndices()
 }
 
 FaceGestureRecognizingOperator::FaceGestureRecognizingOperator(float min_detection_confidence, float min_tracking_confidence) :
+    Operator("FaceGestureRecognizingOperator"),
     min_detection_confidence(min_detection_confidence),
     min_tracking_confidence(min_tracking_confidence),
     face_mesh_instance(nullptr),
@@ -66,13 +67,15 @@ FaceGestureRecognizingOperator::FaceGestureRecognizingOperator(float min_detecti
     initialized(false) {
 
     initializeLandmarkIndices();
-    initialize();
+    if (!FaceGestureRecognizingOperator::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
 }
 
 FaceGestureRecognizingOperator::~FaceGestureRecognizingOperator()
 {
 
-    cleanup();
+    FaceGestureRecognizingOperator::shutdown();
 
 }
 
@@ -120,7 +123,7 @@ bool FaceGestureRecognizingOperator::initialize()
 
 }
 
-void FaceGestureRecognizingOperator::cleanup()
+void FaceGestureRecognizingOperator::shutdown()
 {
 
     clearResults();
@@ -147,6 +150,15 @@ void FaceGestureRecognizingOperator::cleanup()
 
     initialized = false;
 
+}
+
+bool FaceGestureRecognizingOperator::isReady() const noexcept {
+    return initialized;
+}
+
+void FaceGestureRecognizingOperator::cleanup()
+{
+    shutdown();
 }
 
 std::vector<Landmark> FaceGestureRecognizingOperator::getFaceLandmarks(cv::Mat &frame)
@@ -307,7 +319,6 @@ std::string FaceGestureRecognizingOperator::detectEmotion()
     double ear_norm = baseline.ear > 0 ? avg_ear / baseline.ear : 1.0;
     double mar_norm = baseline.mar > 0 ? mar / baseline.mar : 1.0;
     double smile_norm = smile_intensity - baseline.smile;
-    double eyebrow_norm = baseline.eyebrow > 0 ? avg_eyebrow_height / baseline.eyebrow : 1.0;
     double eyebrow_dist_norm = baseline.eyebrow_dist > 0 ? normalized_eyebrow_distance / baseline.eyebrow_dist : 1.0;
 
     // DUYGU KURALLARI

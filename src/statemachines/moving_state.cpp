@@ -42,7 +42,7 @@ std::optional<State*> MovingState::onEnter(const ControlEvent& ev) {
             return transTo<TuiControlState>();
         case SourceService::remoteConnectionService:
             return transTo<RemoteControlState>();
-        case SourceService::gesturePerformerService:
+        case SourceService::expressionService:
             return transTo<TalkingState>();
         case SourceService::landmarkTrackerService:
             return transTo<TalkingState>();

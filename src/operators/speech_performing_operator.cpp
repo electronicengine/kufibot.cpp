@@ -30,13 +30,59 @@ SpeechPerformingOperator* SpeechPerformingOperator::get_instance() {
     return _instance;
 }
 
-SpeechPerformingOperator::SpeechPerformingOperator() {
+SpeechPerformingOperator::SpeechPerformingOperator()
+    : Operator("SpeechPerformingOperator"),
+      _mh(nullptr),
+      _mpg123Err(MPG123_OK),
+      _mpg123Initialized(false),
+      _voiceLoaded(false),
+      keepAliveRunning(false) {
     _piperConfig.eSpeakDataPath = "/usr/local/share/espeak-ng-data/";
-    mpg123_init();  // Initialize MPG123
-    _mh = mpg123_new(nullptr, &_mpg123Err);
-    if (_mpg123Err != MPG123_OK) {
-        ERROR("Failed to initialize mpg123: {}", std::string(mpg123_plain_strerror(_mpg123Err)));
+    if (!SpeechPerformingOperator::initialize()) {
+        WARNING("{} failed to initialize", getName());
     }
+}
+
+bool SpeechPerformingOperator::initialize() {
+    if (_mh != nullptr) {
+        return true;
+    }
+
+    if (!_mpg123Initialized) {
+        mpg123_init();
+        _mpg123Initialized = true;
+    }
+
+    _mh = mpg123_new(nullptr, &_mpg123Err);
+    if (_mpg123Err != MPG123_OK || _mh == nullptr) {
+        ERROR("Failed to initialize mpg123: {}", std::string(mpg123_plain_strerror(_mpg123Err)));
+        return false;
+    }
+
+    return true;
+}
+
+void SpeechPerformingOperator::shutdown() {
+    stopKeepAlive();
+
+    if (_voiceLoaded) {
+        piper::terminate(_piperConfig);
+        _voiceLoaded = false;
+    }
+
+    if (_mh != nullptr) {
+        mpg123_delete(_mh);
+        _mh = nullptr;
+    }
+
+    if (_mpg123Initialized) {
+        mpg123_exit();
+        _mpg123Initialized = false;
+    }
+}
+
+bool SpeechPerformingOperator::isReady() const noexcept {
+    return _voiceLoaded;
 }
 
 void SpeechPerformingOperator::startKeepAlive() {
@@ -89,6 +135,9 @@ void SpeechPerformingOperator::keepAliveLoop() {
 }
 
 void SpeechPerformingOperator::loadModel(const std::string& modelPath){
+    if (!initialize()) {
+        return;
+    }
 
     _modelPath = modelPath;
     _speakerId = 0;
@@ -116,6 +165,7 @@ void SpeechPerformingOperator::loadModel(const std::string& modelPath){
     // }
     // logFile.close();
     unlink("/tmp/so_logs.txt"); // Geçici dosyayı sil
+    _voiceLoaded = true;
     startKeepAlive();
 }
 
@@ -162,11 +212,9 @@ void SpeechPerformingOperator::playAudio() {
     {
         std::unique_lock lock(_mutAudio);
         _cvAudio.wait(lock, [this] { return audioReady; });
-        if (!audioFinished) {
-            copy(_sharedAudioBuffer.begin(), _sharedAudioBuffer.end(), back_inserter(internalBuffer));
-            _sharedAudioBuffer.clear();
-            audioReady = false;
-        }
+        copy(_sharedAudioBuffer.begin(), _sharedAudioBuffer.end(), back_inserter(internalBuffer));
+        _sharedAudioBuffer.clear();
+        audioReady = false;
     }
 
     if ((err = snd_pcm_writei(pcmHandle, internalBuffer.data(), internalBuffer.size())) < 0) {
@@ -266,5 +314,5 @@ void SpeechPerformingOperator::audioCallbackFunc() {
 }
 
 SpeechPerformingOperator::~SpeechPerformingOperator() {
-    piper::terminate(_piperConfig);
+    SpeechPerformingOperator::shutdown();
 }

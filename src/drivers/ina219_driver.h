@@ -64,7 +64,10 @@ public:
     };
 
     INA219Driver();
-    ~INA219Driver();
+    ~INA219Driver() override;
+
+    bool initialize() override;
+    void shutdown() override;
 
     // Initialize the sensor
     bool initINA219(int address = INA219_I2C_ADDRESS3);

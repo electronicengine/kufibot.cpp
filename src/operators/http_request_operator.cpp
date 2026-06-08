@@ -32,16 +32,46 @@ HttpRequestOperator* HttpRequestOperator::get_instance(const std::string& url) {
 }
 
 
-HttpRequestOperator::HttpRequestOperator(const std::string& url) : url_(url) {
-    curl_global_init(CURL_GLOBAL_DEFAULT);
+HttpRequestOperator::HttpRequestOperator(const std::string& url)
+    : Operator("HttpRequestOperator"), url_(url), _curlInitialized(false) {
+    initialize();
 }
 
 HttpRequestOperator::~HttpRequestOperator()
 {
-        curl_global_cleanup();  
+        shutdown();
+}
+
+bool HttpRequestOperator::initialize() {
+    if (_curlInitialized) {
+        return true;
+    }
+
+    const auto result = curl_global_init(CURL_GLOBAL_DEFAULT);
+    _curlInitialized = (result == CURLE_OK);
+    if (!_curlInitialized) {
+        ERROR("Failed to initialize CURL: {}", static_cast<int>(result));
+    }
+
+    return _curlInitialized;
+}
+
+void HttpRequestOperator::shutdown() {
+    if (_curlInitialized) {
+        curl_global_cleanup();
+        _curlInitialized = false;
+    }
+}
+
+bool HttpRequestOperator::isReady() const noexcept {
+    return _curlInitialized;
 }
 
 void HttpRequestOperator::query_llama_text(const std::string& prompt) {
+    if (!isReady() && !initialize()) {
+        return;
+    }
+
     std::string url = "http://192.168.1.20:11434/api/generate";
     std::string payload = R"({"model": "kufi", "prompt":")" + prompt + R"("})";
 

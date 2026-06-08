@@ -11,6 +11,9 @@
 #include "measurements_window.h"
 #include "chat_window.h"
 #include "spdlog/spdlog.h"
+#include <chrono>
+#include <optional>
+#include <tuple>
 
 #define LOG_HISTORY_SIZE    2000
 
@@ -42,6 +45,11 @@ class MainWindow final : public finalcut::FDialog
   ~MainWindow() override;
 
   void log(const std::string& logLine, LogLevel logLevel, const std::string& className = "");
+  void queue_sensor_data(const SensorData& sensorData);
+  void queue_llm_response(const std::string& response);
+  void queue_compass_direction(int angle);
+  void queue_servo_joints(const std::map<ServoMotorJoint, uint8_t>& jointAngles);
+  void set_sensor_refresh_callback(std::function<void()> callback);
 
   CompassRtGraphWindow *_compassRTGraphWindow;
   BodyControllerWindow *_bodyControllerWindow;
@@ -92,6 +100,7 @@ class MainWindow final : public finalcut::FDialog
     void text_view_scroll_up(void);
 
     void initLayout() override;
+    void onTimer (finalcut::FTimerEvent*) override;
     template <typename InstanceT
             , typename CallbackT
             , typename... Args>
@@ -112,6 +121,16 @@ class MainWindow final : public finalcut::FDialog
 
     void filter(const LogList&);
     void print_with_search(const LogItem&);
+    void append_log_line(const std::string& logLine, LogLevel logLevel, const std::string& className);
+
+    std::mutex _pendingUiMtx;
+    std::deque<std::tuple<std::string, LogLevel, std::string>> _pendingLogs;
+    std::deque<std::string> _pendingLlmResponses;
+    std::optional<SensorData> _pendingSensorData;
+    std::optional<int> _pendingCompassDirection;
+    std::optional<std::map<ServoMotorJoint, uint8_t>> _pendingServoJointAngles;
+    std::function<void()> _sensorRefreshCallback;
+    std::chrono::steady_clock::time_point _lastSensorRefreshTime{std::chrono::steady_clock::now()};
 
 };
 

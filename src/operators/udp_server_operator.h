@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include "operator.h"
 #include <vector>
 #include <thread>
 #include <mutex>
@@ -18,10 +19,14 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-class UdpServerOperator {
+class UdpServerOperator : public Operator {
 public:
     UdpServerOperator();
     ~UdpServerOperator();
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     bool openSocket(int port = 0, bool reuse_addr = true);
 

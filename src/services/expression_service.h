@@ -1,5 +1,5 @@
-#ifndef  GESTURE_PERFORMER_SERVICE_H
-#define  GESTURE_PERFORMER_SERVICE_H
+#ifndef  EXPRESSION_SERVICE_H
+#define  EXPRESSION_SERVICE_H
 
 
 #include <thread>
@@ -9,21 +9,19 @@
 #include "service.h"
 #include "robot_controller_service.h"
 #include "../operators/speech_performing_operator.h"
-#include "../operators/speech_recognizing_operator.h"
 #include "interactive_chat_service.h"
-#include "web_socket_service.h"
 
 
-class GesturePerformerService : public Service {
+class ExpressionService : public Service {
 
 public:
 
-    virtual ~GesturePerformerService();
-    static GesturePerformerService *get_instance();
+    virtual ~ExpressionService();
+    static ExpressionService *get_instance();
     static std::map<ServoMotorJoint, uint8_t> idleJointPositions;
 
 private:
-    static GesturePerformerService *_instance;
+    static ExpressionService *_instance;
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> _jointPositionList;
 
     std::atomic<bool> _speaking{false};
@@ -38,7 +36,7 @@ private:
     std::queue<std::variant<LLMResponseData, std::string>> _speakingQueue;
 
     std::mutex _llmResponseQueueMutex;
-    GesturePerformerService();
+    ExpressionService();
 
     // Private helper methods
     int getAngleForJointState(ServoMotorJoint joint, GestureJointState state);
@@ -65,4 +63,4 @@ private:
 
 };
 
-#endif //GESTURE_PERFORMER_SERVICE_H
+#endif //EXPRESSION_SERVICE_H

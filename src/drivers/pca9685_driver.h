@@ -26,8 +26,11 @@
 
 class PCA9685Driver : public I2CDevice {
 public:
-    PCA9685Driver() = default;
-    virtual ~PCA9685Driver();
+    PCA9685Driver();
+    ~PCA9685Driver() override;
+
+    bool initialize() override;
+    void shutdown() override;
 
     bool initPCA9685(int address);
 

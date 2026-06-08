@@ -37,6 +37,8 @@ class BodyControllerWindow : public SubWindow
         return std::bind(&BodyControllerWindow::update_servo_joints_callback, this, std::placeholders::_1);
     }
 
+    void update_servo_joints_callback(const std::map<ServoMotorJoint, uint8_t>& jointAngles);
+
 private:
     std::function<void(const ControlData&)> _controlRobotFunctionCallBack;
     FLabel _dcMotorControlLabel{"Dc Motor Controller", this};
@@ -88,7 +90,6 @@ private:
     void headRight();
     void headDefaultPos();
 
-    void update_servo_joints_callback(const std::map<ServoMotorJoint, uint8_t>& jointAngles);
 
 };
 

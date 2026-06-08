@@ -21,10 +21,13 @@
 bool MainWindow::_noTui = true;
 
 MainWindow::MainWindow (finalcut::FWidget* parent)
-  : finalcut::FDialog{parent}
+  : finalcut::FDialog{parent}, _app(nullptr)
 {
     _noTui = true;
-    _textView.setGeometry(FPoint{2, 4}, FSize{FVTerm::getFOutput()->getColumnNumber() - 4, FVTerm::getFOutput()->getLineNumber() - 8});
+    const auto termWidth = std::max<std::size_t>(FVTerm::getFOutput()->getColumnNumber(), 80);
+    const auto termHeight = std::max<std::size_t>(FVTerm::getFOutput()->getLineNumber(), 24);
+
+    _textView.setGeometry(FPoint{2, 4}, FSize{termWidth - 4, termHeight - 8});
     _textView.addCallback("mouse-wheel-up", this, &MainWindow::text_view_scroll_up);
 
     _lineEditFilter.setLabelText(L"Filter");
@@ -51,24 +54,28 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
     _compassRTGraphWindow->hide();
 
     _bodyControllerWindow = new BodyControllerWindow{this};
+    _bodyControllerWindow->setGeometry (FPoint{4, 6}, FSize{92, 22});
     _bodyControllerWindow->setMinimumSize (FSize{30, 20});
     _bodyControllerWindow->setResizeable();
     _bodyControllerWindow->setMinimizable();
     _bodyControllerWindow->hide();
 
     _servoControllerWindow = new ServoControllerWindow{this};
+    _servoControllerWindow->setGeometry (FPoint{12, 8}, FSize{32, 30});
     _servoControllerWindow->setMinimumSize (FSize{30, 30});
     _servoControllerWindow->setResizeable();
     _servoControllerWindow->setMinimizable();
     _servoControllerWindow->hide();
 
     _measurementsWindow = new MeasurementsWindow{this};
+    _measurementsWindow->setGeometry (FPoint{18, 10}, FSize{30, 18});
     _measurementsWindow->setMinimumSize (FSize{30, 18});
     _measurementsWindow->setResizeable();
     _measurementsWindow->setMinimizable();
     _measurementsWindow->hide();
 
     _chatWindow = new ChatWindow{this};
+    _chatWindow->setGeometry (FPoint{8, 5}, FSize{75, 40});
     _chatWindow->setMinimumSize (FSize{60, 35});
     _chatWindow->setResizeable();
     _chatWindow->setMinimizable();
@@ -76,6 +83,7 @@ MainWindow::MainWindow (finalcut::FWidget* parent)
 
     setTitlebarButtonVisibility(false);
     configure_file_nenu_items();
+    addTimer(100);
 
 }
 
@@ -86,6 +94,41 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::log(const std::string &logLine, LogLevel logLevel, const std::string &className)
+{
+    std::lock_guard<std::mutex> pendingLock(_pendingUiMtx);
+    _pendingLogs.emplace_back(logLine, logLevel, className);
+}
+
+void MainWindow::queue_sensor_data(const SensorData& sensorData)
+{
+    std::lock_guard<std::mutex> lock(_pendingUiMtx);
+    _pendingSensorData = sensorData;
+}
+
+void MainWindow::queue_llm_response(const std::string& response)
+{
+    std::lock_guard<std::mutex> lock(_pendingUiMtx);
+    _pendingLlmResponses.push_back(response);
+}
+
+void MainWindow::queue_compass_direction(int angle)
+{
+    std::lock_guard<std::mutex> lock(_pendingUiMtx);
+    _pendingCompassDirection = angle;
+}
+
+void MainWindow::queue_servo_joints(const std::map<ServoMotorJoint, uint8_t>& jointAngles)
+{
+    std::lock_guard<std::mutex> lock(_pendingUiMtx);
+    _pendingServoJointAngles = jointAngles;
+}
+
+void MainWindow::set_sensor_refresh_callback(std::function<void()> callback)
+{
+    _sensorRefreshCallback = std::move(callback);
+}
+
+void MainWindow::append_log_line(const std::string &logLine, LogLevel logLevel, const std::string &className)
 {
     std::lock_guard<std::mutex> lock(_loggerViewMtx);
 
@@ -145,7 +188,53 @@ void MainWindow::log(const std::string &logLine, LogLevel logLevel, const std::s
     if(_autoScroll)
         _textView.scrollToEnd();
     _textView.redraw();
+}
 
+void MainWindow::onTimer(finalcut::FTimerEvent*)
+{
+    std::deque<std::tuple<std::string, LogLevel, std::string>> pendingLogs;
+    std::deque<std::string> pendingResponses;
+    std::optional<SensorData> pendingSensorData;
+    std::optional<int> pendingCompassDirection;
+    std::optional<std::map<ServoMotorJoint, uint8_t>> pendingServoJointAngles;
+
+    {
+        std::lock_guard<std::mutex> lock(_pendingUiMtx);
+        pendingLogs.swap(_pendingLogs);
+        pendingResponses.swap(_pendingLlmResponses);
+        pendingSensorData.swap(_pendingSensorData);
+        pendingCompassDirection.swap(_pendingCompassDirection);
+        pendingServoJointAngles.swap(_pendingServoJointAngles);
+    }
+
+    for (const auto& [logLine, logLevel, className] : pendingLogs) {
+        append_log_line(logLine, logLevel, className);
+    }
+
+    for (const auto& response : pendingResponses) {
+        if (_chatWindow != nullptr) {
+            _chatWindow->llm_response_callback(response);
+        }
+    }
+
+    if (pendingSensorData.has_value() && _measurementsWindow != nullptr) {
+        _measurementsWindow->update_sensor_data_callback(pendingSensorData.value());
+    }
+
+    if (pendingCompassDirection.has_value() && _compassRTGraphWindow != nullptr) {
+        _compassRTGraphWindow->update_compas_direction_callback(pendingCompassDirection.value());
+    }
+
+    if (pendingServoJointAngles.has_value() && _bodyControllerWindow != nullptr) {
+        _bodyControllerWindow->update_servo_joints_callback(pendingServoJointAngles.value());
+    }
+
+    const auto now = std::chrono::steady_clock::now();
+    if (_sensorRefreshCallback != nullptr
+        && std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSensorRefreshTime).count() >= 250) {
+        _sensorRefreshCallback();
+        _lastSensorRefreshTime = now;
+    }
 }
 
 
@@ -230,29 +319,24 @@ void MainWindow::onClose (finalcut::FCloseEvent* ev)
 void MainWindow::show_compass_rt_graph_window()
 {
     _compassRTGraphWindow->show();
-    _compassRTGraphWindow->zoomWindow();
 }
 
 void MainWindow::show_body_controller_window()
 {
     _bodyControllerWindow->show();
-    _bodyControllerWindow->zoomWindow();
 }
 
 void MainWindow::show_servo_controller_window()
 {
     _servoControllerWindow->show();
-    _servoControllerWindow->zoomWindow();
 }
 
 void MainWindow::show_measurements_window()
 {
     _measurementsWindow->show();
-    _measurementsWindow->zoomWindow();
 }
 
 void MainWindow::show_chat_window()
 {
     _chatWindow->show();
-    _chatWindow->zoomWindow();
 }

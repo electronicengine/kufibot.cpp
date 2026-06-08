@@ -1,7 +1,7 @@
 #ifndef DC_MOTOR_CONTROLLER_H
 #define DC_MOTOR_CONTROLLER_H
 
-#include <atomic>
+#include "controller.h"
 #include "controller_data_structures.h"
 #include "../drivers/pca9685_driver.h"
 
@@ -14,7 +14,7 @@
 #define BIN2 4
 
 
-class DCMotorController {
+class DCMotorController : public Controller {
 public:
     static DCMotorController* get_instance(int address = 0x50);
 
@@ -28,7 +28,10 @@ public:
     void turnRight(int magnitude);
     void turnLeft(int magnitude);
     void stop();
-    void setEnable(bool enable){ _enable.store(enable);}
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
 private:
     DCMotorController(int address);
@@ -38,10 +41,9 @@ private:
     void setDirection(int pin1, int pin2, DCMotorDirection direction);
 
     static DCMotorController* _instance;
+    int _address;
     PCA9685Driver _driver;
     DCMotorState _currentState;
-    std::atomic<bool> _enable = true;
-    std::atomic<bool> _initialized = false;
 };
 
 #endif // MOTOR_DRIVER_H

@@ -16,16 +16,14 @@
  */
 
 #include "interactive_chat_service.h"
-#include "gesture_performer_service.h"
+#include "expression_service.h"
 #include "remote_connection_service.h"
 #include "tui_service.h"
 #include "../logger.h"
 #include <regex>
 
-#include "gesture_recognizer_service.h"
 #include "landmark_tracker_service.h"
 #include "../operators/json_parser_operator.h"
-#include "../operators/speech_recognizing_operator.h"
 
 
 InteractiveChatService* InteractiveChatService::_instance = nullptr;
@@ -270,72 +268,16 @@ bool InteractiveChatService::initialize() {
 
     subscribe_to_service(TuiService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
-    subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(ExpressionService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
-
-    auto speechConfig = parser->getAiConfig()->speechRecognizerConfig;
-
-    INFO("Speech Recognizing Model is loading...");
-    auto* recognizer = SpeechRecognizingOperator::get_instance(speechConfig.silenceThreshold, speechConfig.sampleRate, speechConfig.framesPerBuffer,
-                                                              speechConfig.maxSilenceDurationSec, speechConfig.listenTimeoutMs, speechConfig.command);
-
-    recognizer->load_model(parser->getAiConfig()->speechRecognizerConfig.modelPath);
-    recognizer->open();
 
     return true;
 }
 
 void InteractiveChatService::service_function() {
-
-    auto aiConfig = JsonParserOperator::get_instance()->getAiConfig();
-    auto *recognizer = SpeechRecognizingOperator::get_instance();
-    recognizer->start_listen();
-
-    // while (_running) {
-    //     std::string message = recognizer->get_message(); // 5 second timeout
-    //
-    //     if (!message.empty()) {
-    //         if (message == "<start>") {
-    //             recognizer->stop_listen();
-    //             speak(aiConfig->speechRecognizerConfig.voice);
-    //             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    //             recognizer->start_listen();
-    //             INFO("Start Listen");
-    //         } else {
-    //
-    //             // Process the recognized speech
-    //             json j = json::parse(message);
-    //             std::string text = j["alternatives"][0]["text"];
-    //             INFO("Recognized: {}", text);
-    //             INFO("Stop Listen");
-    //             recognizer->stop_listen();
-    //             std::pair<Directive, float> sim = find_sentence_directive(text);
-    //             INFO("Directive: {}, Sim: {}", sim.first.symbol, sim.second);
-    //
-    //             if (sim.second >= 0.8f) {
-    //                 std::unique_ptr<MessageData> data = std::make_unique<LLMResponseData>();
-    //                 static_cast<LLMResponseData *>(data.get())->sentence = sim.first.description;
-    //
-    //                 std::pair<Directive, float> directive = sim;
-    //                 static_cast<LLMResponseData *>(data.get())->directive = sim.first;
-    //                 static_cast<LLMResponseData *>(data.get())->directiveSimilarity = sim.second;
-    //
-    //                 publish(MessageType::LLMResponse, data);
-    //                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    //             } else {
-    //                 llm_query(text);
-    //                 {
-    //                     std::unique_lock<std::mutex> lock(_quryMutex);
-    //                     _queryCondition.wait(lock);
-    //                 }
-    //             }
-    //
-    //             INFO("Start Listen");
-    //             recognizer->start_listen();
-    //         }
-    //     }
-    // }
-    recognizer->stop_listen();
+    while (_running) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 }
 
 
@@ -355,6 +297,16 @@ void InteractiveChatService::subcribed_data_receive(MessageType type, const std:
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
                 std::string queryMsg = static_cast<LLMQueryData*>(data.get())->query;
+                llm_query(queryMsg);
+            }
+            break;
+        }
+
+        case MessageType::RecognizedSpeech: {
+            if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+
+                std::string queryMsg = static_cast<RecognizedSpeechData*>(data.get())->text;
                 llm_query(queryMsg);
             }
             break;

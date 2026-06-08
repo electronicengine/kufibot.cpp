@@ -33,7 +33,7 @@ void HandGestureRecognizingOperator::clearResults()
 }
 
 HandGestureRecognizingOperator::HandGestureRecognizingOperator(bool mode, int maxHands, float detectionCon, float trackCon)
-    : mode(mode), maxHands(maxHands), detectionCon(detectionCon),
+    : Operator("HandGestureRecognizingOperator"), mode(mode), maxHands(maxHands), detectionCon(detectionCon),
       trackCon(trackCon), instance(nullptr), landmarks_poller(nullptr),
       handedness_poller(nullptr), results(nullptr), initialized(false)
 {
@@ -42,12 +42,14 @@ HandGestureRecognizingOperator::HandGestureRecognizingOperator(bool mode, int ma
     tipIds = {4, 8, 12, 16, 20};
 
     // MediaPipe instance'ını oluştur
-    initialize();
+    if (!HandGestureRecognizingOperator::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
 }
 
 HandGestureRecognizingOperator::~HandGestureRecognizingOperator()
 {
-    cleanup();
+    HandGestureRecognizingOperator::shutdown();
 }
 
 bool HandGestureRecognizingOperator::initialize()
@@ -101,7 +103,7 @@ bool HandGestureRecognizingOperator::initialize()
 
 }
 
-void HandGestureRecognizingOperator::cleanup()
+void HandGestureRecognizingOperator::shutdown()
 {
 
     clearResults();
@@ -123,6 +125,15 @@ void HandGestureRecognizingOperator::cleanup()
 
     initialized = false;
 
+}
+
+bool HandGestureRecognizingOperator::isReady() const noexcept {
+    return initialized;
+}
+
+void HandGestureRecognizingOperator::cleanup()
+{
+    shutdown();
 }
 
 cv::Mat HandGestureRecognizingOperator::findFingers(cv::Mat &frame, bool draw)

@@ -19,8 +19,8 @@
 
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
-#include "gesture_performer_service.h"
-#include "gesture_recognizer_service.h"
+#include "expression_service.h"
+#include "perception_service.h"
 #include "interactive_chat_service.h"
 #include "remote_connection_service.h"
 #include "robot_controller_service.h"
@@ -48,10 +48,10 @@ LandmarkTrackerService::LandmarkTrackerService() : Service("LandmarkTrackingServ
 
 bool LandmarkTrackerService::initialize() {
 
-    subscribe_to_service(GestureRecognizerService::get_instance());
+    subscribe_to_service(PerceptionService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(RobotControllerService::get_instance());
-    subscribe_to_service(GesturePerformerService::get_instance());
+    subscribe_to_service(ExpressionService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
 
     //
@@ -154,7 +154,7 @@ void LandmarkTrackerService::service_function() {
                 controlHead(errorVector.angle, magnitude);
 
                 if (!trackingData.currentJointAngles.empty()) {
-                    GesturePerformerService::idleJointPositions = trackingData.currentJointAngles;
+                    ExpressionService::idleJointPositions = trackingData.currentJointAngles;
                 }
 
                 break;

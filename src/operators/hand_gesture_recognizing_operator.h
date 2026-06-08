@@ -2,6 +2,7 @@
 #define HAND_GESTURE_RECOGNIZING_OPERATOR_H
 
 
+#include "operator.h"
 #include "mediapipe.h"
 #include <opencv2/opencv.hpp>
 #include <vector>
@@ -19,13 +20,17 @@ struct DistanceResult {
     std::vector<int> info; // [x1, y1, x2, y2, cx, cy]
 };
 
-class HandGestureRecognizingOperator {
+class HandGestureRecognizingOperator : public Operator {
     public:
         HandGestureRecognizingOperator(bool mode = false, int maxHands = 2, float detectionCon = 0.5f, float trackCon = 0.5f);
 
         ~HandGestureRecognizingOperator();
 
-        bool initialize();
+        bool initialize() override;
+
+        void shutdown() override;
+
+        bool isReady() const noexcept override;
 
         void cleanup();
 

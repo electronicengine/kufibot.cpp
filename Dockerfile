@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     libgpm-dev \
     libncurses5-dev \
     libglib2.0-dev\
+    libwebrtc-audio-processing-dev \
     pkg-config \
     libtool \
     autoconf-archive \

@@ -30,8 +30,15 @@ ServoMotorController *ServoMotorController::get_instance(int address)
     return _instance;
 }
 
-ServoMotorController::ServoMotorController(int address) {
-    bool ret = _driver.initPCA9685(address);
+ServoMotorController::ServoMotorController(int address)
+    : Controller("ServoMotorController"), _address(address) {
+    if (!ServoMotorController::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
+}
+
+bool ServoMotorController::initialize() {
+    bool ret = _driver.initPCA9685(_address);
     if (ret) {
         _driver.setPWMFrequency(50);
         _currentJointAngles = {
@@ -39,14 +46,29 @@ ServoMotorController::ServoMotorController(int address) {
             {ServoMotorJoint::headUpDown, 15}, {ServoMotorJoint::headLeftRight, 90}, {ServoMotorJoint::eyeRight, 160},
             {ServoMotorJoint::eyeLeft, 20}
         };
-        _initialized = true;
+        _initialized.store(true);
 
         INFO("Servo driver initialized");
     }else {
-        _initialized = false;
+        _initialized.store(false);
 
         ERROR("Servo driver initialization failed");
     }
+
+    return ret;
+}
+
+void ServoMotorController::shutdown() {
+    _driver.shutdown();
+    _initialized.store(false);
+}
+
+bool ServoMotorController::isReady() const noexcept {
+    return _initialized.load();
+}
+
+ServoMotorController::~ServoMotorController() {
+    ServoMotorController::shutdown();
 }
 
 
@@ -80,7 +102,7 @@ void ServoMotorController::setAllJointsAngle(std::map<ServoMotorJoint, uint8_t>&
 }
 
 void ServoMotorController::setJointAngle(ServoMotorJoint joint, int targetAngle, int step, int delayMs) {
-    if (!_enable.load() || !_initialized) {
+    if (!isEnabled() || !isReady()) {
         return;
     }
 

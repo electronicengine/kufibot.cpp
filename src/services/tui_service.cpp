@@ -16,14 +16,11 @@
  */
 
 #include "tui_service.h"
-#include "web_socket_service.h"
 #include "robot_controller_service.h"
 #include "remote_connection_service.h"
-#include "video_stream_service.h"
-#include "gesture_performer_service.h"
+#include "expression_service.h"
 #include "mapping_service.h"
 #include "interactive_chat_service.h"
-#include "robot_controller_service.h"
 
 #undef K
 #undef null
@@ -34,7 +31,7 @@
 #include "../tui/main_window.h"
 #include "../tui/widget_color_theme.h"
 #include "final/final.h"
-#include "gesture_recognizer_service.h"
+#include "perception_service.h"
 #include "rag_service.h"
 
 using namespace finalcut;
@@ -61,7 +58,7 @@ bool TuiService::initialize() {
 
     subscribe_to_service(RobotControllerService::get_instance());
     subscribe_to_service(InteractiveChatService::get_instance());
-    subscribe_to_service(GestureRecognizerService::get_instance());
+    subscribe_to_service(PerceptionService::get_instance());
 
     return true;
 }
@@ -76,13 +73,11 @@ void TuiService::service_function() {
         if (input.empty()) {
             continue;
         }else if (input == "exit") {
-            WebSocketService::get_instance()->stop();
-            VideoStreamService::get_instance()->stop();
             RobotControllerService::get_instance()->stop();
             RemoteConnectionService::get_instance()->stop();
             InteractiveChatService::get_instance()->stop();
-            GesturePerformerService::get_instance()->stop();
-            GestureRecognizerService::get_instance()->stop();
+            ExpressionService::get_instance()->stop();
+            PerceptionService::get_instance()->stop();
             MappingService::get_instance()->stop();
 
             std::exit(0);
@@ -91,13 +86,11 @@ void TuiService::service_function() {
         }else if (input == "help") {
             printHelp();
         }else if (input == "startAll") {
-            WebSocketService::get_instance()->start();
-            VideoStreamService::get_instance()->start();
             RobotControllerService::get_instance()->start();
             RemoteConnectionService::get_instance()->start();
             InteractiveChatService::get_instance()->start();
-            GesturePerformerService::get_instance()->start();
-            GestureRecognizerService::get_instance()->start();
+            ExpressionService::get_instance()->start();
+            PerceptionService::get_instance()->start();
             MappingService::get_instance()->start();
         }else if (input.find("start") != std::string::npos) {
             if (input.find("RobotControllerService") != std::string::npos) {
@@ -106,16 +99,12 @@ void TuiService::service_function() {
                 InteractiveChatService::get_instance()->start();
             }else if (input.find("RemoteConnectionService") != std::string::npos) {
                 RemoteConnectionService::get_instance()->start();
-            }else if (input.find("VideoStreamService") != std::string::npos) {
-                VideoStreamService::get_instance()->start();
+            }else if (input.find("PerceptionService") != std::string::npos) {
+                PerceptionService::get_instance()->start();
             }else if (input.find("MappingService") != std::string::npos) {
                 MappingService::get_instance()->start();
-            }else if (input.find("GesturePerformerService") != std::string::npos) {
-                GesturePerformerService::get_instance()->start();
-            }else if (input.find("GestureRecognizerService") != std::string::npos) {
-                GestureRecognizerService::get_instance()->start();
-            }else if (input.find("WebSocketService") != std::string::npos) {
-                WebSocketService::get_instance()->start();
+            }else if (input.find("ExpressionService") != std::string::npos) {
+                ExpressionService::get_instance()->start();
             }else if (input.find("RagService") != std::string::npos) {
                 RagService::get_instance()->start();
             }
@@ -126,16 +115,12 @@ void TuiService::service_function() {
                 InteractiveChatService::get_instance()->stop();
             }else if (input.find("RemoteConnectionService") != std::string::npos) {
                 RemoteConnectionService::get_instance()->stop();
-            }else if (input.find("VideoStreamService") != std::string::npos) {
-                VideoStreamService::get_instance()->stop();
+            }else if (input.find("PerceptionService") != std::string::npos) {
+                PerceptionService::get_instance()->stop();
             }else if (input.find("MappingService") != std::string::npos) {
                 MappingService::get_instance()->stop();
-            }else if (input.find("GesturePerformerService") != std::string::npos) {
-                GesturePerformerService::get_instance()->stop();
-            }else if (input.find("GestureRecognizerService") != std::string::npos) {
-                GestureRecognizerService::get_instance()->stop();
-            }else if (input.find("WebSocketService") != std::string::npos) {
-                WebSocketService::get_instance()->stop();
+            }else if (input.find("ExpressionService") != std::string::npos) {
+                ExpressionService::get_instance()->stop();
             }else if (input.find("RagService") != std::string::npos) {
                 RagService::get_instance()->stop();
             }
@@ -143,6 +128,9 @@ void TuiService::service_function() {
             std::string className = input.substr(4, input.size() - 4);
             Logger::print_cached_logs(className);
         }else if(input == "sensors") {
+            publish(MessageType::SensorReadRequest);
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
             INFO("{} ",_currentSensorData.to_json());
         }else if (input.find("gestures") != std::string::npos) {
             int seconds = std::stoi(input.substr(9, input.size() - 9));
@@ -184,6 +172,26 @@ void TuiService::service_function() {
             publish(MessageType::ClearRAGDatabaseRequest);
         }else if (input.find("rag show") != std::string::npos) {
             publish(MessageType::ShowRAGDatabaseRequest);
+        }else if (input.find("speak") != std::string::npos) {
+            // Extract text after "speak" command
+            size_t speakPos = input.find("speak");
+            std::string textToSpeak = input.substr(speakPos + 5);
+
+            // Trim leading/trailing whitespace
+            size_t start = textToSpeak.find_first_not_of(" \t\"'");
+            size_t end = textToSpeak.find_last_not_of(" \t\"'");
+
+            if (start != std::string::npos && end != std::string::npos) {
+                textToSpeak = textToSpeak.substr(start, end - start + 1);
+
+                // Create and publish SpeakRequestData
+                auto data = std::make_unique<SpeakRequestData>();
+                data->text = textToSpeak;
+                publish(MessageType::SpeakRequest, std::move(data));
+                INFO("Speaking: {}", textToSpeak);
+            } else {
+                WARNING("speak command usage: speak \"text to speak\" or speak text");
+            }
         }
     }
 }
@@ -202,6 +210,10 @@ void TuiService::printGestureData(int seconds) {
 
 void TuiService::openTui() {
 
+    if (!RobotControllerService::get_instance()->is_running()) {
+        RobotControllerService::get_instance()->start();
+    }
+
     int argc = 0;
     char **argv = nullptr;
 
@@ -214,10 +226,21 @@ void TuiService::openTui() {
     main_window->setText ("Log View");
     main_window->setGeometry (FPoint{1, 0}, FSize{FVTerm::getFOutput()->getColumnNumber(), FVTerm::getFOutput()->getLineNumber()});
 
-    _tuiSensorCallBackFunction = main_window->_measurementsWindow-> get_sensor_data_callback_function();
-    _tuiLlmResponseCallBackFunction = main_window->_chatWindow->get_llm_response_callback_function();
-    _tuiCompasDirectionCallBackFunction = main_window->_compassRTGraphWindow->get_compas_direction_callback_function();
-    _tuiMotorFeedBackInfoCallBackFunction = main_window->_bodyControllerWindow->get_servo_joints_callback_function();
+    _tuiSensorCallBackFunction = [main_window](const SensorData& sensorData) {
+        main_window->queue_sensor_data(sensorData);
+    };
+    _tuiLlmResponseCallBackFunction = [main_window](const std::string& response) {
+        main_window->queue_llm_response(response);
+    };
+    _tuiCompasDirectionCallBackFunction = [main_window](const int& angle) {
+        main_window->queue_compass_direction(angle);
+    };
+    _tuiMotorFeedBackInfoCallBackFunction = [main_window](const std::map<ServoMotorJoint, uint8_t>& jointAngles) {
+        main_window->queue_servo_joints(jointAngles);
+    };
+    main_window->set_sensor_refresh_callback([this]() {
+        publish(MessageType::SensorReadRequest);
+    });
 
     //set tui control CallBack Functions
     main_window->_chatWindow->set_llm_query_function_callback(std::bind(&TuiService::tui_llm_query_callback, this, std::placeholders::_1));
@@ -228,6 +251,9 @@ void TuiService::openTui() {
     Logger::_mainWindow = main_window;
     Logger::_useTui = true;
     main_window->show();
+    main_window->_measurementsWindow->show();
+    main_window->_bodyControllerWindow->show();
+    main_window->_servoControllerWindow->show();
 
     app->exec();
     Logger::_useTui = false;
@@ -243,27 +269,25 @@ void TuiService::printHelp() {
     INFO("--> sensors  : get sensor values");
     INFO("--> set <joint> <value>: set servo angle");
     INFO("--> llm <query> : query llm");
+    INFO("--> speak <text> : make robot speak");
     INFO("--> log <className> : print logs of a service");
     INFO("--> gestures <seconds>: prints recognized gesture info while seconds");
     INFO("--> start|stop <service> : start or stop a service");
     INFO("----> Available Services: ");
-    INFO("------> WebSocketService");
-    INFO("------> VideoStreamService");
+    INFO("------> PerceptionService (camera + perception)");
     INFO("------> RobotControllerService");
     INFO("------> RemoteConnectionService");
     INFO("------> InteractiveChatService");
-    INFO("------> GestureRecognizerService");
     INFO("------> MappingService");
 }
 
 void TuiService::setJointAngle(ServoMotorJoint joint, int angle) {
 
-    std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
+    auto data = std::make_unique<ControlData>();
     data->source = SourceService::tuiService;
-    static_cast<ControlData*>(data.get())->jointAngle.emplace();
-    static_cast<ControlData*>(data.get())->jointAngle = std::make_pair(joint, angle);
+    data->jointAngle.emplace(joint, angle);
 
-    publish(MessageType::ControlData, data);
+    publish(MessageType::ControlData, std::move(data));
 
 }
 
@@ -278,11 +302,16 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                std::string response = static_cast<LLMResponseData*>(data.get())->sentence;
-                EmotionalGesture emotion = static_cast<LLMResponseData*>(data.get())->emotionalGesture;
-                ReactionalGesture reaction = static_cast<LLMResponseData*>(data.get())->reactionalGesture;
-                float emotionSimilarity = static_cast<LLMResponseData*>(data.get())->emotionSimilarity;
-                float reactionSimilarity = static_cast<LLMResponseData*>(data.get())->reactionSimilarity;
+                const auto* llmResponse = dynamic_cast<const LLMResponseData*>(data.get());
+                if (llmResponse == nullptr) {
+                    break;
+                }
+
+                std::string response = llmResponse->sentence;
+                EmotionalGesture emotion = llmResponse->emotionalGesture;
+                ReactionalGesture reaction = llmResponse->reactionalGesture;
+                float emotionSimilarity = llmResponse->emotionSimilarity;
+                float reactionSimilarity = llmResponse->reactionSimilarity;
 
                 response += " " + emotion.symbol;
                 response += " similarity: " + std::to_string(emotionSimilarity);
@@ -297,13 +326,18 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                _currentSensorData = *static_cast<SensorData*>(data.get());
+                const auto* sensorData = dynamic_cast<const SensorData*>(data.get());
+                if (sensorData == nullptr) {
+                    break;
+                }
+
+                _currentSensorData = *sensorData;
                 if (_tuiSensorCallBackFunction) {
                     _tuiSensorCallBackFunction(_currentSensorData);
                 }
 
                 if (_currentSensorData.compassData.has_value()) {
-                    if (_tuiSensorCallBackFunction)
+                    if (_tuiCompasDirectionCallBackFunction)
                         _tuiCompasDirectionCallBackFunction(_currentSensorData.compassData->angle);
                 }
 
@@ -319,25 +353,45 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
 
-                _recognizedGestureData = *static_cast<RecognizedGestureData*>(data.get());
+                const auto* recognizedGesture = dynamic_cast<const RecognizedGestureData*>(data.get());
+                if (recognizedGesture == nullptr) {
+                    break;
+                }
+
+                _recognizedGestureData = *recognizedGesture;
             }
             break;
         }
+
+        case MessageType::RecognizedSpeech : {
+            std::lock_guard<std::mutex> lock(_dataMutex);
+
+            const auto* recognizedSpeech = dynamic_cast<const RecognizedSpeechData*>(data.get());
+            if (recognizedSpeech == nullptr) {
+                break;
+            }
+
+            _recognizedSpeechData = *recognizedSpeech;
+            INFO("Recognized Speech: {}", _recognizedSpeechData.text);
+
+            break;
+        }
+
         default:
-            WARNING("{} subcribed_data_receive unknown message type!", get_service_name());
             break;
     }
 }
 
 void TuiService::tui_control_function_callback(const ControlData &data) {
-    std::unique_ptr<MessageData> message_data = std::make_unique<ControlData>();
-    *static_cast<ControlData*>(message_data.get()) = data;
-    publish(MessageType::ControlData, message_data);
+    auto message_data = std::make_unique<ControlData>();
+    *message_data = data;
+    message_data->source = SourceService::tuiService;
+    publish(MessageType::ControlData, std::move(message_data));
 }
 
 void TuiService::tui_llm_query_callback(const std::string &query) {
-    std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
-    static_cast<LLMQueryData*>(data.get())->query = query;
-    publish(MessageType::LLMQuery, data);
+    auto data = std::make_unique<LLMQueryData>();
+    data->query = query;
+    publish(MessageType::LLMQuery, std::move(data));
 }
 

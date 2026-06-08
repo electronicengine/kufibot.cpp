@@ -20,13 +20,28 @@
 #include <thread>
 #include <cmath>
 
-HMC5883LDriver::HMC5883LDriver() {
+namespace {
+constexpr double HMC5883L_OFFSET_X = -168.500000;
+constexpr double HMC5883L_OFFSET_Y = -1227.000000;
+constexpr double HMC5883L_SCALE_X = 0.981647;
+constexpr double HMC5883L_SCALE_Y = 1.019052;
+}
+
+HMC5883LDriver::HMC5883LDriver() : I2CDevice("HMC5883LDriver"), fd(-1) {
 
 }
 
 
 HMC5883LDriver::~HMC5883LDriver() {
+    HMC5883LDriver::shutdown();
+}
 
+bool HMC5883LDriver::initialize() {
+    return initHMC5883l();
+}
+
+void HMC5883LDriver::shutdown() {
+    I2CDevice::shutdown();
 }
 
 
@@ -55,17 +70,20 @@ bool HMC5883LDriver::initHMC5883l() {
 Axis HMC5883LDriver::readHMC5883l() {
     Axis axis;
 
-    axis.x = read_x();
-    axis.y = read_y();
+    const int16_t raw_x = read_x();
+    const int16_t raw_y = read_y();
+
+    axis.x = static_cast<float>((raw_x - HMC5883L_OFFSET_X) * HMC5883L_SCALE_X);
+    axis.y = static_cast<float>((raw_y - HMC5883L_OFFSET_Y) * HMC5883L_SCALE_Y);
     axis.z = read_z();
-    axis.t = compute_heading(axis.x, axis.y);
+    axis.t = static_cast<float>(compute_heading(axis.x, axis.y));
 
     return axis;
 }
 
 
 
-double HMC5883LDriver::compute_heading(int16_t x, int16_t y) {
+double HMC5883LDriver::compute_heading(double x, double y) {
     // Calculate heading in radians
     double heading_rad = atan2(y, x);
 
@@ -90,13 +108,13 @@ double HMC5883LDriver::compute_heading(int16_t x, int16_t y) {
 }
 
 int16_t HMC5883LDriver::read_x() {
-    return readWord(HMC5883L_X_MSB);
+    return static_cast<int16_t>(readWord(HMC5883L_X_MSB));
 }
 
 int16_t HMC5883LDriver::read_y() {
-    return readWord(HMC5883L_Y_MSB);
+    return static_cast<int16_t>(readWord(HMC5883L_Y_MSB));
 }
 
 int16_t HMC5883LDriver::read_z() {
-    return readWord(HMC5883L_Z_MSB);
+    return static_cast<int16_t>(readWord(HMC5883L_Z_MSB));
 }

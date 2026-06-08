@@ -30,7 +30,11 @@ SpeechRecognizingOperator::SpeechRecognizingOperator(uint32_t silenceThreshold,
                                                      uint32_t framesPerBuffer,
                                                      uint32_t maxSilenceDurationSec,
                                                      uint32_t listenTimeoutMs,
-                                                     const std::string &wakeCommand) {
+                                                     const std::string &wakeCommand)
+    : Operator("SpeechRecognizingOperator"),
+      _model(nullptr),
+      _recognizer(nullptr),
+      _stream(nullptr) {
     _silenceThreshold = silenceThreshold; ;  // Silence detection threshold
     _sampleRate = sampleRate;   //örnekleme frekansı), Specifies the number of recorded audio samples. 16000 is standard for speech recognition.
     _framesPerBuffer = framesPerBuffer; // Reduced for lower latency
@@ -39,8 +43,6 @@ SpeechRecognizingOperator::SpeechRecognizingOperator(uint32_t silenceThreshold,
 
     _wakeCommand = wakeCommand;
 
-    _recognizer = nullptr;
-    _stream = nullptr;
     _lastActivityTime = std::chrono::steady_clock::now();
     _audioBuffer.reserve(_framesPerBuffer * 2);  // Pre-allocate buffer
     _processBuffer.clear();
@@ -48,7 +50,22 @@ SpeechRecognizingOperator::SpeechRecognizingOperator(uint32_t silenceThreshold,
 
 
 SpeechRecognizingOperator::~SpeechRecognizingOperator() {
+    SpeechRecognizingOperator::shutdown();
+}
+
+bool SpeechRecognizingOperator::initialize() {
+    return open();
+}
+
+void SpeechRecognizingOperator::shutdown() {
     close();
+}
+
+bool SpeechRecognizingOperator::isReady() const noexcept {
+    return _model != nullptr && _recognizer != nullptr && _stream != nullptr;
+}
+
+void SpeechRecognizingOperator::updateReadyState() {
 }
 
 // Voice Activity Detection
@@ -80,6 +97,17 @@ int SpeechRecognizingOperator::paCallback(const void *input, void *output,
                                             PaStreamCallbackFlags statusFlags,
                                             void *userData) {
     auto *controller = static_cast<SpeechRecognizingOperator *>(userData);
+    if (controller == nullptr || input == nullptr) {
+        return paAbort;
+    }
+
+    if ((statusFlags & paInputOverflow) != 0) {
+        return paComplete;
+    }
+
+    (void)output;
+    (void)timeInfo;
+
     const short* audio_data = static_cast<const short*>(input);
     static bool talking = false;
     static std::chrono::steady_clock::time_point lastTalkingFrameTime;
@@ -125,19 +153,42 @@ int SpeechRecognizingOperator::paCallback(const void *input, void *output,
 }
 
 void SpeechRecognizingOperator::load_model(const std::string &modelPath) {
+    if (_model != nullptr && _recognizer != nullptr) {
+        updateReadyState();
+        return;
+    }
+
     _model = vosk_model_new(modelPath.c_str());
+    if (_model == nullptr) {
+        ERROR("Failed to load Vosk model from: {}", modelPath);
+        return;
+    }
+
     _recognizer = vosk_recognizer_new(_model, _sampleRate);
+    if (_recognizer == nullptr) {
+        ERROR("Failed to create Vosk recognizer.");
+        vosk_model_free(_model);
+        _model = nullptr;
+        return;
+    }
 
     // _recognizer = vosk_recognizer_new_grm(
     // _model,
     // _sampleRate,
     // "[\"metafoniks\", \"iğrenç\", \"seven eight nine zero\", \"[unk]\"]");
 
-    vosk_recognizer_set_max_alternatives(_recognizer, 3);  // Only best result
+    // Only best result
+    //vosk_recognizer_set_max_alternatives(_recognizer, 3);
+    updateReadyState();
 }
 
 // Initialize PortAudio with optimized settings
 bool SpeechRecognizingOperator::open() {
+    if (_stream != nullptr) {
+        updateReadyState();
+        return true;
+    }
+
     if (Pa_Initialize() != paNoError) {
         ERROR("Failed to initialize PortAudio.");
         return false;
@@ -168,10 +219,20 @@ bool SpeechRecognizingOperator::open() {
         return false;
     }
 
+    updateReadyState();
     return true;
 }
 
 bool SpeechRecognizingOperator::start_listen() {
+    if (_stream == nullptr) {
+        ERROR("Audio stream is not initialized.");
+        return false;
+    }
+
+    if (Pa_IsStreamActive(_stream) == 1) {
+        return true;
+    }
+
     if (Pa_StartStream(_stream) != paNoError) {
         ERROR("Failed to start audio stream.");
         return false;
@@ -181,7 +242,13 @@ bool SpeechRecognizingOperator::start_listen() {
 }
 
 void SpeechRecognizingOperator::stop_listen() {
-    Pa_StopStream(_stream);
+    if (_stream == nullptr) {
+        return;
+    }
+
+    if (Pa_IsStreamActive(_stream) == 1) {
+        Pa_StopStream(_stream);
+    }
 }
 
 
@@ -200,31 +267,22 @@ std::vector<int16_t> SpeechRecognizingOperator::get_buffer() {
 }
 
 std::string SpeechRecognizingOperator::get_text(const std::vector<int16_t> &audioData) {
+    if (_recognizer == nullptr || _model == nullptr || audioData.empty()) {
+        return "";
+    }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
     _isSpeaking.store(true);
     std::string text;
     std::string result;
 
-    int final = vosk_recognizer_accept_waveform(_recognizer, (const char*)audioData.data(), audioData.size() * sizeof(int16_t));
+    int final = vosk_recognizer_accept_waveform_s(_recognizer, audioData.data(), audioData.size() * sizeof(int16_t));
     if (final) {
-        result = vosk_recognizer_result(_recognizer);
-        INFO("res:  {}", result);
+        result = vosk_recognizer_final_result(_recognizer);
         json j = json::parse(result);
-        if (j.contains("alternatives")) {
-            text = j["alternatives"][0]["text"];
-        }
-    } else {
-        result = vosk_recognizer_partial_result(_recognizer);
-        INFO("res:  {}", result);
-
-        json j = json::parse(result);
-        if (j.contains("partial")) {
-            text = j["partial"];
-        }
+        text = j["text"];
     }
     _isSpeaking.store(false);
-    vosk_recognizer_reset(_recognizer);
 
     return text;
 }
@@ -233,16 +291,24 @@ std::string SpeechRecognizingOperator::get_text(const std::vector<int16_t> &audi
 // Clean up and release resources
 void SpeechRecognizingOperator::close() {
     if (_stream) {
+        if (Pa_IsStreamActive(_stream) == 1) {
+            Pa_StopStream(_stream);
+        }
         Pa_CloseStream(_stream);
+        _stream = nullptr;
     }
     Pa_Terminate();
 
     if (_recognizer) {
         vosk_recognizer_free(_recognizer);
+        _recognizer = nullptr;
     }
 
     if (_model) {
         vosk_model_free(_model);
+        _model = nullptr;
     }
+
+    updateReadyState();
 }
 

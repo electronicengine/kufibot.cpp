@@ -21,24 +21,41 @@
 #include "../logger.h"
 
 LlamaOperator::LlamaOperator()
+    : Operator("LlamaOperator"),
+      _nThreads(4),
+      _ngl(99),
+      _nCtx(2048),
+      _minP(0.05f),
+      _temp(0.8f),
+      _topK(50),
+      _topP(0.9f),
+      _modelLoaded(false),
+      _model(nullptr),
+      _ctx(nullptr),
+      _smpl(nullptr),
+      _batch(nullptr),
+      _systemMessage(""),
+      _running(false),
+      _vocab(nullptr)
 {
-    _ngl = 99;
-    _nCtx = 2048;
-    _minP = 0.05f;
-    _temp = 0.8f;
-    _topK = 50;
-    _topP = 0.9;
-    _nThreads = 4;
-    _model = nullptr;
-    _ctx = nullptr;
-    _smpl = nullptr;
-    _vocab = nullptr;
-    _modelLoaded = false;
-    _systemMessage = "";
 }
 
 LlamaOperator::~LlamaOperator() {
-    unloadModel();
+    LlamaOperator::shutdown();
+}
+
+bool LlamaOperator::initialize() {
+    return true;
+}
+
+void LlamaOperator::shutdown() {
+    if (_ctx || _model || _smpl || _modelLoaded) {
+        unloadModel();
+    }
+}
+
+bool LlamaOperator::isReady() const noexcept {
+    return _modelLoaded && _model != nullptr && _ctx != nullptr;
 }
 
 void LlamaOperator::setOptions(int ngl, int nThreads, int n_ctx, float minP, float temp, int topK,
@@ -208,6 +225,7 @@ std::string LlamaOperator::generateResponse(const std::string& prompt) {
         if (n < 0) {
             GGML_ABORT("failed to convert token to piece\n");
         }
+        response.append(buf, n);
         _responseCallbackFunction(std::string(buf, n));
         batch = llama_batch_get_one(&new_token_id, 1);
     }
@@ -303,6 +321,11 @@ void LlamaOperator::unloadEmbedModel() {
         _smpl = nullptr;
     }
 
+    if (_ctx) {
+        llama_free(_ctx);
+        _ctx = nullptr;
+    }
+
     if (_model) {
         llama_model_free(_model);
         _model = nullptr;
@@ -368,9 +391,22 @@ void LlamaOperator::unloadModel() {
     for (auto &msg: _messages) {
         free(const_cast<char *>(msg.content));
     }
-    llama_sampler_free(_smpl);
-    llama_free(_ctx);
-    llama_model_free(_model);
+    _messages.clear();
+
+    if (_smpl) {
+        llama_sampler_free(_smpl);
+        _smpl = nullptr;
+    }
+    if (_ctx) {
+        llama_free(_ctx);
+        _ctx = nullptr;
+    }
+    if (_model) {
+        llama_model_free(_model);
+        _model = nullptr;
+    }
+    _vocab = nullptr;
+    _modelLoaded = false;
 }
 
 void LlamaOperator::stopGenerateResponse() {

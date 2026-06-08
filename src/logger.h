@@ -79,6 +79,27 @@ public:
         }
     }
 
+    static void replay_cached_logs_to_tui() {
+        if (_mainWindow == nullptr) {
+            return;
+        }
+
+        for (const auto& cachedLog : _cachedLogs) {
+            LogLevel logLevel = LogLevel::info;
+            switch (cachedLog.level) {
+                case spdlog::level::trace: logLevel = LogLevel::trace; break;
+                case spdlog::level::debug: logLevel = LogLevel::debug; break;
+                case spdlog::level::info: logLevel = LogLevel::info; break;
+                case spdlog::level::warn: logLevel = LogLevel::warn; break;
+                case spdlog::level::err: logLevel = LogLevel::error; break;
+                case spdlog::level::critical: logLevel = LogLevel::critical; break;
+                default: break;
+            }
+
+            _mainWindow->log(cachedLog.log, logLevel, cachedLog.class_name);
+        }
+    }
+
 
     static inline std::string extract_class_name(const std::string& pretty_function) {
         std::regex class_regex(R"((\w+)::\w+\(.*\))");
@@ -103,7 +124,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::trace, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
                                        formattedStr);
@@ -127,7 +148,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::info, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}", class_name, formattedStr);
             spdlog::info(full_message);
         } else {
@@ -149,7 +170,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::debug, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
                                        formattedStr);
@@ -173,7 +194,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::warn, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
                                        formattedStr);
@@ -197,7 +218,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::err, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
                                        formattedStr);
@@ -221,7 +242,7 @@ public:
             _cachedLogs.push_back({formattedStr, spdlog::level::critical, class_name});
         }
 
-        if (!_useTui) {
+        if (!_useTui || _mainWindow == nullptr) {
             std::string full_message = fmt::format("<{}> {}",
                                        class_name,
                                        formattedStr);

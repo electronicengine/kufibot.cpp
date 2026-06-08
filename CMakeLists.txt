@@ -13,7 +13,7 @@ set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
 # Deployment configuration
 set(DEPLOY_USER kufi)
-set(DEPLOY_HOST 192.168.1.48)
+set(DEPLOY_HOST 192.168.1.12)
 set(DEPLOY_PATH /home/kufi/workspace/)
 
 set(PYTHON_INCLUDE_DIR /usr/include/python3.11)

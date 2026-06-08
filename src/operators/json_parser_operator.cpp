@@ -31,51 +31,89 @@ JsonParserOperator *JsonParserOperator::get_instance() {
     return _instance;
 }
 
-
-// ======================= STRING ↔ ENUM =======================
-
-JsonParserOperator::JsonParserOperator() {
+bool JsonParserOperator::initialize() {
+    shutdown();
 
     loadConfigPaths(CONFIG_PATHS_FILE, _configPaths.emplace());
     if (_configPaths->ai_config.empty()) {
         _configPaths.reset();
         ERROR("_configPaths.ai_config is empty. Please check the config paths file: {}", CONFIG_PATHS_FILE);
-    }else {
-
-        loadRagDataset(_configPaths->rag_dataset, _ragDataset.emplace());
-        loadFaceReactions(_configPaths->reaction_set, _faceReactionList.emplace());
-
-        loadMotionsFromFile(_configPaths->motion_definitions, _emotionalMotions.emplace(), _reactionalMotions.emplace(), _directiveMotions.emplace(), _idlePosition.emplace());
-
-        if (_emotionalMotions->empty()) {
-            ERROR("No emotional motions found in the motion definitions file: {}", _configPaths->motion_definitions);
-            _emotionalMotions.reset();
-            _reactionalMotions.reset();
-            _directiveMotions.reset();
-            _idlePosition.reset();
-        }
-
-        loadGesturesFromFile(_configPaths->gesture_config, _emotionalList.emplace(), _reactionalList.emplace(), _directiveList.emplace());
-        if (_emotionalMotions->empty()) {
-            ERROR("No emotional gestures found in the gesture definitions file: {}", _configPaths->gesture_config);
-            _emotionalList.reset();
-            _reactionalList.reset();
-            _directiveList.reset();
-        }
-
-        loadJointAnglesFromJson(_configPaths->joint_angles, _jointAngles.emplace());
-        if (_jointAngles->empty()) {
-            ERROR("No Joint found in the joint angle file: {}", _configPaths->joint_angles);
-            _jointAngles.reset();
-        }
-
-        loadAiConfig(_configPaths->ai_config, _aiConfig.emplace());
-        if (_aiConfig->speechProcessorConfig.modelPath.empty()) {
-            _aiConfig.reset();
-            ERROR("No speech processor model path found in the AI config file: {}", _configPaths->ai_config);
-        }
+        return false;
     }
 
+    loadRagDataset(_configPaths->rag_dataset, _ragDataset.emplace());
+    loadFaceReactions(_configPaths->reaction_set, _faceReactionList.emplace());
+
+    loadMotionsFromFile(_configPaths->motion_definitions, _emotionalMotions.emplace(), _reactionalMotions.emplace(), _directiveMotions.emplace(), _idlePosition.emplace());
+
+    if (_emotionalMotions->empty()) {
+        ERROR("No emotional motions found in the motion definitions file: {}", _configPaths->motion_definitions);
+        _emotionalMotions.reset();
+        _reactionalMotions.reset();
+        _directiveMotions.reset();
+        _idlePosition.reset();
+    }
+
+    loadGesturesFromFile(_configPaths->gesture_config, _emotionalList.emplace(), _reactionalList.emplace(), _directiveList.emplace());
+    if (_emotionalMotions->empty()) {
+        ERROR("No emotional gestures found in the gesture definitions file: {}", _configPaths->gesture_config);
+        _emotionalList.reset();
+        _reactionalList.reset();
+        _directiveList.reset();
+    }
+
+    loadJointAnglesFromJson(_configPaths->joint_angles, _jointAngles.emplace());
+    if (_jointAngles->empty()) {
+        ERROR("No Joint found in the joint angle file: {}", _configPaths->joint_angles);
+        _jointAngles.reset();
+    }
+
+    loadAiConfig(_configPaths->ai_config, _aiConfig.emplace());
+    if (_aiConfig->speechProcessorConfig.modelPath.empty()) {
+        _aiConfig.reset();
+        ERROR("No speech processor model path found in the AI config file: {}", _configPaths->ai_config);
+    }
+
+    return isReady();
+}
+
+void JsonParserOperator::shutdown() {
+    _ragDataset.reset();
+    _emotionalMotions.reset();
+    _reactionalMotions.reset();
+    _directiveMotions.reset();
+    _idlePosition.reset();
+    _emotionalList.reset();
+    _reactionalList.reset();
+    _directiveList.reset();
+    _faceReactionList.reset();
+    _jointAngles.reset();
+    _configPaths.reset();
+    _aiConfig.reset();
+}
+
+bool JsonParserOperator::isReady() const noexcept {
+    return _ragDataset.has_value()
+        && _emotionalMotions.has_value()
+        && _reactionalMotions.has_value()
+        && _directiveMotions.has_value()
+        && _idlePosition.has_value()
+        && _emotionalList.has_value()
+        && _reactionalList.has_value()
+        && _directiveList.has_value()
+        && _faceReactionList.has_value()
+        && _jointAngles.has_value()
+        && _configPaths.has_value()
+        && _aiConfig.has_value();
+}
+
+
+// ======================= STRING ↔ ENUM =======================
+
+JsonParserOperator::JsonParserOperator() : Operator("JsonParserOperator") {
+    if (!JsonParserOperator::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
 }
 
 

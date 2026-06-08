@@ -18,9 +18,21 @@
 #include "pca9685_driver.h"
 #include "../logger.h"
 
-PCA9685Driver::~PCA9685Driver() {
-    // No explicit resource deallocation needed with wiringPi
+PCA9685Driver::PCA9685Driver() : I2CDevice("PCA9685Driver") {
 }
+
+PCA9685Driver::~PCA9685Driver() {
+    PCA9685Driver::shutdown();
+}
+
+bool PCA9685Driver::initialize() {
+    return initPCA9685(PCA9685_ADDRESS);
+}
+
+void PCA9685Driver::shutdown() {
+    I2CDevice::shutdown();
+}
+
 bool PCA9685Driver::initPCA9685(int address) {
     bool ret = openDevice(address);
     if (ret) {

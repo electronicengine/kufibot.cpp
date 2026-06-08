@@ -24,7 +24,11 @@ add_library(${TARGET} SHARED ${SRCS}
         json_parser_operator.cpp
         json_parser_operator.h
         udp_server_operator.cpp
-        udp_server_operator.h)
+        udp_server_operator.h
+        IUdpSocket.cpp
+        IUdpSocket.h
+        UdpServerSocket.cpp
+        UdpServerSocket.h)
 
 target_link_libraries(${TARGET}
         ${PYTHON_LIBRARY}

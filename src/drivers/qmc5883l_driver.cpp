@@ -18,7 +18,7 @@
 #include "qmc5883l_driver.h"
 #include <cmath>
 
-QMC5883LDriver::QMC5883LDriver() {
+QMC5883LDriver::QMC5883LDriver() : I2CDevice("QMC5883LDriver") {
 
     _address = DFLT_ADDRESS;
     _outputDataRate = ODR_10HZ;
@@ -29,7 +29,18 @@ QMC5883LDriver::QMC5883LDriver() {
 
 
 QMC5883LDriver::~QMC5883LDriver() {
-    _modeStandby();
+    QMC5883LDriver::shutdown();
+}
+
+bool QMC5883LDriver::initialize() {
+    return initQMC5883l();
+}
+
+void QMC5883LDriver::shutdown() {
+    if (isReady()) {
+        _modeStandby();
+    }
+    I2CDevice::shutdown();
 }
 
 bool QMC5883LDriver::initQMC5883l()

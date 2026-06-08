@@ -1,22 +1,24 @@
 #ifndef POWER_CONTROLLER_H
 #define POWER_CONTROLLER_H
 
-#include <atomic>
+#include "controller.h"
 #include "../drivers/ina219_driver.h"
 #include "controller_data_structures.h"
 
-class PowerController {
+class PowerController : public Controller {
 public:
     static PowerController* get_instance();
+    ~PowerController() override;
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     PowerData getConsumption();
-    void setEnable(bool enable){ _enable.store(enable);}
 
 private:
     INA219Driver _ina;
-    std::atomic<bool> _initialized = false;
     static PowerController* _instance;
-    std::atomic<bool> _enable = true;
     PowerController();
 };
 

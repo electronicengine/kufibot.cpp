@@ -19,7 +19,9 @@ include_directories(/usr/include)
 
 add_library(${TARGET} SHARED ${SRCS}
         rag_service.cpp
-        rag_service.h)
+        rag_service.h
+        voice_agent_service.cpp
+        voice_agent_service.h)
 target_include_directories(${TARGET} PRIVATE ${SERVICES_INC_DIR})
 target_link_directories(${TARGET} PRIVATE  ${SERVICES_LIB_DIR})
 target_link_libraries(${TARGET} PRIVATE statemachines /usr/local/lib/libsqlite3.so)

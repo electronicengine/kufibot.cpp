@@ -18,18 +18,23 @@
 #include "i2c_device.h"
 #include "../logger.h"
 
+#include <unistd.h>
+
 std::mutex I2CDevice::_mutex;
 
 
-I2CDevice::I2CDevice() {
-
-}
+I2CDevice::I2CDevice(const std::string& name)
+    : Driver(name), _i2cFd(-1), _address(-1) {}
 
 I2CDevice::~I2CDevice() {
-
+    I2CDevice::shutdown();
 }
 
-bool I2CDevice::isReady() const {
+void I2CDevice::shutdown() {
+    closeDevice();
+}
+
+bool I2CDevice::isReady() const noexcept {
     return _i2cFd != -1;
 }
 
@@ -42,7 +47,20 @@ bool I2CDevice::openDevice(int address) {
         return false;
     }
 
+    _address = address;
+
     return true;
+}
+
+void I2CDevice::closeDevice() {
+    std::lock_guard<std::mutex> lockGuard(_mutex);
+
+    if (_i2cFd != -1) {
+        close(_i2cFd);
+        _i2cFd = -1;
+    }
+
+    _address = -1;
 }
 
 bool I2CDevice::writeByte(uint8_t reg, uint8_t value) {

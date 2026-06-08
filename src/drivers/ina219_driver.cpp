@@ -28,10 +28,21 @@
 #include <thread>
 #include <chrono>
 
-INA219Driver::INA219Driver() : I2CDevice() {
+INA219Driver::INA219Driver() : I2CDevice("INA219Driver"), _currentLSB(0.0f), _calValue(0) {
 }
 
 INA219Driver::~INA219Driver() {
+    INA219Driver::shutdown();
+}
+
+bool INA219Driver::initialize() {
+    return initINA219();
+}
+
+void INA219Driver::shutdown() {
+    I2CDevice::shutdown();
+    _currentLSB = 0.0f;
+    _calValue = 0;
 }
 
 bool INA219Driver::initINA219(int address) {

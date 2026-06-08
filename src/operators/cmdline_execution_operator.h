@@ -2,6 +2,7 @@
 #define CMDLINEEXECUTIONOPERATOR_H
 
 #include <string>
+#include "operator.h"
 
 enum class ExecutionType {
     query,
@@ -9,10 +10,14 @@ enum class ExecutionType {
     tunning
 };
 
-class CmdLineExecutionOperator {
+class CmdLineExecutionOperator : public Operator {
 public:
     static CmdLineExecutionOperator* get_instance();
     ~CmdLineExecutionOperator() = default;
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     std::string run(const std::string path, const std::string& prompt = "");
     std::string execute(ExecutionType Type, const std::string& prompt);

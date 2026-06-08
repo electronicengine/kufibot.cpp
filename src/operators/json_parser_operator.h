@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include "operator.h"
 #include "../gesture_defs.h"
 #include "../public_data_messages.h"
 
@@ -15,10 +16,14 @@
 #define CONFIG_PATHS_FILE "/usr/local/etc/config_paths.json"
 
 
-class JsonParserOperator {
+class JsonParserOperator : public Operator {
 
 public:
     static JsonParserOperator* get_instance();
+
+    bool initialize() override;
+    void shutdown() override;
+    bool isReady() const noexcept override;
 
     std::optional<std::map<EmotionType, EmotionalMotion>> getEmotionalMotions(){return _emotionalMotions;}
     std::optional<std::map<ReactionType, ReactionalMotion>> getReactionalMotions(){return _reactionalMotions;}
@@ -84,9 +89,9 @@ private:
     std::map<ServoMotorJoint, std::map<GestureJointState, GestureJointAngle>> getJointLimits(const std::string& filename);
 
     // String conversion methods for enum types
-    std::string to_string(EmotionType emotion);
-    std::string to_string(ReactionType reaction);
-    std::string to_string(DirectiveType directive);
+    [[maybe_unused]] std::string to_string(EmotionType emotion);
+    [[maybe_unused]] std::string to_string(ReactionType reaction);
+    [[maybe_unused]] std::string to_string(DirectiveType directive);
 
     // Motion parsing methods
     static MotionSequenceItem parseMotionSequenceItem(const nlohmann::json& sequenceJson);
@@ -110,8 +115,8 @@ private:
     static ServoMotorJoint servoJointFromString(const std::string& str);
     static GestureJointState gestureStateFromString(const std::string& str);
 
-    static std::string to_string(ServoMotorJoint joint);
-    static std::string to_string(GestureJointState state);
+    [[maybe_unused]] static std::string to_string(ServoMotorJoint joint);
+    [[maybe_unused]] static std::string to_string(GestureJointState state);
 
 };
 

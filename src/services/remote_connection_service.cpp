@@ -18,10 +18,9 @@
 #include "remote_connection_service.h"
 
 #include "../logger.h"
-#include "gesture_performer_service.h"
+#include "expression_service.h"
 #include "interactive_chat_service.h"
-#include "landmark_tracker_service.h"
-#include "web_socket_service.h"
+#include "perception_service.h"
 
 RemoteConnectionService* RemoteConnectionService::_instance = nullptr;
 
@@ -34,66 +33,71 @@ RemoteConnectionService *RemoteConnectionService::get_instance()
     return _instance;
 }
 
-RemoteConnectionService::RemoteConnectionService() : Service("RemoteConnectionService") {
+RemoteConnectionService::RemoteConnectionService()
+    : Service("RemoteConnectionService"), _port(8080), _ip("0.0.0.0"), _webSocketOperator(_ip, static_cast<uint16_t>(_port)) {
 
 }
 
 bool RemoteConnectionService::initialize() {
-    subscribe_to_service(WebSocketService::get_instance());
+    _webSocketOperator.setOpenHandler([this](const ConnectionHandle& hdl) {
+        handle_websocket_open(hdl);
+    });
+    _webSocketOperator.setCloseHandler([this](const ConnectionHandle& hdl) {
+        handle_websocket_close(hdl);
+    });
+    _webSocketOperator.setMessageHandler([this](const ConnectionHandle& hdl, const std::string& message) {
+        handle_websocket_message(hdl, message);
+    });
+
+    if (!_webSocketOperator.initialize()) {
+        ERROR("Web socket operator failed to initialize.");
+        return false;
+    }
+
     return true;
 }
 
 void RemoteConnectionService::service_function() {
+    if (!_webSocketOperator.start()) {
+        ERROR("Web socket operator failed to start.");
+        _running = false;
+        return;
+    }
 
     while (_running) {
         {
             std::unique_lock<std::mutex> lock(_dataMutex);
-            _condVar.wait(lock);
+            _condVar.wait(lock, [this] {
+                return !_running || _socketMessage.has_value() || _frame.has_value() || _sensorData.has_value();
+            });
         }
 
-        if (_frame.has_value() && _hdl.has_value()) {
-            std::vector<uchar> buffer;
-            cv::imencode(".jpg", _frame.value(), buffer);
-
-            std::unique_ptr<MessageData> data = std::make_unique<WebSocketTransferData>();
-            static_cast<WebSocketTransferData *>(data.get())->hdl = _hdl.value();
-            static_cast<WebSocketTransferData *>(data.get())->msg = std::string(buffer.begin(), buffer.end());
-            static_cast<WebSocketTransferData *>(data.get())->type = 2;
-            publish(MessageType::WebSocketTransfer, data);
-            _frame.reset();
-
-            std::string sensor_json = "";
-            if (_sensorData.has_value()) {
-                sensor_json = _sensorData.value().to_json();
-            }
-
-            static_cast<WebSocketTransferData *>(data.get())->hdl = _hdl.value();
-            static_cast<WebSocketTransferData *>(data.get())->msg = sensor_json;
-            static_cast<WebSocketTransferData *>(data.get())->type = 1;
-            publish(MessageType::WebSocketTransfer, data);
-            _sensorData.reset();
+        if (!_running) {
+            break;
         }
 
         if (_socketMessage.has_value() && _hdl.has_value()) {
             if (_socketMessage.value() == "on_open") {
                 INFO("on_open");
 
-                speak("Remote Control Mode is activated!");
+                speak("Uzaktan kumanda modu aktif!");
                 std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
                 INFO("Publishing AIModeOffCall");
                 publish(MessageType::AIModeOffCall);
-                subscribe_to_service(VideoStreamService::get_instance());
+                subscribe_to_service(PerceptionService::get_instance());
                 subscribe_to_service(RobotControllerService::get_instance());
             } else if (_socketMessage.value() == "on_close") {
                 INFO("on_close");
                 INFO("Publishing AIModeOnCall");
                 publish(MessageType::AIModeOnCall);
-                unsubscribe_from_service(VideoStreamService::get_instance());
+                unsubscribe_from_service(PerceptionService::get_instance());
                 unsubscribe_from_service(RobotControllerService::get_instance());
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-                speak("AI Mode is activated!");
+                speak("EY AY Modu Aktif!");
+                _frame.reset();
+                _hdl.reset();
 
             } else {
                 Json message = Json::parse(_socketMessage.value());
@@ -107,75 +111,116 @@ void RemoteConnectionService::service_function() {
                         publish(MessageType::AIModeOnCall);
 
                         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-                        speak("AI Mode is activated!");
+                        speak("EY AY Modu aktif!");
 
                     } else if (talkieValue.find("switch ai mode off") != std::string::npos) {
                         INFO("Publishing AIModeOffCall");
 
-                        speak("Remote Control Mode is activated!");
+                        speak("Uzaktan kumanda modu aktif!");
                         std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
                         publish(MessageType::AIModeOffCall);
                     } else {
-                        std::unique_ptr<MessageData> data = std::make_unique<LLMQueryData>();
-                        static_cast<LLMQueryData *>(data.get())->query = talkieValue;
+                        auto data = std::make_unique<LLMQueryData>();
+                        data->query = talkieValue;
 
-                        publish(MessageType::LLMQuery, data);
+                        publish(MessageType::LLMQuery, std::move(data));
                     }
                 }else if (message.contains("wifi_config")) {
                         std::string ssid = message["wifi_config"]["SSID"];
                         std::string password = message["wifi_config"]["Password"];
                         INFO("Connecting Wifi: SSID: {} PASSWORD: {} ", ssid, password);
 
-                        std::string cmd = "sudo nmcli device wifi connect " +  ssid + " password " + password + " ifname wlan0";
+                        std::string cmd = "sudo nmcli device wifi connect ";
+                        cmd += ssid;
+                        cmd += " password ";
+                        cmd += password;
+                        cmd += " ifname wlan0";
 
                         system("sudo nmcli connection down Hotspot");
                         system(cmd.c_str());
 
+                }else if (message.contains("database_insert")) {
+                    auto data = std::make_unique<DatabaseInsertData>();
+                    data->input = message["database_insert"]["input"];
+                    data->output = message["database_insert"]["output"];
+
+                    publish(MessageType::DatabaseInsertData, std::move(data));
+
                 }else {
-                    std::unique_ptr<MessageData> data = std::make_unique<ControlData>();
-                    *static_cast<ControlData *>(data.get()) = ControlData(message);
+                    auto data = std::make_unique<ControlData>(message);
                     data->source = SourceService::remoteConnectionService;
 
-                    publish(MessageType::ControlData, data);
+                    publish(MessageType::ControlData, std::move(data));
                 }
             }
 
             _socketMessage.reset();
         }
+
+        if (_frame.has_value() && _hdl.has_value()) {
+            std::vector<uchar> buffer;
+            cv::imencode(".jpg", _frame.value(), buffer);
+            _webSocketOperator.sendBinary(_hdl.value(), buffer);
+            _frame.reset();
+
+            std::string sensor_json;
+            if (_sensorData.has_value()) {
+                sensor_json = _sensorData.value().to_json();
+            }
+
+            _webSocketOperator.sendText(_hdl.value(), sensor_json);
+            _sensorData.reset();
+        }
     }
+
+    _webSocketOperator.stop();
 }
 
 void RemoteConnectionService::speak(std::string text) {
     INFO("Speaking: {}", text);
-    std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
-    static_cast<SpeakRequestData *>(data.get())->text = text;
-    publish(MessageType::SpeakRequest, data);
+    auto data = std::make_unique<SpeakRequestData>();
+    data->text = text;
+    publish(MessageType::SpeakRequest, std::move(data));
 }
 
 RemoteConnectionService::~RemoteConnectionService()
 {
-    stop(); // Ensure everything is stopped in the destructor
+    stop();
+    _webSocketOperator.shutdown();
+}
+
+void RemoteConnectionService::handle_websocket_open(const ConnectionHandle& hdl) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+    _socketMessage = "on_open";
+    _hdl = hdl;
+    _condVar.notify_one();
+}
+
+void RemoteConnectionService::handle_websocket_close(const ConnectionHandle& hdl) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+    _socketMessage = "on_close";
+    _hdl = hdl;
+    _condVar.notify_one();
+}
+
+void RemoteConnectionService::handle_websocket_message(const ConnectionHandle& hdl, const std::string& message) {
+    std::lock_guard<std::mutex> lock(_dataMutex);
+    _socketMessage = message;
+    _hdl = hdl;
+    _condVar.notify_one();
 }
 
 void RemoteConnectionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) {
 
     switch (type) {
-        case MessageType::WebSocketReceive: {
-            if (data) {
-                std::lock_guard<std::mutex> lock(_dataMutex);
-                _socketMessage = static_cast<WebSocketReceiveData*>(data.get())->msg;
-                _hdl = static_cast<WebSocketReceiveData*>(data.get())->hdl;
-                _condVar.notify_one();
-            }
-            break;
-        }
-
         case MessageType::VideoFrame: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
-                _frame = static_cast<VideoFrameData*>(data.get())->frame;
-                _condVar.notify_one();
+                if (const auto* frameData = dynamic_cast<const VideoFrameData*>(data.get())) {
+                    _frame = frameData->frame;
+                    _condVar.notify_one();
+                }
             }
 
             break;
@@ -184,7 +229,9 @@ void RemoteConnectionService::subcribed_data_receive(MessageType type, const std
         case MessageType::SensorData: {
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);
-                _sensorData = *static_cast<SensorData*>(data.get());
+                if (const auto* sensorData = dynamic_cast<const SensorData*>(data.get())) {
+                    _sensorData = *sensorData;
+                }
             }
 
             break;

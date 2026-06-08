@@ -5,13 +5,25 @@
 #include "udp_server_operator.h"
 
 
-UdpServerOperator::UdpServerOperator() : _sock(-1), _running(false) {
+UdpServerOperator::UdpServerOperator() : Operator("UdpServerOperator"), _sock(-1), _running(false) {
 
 }
 
 
 UdpServerOperator::~UdpServerOperator() {
+    shutdown();
+}
+
+bool UdpServerOperator::initialize() {
+    return openSocket();
+}
+
+void UdpServerOperator::shutdown() {
     closeSocket();
+}
+
+bool UdpServerOperator::isReady() const noexcept {
+    return _sock >= 0;
 }
 
 

@@ -3,6 +3,7 @@
 #define TUI_SERVICE_H
 
 #include "service.h"
+#include "../public_data_messages.h"
 
 namespace finalcut {
     class FApplication;
@@ -26,6 +27,7 @@ private:
     std::function<void(const std::map<ServoMotorJoint, uint8_t>&)> _tuiMotorFeedBackInfoCallBackFunction;
     SensorData _currentSensorData;
     RecognizedGestureData _recognizedGestureData;
+    RecognizedSpeechData _recognizedSpeechData;
 
     TuiService();
 

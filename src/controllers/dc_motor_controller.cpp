@@ -27,27 +27,46 @@ DCMotorController* DCMotorController::get_instance(int address) {
     return _instance;
 }
 
-DCMotorController::DCMotorController(int address) {
-    bool ret = _driver.initPCA9685(address);
+DCMotorController::DCMotorController(int address)
+    : Controller("DCMotorController"), _address(address) {
+    if (!DCMotorController::initialize()) {
+        WARNING("{} failed to initialize", getName());
+    }
+}
+
+bool DCMotorController::initialize() {
+    bool ret = _driver.initPCA9685(_address);
     if (ret) {
         _driver.setPWMFrequency(50); // Set PWM frequency
-        _initialized = true;
+        _initialized.store(true);
         INFO("DCMotorController is initialized!");
     }else {
-        _initialized = false;
+        _initialized.store(false);
         ERROR("DCMotorController initialization failed!");
     }
 
+    return ret;
+}
 
+void DCMotorController::shutdown() {
+    if (_initialized.load()) {
+        stop();
+    }
+    _driver.shutdown();
+    _initialized.store(false);
+}
+
+bool DCMotorController::isReady() const noexcept {
+    return _initialized.load();
 }
 
 DCMotorController::~DCMotorController() {
-    stop(); // Ensure motors stop on object destruction
+    DCMotorController::shutdown(); // Ensure motors stop on object destruction
 }
 
 
 void DCMotorController::run(DCMotor motor, DCMotorDirection direction, int speed) {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
 
     if (speed > 100) {
@@ -81,7 +100,7 @@ void DCMotorController::setDirection(int pin1, int pin2, DCMotorDirection direct
 }
 
 void DCMotorController::forward(int magnitude) {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
 
     run(DCMotor::right, DCMotorDirection::forward, magnitude);
@@ -89,7 +108,7 @@ void DCMotorController::forward(int magnitude) {
 }
 
 void DCMotorController::backward(int magnitude) {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
 
     run(DCMotor::right,  DCMotorDirection::backward, magnitude);
@@ -97,7 +116,7 @@ void DCMotorController::backward(int magnitude) {
 }
 
 void DCMotorController::turnRight(int magnitude) {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
 
     run(DCMotor::right,  DCMotorDirection::forward, magnitude);
@@ -105,7 +124,7 @@ void DCMotorController::turnRight(int magnitude) {
 }
 
 void DCMotorController::turnLeft(int magnitude) {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
 
     run(DCMotor::right, DCMotorDirection::backward, magnitude);
@@ -113,7 +132,7 @@ void DCMotorController::turnLeft(int magnitude) {
 }
 
 void DCMotorController::stop() {
-    if (!_enable.load() || !_initialized)
+    if (!isEnabled() || !isReady())
         return;
     
     _driver.setDutyCyclePercent(PWMA, 0);

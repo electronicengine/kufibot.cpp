@@ -3,8 +3,6 @@
 
 #include "driver_data.h"
 #include "i2c_device.h"
-#include <cstdint>
-#include "driver_data.h"
 
 
 // HMC5883L register addresses
@@ -22,15 +20,17 @@ class HMC5883LDriver : public I2CDevice {
 private:
     int fd;
 
-    double compute_heading(int16_t x, int16_t y);
+    static double compute_heading(double x, double y);
     int16_t read_x();
     int16_t read_y();
     int16_t read_z();
 
 public:
     HMC5883LDriver();
-    ~HMC5883LDriver();
+    ~HMC5883LDriver() override;
 
+    bool initialize() override;
+    void shutdown() override;
 
     bool initHMC5883l();
     Axis readHMC5883l();

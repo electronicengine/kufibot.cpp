@@ -33,6 +33,7 @@ private:
 
     bool initialize();
     void service_function();
+    void insertToDatabase(const std::string& input, const std::string& output);
     void updateRAGDatabase();
     void showRAGDatabase();
     void clearRAGDatabase();
