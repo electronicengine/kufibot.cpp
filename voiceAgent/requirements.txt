@@ -1,0 +1,7 @@
+pipecat-ai[silero,deepgram,openai,elevenlabs,local]
+python-dotenv
+loguru
+
+# Dev / test dependencies
+pytest>=7.0
+pytest-asyncio>=0.21
