@@ -18,9 +18,10 @@
 #include "robot_controller_service.h"
 #include "expression_service.h"
 #include "landmark_tracker_service.h"
-#include "remote_connection_service.h"
 #include "mapping_service.h"
+#include "remote_connection_service.h"
 #include "tui_service.h"
+#include "voice_agent_service.h"
 
 #include "../logger.h"
 
@@ -46,6 +47,7 @@ bool RobotControllerService::initialize() {
     subscribe_to_service(InteractiveChatService::get_instance());
     subscribe_to_service(LandmarkTrackerService::get_instance());
     subscribe_to_service(RemoteConnectionService::get_instance());
+    subscribe_to_service(VoiceAgentService::get_instance());
 
     _robot.start();
 
@@ -106,7 +108,10 @@ void RobotControllerService::subcribed_data_receive(MessageType type,  const std
         }
 
         case MessageType::SensorReadRequest: {
-            publishSensorValues();
+            std::unique_lock<std::mutex> lock(_dataMutex, std::try_to_lock);
+            if (lock.owns_lock()) {
+                publishSensorValues();
+            }
             break;
         }
 

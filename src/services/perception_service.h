@@ -27,6 +27,7 @@ private:
     bool _showFrame;
     std::atomic<bool> _aiModeEnabled{true};
 
+
     static PerceptionService *_instance;
 
     explicit PerceptionService(const std::string& name = "PerceptionService",  bool showFrame = false);
@@ -40,7 +41,9 @@ private:
     bool initialize() override;
     void service_function() override;
 
+    std::string getCameraSnapshot(cv::Mat& frame);
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data) override;
+    cv::Mat _frame;
 
 public:
     VideoOperator& get_video_operator();

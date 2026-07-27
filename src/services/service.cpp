@@ -64,8 +64,8 @@ void Service::unsubscribe_from_service(Service *SubscribedService) {
 }
 
 
-bool Service::start()
-{
+
+bool Service::start() {
     if (!_disabled) {
         if (!_running) {
             if (!_initialized) {

@@ -95,7 +95,7 @@ bool ExpressionService::initialize() {
 
     auto aiConfig = parser->getAiConfig();
     if (aiConfig.has_value()) {
-        SpeechPerformingOperator::get_instance()->loadModel(aiConfig->speechProcessorConfig.modelPath);
+        //SpeechPerformingOperator::get_instance()->loadModel(aiConfig->speechProcessorConfig.modelPath);
     } else {
         ERROR("Speech Processor model couldn't load");
         return false;
@@ -136,11 +136,6 @@ void ExpressionService::service_function()
 
                 }
 
-                INFO("End Marker {}", response.endMarker);
-                if (response.endMarker) {
-                    INFO("Gesture Performance is complited.!");
-                    publish(MessageType::GesturePerformanceCompleted);
-                }
             }else if (std::holds_alternative<std::string>(_speakingQueue.front())) {
                 std::string speakText = std::get<std::string>(_speakingQueue.front());
                 INFO("Speak Text: {}", speakText);
@@ -148,7 +143,6 @@ void ExpressionService::service_function()
                 speak.detach();
 
             }
-
 
             while (_speaking) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -249,7 +243,7 @@ void ExpressionService::executeEmotionalMotion(EmotionType emotionType) {
 
     auto it = _emotionalMotions.find(emotionType);
     if (it == _emotionalMotions.end()) {
-        WARNING("Emotional motion not found: ");
+        WARNING("Emotional motion not found: {}", (int)emotionType);
         return;
     }
 
@@ -263,7 +257,7 @@ void ExpressionService::executeReactionalMotion(ReactionType reactionType) {
 
     auto it = _reactionalMotions.find(reactionType);
     if (it == _reactionalMotions.end()) {
-        WARNING("Reactional motion not found: {}");
+        WARNING("Reactional motion not found: {}", (int)reactionType);
         return;
     }
 
@@ -327,6 +321,7 @@ void ExpressionService::executeMotionSequence(const std::map<ServoMotorJoint, Ge
 
 void ExpressionService::makeMimic(const LLMResponseData &llm_response) {
     INFO("makeMimic");
+    publish(MessageType::StopPerceptionRequest);
 
     if (llm_response.reactionSimilarity > llm_response.emotionSimilarity) {
         executeReactionalMotion(llm_response.reactionalGesture.reaction);
@@ -334,6 +329,8 @@ void ExpressionService::makeMimic(const LLMResponseData &llm_response) {
     else {
         executeEmotionalMotion(llm_response.emotionalGesture.emotion);
     }
+
+    publish(MessageType::StartPerceptionRequest);
 }
 
 void ExpressionService::speakText(const std::string &text) {

@@ -144,8 +144,10 @@ enum class MessageType {
     ShowRAGDatabaseRequest,
     AIModeOnCall,
     AIModeOffCall,
-    StopVideoStreamRequest,
-    StartVideoStreamRequest
+    StopPerceptionRequest,
+    StartPerceptionRequest,
+    CameraSnapShotRequest,
+    CameraSnapShotResponse,
 };
 
 using Json = nlohmann::json;
@@ -168,7 +170,7 @@ struct SensorData  : public MessageData {
     std::optional<std::map<ServoMotorJoint, uint8_t>> currentJointAngles;
     std::optional<DCMotorState> dcMotorState;
 
-    [[nodiscard]] std::string to_json() const {
+    std::string to_json() const {
 
         if (!compassData.has_value() || !distanceData.has_value() || !powerData.has_value() ) {
             return "";
@@ -308,8 +310,8 @@ struct LLMResponseData : public MessageData {
         // Zorunlu alanlar (to_json tarafında yazılanlar)
         sentence = j.value("sentence", std::string{});
 
-        emotionalGesture.symbol = j.value("emotional_gesture",std::string{});
-        reactionalGesture.symbol = j.value("reactional_gesture", std::string{});
+        emotionalGesture.emotion = (EmotionType) j.value("emotional_gesture", 255);
+        reactionalGesture.reaction =(ReactionType) j.value("reactional_gesture", 255);
         directive.symbol = j.value("directive", std::string{});
 
         endMarker = j.value("end_marker", false);
@@ -325,13 +327,13 @@ struct LLMResponseData : public MessageData {
     [[nodiscard]] std::string to_json() const {
         Json j;
         j["sentence"] = sentence;
-        j["emotional_gesture"] = emotionalGesture.symbol;
-        j["reactional_gesture"] = reactionalGesture.symbol;
+        j["emotional_gesture"] = emotionalGesture.emotion;
+        j["reactional_gesture"] = reactionalGesture.reaction;
         j["directive"] = directive.symbol;
         j["end_marker"] = endMarker;
         j["emotion_similarity"] = emotionSimilarity;
-        j["reaction_similarity"] = reactionSimilarity;
         j["directive_similarity"] = directiveSimilarity;
+        j["reaction_similarity"] = reactionSimilarity;
         return j.dump();
     }
 };
@@ -365,6 +367,63 @@ struct FaceInfo {
     FaceInfo() : left_ear(0), right_ear(0), avg_ear(0), mar(0), eyebrow_height(0) {}
 };
 
+
+struct CameraSnapShotResponseData : public MessageData {
+
+    std::string imagePath;
+    std::string faceEmotion;
+    FaceInfo faceInfo;
+    std::string handGesture;
+    BoundingBox handBbox;
+
+    CameraSnapShotResponseData() = default;
+
+    CameraSnapShotResponseData(const std::string& jsonStr) {
+
+        Json j = Json::parse(jsonStr);
+
+        if (!j.is_object()) {
+            return;
+        }
+
+        imagePath = j.value("image_path", std::string{});
+        FaceInfo faceInfo;
+        faceEmotion = j.value("face_emotion", std::string{});
+        faceInfo.left_ear = j.value("face_left_ear", 0.0);
+        faceInfo.right_ear = j.value("face_right_ear", 0.0);
+        faceInfo.avg_ear = j.value("face_avg_ear", 0.0 );
+        faceInfo.mar = j.value("face_mar", 0.0);
+        faceInfo.eyebrow_height = j.value("face_eyebrow_height", 0.0);
+
+        handGesture = j.value("hand_gesture", "");
+        handBbox.xmin = j.value("hand_bbox_xmin", 0);
+        handBbox.ymin = j.value("hand_bbox_ymin", 0);
+        handBbox.xmax = j.value("hand_bbox_xmax", 0);
+        handBbox.ymax = j.value("hand_bbox_ymax", 0);
+        handBbox.valid = j.value("hand_bbox_valid", false);
+    }
+
+
+    [[nodiscard]] std::string to_json() const {
+        Json j;
+        j["image_path"] = imagePath;
+        j["face_emotion"] = faceEmotion;
+        j["face_left_ear"] = faceInfo.left_ear;
+        j["face_right_ear"] = faceInfo.right_ear;
+        j["face_avg_ear"] = faceInfo.avg_ear;
+        j["face_mar"] = faceInfo.mar;
+        j["face_eyebrow_height"] = faceInfo.eyebrow_height;
+
+        j["hand_gesture"] = handGesture;
+        j["hand_bbox_xmin"] = handBbox.xmin;
+        j["hand_bbox_ymin"] = handBbox.ymin;
+        j["hand_bbox_xmax"] = handBbox.xmax;
+        j["hand_bbox_ymax"] = handBbox.ymax;
+        j["hand_bbox_valid"] = handBbox.valid;
+
+        return j.dump();
+    }
+};
 
 struct RecognizedGestureData : public MessageData {
     std::string faceEmotion;

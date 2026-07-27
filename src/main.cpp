@@ -15,15 +15,17 @@
  * along with Kufibot. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "services/tui_service.h"
-#include "services/perception_service.h"
-#include "services/landmark_tracker_service.h"
-#include "services/robot_controller_service.h"
-#include "services/rag_service.h"
-#include "services/expression_service.h"
-#include "logger.h"
 #include <future>
 #include <string>
+#include "logger.h"
+#include "services/expression_service.h"
+#include "services/landmark_tracker_service.h"
+#include "services/perception_service.h"
+#include "services/rag_service.h"
+#include "services/robot_controller_service.h"
+#include "services/tui_service.h"
+
+#include "services/voice_agent_service.h"
 
 auto main(int argc, char *argv[]) -> int {
     bool showFrame = false;
@@ -79,31 +81,18 @@ auto main(int argc, char *argv[]) -> int {
         if (!ret) {
             return 1;
         }
-        // ret = RemoteConnectionService::
 
-
-        // ret = InteractiveChatService::get_instance()->stop();
-        // if (!ret) {
-        //     return 1;
-        // }
-        // ret = RagService::get_instance()->start();
-        // if (!ret) {
-        //     return 1;
-        // }
         ret = LandmarkTrackerService::get_instance()->start();
         if (!ret) {
             return 1;
         }
-        
-        // ret = MappingService::get_instance()->stop();
-        // if (!ret) {
-        //     return 1;
-        // }
+        ret = VoiceAgentService::get_instance()->start();
+        if (!ret) {
+            return 1;
+        }
+
     }
 
-    // std::unique_ptr<MessageData> data = std::make_unique<SpeakRequestData>();
-    // static_cast<SpeakRequestData *>(data.get())->text = "Sistem yapılandırıldı. Hadi Konuşalım.";
-    // LandmarkTrackerService::get_instance()->publish(MessageType::SpeakRequest, data);
     if (!asService) {
         bool ret = TuiService::get_instance()->start();
         if (!ret) {

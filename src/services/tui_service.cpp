@@ -192,6 +192,117 @@ void TuiService::service_function() {
             } else {
                 WARNING("speak command usage: speak \"text to speak\" or speak text");
             }
+        }else if (input.find("expression") != std::string::npos) {
+            std::string cmd = input;
+            size_t pos = cmd.find("expression");
+            std::string arg = cmd.substr(pos + 10);
+
+            // Trim leading/trailing spaces
+            size_t start = arg.find_first_not_of(" \t\r\n\"'");
+            size_t end = arg.find_last_not_of(" \t\r\n\"'");
+            std::string target = (start != std::string::npos && end != std::string::npos) ? arg.substr(start, end - start + 1) : "";
+
+            if (target.empty() || target == "help") {
+                INFO("Usage: expression <gesture_name>");
+                INFO("       expression list");
+                INFO("Examples: expression happy");
+                INFO("          expression greeting");
+            } else if (target == "list") {
+                INFO("Available Emotional Gestures:");
+                INFO("--> happy, angry, funny, serious, curious, worried, surprised, confident");
+                INFO("Available Reactional Gestures:");
+                INFO("--> greeting, listening, talking, accepting, rejecting, thinking, agreeing");
+            } else {
+                bool found = false;
+                LLMResponseData data;
+                data.endMarker = true;
+                data.sentence = "Testing " + target;
+
+                if (target == "happy") {
+                    data.emotionalGesture.emotion = EmotionType::happy;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "angry") {
+                    data.emotionalGesture.emotion = EmotionType::angry;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "funny") {
+                    data.emotionalGesture.emotion = EmotionType::funny;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "serious") {
+                    data.emotionalGesture.emotion = EmotionType::serious;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "curious") {
+                    data.emotionalGesture.emotion = EmotionType::curious;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "worried") {
+                    data.emotionalGesture.emotion = EmotionType::worried;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "surprised") {
+                    data.emotionalGesture.emotion = EmotionType::surprised;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "confident") {
+                    data.emotionalGesture.emotion = EmotionType::confident;
+                    data.emotionSimilarity = 1.0f;
+                    data.reactionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "greeting") {
+                    data.reactionalGesture.reaction = ReactionType::greeting;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "listening") {
+                    data.reactionalGesture.reaction = ReactionType::listening;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "talking") {
+                    data.reactionalGesture.reaction = ReactionType::talking;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "accepting") {
+                    data.reactionalGesture.reaction = ReactionType::accepting;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "rejecting") {
+                    data.reactionalGesture.reaction = ReactionType::rejecting;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "thinking") {
+                    data.reactionalGesture.reaction = ReactionType::thinking;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                } else if (target == "agreeing") {
+                    data.reactionalGesture.reaction = ReactionType::agreeing;
+                    data.reactionSimilarity = 1.0f;
+                    data.emotionSimilarity = 0.0f;
+                    found = true;
+                }
+
+                if (found) {
+                    INFO("Publishing LLMResponse with gesture: {}", target);
+                    auto msgData = std::make_unique<LLMResponseData>(data);
+                    publish(MessageType::LLMResponse, std::move(msgData));
+                } else {
+                    WARNING("Unknown gesture: '{}'. Type 'expression list' to see all valid gestures.", target);
+                }
+            }
         }
     }
 }
@@ -272,6 +383,8 @@ void TuiService::printHelp() {
     INFO("--> speak <text> : make robot speak");
     INFO("--> log <className> : print logs of a service");
     INFO("--> gestures <seconds>: prints recognized gesture info while seconds");
+    INFO("--> expression <name> : test gesture by name (e.g. happy, greeting)");
+    INFO("--> expression list : list all testable expressions");
     INFO("--> start|stop <service> : start or stop a service");
     INFO("----> Available Services: ");
     INFO("------> PerceptionService (camera + perception)");
@@ -279,6 +392,7 @@ void TuiService::printHelp() {
     INFO("------> RemoteConnectionService");
     INFO("------> InteractiveChatService");
     INFO("------> MappingService");
+    INFO("------> ExpressionService");
 }
 
 void TuiService::setJointAngle(ServoMotorJoint joint, int angle) {

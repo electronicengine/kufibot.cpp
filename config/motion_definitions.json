@@ -72,8 +72,8 @@
           "neck": "middle",
           "headUpDown": "middle",
           "headLeftRight": "halfup",
-          "eyeLeft": "middle",
-          "eyeRight": "middle"
+          "eyeLeft": "fullup",
+          "eyeRight": "fullup"
         },
         "sequence": [
           {

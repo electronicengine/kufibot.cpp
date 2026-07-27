@@ -25,6 +25,7 @@
 #include "../logger.h"
 #include "../operators/json_parser_operator.h"
 #include "../operators/speech_recognizing_operator.h"
+#include "expression_service.h"
 #include "remote_connection_service.h"
 
 PerceptionService* PerceptionService::_instance = nullptr;
@@ -49,6 +50,7 @@ PerceptionService::~PerceptionService() {
 
 bool PerceptionService::initialize() {
 	subscribe_to_service(RemoteConnectionService::get_instance());
+    subscribe_to_service(ExpressionService::get_instance());
 
 	if (!_videoOperator.initialize()) {
 		ERROR("Video operator failed to initialize!");
@@ -68,31 +70,29 @@ bool PerceptionService::initialize() {
 	}
 	INFO("Hand gesture recognition module initialized.");
 
-	auto parser = JsonParserOperator::get_instance();
-	auto speechConfig = parser->getAiConfig()->speechRecognizerConfig;
+	//uto parser = JsonParserOperator::get_instance();
+	//auto speechConfig = parser->getAiConfig()->speechRecognizerConfig;
 
-	INFO("Speech Recognizing Model is loading...");
-	auto* recognizer = SpeechRecognizingOperator::get_instance(
-		speechConfig.silenceThreshold,
-		speechConfig.sampleRate,
-		speechConfig.framesPerBuffer,
-		speechConfig.maxSilenceDurationSec,
-		speechConfig.listenTimeoutMs,
-		speechConfig.command);
+	//INFO("Speech Recognizing Model is loading...");
+	// auto* recognizer = SpeechRecognizingOperator::get_instance(
+	// 	speechConfig.silenceThreshold,
+	// 	speechConfig.sampleRate,
+	// 	speechConfig.framesPerBuffer,
+	// 	speechConfig.maxSilenceDurationSec,
+	// 	speechConfig.listenTimeoutMs,
+	// 	speechConfig.command);
 
-	recognizer->load_model(speechConfig.modelPath);
-	if (!recognizer->open()) {
-		ERROR("Speech recognizing module failed to open audio stream!");
-		return false;
-	}
-	INFO("Speech recognizing module initialized.");
+	// recognizer->load_model(speechConfig.modelPath);
+	// if (!recognizer->open()) {
+	// 	ERROR("Speech recognizing module failed to open audio stream!");
+	// 	return false;
+	// }
+	//INFO("Speech recognizing module initialized.");
 
 	return true;
 }
 
 void PerceptionService::service_function() {
-	auto* recognizer = SpeechRecognizingOperator::get_instance();
-	bool speechListening = false;
 
 	if (!_videoOperator.open()) {
 		ERROR("Perception service could not open camera.");
@@ -101,42 +101,62 @@ void PerceptionService::service_function() {
 	}
 
 	while (_running) {
-		cv::Mat frame;
-		if (!_videoOperator.readFrame(frame)) {
+		if (!_videoOperator.readFrame(_frame)) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(30));
 			continue;
 		}
 
-		publishVideoFrame(frame);
+		//publishVideoFrame(frame);
 
 		const bool aiModeEnabled = _aiModeEnabled.load();
-		if (aiModeEnabled && !speechListening) {
-			if (!recognizer->start_listen()) {
-				WARNING("Speech recognizer could not start listening. Perception service will continue with vision only.");
-			} else {
-				speechListening = true;
-			}
-		} else if (!aiModeEnabled && speechListening) {
-			recognizer->stop_listen();
-			speechListening = false;
-		}
 
 		if (aiModeEnabled) {
-			processFrame(frame);
-			processSpeechInput();
+			processFrame(_frame);
+			//processSpeechInput();
 		}
 
 		if (_showFrame) {
-			cv::imshow("Perception Service", frame);
+			cv::imshow("Perception Service", _frame);
 			cv::waitKey(1);
 		}
 	}
 
-	if (speechListening) {
-		recognizer->stop_listen();
-	}
 	_videoOperator.close();
 }
+
+
+
+std::string PerceptionService::getCameraSnapshot(cv::Mat& frame) {
+    // Kayıt dizinini belirle
+    std::string saveDir = std::string(getenv("HOME")) + "/.config/kufi/";
+
+    // Dizin yoksa oluştur
+    std::filesystem::create_directories(saveDir);
+
+    // Timestamp ile unique dosya adı oluştur
+    auto now = std::chrono::system_clock::now();
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        now.time_since_epoch()).count();
+
+    std::string filePath = saveDir + "frame_" + std::to_string(timestamp) + ".jpg";
+
+    // Frame boş mu kontrol et
+    if (frame.empty()) {
+        ERROR("Frame is empty, cannot save image");
+        return "";
+    }
+
+    // JPG olarak kaydet (kalite: 0-100)
+    std::vector<int> params = {cv::IMWRITE_JPEG_QUALITY, 90};
+    if (!cv::imwrite(filePath, frame, params)) {
+        ERROR("Failed to save image to: {}", filePath);
+        return "";
+    }
+
+    return filePath;
+}
+
+
 
 void PerceptionService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
 	(void)data;
@@ -156,16 +176,27 @@ void PerceptionService::subcribed_data_receive(MessageType type, const std::uniq
 			}
 			break;
 		}
-		case MessageType::StartVideoStreamRequest: {
+		case MessageType::StartPerceptionRequest: {
 			if (!_running) {
 				start();
 			}
 			break;
 		}
-		case MessageType::StopVideoStreamRequest: {
+		case MessageType::StopPerceptionRequest: {
 			stop();
 			break;
 		}
+
+	    case MessageType::CameraSnapShotRequest: {
+            if (data) {
+                std::lock_guard<std::mutex> lock(_dataMutex);
+                std::string path = getCameraSnapshot(_frame);
+                auto data = std::make_unique<CameraSnapShotResponseData>();
+                static_cast<CameraSnapShotResponseData*>(data.get())->imagePath = path;
+                publish(MessageType::CameraSnapShotResponse, std::move(data));
+            }
+            break;
+        }
 		default:
 			break;
 	}

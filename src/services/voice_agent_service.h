@@ -19,6 +19,7 @@ private:
     UdpServerSocket _udpServer;
     int _listenPort = 5005;
     std::shared_ptr<SensorData> _sensorData;
+    std::string _cameraSnapShot;
 
     void process_received_data(const std::string& data);
     void subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData>& data);

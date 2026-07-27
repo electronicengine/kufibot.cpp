@@ -44,7 +44,8 @@ bool VideoOperator::openLocked() {
         return true;
     }
 
-    auto capture = std::make_shared<cv::VideoCapture>(_cameraIndex, VIDEO_CAPTURE_BACKEND);
+    auto capture = std::make_shared<cv::VideoCapture>("/dev/v4l/by-id/usb-Generic_HD_camera_20181212000000-video-index0", VIDEO_CAPTURE_BACKEND);
+
     if (!capture->isOpened()) {
         ERROR("Error: Could not open the camera with index {}.", _cameraIndex);
         _cap.reset();

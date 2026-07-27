@@ -42,12 +42,13 @@ bool ServoMotorController::initialize() {
     if (ret) {
         _driver.setPWMFrequency(50);
         _currentJointAngles = {
-            {ServoMotorJoint::rightArm, 15}, {ServoMotorJoint::leftArm, 170}, {ServoMotorJoint::neck, 78},
+            {ServoMotorJoint::rightArm, 15}, {ServoMotorJoint::leftArm, 170}, {ServoMotorJoint::neck, 30},
             {ServoMotorJoint::headUpDown, 15}, {ServoMotorJoint::headLeftRight, 90}, {ServoMotorJoint::eyeRight, 160},
             {ServoMotorJoint::eyeLeft, 20}
         };
         _initialized.store(true);
-
+        initSaveFile();
+        loadJointAngles();
         INFO("Servo driver initialized");
     }else {
         _initialized.store(false);
@@ -57,6 +58,7 @@ bool ServoMotorController::initialize() {
 
     return ret;
 }
+
 
 void ServoMotorController::shutdown() {
     _driver.shutdown();
@@ -71,25 +73,65 @@ ServoMotorController::~ServoMotorController() {
     ServoMotorController::shutdown();
 }
 
+void ServoMotorController::initSaveFile() {
+    // Dosya yoksa oluştur, varsa dokunma
+    std::ofstream createFile(SAVE_PATH, std::ios::app);
+    if (!createFile.is_open()) {
+        ERROR("Failed to create joint_angles.json");
+        return;
+    }
+    createFile.close();
+}
 
-void ServoMotorController::saveJointAngles()
-{
-    // std::ofstream outFile("joint_angles.json");
-    // outFile << json::dump(jointAngles, outFile) << ;
-    // outFile.close();
+void ServoMotorController::saveJointAngles() {
+    std::ofstream outFile(SAVE_PATH, std::ios::out | std::ios::trunc);
+    if (!outFile.is_open()) {
+        ERROR("Failed to open joint_angles.json for writing");
+        return;
+    }
+
+    Json data;
+    for (const auto& [joint, angle] : _currentJointAngles) {
+        data[Servo_Motor_Joint_Names.at(joint)] = angle;
+    }
+    outFile << data.dump(4);
+    outFile.close();
 }
 
 void ServoMotorController::loadJointAngles() {
-    //  std::ifstream inFile("oint_angles.json");
-    // if (inFile.is_open()) {
-    //     Json data = Json::parse(inFile);
-    // }else{
-    //     ERROR("Error opening file: example.json");
-    //     return;
-    // }
-    //
-    // inFile.close();
+
+    std::ifstream inFile(SAVE_PATH);
+    if (!inFile.is_open()) {
+        ERROR("Error opening file: servo_joint_angles.json");
+        return;
+    }
+
+    try {
+        std::stringstream buffer;
+        buffer << inFile.rdbuf();
+        inFile.close();
+
+        std::string content = buffer.str();
+        if (content.empty()) {
+            // Dosya boşsa yüklenecek bir şey yok, hata değil
+            return;
+        }
+
+        Json data = Json::parse(content, nullptr, false);
+        if (data.is_discarded()) {
+            ERROR("Invalid JSON format in file: servo_joint_angles.json");
+            return;
+        }
+
+        for (auto& [joint, angle] : _currentJointAngles) {
+            angle = data.value(Servo_Motor_Joint_Names.at(joint), angle);
+        }
+    } catch (const std::exception& e) {
+        ERROR("Failed to parse JSON: {}", e.what());
+    }
 }
+
+
 
 void ServoMotorController::setAllJointsAngle(std::map<ServoMotorJoint, uint8_t>& angles) {
     for (const auto& [joint, angle] : angles) {
@@ -98,7 +140,6 @@ void ServoMotorController::setAllJointsAngle(std::map<ServoMotorJoint, uint8_t>&
         setJointAngle(joint, angle);
     }
 
-    saveJointAngles();
 }
 
 void ServoMotorController::setJointAngle(ServoMotorJoint joint, int targetAngle, int step, int delayMs) {
@@ -123,6 +164,8 @@ void ServoMotorController::setJointAngle(ServoMotorJoint joint, int targetAngle,
         int pulse = 500 + (currentAngle / 180.0) * 2000;
         _driver.setDutyCyclePulse((int)joint, pulse);
         usleep(delayMs * 1000);
+        _currentJointAngles[joint] = currentAngle;
+        saveJointAngles();
     }
     _currentJointAngles[joint] = targetAngle;
 }
