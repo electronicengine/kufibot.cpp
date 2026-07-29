@@ -28,7 +28,9 @@ TalkingState::TalkingState(std::string n, State* parent) : State(n, parent) {
 }
 
 std::optional<State*> TalkingState::onEnter(const ControlEvent& ev) {
-    INFO("onEnter TalkingState");
+    INFO("onEnter TalkingState source: {}", (int)ev.source);
+    _entrySource = ev.source;
+
     CompassController::get_instance()->setEnable(true);
     DistanceController::get_instance()->setEnable(true);
     PowerController::get_instance()->setEnable(true);
@@ -49,12 +51,20 @@ std::optional<State*> TalkingState::onEvent(const ControlEvent& ev) {
 
     switch (ev.type) {
         case EventType::control: {
-            _parentState->_lastEventTime = std::chrono::steady_clock::now();
+            // Only reset the MovingState timeout for events from the service
+            // that triggered entry into TalkingState. This prevents continuous
+            // landmark-tracking ControlData from keeping the state alive after
+            // expression gestures complete.
+            if (ev.source == _entrySource) {
+                _parentState->_lastEventTime = std::chrono::steady_clock::now();
+            }
             static_cast<Robot*>(_machine)->control_motion(ev.controlData);
             return stayOnThisState();
         }
+        case EventType::timeout:
+            // Let MovingState handle the timeout
+            return stayOnThisState();
         default:
-            INFO("doesn't find the event in TalkingState");
             return stayOnThisState();
     }
 }

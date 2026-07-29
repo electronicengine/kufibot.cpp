@@ -14,6 +14,9 @@ struct TalkingState : State {
     std::optional<State*> onEnter(const ControlEvent& ev) override;
     std::optional<State*> onExit(const ControlEvent& ev) override;
     std::optional<State*> onEvent(const ControlEvent& ev) override;
+
+private:
+    SourceService _entrySource = SourceService::none;
 };
 
 

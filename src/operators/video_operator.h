@@ -20,6 +20,8 @@ public:
     bool open();
     void close();
     bool readFrame(cv::Mat& frame);
+    bool grabFrame();
+    bool retrieveFrame(cv::Mat& frame);
 
     int getCameraIndex() const noexcept;
     int getFrameWidth() const noexcept;

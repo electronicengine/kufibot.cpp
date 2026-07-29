@@ -436,6 +436,7 @@ void TuiService::subcribed_data_receive(MessageType type,  const std::unique_ptr
             }
             break;
 
+            
         case MessageType::SensorData:
             if (data) {
                 std::lock_guard<std::mutex> lock(_dataMutex);

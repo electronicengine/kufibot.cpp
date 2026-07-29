@@ -72,6 +72,7 @@ void RobotControllerService::service_function() {
                 source = static_cast<MessageData*>(&_controlData.value())->source.value();
             }
             else {
+                WARNING("ControlData source is not set. Defaulting to SourceService::none.");
                 source = SourceService::none;
             }
 

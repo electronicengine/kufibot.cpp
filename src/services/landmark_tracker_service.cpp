@@ -204,14 +204,6 @@ PolarVector LandmarkTrackerService::calculateErrorVector(const Point2D &target) 
 void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std::unique_ptr<MessageData> &data) {
 
     switch (type) {
-        case MessageType::LLMResponse: {
-            if (data) {
-                std::lock_guard<std::mutex> lock(_dataMutex);
-
-                _llmResponseData = *static_cast<LLMResponseData *>(data.get());
-            }
-            break;
-        }
 
         case MessageType::RecognizedGesture: {
             if (data) {
@@ -228,6 +220,18 @@ void LandmarkTrackerService::subcribed_data_receive(MessageType type, const std:
 
                 _sensorData = *static_cast<SensorData *>(data.get());
             }
+            break;
+        }
+
+        case MessageType::StopPerceptionRequest: {
+            stop();
+            INFO("LandmarkTrackerService stopped for gesture");
+            break;
+        }
+
+        case MessageType::StartPerceptionRequest: {
+            start();
+            INFO("LandmarkTrackerService started after gesture");
             break;
         }
 

@@ -83,6 +83,42 @@ bool VideoOperator::readFrame(cv::Mat& frame) {
     return true;
 }
 
+bool VideoOperator::grabFrame() {
+    std::lock_guard<std::mutex> lock(_capMutex);
+
+    if (!openLocked()) {
+        return false;
+    }
+
+    // grab() only dequeues the next buffer from the driver, it does not
+    // decode/copy the image. Calling this every loop iteration keeps the
+    // V4L2 buffer queue drained at the camera's native rate without paying
+    // the cost of a full retrieve(), so we can safely skip expensive
+    // processing on most frames to save CPU/power.
+    if (!_cap->grab()) {
+        WARNING("Warning: Failed to grab frame from camera {}!", _cameraIndex);
+        return false;
+    }
+
+    return true;
+}
+
+bool VideoOperator::retrieveFrame(cv::Mat& frame) {
+    std::lock_guard<std::mutex> lock(_capMutex);
+
+    if (_cap == nullptr || !_cap->isOpened()) {
+        return false;
+    }
+
+    _cap->retrieve(frame);
+    if (frame.empty()) {
+        WARNING("Warning: Received empty frame from camera {}!", _cameraIndex);
+        return false;
+    }
+
+    return true;
+}
+
 int VideoOperator::getCameraIndex() const noexcept {
     return _cameraIndex;
 }

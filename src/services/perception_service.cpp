@@ -100,25 +100,40 @@ void PerceptionService::service_function() {
 		return;
 	}
 
+	// Gesture recognition (face/hand landmark inference) is the expensive part
+	// of this loop, not the frame grab itself. Instead of sleeping between
+	// grab and process - which delays draining the camera's internal V4L2
+	// buffer queue and causes it to overflow (seen as repeated "empty frame"
+	// warnings) - we grab every frame cheaply (no decode) to keep the camera
+	// pipeline flowing at its native rate, and only decode + run the heavy
+	// processing at a throttled cadence. This frees up CPU for other
+	// concurrent workloads (e.g. the voice agent) without starving the camera.
+	constexpr auto kProcessInterval = std::chrono::milliseconds(100); // ~10 Hz
+	auto lastProcessTime = std::chrono::steady_clock::now() - kProcessInterval;
+
 	while (_running) {
-		if (!_videoOperator.readFrame(_frame)) {
+		if (!_videoOperator.grabFrame()) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(30));
 			continue;
 		}
 
-		//publishVideoFrame(frame);
-
-		const bool aiModeEnabled = _aiModeEnabled.load();
-
-		if (aiModeEnabled) {
+		auto now = std::chrono::steady_clock::now();
+		if (now - lastProcessTime < kProcessInterval) {
+			// Frame already grabbed and dropped cheaply; skip the costly
+			// retrieve()/processFrame() this cycle to save CPU/power.
 			processFrame(_frame);
-			//processSpeechInput();
+			continue;
+		}
+		lastProcessTime = now;
+
+		if (!_videoOperator.retrieveFrame(_frame)) {
+			continue;
 		}
 
-		if (_showFrame) {
-			cv::imshow("Perception Service", _frame);
-			cv::waitKey(1);
-		}
+		// if (_showFrame) {
+		// 	cv::imshow("Perception Service", _frame);
+		// 	cv::waitKey(1);
+		// }
 	}
 
 	_videoOperator.close();

@@ -217,6 +217,8 @@ void ExpressionService::setIdlePosition() {
 
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
     static_cast<ControlData*>(data.get())->jointAngles.value() = idleJointPositions;
+    static_cast<ControlData*>(data.get())->source = SourceService::expressionService;
+
     _currentPositions = idleJointPositions;
 
     publish(MessageType::ControlData, data);
@@ -233,22 +235,50 @@ void ExpressionService::executeJointPositions(const std::map<ServoMotorJoint, Ge
 
     static_cast<ControlData*>(data.get())->jointAngles.emplace();
     static_cast<ControlData*>(data.get())->jointAngles.value() = jointAngles;
+    static_cast<ControlData*>(data.get())->source = SourceService::expressionService;
 
     publish(MessageType::ControlData, data);
     _currentPositions = jointAngles;
 }
 
 
+static const char* emotionTypeName(EmotionType t) {
+    switch (t) {
+        case EmotionType::happy:      return "happy";
+        case EmotionType::angry:      return "angry";
+        case EmotionType::funny:      return "funny";
+        case EmotionType::serious:    return "serious";
+        case EmotionType::curious:    return "curious";
+        case EmotionType::worried:    return "worried";
+        case EmotionType::surprised:  return "surprised";
+        case EmotionType::confident:  return "confident";
+        default:                      return "unknown";
+    }
+}
+
+static const char* reactionTypeName(ReactionType t) {
+    switch (t) {
+        case ReactionType::greeting:  return "greeting";
+        case ReactionType::listening: return "listening";
+        case ReactionType::talking:   return "talking";
+        case ReactionType::accepting: return "accepting";
+        case ReactionType::rejecting: return "rejecting";
+        case ReactionType::thinking:  return "thinking";
+        case ReactionType::agreeing:  return "agreeing";
+        default:                      return "unknown";
+    }
+}
+
 void ExpressionService::executeEmotionalMotion(EmotionType emotionType) {
 
     auto it = _emotionalMotions.find(emotionType);
     if (it == _emotionalMotions.end()) {
-        WARNING("Emotional motion not found: {}", (int)emotionType);
+        WARNING("Emotional motion not found: {}", emotionTypeName(emotionType));
         return;
     }
 
     const EmotionalMotion& motion = it->second;
-    INFO("executeEmotionalMotion {}", (int)emotionType);
+    INFO("executeEmotionalMotion {}", emotionTypeName(emotionType));
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 
 }
@@ -257,12 +287,12 @@ void ExpressionService::executeReactionalMotion(ReactionType reactionType) {
 
     auto it = _reactionalMotions.find(reactionType);
     if (it == _reactionalMotions.end()) {
-        WARNING("Reactional motion not found: {}", (int)reactionType);
+        WARNING("Reactional motion not found: {}", reactionTypeName(reactionType));
         return;
     }
 
     const ReactionalMotion& motion = it->second;
-    INFO("executeReactionalMotion {}",(int)reactionType);
+    INFO("executeReactionalMotion {}", reactionTypeName(reactionType));
     executeMotionSequence(motion.joints, motion.sequence, motion.duration);
 
 }

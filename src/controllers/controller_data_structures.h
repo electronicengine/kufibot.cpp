@@ -47,8 +47,8 @@ enum class ServoMotorJoint {
     rightArm = 0,
     leftArm,
     neck,
-    headUpDown,
     headLeftRight,
+    headUpDown,
     eyeRight,
     eyeLeft,
 };
